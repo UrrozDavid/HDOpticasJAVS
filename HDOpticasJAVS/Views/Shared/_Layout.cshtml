@@ -1,0 +1,175 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poppins:wght@500&family=Raleway:wght@400&family=Roboto:wght@400&family=Nunito:wght@400&display=swap" rel="stylesheet" />
+
+    <style>
+        html, body {
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 15px;
+            border-bottom: 4px solid;
+            border-image: linear-gradient(to right, #00B5E2, #1A73E8) 1;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+            .header .header-links {
+                margin-left: auto;
+            }
+
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #00B5E2;
+            transition: 0.3s;
+            z-index: 999;
+            color: white;
+            padding-top: 60px;
+        }
+
+            #sidebar.active {
+                left: 0;
+            }
+
+            #sidebar ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+                #sidebar ul li {
+                    padding: 15px;
+                    text-align: left;
+                }
+
+                    #sidebar ul li a {
+                        color: white;
+                        font-family: 'Poppins', sans-serif;
+                        text-decoration: none;
+                    }
+
+                        #sidebar ul li a:hover {
+                            background-color: #4F4F4F;
+                        }
+
+        #menuToggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            color: #00B5E2;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        #sidebar.active + #menuToggle {
+            left: 265px;
+        }
+
+        main {
+            flex: 1;
+            margin-left: 250px;
+            transition: margin-left 0.3s;
+            padding: 80px 20px 20px;
+        }
+
+            main.shift {
+                margin-left: 0;
+            }
+
+        footer {
+            background-color: #424242;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+            footer a {
+                color: #00B5E2;
+                text-decoration: none;
+                font-family: 'Poppins', sans-serif;
+                margin: 0 10px;
+            }
+
+                footer a:hover {
+                    color: #1A73E8;
+                }
+    </style>
+</head>
+<body>
+    <header class="header">
+        
+        <span id="menuToggle"><i class="fa fa-bars"></i></span>
+        
+        <div class="header-links">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="@Url.Action("Logout", "Account")" class="btn btn-link text-dark"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "Account")" class="btn btn-link text-dark"><i class="fa fa-sign-in"></i> Iniciar Sesión</a>
+            }
+        </div>
+    </header>
+
+    <div id="sidebar">
+        <ul>
+            <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+            <li><a href="@Url.Action("Index", "Inventario")"><i class="fa fa-cogs"></i> Inventario</a></li>
+            <li><a href="@Url.Action("Index", "PuntoVenta")"><i class="fa fa-shopping-cart"></i> Punto de Venta</a></li>
+        </ul>
+    </div>
+
+    <main class="shift">
+        @RenderBody()
+    </main>
+
+    <footer>
+        <p class="m-0" style="font-family: Roboto;">&copy; 2025 HD Ópticas JAVS - Todos los derechos reservados.</p>
+        <p class="m-0" style="font-family: Nunito;">Contacto: hdopticascr@gmail.com | Tel: +506 2221-4315</p>
+        <p class="m-0">
+            <a href="https://wa.me/50687187771" target="_blank"><i class="fa fa-whatsapp"></i> WhatsApp</a> |
+            <a href="https://instagram.com/hdopticasjavs" target="_blank"><i class="fa fa-instagram"></i> Instagram</a> |
+            <a href="https://facebook.com/hdopticasjavs" target="_blank"><i class="fa fa-facebook"></i> Facebook</a>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.querySelector('main');
+
+        menuToggle.addEventListener('click', function () {
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('shift');
+        });
+    </script>
+</body>
+</html>

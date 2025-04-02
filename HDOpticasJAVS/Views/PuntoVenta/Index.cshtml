@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Punto de Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4" style="font-family: Montserrat; color: #01579B;">Punto de Venta</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4 style="font-family: Raleway; color: #00B5E2;">Seleccionar Producto</h4>
+            <input type="text" class="form-control mb-3" placeholder="Buscar producto..." style="font-family: Roboto; border: 1px solid #A9A9A9;">
+            <table class="table table-striped">
+                <thead style="background-color: #F1E0C6; color: #424242; font-family: Raleway;">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Agregar</th>
+                    </tr>
+                </thead>
+                <tbody style="font-family: Roboto;">
+                    <tr>
+                        <td>Gafas de Sol</td>
+                        <td>$50.00</td>
+                        <td>
+                            <button class="btn btn-sm btn-success" style="background-color: #1A73E8; border-color: #1A73E8;" onclick="showSuccessMessage()">+</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lentes Recetados</td>
+                        <td>$120.00</td>
+                        <td>
+                            <button class="btn btn-sm btn-success" style="background-color: #1A73E8; border-color: #1A73E8;" onclick="showSuccessMessage()">+</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <h4 style="font-family: Raleway; color: #FF7043;">Detalles de la Compra</h4>
+            <ul class="list-group mb-3" style="font-family: Roboto;">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Gafas de Sol</span>
+                    <span>$50.00</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Lentes Recetados</span>
+                    <span>$120.00</span>
+                </li>
+            </ul>
+            <h5 class="text-end" style="font-family: Montserrat; color: #D32F2F;">Total: $170.00</h5>
+            <button class="btn btn-primary w-100 mt-2" style="background-color: #00B5E2; border-color: #00B5E2; font-family: Poppins;" onclick="showSuccessMessage()">Procesar Pago</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #00B5E2; color: #FFFFFF;">
+                <h5 class="modal-title" id="successModalLabel">Éxito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="font-family: Roboto;">
+                La operación se realizó con éxito.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #D32F2F; color: #FFFFFF;">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="font-family: Roboto;">
+                Ha ocurrido un error. Inténtelo de nuevo.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>function showSuccessMessage() {
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+    }
+
+    function showErrorMessage() {
+        var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+        errorModal.show();
+    }</script>

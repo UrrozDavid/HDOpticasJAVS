@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Inventario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4" style="font-family: Montserrat; color: #01579B;">Inventario</h2>
+    <div class="d-flex justify-content-between mb-3">
+        <button class="btn btn-primary" style="background-color: #00B5E2; border-color: #00B5E2; font-family: Poppins;">Agregar Producto</button>
+        <input type="text" class="form-control w-25" placeholder="Buscar producto..." style="font-family: Roboto; border: 1px solid #A9A9A9;">
+    </div>
+    <table class="table table-striped">
+        <thead style="background-color: #F1E0C6; color: #424242; font-family: Raleway;">
+            <tr>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody style="font-family: Roboto;">
+            <tr>
+                <td>Lentes de Sol</td>
+                <td>Accesorios</td>
+                <td>25</td>
+                <td>$45.00</td>
+                <td>
+                    <button class="btn btn-sm btn-warning" style="background-color: #FF7043; border-color: #FF7043;">Editar</button>
+                    <button class="btn btn-sm btn-danger" style="background-color: #D32F2F; border-color: #D32F2F;">Eliminar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Gafas Recetadas</td>
+                <td>Óptica</td>
+                <td>40</td>
+                <td>$120.00</td>
+                <td>
+                    <button class="btn btn-sm btn-warning" style="background-color: #FF7043; border-color: #FF7043;">Editar</button>
+                    <button class="btn btn-sm btn-danger" style="background-color: #D32F2F; border-color: #D32F2F;">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
