@@ -123,6 +123,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ContabilidadController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\MarketingController.cs" />
@@ -196,6 +197,15 @@
     <Content Include="Views\Clientes\Editar.cshtml" />
     <Content Include="Views\Marketing\Editar.cshtml" />
     <Content Include="Views\Clientes\EditarEvaluacion.cshtml" />
+    <Content Include="Views\Inventario\Create.cshtml" />
+    <Content Include="Views\Inventario\Edit.cshtml" />
+    <Content Include="Views\Inventario\Details.cshtml" />
+    <Content Include="Views\Inventario\Delete.cshtml" />
+    <Content Include="Views\Contabilidad\Create.cshtml" />
+    <Content Include="Views\Contabilidad\Delete.cshtml" />
+    <Content Include="Views\Contabilidad\Details.cshtml" />
+    <Content Include="Views\Contabilidad\Edit.cshtml" />
+    <Content Include="Views\Contabilidad\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

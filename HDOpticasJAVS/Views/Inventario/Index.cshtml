@@ -1,45 +1,50 @@
 ﻿@{
     ViewBag.Title = "Inventario";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-4">
-    <h2 class="mb-4" style="font-family: Montserrat; color: #01579B;">Inventario</h2>
-    <div class="d-flex justify-content-between mb-3">
-        <button class="btn btn-primary" style="background-color: #00B5E2; border-color: #00B5E2; font-family: Poppins;">Agregar Producto</button>
-        <input type="text" class="form-control w-25" placeholder="Buscar producto..." style="font-family: Roboto; border: 1px solid #A9A9A9;">
-    </div>
-    <table class="table table-striped">
-        <thead style="background-color: #F1E0C6; color: #424242; font-family: Raleway;">
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Crear Nuevo Producto</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre Producto</th>
+            <th>Código Producto</th>
+            <th>Stock</th>
+            <th>Precio</th>
+            <th>Proveedor</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in ViewBag.Productos)
+        {
             <tr>
-                <th>Nombre</th>
-                <th>Categoría</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody style="font-family: Roboto;">
-            <tr>
-                <td>Lentes de Sol</td>
-                <td>Accesorios</td>
-                <td>25</td>
-                <td>$45.00</td>
+                <td>@producto.Nombre_Producto</td>
+                <td>@producto.Codigo_Producto</td>
+                <td>@producto.Stock</td>
+                <td>@producto.Precio</td>
+                <td>@producto.Id_Proveedor</td>
                 <td>
-                    <button class="btn btn-sm btn-warning" style="background-color: #FF7043; border-color: #FF7043;">Editar</button>
-                    <button class="btn btn-sm btn-danger" style="background-color: #D32F2F; border-color: #D32F2F;">Eliminar</button>
+                    <a href="@Url.Action("Edit", new { id = producto.Id_Producto })" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="@Url.Action("Details", new { id = producto.Id_Producto })" class="btn btn-info btn-sm">Ver</a>
+                    <form method="post" action="@Url.Action("Delete", new { id = producto.Id_Producto })" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar este producto?');">Eliminar</button>
+                    </form>
                 </td>
             </tr>
-            <tr>
-                <td>Gafas Recetadas</td>
-                <td>Óptica</td>
-                <td>40</td>
-                <td>$120.00</td>
-                <td>
-                    <button class="btn btn-sm btn-warning" style="background-color: #FF7043; border-color: #FF7043;">Editar</button>
-                    <button class="btn btn-sm btn-danger" style="background-color: #D32F2F; border-color: #D32F2F;">Eliminar</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>

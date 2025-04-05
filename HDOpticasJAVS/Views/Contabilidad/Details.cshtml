@@ -1,0 +1,33 @@
+﻿@model HDOpticasJAVS.Controllers.Venta
+
+@{
+    ViewBag.Title = "Detalles de la linea";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Factura</dt>
+        <dd class="col-sm-9">@Model.Numero_Factura</dd>
+
+        <dt class="col-sm-3">Producto</dt>
+        <dd class="col-sm-9">@Model.Id_Producto</dd>
+
+        <dt class="col-sm-3">Total</dt>
+        <dd class="col-sm-9">@Model.Total</dd>
+
+        <dt class="col-sm-3">Fecha</dt>
+        <dd class="col-sm-9">@Model.Fecha</dd>
+
+        <dt class="col-sm-3">Cliente</dt>
+        <dd class="col-sm-9">@Model.Cliente</dd>
+
+        <dt class="col-sm-3">Tipo de Pago</dt>
+        <dd class="col-sm-9">@Model.Tipo_Pago</dd>
+
+        <dt class="col-sm-3">Status</dt>
+        <dd class="col-sm-9">@Model.Status</dd>
+    </dl>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>
+</div>

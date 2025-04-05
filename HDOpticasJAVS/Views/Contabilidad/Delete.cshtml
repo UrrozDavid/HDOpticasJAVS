@@ -1,0 +1,16 @@
+﻿@model HDOpticasJAVS.Controllers.Venta
+
+@{
+    ViewBag.Title = "Eliminar linea";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>¿Estás seguro de que deseas eliminar la venta con el número de factura <strong>@Model.Numero_Factura</strong>?</p>
+
+<div>
+    <form method="post">
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

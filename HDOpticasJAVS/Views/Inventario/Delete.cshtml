@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Eliminar Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="font-family: Montserrat; color: #C62828;">@ViewBag.Title</h2>
+
+<div style="font-family: Roboto;">
+    <p>¿Estás seguro que deseas eliminar el producto <strong>@ViewBag.Nombre_Producto</strong>?</p>
+
+    <form method="post" action="@Url.Action("DeleteConfirmed", new { id = ViewBag.Id_Producto })">
+        <button type="submit" class="btn btn-danger" style="background-color:#D32F2F; border-color:#D32F2F; font-family: Poppins;">Eliminar</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary" style="font-family: Poppins;">Cancelar</a>
+    </form>
+</div>

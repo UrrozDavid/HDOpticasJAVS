@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Ventas";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Registrar Nueva Contabilidad</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Factura</th>
+            <th>Producto</th>
+            <th>Total</th>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Tipo de Pago</th>
+            <th>Status</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var venta in ViewBag.Ventas)
+        {
+            <tr>
+                <td>@venta.Numero_Factura</td>
+                <td>@venta.Id_Producto</td>
+                <td>@venta.Total</td>
+                <td>@venta.Fecha</td>
+                <td>@venta.Cliente</td>
+                <td>@venta.Tipo_Pago</td>
+                <td>@venta.Status</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = venta.Id_Venta })" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="@Url.Action("Details", new { id = venta.Id_Venta })" class="btn btn-info btn-sm">Ver</a>
+                    <form method="post" action="@Url.Action("Delete", new { id = venta.Id_Venta })" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta venta?');">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

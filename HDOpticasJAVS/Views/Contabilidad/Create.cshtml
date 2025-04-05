@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Registrar nueva contabilidad";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>Producto</label>
+        <input type="number" name="Id_Producto" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Total</label>
+        <input type="number" name="Total" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Número de Factura</label>
+        <input type="text" name="Numero_Factura" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" name="Fecha" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Monto</label>
+        <input type="number" name="Monto" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Cliente</label>
+        <input type="text" name="Cliente" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Tipo de Pago</label>
+        <input type="text" name="Tipo_Pago" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Status</label>
+        <input type="text" name="Status" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Registrar Venta</button>
+</form>
