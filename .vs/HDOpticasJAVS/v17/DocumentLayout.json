@@ -1,0 +1,92 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\smont\\source\\repos\\HDOpticasJAVS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\smont\\source\\repos\\hdopticasjavs\\hdopticasjavs\\controllers\\clientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\controllers\\clientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\smont\\source\\repos\\hdopticasjavs\\hdopticasjavs\\views\\clientes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\clientes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\smont\\source\\repos\\hdopticasjavs\\hdopticasjavs\\views\\clientes\\detalles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\clientes\\detalles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\smont\\source\\repos\\hdopticasjavs\\hdopticasjavs\\views\\clientes\\editarevaluacion.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\clientes\\editarevaluacion.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\smont\\source\\repos\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\Index.cshtml",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Clientes\\Index.cshtml",
+              "ToolTip": "C:\\Users\\smont\\source\\repos\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\Index.cshtml",
+              "RelativeToolTip": "HDOpticasJAVS\\Views\\Clientes\\Index.cshtml",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB4AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-05T16:23:08.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ClientesController.cs",
+              "DocumentMoniker": "C:\\Users\\smont\\source\\repos\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\ClientesController.cs",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Controllers\\ClientesController.cs",
+              "ToolTip": "C:\\Users\\smont\\source\\repos\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\ClientesController.cs",
+              "RelativeToolTip": "HDOpticasJAVS\\Controllers\\ClientesController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-05T16:04:02.828Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EditarEvaluacion.cshtml",
+              "DocumentMoniker": "C:\\Users\\smont\\source\\repos\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\EditarEvaluacion.cshtml",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Clientes\\EditarEvaluacion.cshtml",
+              "ToolTip": "C:\\Users\\smont\\source\\repos\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\EditarEvaluacion.cshtml",
+              "RelativeToolTip": "HDOpticasJAVS\\Views\\Clientes\\EditarEvaluacion.cshtml",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAuwB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-05T16:03:08.471Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Detalles.cshtml",
+              "DocumentMoniker": "C:\\Users\\smont\\source\\repos\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\Detalles.cshtml",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Clientes\\Detalles.cshtml",
+              "ToolTip": "C:\\Users\\smont\\source\\repos\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\Detalles.cshtml",
+              "RelativeToolTip": "HDOpticasJAVS\\Views\\Clientes\\Detalles.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-05T15:56:36.439Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Expediente del Cliente";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">Nombre:</label>
+        <div class="col-md-10">@ViewBag.ClienteNombre</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Cédula:</label>
+        <div class="col-md-10">@ViewBag.Cedula</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Teléfono:</label>
+        <div class="col-md-10">@ViewBag.Telefono</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Correo:</label>
+        <div class="col-md-10">@ViewBag.Correo</div>
+    </div>
+</div>
+
+<hr />
+
+<h3>Historial Médico</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Diagnóstico</th>
+            <th>Tratamiento</th>
+            <th>Observaciones</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2024-12-05</td>
+            <td>Miopía leve</td>
+            <td>Lentes 1.25</td>
+            <td>Revisión anual recomendada</td>
+            <td>
+                <a href="@Url.Action("EditarEvaluacion", "Clientes", new { id = 1, evaluacionId = 1 })" class="btn btn-warning btn-sm">Editar</a>
+                <form method="post" action="@Url.Action("EliminarEvaluacion", "Clientes", new { id = 1, evaluacionId = 1 })" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta evaluación?');">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>2023-11-22</td>
+            <td>Astigmatismo</td>
+            <td>Lentes con filtro azul</td>
+            <td>Fatiga visual frecuente</td>
+            <td>
+                <a href="@Url.Action("EditarEvaluacion", "Clientes", new { id = 1, evaluacionId = 2 })" class="btn btn-warning btn-sm">Editar</a>
+                <form method="post" action="@Url.Action("EliminarEvaluacion", "Clientes", new { id = 1, evaluacionId = 2 })" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta evaluación?');">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr />
+
+<h3>Agregar Nueva Evaluación</h3>
+<form method="post" action="@Url.Action("GuardarEvaluacion", "Clientes")">
+    <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" name="Fecha" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Diagnóstico</label>
+        <input type="text" name="Diagnostico" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Tratamiento</label>
+        <input type="text" name="Tratamiento" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Observaciones</label>
+        <textarea name="Observaciones" class="form-control" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Guardar Evaluación</button>
+</form>

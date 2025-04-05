@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Campañas de Marketing";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<p>
+    <a href="@Url.Action("Crear")" class="btn btn-primary">Crear Nueva Campaña</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Segmento</th>
+            <th>Fecha de Envío</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Campaña de Lentes 2x1</td>
+            <td>Clientes frecuentes</td>
+            <td>2025-04-15</td>
+            <td>Pendiente</td>
+            <td>
+                <a href="@Url.Action("Detalles")" class="btn btn-info btn-sm">Ver</a>
+                <a href="@Url.Action("Editar")" class="btn btn-warning btn-sm">Editar</a>
+                <form method="post" action="@Url.Action("Eliminar")" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta campaña?');">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>

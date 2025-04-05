@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Clientes Registrados";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<p>
+    <a href="@Url.Action("Crear")" class="btn btn-primary">Registrar Nuevo Cliente</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>María González</td>
+            <td>1-2345-6789</td>
+            <td>8872-8895</td>
+            <td>mariaG@gmail.com</td>
+            <td>
+                <form method="post" action="@Url.Action("VerCliente", "Clientes")" style="display:inline;">
+                    <input type="hidden" name="Nombre" value="María González" />
+                    <input type="hidden" name="Cedula" value="1-2345-6789" />
+                    <input type="hidden" name="Telefono" value="8872-8895" />
+                    <input type="hidden" name="Correo" value="mariaG@gmail.com" />
+                    <button type="submit" class="btn btn-info btn-sm">Ver</button>
+                </form>
+                <a href="@Url.Action("Editar")" class="btn btn-warning btn-sm">Editar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Registrar Cliente";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>Nombre Completo</label>
+        <input type="text" name="Nombre" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Cédula</label>
+        <input type="text" name="Cedula" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Teléfono</label>
+        <input type="text" name="Telefono" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Correo</label>
+        <input type="email" name="Correo" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Guardar Cliente</button>
+</form>
