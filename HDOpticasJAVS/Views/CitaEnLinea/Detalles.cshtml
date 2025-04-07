@@ -59,8 +59,8 @@
             <td>Cartago, Costa Rica</td>
             <td>34</td>
             <td>
-                <a href="@Url.Action("EditarCita", "Citas", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
-                <form method="post" action="@Url.Action("EliminarCita", "Citas", new { id = 1, datosId = 1 })" style="display:inline;">
+                <a href="@Url.Action("EditarCita", "Cita", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
+                <form method="post" action="@Url.Action("EliminarCita", "Cita", new { id = 1, datosId = 1 })" style="display:inline;">
                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar estos datos?');">Eliminar</button>
                 </form>
             </td>
@@ -71,7 +71,7 @@
 <hr />
 
 <h3>Agregar Nuevos detalles de la cita</h3>
-<form method="post" action="@Url.Action("GuardarCita", "Citas")">
+<form method="post" action="@Url.Action("GuardarCita", "Cita")">
     <div class="form-group">
         <label>Nombre</label>
         <input type="text" name="Nombre" class="form-control" />

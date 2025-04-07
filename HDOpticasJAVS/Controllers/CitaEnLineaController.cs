@@ -4,28 +4,28 @@ using System.Web.Razor.Parser.SyntaxTree;
 
 namespace HDOpticasJAVS.Controllers
 {
-    public class CitasEnLineaController : Controller
+    public class CitaEnLineaController : Controller
     {
-        // GET: Citas
+        // GET: Cita
         public ActionResult Index()
         {
             return View();
         }
         [HttpGet]
-        // GET: Citas/Crear
+        // GET: Cita/Crear
         public ActionResult Crear()
         {
             return View();
         }
 
         [HttpGet]
-        // GET: Citas/Ver
+        // GET: Cita/Ver
         public ActionResult VerCita()
         {
             return View();
         }
 
-        // POST: Citas/Crear
+        // POST: Cita/Crear
         [HttpPost]
 
         public ActionResult VerCita(FormCollection collection)
@@ -46,7 +46,7 @@ namespace HDOpticasJAVS.Controllers
             string especialidad = collection["Especialidad"];
             string estado = collection["Estado"];
 
-            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(fechaCita    )
+            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(fechaCita)
                 || string.IsNullOrWhiteSpace(horaCita) || string.IsNullOrWhiteSpace(especialidad)
                 || string.IsNullOrWhiteSpace(estado))
             {
@@ -58,7 +58,7 @@ namespace HDOpticasJAVS.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Citas/Detalles
+        // GET: Cita/Detalles
         public ActionResult Detalles(int id = 1)
         {
             ViewBag.ClienteNombre = TempData["ClienteNombre"] ?? "Sofía Ramírez Chacón";
@@ -71,7 +71,7 @@ namespace HDOpticasJAVS.Controllers
         }
 
 
-        // GET: Citas/Editar
+        // GET: Cita/Editar
         public ActionResult Editar(int id = 1)
         {
             ViewBag.ClienteNombre = "Sofía Ramírez Chacón";
@@ -82,7 +82,7 @@ namespace HDOpticasJAVS.Controllers
             return View();
         }
 
-        // POST:   Citas/Editar
+        // POST:   Cita/Editar
         [HttpPost]
         public ActionResult Editar(FormCollection collection)
         {
@@ -111,7 +111,7 @@ namespace HDOpticasJAVS.Controllers
             return RedirectToAction("Detalles", new { id = 1 });
         }
 
-        // POST: Citas/GuardarCita
+        // POST: Cita/GuardarCita
         [HttpPost]
         public ActionResult GuardarCita(FormCollection form)
         {

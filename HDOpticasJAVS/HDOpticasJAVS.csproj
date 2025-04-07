@@ -120,8 +120,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CitaEnLineaController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\EmpleadoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ContabilidadController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
@@ -216,6 +218,15 @@
     <Content Include="Views\Usuario\Detalles.cshtml" />
     <Content Include="Views\Clientes\Perfil.cshtml" />
     <Content Include="Views\PuntoVenta\IndexAdmin.cshtml" />
+    <Content Include="Views\Empleado\Crear.cshtml" />
+    <Content Include="Views\Empleado\Detalles.cshtml" />
+    <Content Include="Views\Empleado\Editar.cshtml" />
+    <Content Include="Views\Empleado\Eliminar.cshtml" />
+    <Content Include="Views\Empleado\Index.cshtml" />
+    <Content Include="Views\CitaEnLinea\Crear.cshtml" />
+    <Content Include="Views\CitaEnLinea\Detalles.cshtml" />
+    <Content Include="Views\CitaEnLinea\Editar.cshtml" />
+    <Content Include="Views\CitaEnLinea\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

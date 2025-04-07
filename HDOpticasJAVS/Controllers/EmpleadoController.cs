@@ -4,21 +4,21 @@ using System.Web.Razor.Parser.SyntaxTree;
 
 namespace HDOpticasJAVS.Controllers
 {
-    public class EmpleadosController : Controller
+    public class EmpleadoController : Controller
     {
-        // GET: Empleados
+        // GET: Empleado
         public ActionResult Index()
         {
             return View();
         }
         [HttpGet]
-        // GET: Empleados/Crear
+        // GET: Empleado/Crear
         public ActionResult Crear()
         {
             return View();
         }
 
-        // POST: Empleados/Crear
+        // POST: Empleado/Crear
         [HttpPost]
 
         public ActionResult VerEmpleado(FormCollection collection)
@@ -53,7 +53,7 @@ namespace HDOpticasJAVS.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Empleados/Detalles
+        // GET: Empleado/Detalles
         public ActionResult Detalles(int id = 1)
         {
             ViewBag.EmpleadoNombre = TempData["EmpleadoNombre"] ?? "María Fernanda Lopez";
@@ -79,7 +79,7 @@ namespace HDOpticasJAVS.Controllers
             return View();
         }
 
-        // POST:   Empleados/Editar
+        // POST:   Empleado/Editar
         [HttpPost]
         public ActionResult Editar(FormCollection collection)
         {
@@ -103,7 +103,7 @@ namespace HDOpticasJAVS.Controllers
             TempData["Cedula"] = cedula;
             TempData["Telefono"] = telefono;
             TempData["Correo"] = correo;
-            TempData["Direccion"] = direccion; 
+            TempData["Direccion"] = direccion;
             TempData["Contacto de emergencia"] = contactoDeEmergencia;
 
             TempData["SuccessMessage"] = "La información del empleado fue actualizada correctamente.";
@@ -113,10 +113,10 @@ namespace HDOpticasJAVS.Controllers
         //[HttpPost]
         //public ActionResult Eliminar(int id)
         //{
-        //    var empleado = empleados.FirstOrDefault(v => v.Cedula == id);
+        //    var empleado = Empleado.FirstOrDefault(v => v.Cedula == id);
         //    if (empleado != null)
         //    {
-        //        empleados.Remove(empleado);
+        //        Empleado.Remove(empleado);
         //        TempData["SuccessMessage"] = "Empleado eliminada exitosamente.";
         //    }
         //    else
@@ -127,7 +127,7 @@ namespace HDOpticasJAVS.Controllers
         //    return RedirectToAction("Index");
         //}
 
-        // POST: Empleados/GuardarDatos
+        // POST: Empleado/GuardarDatos
         [HttpPost]
         public ActionResult GuardarDatos(FormCollection form)
         {

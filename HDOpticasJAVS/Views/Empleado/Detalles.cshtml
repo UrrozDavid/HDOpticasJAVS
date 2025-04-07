@@ -65,8 +65,8 @@
             <td>₡950,000</td>
             <td>Dra. Laura Vargas</td>
             <td>
-                <a href="@Url.Action("EditarDatos", "Empleados", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
-                <form method="post" action="@Url.Action("EliminarDatos", "Empleados", new { id = 1, datosId = 1 })" style="display:inline;">
+                <a href="@Url.Action("EditarDatos", "Empleado", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
+                <form method="post" action="@Url.Action("EliminarDatos", "Empleado", new { id = 1, datosId = 1 })" style="display:inline;">
                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar estos datos?');">Eliminar</button>
                 </form>
             </td>
@@ -80,8 +80,8 @@
             <td>₡610,000</td>
             <td>Mario Rodríguez</td>
 <td>
-                <a href="@Url.Action("EditarDatos", "Empleados", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
-                <form method="post" action="@Url.Action("EliminarDatos", "Empleados", new { id = 1, datosId = 1 })" style="display:inline;">
+                <a href="@Url.Action("EditarDatos", "Empleado", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
+                <form method="post" action="@Url.Action("EliminarDatos", "Empleado", new { id = 1, datosId = 1 })" style="display:inline;">
                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar estos datos?');">Eliminar</button>
                 </form>
             </td>
@@ -92,7 +92,7 @@
 <hr />
 
 <h3>Agregar Nuevos detalles laborales</h3>
-<form method="post" action="@Url.Action("GuardarDatos", "Empleados")">
+<form method="post" action="@Url.Action("GuardarDatos", "Empleado")">
     <div class="form-group">
         <label>Puesto</label>
         <input type="text" name="Puesto" class="form-control" />
