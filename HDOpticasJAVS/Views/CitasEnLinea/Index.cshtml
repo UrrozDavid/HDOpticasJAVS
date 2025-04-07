@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Citas agendadas";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<p>
+    <a href="@Url.Action("Crear")" class="btn btn-primary">Agendar nueva cita</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Fecha cita</th>
+            <th>Hora cita</th>
+            <th>Especialidad</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    <td>
+    <tr>
+        <td>Sofía Ramírez Chacón</td>
+        <td>2025-04-12</td>
+        <td>10:30 a.m.</td>
+        <td>Examen Visual Completo</td>
+        <td>Confirmada</td>
+    </tr>
+    </td>
+    <form method="post" action="@Url.Action("VerCita", "CitasEnLinea")" style="display:inline;">
+        <input type="hidden" name="Nombre" value="Sofía Ramírez Chacón" />
+        <input type="hidden" name="Fecha cita" value="2025-04-12" />
+        <input type="hidden" name="Hora cita" value="10:30 a.m." />
+        <input type="hidden" name="Especialidad" value="Examen Visual Completo" />
+        <input type="hidden" name="Estado" value="Activo" />
+        <button type="submit" class="btn btn-info btn-sm">Ver</button>
+    </form>
+    <a href="@Url.Action("Editar")" class="btn btn-warning btn-sm">Editar</a>
+    </td>
+    </tr>
+    </tbody>
+</table>

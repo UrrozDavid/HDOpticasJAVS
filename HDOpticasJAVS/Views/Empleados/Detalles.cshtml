@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "Detalles Laborales";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">Nombre:</label>
+        <div class="col-md-10">@ViewBag.ClienteNombre</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Cédula:</label>
+        <div class="col-md-10">@ViewBag.Cedula</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Teléfono:</label>
+        <div class="col-md-10">@ViewBag.Telefono</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Correo:</label>
+        <div class="col-md-10">@ViewBag.Correo</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Direccion:</label>
+        <div class="col-md-10">@ViewBag.Direccion</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Contacto de emergencia:</label>
+        <div class="col-md-10">@ViewBag.ContactoEmergencia</div>
+    </div>
+</div>
+
+<hr />
+
+<h3>Detalles laborales del empleado</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Puesto</th>
+            <th>Departamento</th>
+            <th>Fecha de ingreso</th>
+            <th>Tipo de contrato</th>
+            <th>Horario laboral</th>
+            <th>Salario</th>
+            <th>Supervisor directo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Optometrista</td>
+            <td>Óptica</td>
+            <td>2022-03-15</td>
+            <td>Indefinido</td>
+            <td>Lunes a Viernes, 8:00 a.m. - 5:00 p.m.</td>
+            <td>₡950,000</td>
+            <td>Dra. Laura Vargas</td>
+            <td>
+                <a href="@Url.Action("EditarDatos", "Empleados", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
+                <form method="post" action="@Url.Action("EliminarDatos", "Empleados", new { id = 1, datosId = 1 })" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar estos datos?');">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>Asistente de Ventas</td>
+            <td>Ventas</td>
+            <td>2023-07-10</td>
+            <td>Plazo fijo</td>
+            <td>Lunes a Sábado, 9:00 a.m. - 6:00 p.m.</td>
+            <td>₡610,000</td>
+            <td>Mario Rodríguez</td>
+<td>
+                <a href="@Url.Action("EditarDatos", "Empleados", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
+                <form method="post" action="@Url.Action("EliminarDatos", "Empleados", new { id = 1, datosId = 1 })" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar estos datos?');">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr />
+
+<h3>Agregar Nuevos detalles laborales</h3>
+<form method="post" action="@Url.Action("GuardarDatos", "Empleados")">
+    <div class="form-group">
+        <label>Puesto</label>
+        <input type="text" name="Puesto" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Departamento</label>
+        <input type="text" name="Departamento" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Fecha de ingreso</label>
+        <input type="date" name="Fecha de ingreso" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Tipo de contrato</label>
+        <input type="text" name="Tipo de contrato" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Horario laboral</label>
+        <input type="text" name="Horario laboral" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Salario</label>
+        <input type="number" name="Salario" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Supervisor directo</label>
+        <input type="text" name="Supervisor directo" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Guardar Evaluación</button>
+</form>

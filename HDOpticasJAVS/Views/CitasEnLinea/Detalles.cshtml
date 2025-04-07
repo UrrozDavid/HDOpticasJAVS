@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Detalles de Cita";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">Nombre:</label>
+        <div class="col-md-10">@ViewBag.ClienteNombre</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Fecha cita:</label>
+        <div class="col-md-10">@ViewBag.FechaCita</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Hora cita:</label>
+        <div class="col-md-10">@ViewBag.HoraCita</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Especialidad:</label>
+        <div class="col-md-10">@ViewBag.Especialidad</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Estado:</label>
+        <div class="col-md-10">@ViewBag.Estado</div>
+    </div>
+</div>
+
+<hr />
+
+<h3>Detalles de la cita</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cedula</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+            <th>Direccion</th>
+            <th>Edad</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Andrés Campos Solís</td>
+            <td>1-0987-6543</td>
+            <td>8776-2211</td>
+            <td>andres.campos@gmail.com</td>
+            <td>Cartago, Costa Rica</td>
+            <td>34</td>
+            <td>
+                <a href="@Url.Action("EditarCita", "Citas", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
+                <form method="post" action="@Url.Action("EliminarCita", "Citas", new { id = 1, datosId = 1 })" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar estos datos?');">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr />
+
+<h3>Agregar Nuevos detalles de la cita</h3>
+<form method="post" action="@Url.Action("GuardarCita", "Citas")">
+    <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" name="Nombre" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Cedula</label>
+        <input type="text" name="Cedula" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Telefono</label>
+        <input type="text" name="Telefono" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Correo</label>
+        <input type="email" name="Correo" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Direccion</label>
+        <input type="text" name="Direccion" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Edad</label>
+        <input type="number" name="Edad" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Guardar Datos</button>
+</form>
