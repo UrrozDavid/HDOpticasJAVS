@@ -189,6 +189,7 @@
                 if (rol == "Administrador" || rol == "Recepcionista")
                 {
                     <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+                    <li><a href="@Url.Action("Index", "CitaEnLinea")"><i class="fa fa-tachometer"></i> Citas</a></li>
                 }
 
                 if (rol == "Administrador" || rol == "Recepcionista")
@@ -219,6 +220,11 @@
                 if (rol == "Administrador" || rol == "Contador")
                 {
                     <li><a href="@Url.Action("Index", "Contabilidad")"><i class="fa fa-line-chart"></i> Contabilidad</a></li>
+                }
+
+                if (rol == "Administrador")
+                {
+                    <li><a href="@Url.Action("Index", "Empleado")"><i class="fa fa-line-chart"></i> Empleados</a></li>
                 }
 
                 if (rol == "Cliente")
