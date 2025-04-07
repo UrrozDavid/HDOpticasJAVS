@@ -3,36 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\jason\\documents\\github\\hdopticasjavs\\hdopticasjavs\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\hdopticasjavs\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\jason\\documents\\github\\hdopticasjavs\\hdopticasjavs\\views\\citaenlinea\\calendario.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\citaenlinea\\calendario.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\hdopticasjavs\\views\\citaenlinea\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\citaenlinea\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\jason\\documents\\github\\hdopticasjavs\\hdopticasjavs\\controllers\\citaenlineacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\controllers\\citaenlineacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\jason\\documents\\github\\hdopticasjavs\\hdopticasjavs\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\hdopticasjavs\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\jason\\documents\\github\\hdopticasjavs\\hdopticasjavs\\views\\empleado\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\empleado\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\jason\\documents\\github\\hdopticasjavs\\hdopticasjavs\\views\\contabilidad\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\contabilidad\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,73 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Dashboard\\Index.cshtml",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Dashboard\\Index.cshtml",
-              "ToolTip": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Dashboard\\Index.cshtml",
-              "RelativeToolTip": "HDOpticasJAVS\\Views\\Dashboard\\Index.cshtml",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-07T02:09:27.771Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CitaEnLineaController.cs",
-              "DocumentMoniker": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\CitaEnLineaController.cs",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Controllers\\CitaEnLineaController.cs",
-              "ToolTip": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\CitaEnLineaController.cs",
-              "RelativeToolTip": "HDOpticasJAVS\\Controllers\\CitaEnLineaController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAA4wBsAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T02:08:09.836Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Calendario.cshtml",
-              "DocumentMoniker": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\CitaEnLinea\\Calendario.cshtml",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\CitaEnLinea\\Calendario.cshtml",
-              "ToolTip": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\CitaEnLinea\\Calendario.cshtml",
-              "RelativeToolTip": "HDOpticasJAVS\\Views\\CitaEnLinea\\Calendario.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-07T02:06:20.633Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Contabilidad\\Index.cshtml",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Contabilidad\\Index.cshtml",
-              "ToolTip": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Contabilidad\\Index.cshtml",
-              "RelativeToolTip": "HDOpticasJAVS\\Views\\Contabilidad\\Index.cshtml",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-07T02:01:58.812Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Empleado\\Index.cshtml",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Empleado\\Index.cshtml",
-              "ToolTip": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Empleado\\Index.cshtml",
-              "RelativeToolTip": "HDOpticasJAVS\\Views\\Empleado\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-07T02:01:48.481Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -120,32 +27,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-07T01:51:55.216Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "HDOpticasJAVS\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAANMAAAAAAAAAAAAYwOkAAAB4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-07T01:50:43.57Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\CitaEnLinea\\Index.cshtml",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\CitaEnLinea\\Index.cshtml",
-              "ToolTip": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\CitaEnLinea\\Index.cshtml",
-              "RelativeToolTip": "HDOpticasJAVS\\Views\\CitaEnLinea\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-07T01:48:54.999Z",
               "EditorCaption": ""
             }
           ]

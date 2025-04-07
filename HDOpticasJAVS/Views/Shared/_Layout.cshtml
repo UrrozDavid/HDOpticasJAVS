@@ -227,6 +227,11 @@
                     <li><a href="@Url.Action("Index", "Empleado")"><i class="fa-solid fa-user-tie"></i> Empleados</a></li>
                 }
 
+                if (rol == "Cajero")
+                {
+                    <li><a href="@Url.Action("Index", "PuntoVenta")"><i class="fa-solid fa-bag-shopping"></i> Realizar Venta</a></li>
+                }
+
                 if (rol == "Cliente")
                 {
                     <li><a href="@Url.Action("Perfil", "Clientes")"><i class="fa fa-user-circle"></i> Mi Perfil</a></li>
@@ -255,9 +260,9 @@
         <p class="m-0" style="font-family: Roboto;">&copy; 2025 HD Ópticas JAVS - Todos los derechos reservados.</p>
         <p class="m-0" style="font-family: Nunito;">Contacto: hdopticascr@gmail.com | Tel: +506 2221-4315</p>
         <p class="m-0">
-            <a href="https://wa.me/50687187771" target="_blank"><i class="fa fa-whatsapp"></i> WhatsApp</a> |
-            <a href="https://instagram.com/hdopticasjavs" target="_blank"><i class="fa fa-instagram"></i> Instagram</a> |
-            <a href="https://facebook.com/hdopticasjavs" target="_blank"><i class="fa fa-facebook"></i> Facebook</a>
+            <a href="https://wa.me/50687187771" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a> |
+            <a href="https://instagram.com/hdopticasjavs" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a> |
+            <a href="https://facebook.com/hdopticasjavs" target="_blank"><i class="fa-brands fa-facebook"></i> Facebook</a>
         </p>
     </footer>
 
