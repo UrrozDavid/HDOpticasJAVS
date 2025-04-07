@@ -1,9 +1,99 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Acerca de";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <p>Use this area to provide additional information.</p>
-</main>
+<style>
+    body {
+        background: linear-gradient(135deg, #00B5E2, #1A73E8, #FF7043);
+        color: #FFFFFF;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    h1, h2, h3 {
+        font-family: 'Montserrat', sans-serif;
+        color: #F1E0C6;
+    }
+
+    h2 {
+        font-family: 'Raleway', sans-serif;
+    }
+
+    p {
+        font-family: 'Nunito', sans-serif;
+    }
+
+    a, .btn {
+        font-family: 'Poppins', sans-serif;
+        text-decoration: none;
+    }
+
+    .btn-custom {
+        background-color: #D32F2F;
+        color: #FFFFFF;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 1.2rem;
+    }
+
+        .btn-custom:hover {
+            background-color: #C62828;
+        }
+
+    .map-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+</style>
+
+<section class="container my-5">
+    <h1 class="text-center mb-4 animate__animated animate__fadeInDown">Acerca de HD Ópticas</h1>
+
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 text-center animate__animated animate__fadeInLeft">
+            <img src="/img/Local.jpg" class="img-fluid rounded shadow-lg" alt="Local HD Ópticas">
+        </div>
+        <div class="col-md-6 animate__animated animate__fadeInRight">
+            <h2 class="fw-bold">¿Quiénes somos?</h2>
+            <p>
+                En <strong>HD Ópticas</strong>, nos enorgullece ser una empresa costarricense dedicada al cuidado integral de la salud visual.
+                Nuestro compromiso es ofrecer a cada cliente una atención personalizada, profesional y accesible.
+                Contamos con equipos de última generación y un equipo humano comprometido con tu bienestar visual.
+            </p>
+            <p>
+                Desde nuestros inicios, buscamos ser líderes en el sector óptico mediante una atención cálida, productos de calidad y una filosofía centrada en la confianza, la innovación y la excelencia.
+            </p>
+        </div>
+    </div>
+
+    <div class="row my-5 animate__animated animate__fadeInUp">
+        <div class="col">
+            <h2 class="text-center mb-4">¿Dónde estamos ubicados?</h2>
+            <p class="text-center">
+                Podés visitarnos en nuestra sucursal en San José, en la Avenida 1. Te esperamos con los brazos abiertos.
+            </p>
+            <div class="map-container mt-3">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3930.010757265662!2d-84.0771534!3d9.9347256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0e32eef8e91cb%3A0xedba23f734e007db!2sHD%20%C3%93pticas%20Av.1!5e0!3m2!1ses-419!2scr!4v1712420425580!5m2!1ses-419!2scr"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">

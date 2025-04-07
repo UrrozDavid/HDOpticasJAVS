@@ -85,16 +85,16 @@
         <h2>Iniciar Sesión</h2>
         <form action="@Url.Action("Login", "Account")" method="post">
             <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Usuario" required>
+                <input type="text" name="Usuario" class="form-control" placeholder="Usuario" required>
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" placeholder="Contraseña" required>
+                <input type="password" name="Contrasenia" class="form-control" placeholder="Contraseña" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Ingresar</button>
 
             <div class="login-options">
                 <a href="@Url.Action("Recuperar", "Account")">¿Olvidaste tu contraseña?</a> <br>
-                <a href="@Url.Action("Registro", "Account")">Crear una cuenta</a>
+                <a href="@Url.Action("RegistroCliente", "Account")">Crear una cuenta</a>
             </div>
         </form>
     </div>

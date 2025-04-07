@@ -1,0 +1,3 @@
+402560987;22;Masculino;Miopía;88888888
+4524;24;Masculino;ewew;62626
+5658;21;Femenino;ewew;77777777

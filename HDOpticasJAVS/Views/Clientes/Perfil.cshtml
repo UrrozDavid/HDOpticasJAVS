@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Mi Perfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var nombreCompleto = Session["NombreCompleto"] != null ? Session["NombreCompleto"].ToString() : "Usuario";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg text-white" style="max-width: 800px; width: 100%; background: rgba(0, 0, 0, 0.7); border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h3 style="font-family: 'Poppins', sans-serif;">Bienvenido/a, @nombreCompleto</h3>
+        </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+            <h5 class="mb-3" style="color: #F1E0C6;"><i class="fa fa-calendar"></i> Historial de Citas</h5>
+            <ul class="list-group mb-4">
+                <li class="list-group-item bg-transparent text-white border-light">📅 15/02/2025 - Consulta visual general</li>
+                <li class="list-group-item bg-transparent text-white border-light">📅 28/11/2024 - Control de lentes de contacto</li>
+                <li class="list-group-item bg-transparent text-white border-light">📅 05/08/2024 - Diagnóstico de visión nocturna</li>
+            </ul>
+
+            <h5 class="mb-3" style="color: #F1E0C6;"><i class="fa fa-shopping-bag"></i> Historial de Compras</h5>
+            <ul class="list-group">
+                <li class="list-group-item bg-transparent text-white border-light">🕶️ Lentes Ray-Ban Aviator - ₡85,000 - 20/03/2025</li>
+                <li class="list-group-item bg-transparent text-white border-light">👓 Lentes recetados HD Blue Cut - ₡69,000 - 03/12/2024</li>
+                <li class="list-group-item bg-transparent text-white border-light">🧴 Kit de limpieza óptica - ₡6,000 - 10/10/2024</li>
+            </ul>
+        </div>
+        <div class="card-footer text-center text-muted" style="font-size: 0.9rem; background-color: #1A73E8; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; ">
+            Última actualización: @DateTime.Now.ToString("dd 'de' MMMM yyyy", new System.Globalization.CultureInfo("es-ES"))
+        </div>
+    </div>
+</div>

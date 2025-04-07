@@ -1,19 +1,72 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contacto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+<style>
+    body {
+        background: linear-gradient(135deg, #00B5E2, #1A73E8, #FF7043);
+        color: #FFFFFF;
+        font-family: 'Roboto', sans-serif;
+    }
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
-</main>
+    h1, h2, h3 {
+        font-family: 'Montserrat', sans-serif;
+        color: #F1E0C6;
+    }
+
+    h2 {
+        font-family: 'Raleway', sans-serif;
+    }
+
+    p {
+        font-family: 'Nunito', sans-serif;
+    }
+
+    a, .btn {
+        font-family: 'Poppins', sans-serif;
+        text-decoration: none;
+    }
+
+    .contact-container {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 40px;
+        border-radius: 12px;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .contact-info i {
+        font-size: 1.5rem;
+        margin-right: 10px;
+        color: #FFD54F;
+    }
+
+    .contact-info p {
+        font-size: 1.2rem;
+        margin: 10px 0;
+    }
+</style>
+
+<section class="position-relative text-white d-flex align-items-center text-center" height: 60vh;">
+    <div class="container">
+        <div class="p-4 contact-container animate__animated animate__fadeInDown">
+            <h1 class="display-4 fw-bold">Contáctanos</h1>
+            <p class="lead">Estamos aquí para ayudarte con cualquier consulta o información que necesites.</p>
+        </div>
+    </div>
+</section>
+
+<section class="container my-5 animate__animated animate__fadeInUp">
+    <div class="contact-container text-center">
+        <h2 class="mb-4">Información de Contacto</h2>
+        <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> Correo: <a href="mailto:hdopticascr@gmail.com" style="color: #FFFFFF;">hdopticascr@gmail.com</a></p>
+            <p><i class="fas fa-phone"></i> Tel: <a href="tel:+50622214315" style="color: #FFFFFF;">+506 2221-4315</a></p>
+        </div>
+    </div>
+</section>
+
+<!-- Asegúrate de tener FontAwesome cargado si estás usando íconos como fas fa-envelope, fas fa-phone -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">

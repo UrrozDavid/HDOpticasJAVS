@@ -3,58 +3,68 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-4">
-    <h2 class="mb-4" style="font-family: Montserrat; color: #01579B;">Punto de Venta</h2>
-
-    <div class="row">
-        <div class="col-md-6">
-            <h4 style="font-family: Raleway; color: #00B5E2;">Seleccionar Producto</h4>
-            <input type="text" class="form-control mb-3" placeholder="Buscar producto..." style="font-family: Roboto; border: 1px solid #A9A9A9;">
-            <table class="table table-striped">
-                <thead style="background-color: #F1E0C6; color: #424242; font-family: Raleway;">
-                    <tr>
-                        <th>Producto</th>
-                        <th>Precio</th>
-                        <th>Agregar</th>
-                    </tr>
-                </thead>
-                <tbody style="font-family: Roboto;">
-                    <tr>
-                        <td>Gafas de Sol</td>
-                        <td>$50.00</td>
-                        <td>
-                            <button class="btn btn-sm btn-success" style="background-color: #1A73E8; border-color: #1A73E8;" onclick="showSuccessMessage()">+</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Lentes Recetados</td>
-                        <td>$120.00</td>
-                        <td>
-                            <button class="btn btn-sm btn-success" style="background-color: #1A73E8; border-color: #1A73E8;" onclick="showSuccessMessage()">+</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg w-100" style="max-width: 1100px; background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
         </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+            <div class="row">
+                <!-- Selección de productos -->
+                <div class="col-md-6">
+                    <h4 style="font-family: Raleway; color: #00B5E2;">Seleccionar Producto</h4>
+                    <input type="text" class="form-control mb-3" placeholder="Buscar producto..." style="font-family: Roboto; border: 1px solid #A9A9A9;">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover table-bordered">
+                            <thead class="table-light text-dark" style="font-family: Raleway;">
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Agregar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Gafas de Sol</td>
+                                    <td>$50.00</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success" style="background-color: #1A73E8; border-color: #1A73E8;" onclick="showSuccessMessage()">+</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Lentes Recetados</td>
+                                    <td>$120.00</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success" style="background-color: #1A73E8; border-color: #1A73E8;" onclick="showSuccessMessage()">+</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-        <div class="col-md-6">
-            <h4 style="font-family: Raleway; color: #FF7043;">Detalles de la Compra</h4>
-            <ul class="list-group mb-3" style="font-family: Roboto;">
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Gafas de Sol</span>
-                    <span>$50.00</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Lentes Recetados</span>
-                    <span>$120.00</span>
-                </li>
-            </ul>
-            <h5 class="text-end" style="font-family: Montserrat; color: #D32F2F;">Total: $170.00</h5>
-            <button class="btn btn-primary w-100 mt-2" style="background-color: #00B5E2; border-color: #00B5E2; font-family: Poppins;" onclick="showSuccessMessage()">Procesar Pago</button>
+                <!-- Detalles de la compra -->
+                <div class="col-md-6">
+                    <h4 style="font-family: Raleway; color: #FF7043;">Detalles de la Compra</h4>
+                    <ul class="list-group mb-3" style="font-family: Roboto;">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Gafas de Sol</span>
+                            <span>$50.00</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Lentes Recetados</span>
+                            <span>$120.00</span>
+                        </li>
+                    </ul>
+                    <h5 class="text-end" style="font-family: Montserrat; color: #D32F2F;">Total: $170.00</h5>
+                    <button class="btn btn-primary w-100 mt-2" style="background-color: #00B5E2; border-color: #00B5E2; font-family: Poppins;" onclick="showSuccessMessage()">Procesar Pago</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+<!-- Modal de Éxito -->
 <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -72,6 +82,7 @@
     </div>
 </div>
 
+<!-- Modal de Error -->
 <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -89,7 +100,9 @@
     </div>
 </div>
 
-<script>function showSuccessMessage() {
+<!-- Scripts -->
+<script>
+    function showSuccessMessage() {
         var successModal = new bootstrap.Modal(document.getElementById('successModal'));
         successModal.show();
     }
@@ -97,4 +110,5 @@
     function showErrorMessage() {
         var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
         errorModal.show();
-    }</script>
+    }
+</script>

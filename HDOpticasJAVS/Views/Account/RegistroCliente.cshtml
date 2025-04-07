@@ -1,0 +1,145 @@
+﻿@model HDOpticasJAVS.Models.ClienteViewModel
+
+@{
+    ViewBag.Title = "Registro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2 class="titulo">Registro</h2>
+                </div>
+                <div class="card-body">
+                    <form id="formRegistro" action="@Url.Action("GuardarCliente", "Account")" method="post">
+                        <div class="form-group">
+                            <label for="Cedula">Cédula:</label>
+                            <input type="text" name="Cedula" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Nombre">Nombre:</label>
+                            <input type="text" name="Nombre" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Apellido1">Primer Apellido:</label>
+                            <input type="text" name="Apellido1" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Apellido2">Segundo Apellido:</label>
+                            <input type="text" name="Apellido2" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Correo">Correo:</label>
+                            <input type="email" name="Correo" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Contrasenia">Contraseña:</label>
+                            <input type="password" name="Contrasenia" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Fecha_Nacimiento">Fecha de Nacimiento:</label>
+                            <input type="date" name="Fecha_Nacimiento" id="fechaNacimiento" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Edad">Edad:</label>
+                            <input type="number" name="Edad" id="edad" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Genero">Género:</label>
+                            <select name="Genero" class="form-control" required>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Padecimiento">Padecimientos:</label>
+                            <input type="text" name="Padecimiento" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Numero_Telefono">Número de Teléfono:</label>
+                            <input type="text" name="Numero_Telefono" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Confirmar Registro</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("fechaNacimiento").addEventListener("change", function() {
+        let fechaNacimiento = new Date(this.value);
+        let hoy = new Date();
+        let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+        let mes = hoy.getMonth() - fechaNacimiento.getMonth();
+        let dia = hoy.getDate() - fechaNacimiento.getDate();
+
+        if (mes < 0 || (mes === 0 && dia < 0)) {
+            edad--;
+        }
+
+        document.getElementById("edad").value = edad;
+    });
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <text>alert("@TempData["Mensaje"]");</text>
+    }
+</script>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+
+    .card {
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #F4F4F9;
+    }
+
+    .card-header {
+        background-color: #00B5E2;
+        color: white;
+        font-family: "Montserrat", sans-serif;
+    }
+
+    .titulo {
+        font-size: 1.8rem;
+    }
+
+    .form-group label {
+        font-family: "Raleway", sans-serif;
+        font-size: 1rem;
+        color: #424242;
+    }
+
+    .form-control {
+        font-family: "Roboto", sans-serif;
+    }
+
+    .btn-primary {
+        background-color: #1A73E8;
+        border: none;
+        font-family: "Poppins", sans-serif;
+    }
+
+        .btn-primary:hover {
+            background-color: #01579B;
+        }
+</style>

@@ -1,33 +1,85 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+<style>
+    body {
+        background: linear-gradient(135deg, #00B5E2, #1A73E8, #FF7043);
+        color: #FFFFFF;
+        font-family: 'Roboto', sans-serif;
+    }
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+    h1, h2, h3 {
+        font-family: 'Montserrat', sans-serif;
+        color: #F1E0C6;
+    }
+
+    h2 {
+        font-family: 'Raleway', sans-serif;
+    }
+
+    p {
+        font-family: 'Nunito', sans-serif;
+    }
+
+    a, .btn {
+        font-family: 'Poppins', sans-serif;
+        text-decoration: none;
+    }
+
+    .btn-custom {
+        background-color: #D32F2F;
+        color: #FFFFFF;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 1.2rem;
+    }
+
+        .btn-custom:hover {
+            background-color: #C62828;
+        }
+</style>
+
+<section class="position-relative text-white d-flex align-items-center text-center" style="background: url('/img/fondo2.jpg') center/cover no-repeat; height: 70vh;">
+    <div class="container">
+        <div class="p-4" style="background: rgba(0, 0, 0, 0.6); border-radius: 10px; display: inline-block; max-width: 600px;">
+            <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Bienvenido/a a HD Ópticas</h1>
+            <p class="lead animate__animated animate__fadeIn">Cuidamos tu visión con la mejor tecnología y especialistas.</p>
+            <a href="#servicios" class="btn btn-custom animate__animated animate__zoomIn">Ver Servicios</a>
+        </div>
     </div>
-</main>
+</section>
+
+<section id="servicios" class="container my-5">
+    <h2 class="text-center mb-4">Nuestros Servicios</h2>
+    <div class="row align-items-center mb-5 animate__animated animate__fadeInLeft">
+        <div class="col-md-6 text-center">
+            <img src="/img/examen-visual.jpg" class="img-fluid rounded shadow-lg" alt="Servicio 1">
+        </div>
+        <div class="col-md-6">
+            <h3 class="fw-bold">Exámenes Visuales</h3>
+            <p>Realizamos evaluaciones detalladas para diagnosticar y corregir problemas visuales.</p>
+        </div>
+    </div>
+    <div class="row align-items-center mb-5 animate__animated animate__fadeInRight">
+        <div class="col-md-6 order-md-2 text-center">
+            <img src="/img/lentes.jpg" class="img-fluid rounded shadow-lg" alt="Servicio 2">
+        </div>
+        <div class="col-md-6 order-md-1">
+            <h3 class="fw-bold">Lentes</h3>
+            <p>Contamos con una amplia variedad de lentes de alta calidad.</p>
+        </div>
+    </div>
+    <div class="row align-items-center mb-5 animate__animated animate__fadeInLeft">
+        <div class="col-md-6 text-center">
+            <img src="/img/especialista.jpg" class="img-fluid rounded shadow-lg" alt="Servicio 3">
+        </div>
+        <div class="col-md-6">
+            <h3 class="fw-bold">Cuidado y Salud Visual</h3>
+            <p>Te brindamos asesoramiento y tratamientos especializados para el bienestar de tus ojos.</p>
+        </div>
+    </div>
+</section>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">

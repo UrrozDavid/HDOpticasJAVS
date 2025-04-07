@@ -1,45 +1,55 @@
 ﻿@{
     ViewBag.Title = "Campañas de Marketing";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg w-100" style="max-width: 1100px; background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success" style="font-family: Roboto;">@TempData["SuccessMessage"]</div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger" style="font-family: Roboto;">@TempData["ErrorMessage"]</div>
+            }
 
-<p>
-    <a href="@Url.Action("Crear")" class="btn btn-primary">Crear Nueva Campaña</a>
-</p>
+            <div class="text-end mb-3">
+                <a href="@Url.Action("Crear")" class="btn btn-custom">Crear Nueva Campaña</a>
+            </div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Título</th>
-            <th>Segmento</th>
-            <th>Fecha de Envío</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Campaña de Lentes 2x1</td>
-            <td>Clientes frecuentes</td>
-            <td>2025-04-15</td>
-            <td>Pendiente</td>
-            <td>
-                <a href="@Url.Action("Detalles")" class="btn btn-info btn-sm">Ver</a>
-                <a href="@Url.Action("Editar")" class="btn btn-warning btn-sm">Editar</a>
-                <form method="post" action="@Url.Action("Eliminar")" style="display:inline;">
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta campaña?');">Eliminar</button>
-                </form>
-            </td>
-        </tr>
-    </tbody>
-</table>
+            <table class="table table-dark table-hover table-bordered">
+                <thead class="table-light text-dark" style="font-family: Raleway;">
+                    <tr>
+                        <th>Título</th>
+                        <th>Segmento</th>
+                        <th>Fecha de Envío</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody style="font-family: Roboto;">
+                    <tr>
+                        <td>Campaña de Lentes 2x1</td>
+                        <td>Clientes frecuentes</td>
+                        <td>2025-04-15</td>
+                        <td>Pendiente</td>
+                        <td>
+                            <a href="@Url.Action("Detalles")" class="btn btn-info btn-sm" style="font-family: Roboto;">Ver</a>
+                            <a href="@Url.Action("Editar")" class="btn btn-warning btn-sm" style="font-family: Roboto;">Editar</a>
+                            <form method="post" action="@Url.Action("Eliminar")" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm" style="font-family: Roboto;" onclick="return confirm('¿Desea eliminar esta campaña?');">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

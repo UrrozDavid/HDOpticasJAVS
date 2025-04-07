@@ -1,0 +1,46 @@
+﻿@model HDOpticasJAVS.Models.UsuarioViewModel
+@{
+    ViewBag.Title = "Editar Usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2 class="titulo">Editar Usuario</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="ActualizarUsuario" method="post">
+                        <input type="hidden" asp-for="Cedula">
+                        <div class="form-group">
+                            <label for="Nombre">Nombre:</label>
+                            <input type="text" asp-for="Nombre" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Apellido1">Primer Apellido:</label>
+                            <input type="text" asp-for="Apellido1" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Apellido2">Segundo Apellido:</label>
+                            <input type="text" asp-for="Apellido2" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="Rol">Rol:</label>
+                            <select asp-for="Rol" class="form-control" required>
+                                <option value="Administrador">Administrador</option>
+                                <option value="Cajero">Cajero</option>
+                                <option value="Bodeguero">Bodeguero</option>
+                                <option value="Contador">Contador</option>
+                                <option value="Recepcionista">Recepcionista</option>
+                                <option value="Especialista">Especialista</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-block">Actualizar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

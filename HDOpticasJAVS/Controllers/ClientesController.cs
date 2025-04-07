@@ -16,6 +16,11 @@ namespace HDOpticasJAVS.Controllers
             return View();
         }
 
+        public ActionResult Perfil()
+        {
+            return View();
+        }
+
         // POST: Clientes/Crear
         [HttpPost]
 

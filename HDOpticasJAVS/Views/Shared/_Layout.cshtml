@@ -21,6 +21,48 @@
             flex-direction: column;
         }
 
+        /*Nuevo*/
+        body {
+            background: linear-gradient(135deg, #00B5E2, #1A73E8, #FF7043);
+            color: #FFFFFF;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: #F1E0C6;
+        }
+
+        h2 {
+            font-family: 'Raleway', sans-serif;
+        }
+
+        p {
+            font-family: 'Nunito', sans-serif;
+        }
+
+        a, .btn {
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+        }
+
+        .btn-custom {
+            background-color: #D32F2F;
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+        }
+
+            .btn-custom:hover {
+                background-color: #C62828;
+            }
+        /*Cierre Nuevo*/
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -123,11 +165,11 @@
 </head>
 <body>
     <header class="header">
-        
+
         <span id="menuToggle"><i class="fa fa-bars"></i></span>
-        
+
         <div class="header-links">
-            @if (User.Identity.IsAuthenticated)
+            @if (Session["Rol"] != null)
             {
                 <a href="@Url.Action("Logout", "Account")" class="btn btn-link text-dark"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
             }
@@ -138,15 +180,64 @@
         </div>
     </header>
 
-    <div id="sidebar">
-        <ul>
-            <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-tachometer"></i> Dashboard</a></li>
-            <li><a href="@Url.Action("Index", "Inventario")"><i class="fa fa-cogs"></i> Inventario</a></li>
-            <li><a href="@Url.Action("Index", "PuntoVenta")"><i class="fa fa-shopping-cart"></i> Punto de Venta</a></li>
-            <li><a href="@Url.Action("Index", "Clientes")"><i class="fa fa-users"></i> Clientes</a></li>
-            <li><a href="@Url.Action("Index", "Marketing")"><i class="fa fa-bullhorn"></i> Marketing</a></li>
-            <li><a href="@Url.Action("Index", "Contabilidad")"><i class="fa fa-bullhorn"></i> Contabilidad</a></li>
+    <div id="sidebar" class="d-flex flex-column">
+        <ul class="flex-grow-1">
+            @if (Session["Rol"] != null)
+            {
+                var rol = Session["Rol"].ToString();
+
+                if (rol == "Administrador" || rol == "Recepcionista")
+                {
+                    <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+                }
+
+                if (rol == "Administrador" || rol == "Recepcionista")
+                {
+                    <li><a href="@Url.Action("Index", "Usuario")"><i class="fa fa-user"></i> Administración Usuarios</a></li>
+                }
+
+                if (rol == "Administrador" || rol == "Bodeguero")
+                {
+                    <li><a href="@Url.Action("Index", "Inventario")"><i class="fa fa-cogs"></i> Inventario</a></li>
+                }
+
+                if (rol == "Administrador" || rol == "Cajero")
+                {
+                    <li><a href="@Url.Action("IndexAdmin", "PuntoVenta")"><i class="fa fa-shopping-cart"></i> Punto de Venta</a></li>
+                }
+
+                if (rol == "Administrador" || rol == "Recepcionista")
+                {
+                    <li><a href="@Url.Action("Index", "Clientes")"><i class="fa fa-users"></i> Clientes</a></li>
+                }
+
+                if (rol == "Administrador" || rol == "Marketing")
+                {
+                    <li><a href="@Url.Action("Index", "Marketing")"><i class="fa fa-bullhorn"></i> Marketing</a></li>
+                }
+
+                if (rol == "Administrador" || rol == "Contador")
+                {
+                    <li><a href="@Url.Action("Index", "Contabilidad")"><i class="fa fa-line-chart"></i> Contabilidad</a></li>
+                }
+
+                if (rol == "Cliente")
+                {
+                    <li><a href="@Url.Action("Perfil", "Clientes")"><i class="fa fa-user-circle"></i> Mi Perfil</a></li>
+                    <li><a href="@Url.Action("Index", "PuntoVenta")"><i class="fa fa-shopping-cart"></i> Punto de Venta</a></li>
+                }
+            }
+            else
+            {
+                <li><a href="@Url.Action("About", "Home")"><i class="fa fa-info-circle"></i> Acerca de</a></li>
+                <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i> Contacto</a></li>
+            }
         </ul>
+        <div class="mp-3">
+            <a href="@Url.Action("Index", "Home")" style="display: inline-block; padding: 10px;">
+                <img src="@Url.Content("/img/Logo-hdopticas.png")" alt="Inicio" style="height: 40px;" />
+            </a>
+        </div>
     </div>
 
     <main class="shift">
@@ -174,5 +265,7 @@
             mainContent.classList.toggle('shift');
         });
     </script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
