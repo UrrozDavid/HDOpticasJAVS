@@ -1,53 +1,61 @@
 ﻿@{
-    ViewBag.Title = "Cita agendadas";
+    ViewBag.Title = "Citas Agendadas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg w-100" style="max-width: 1100px; background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success" style="font-family: Roboto;">@TempData["SuccessMessage"]</div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger" style="font-family: Roboto;">@TempData["ErrorMessage"]</div>
+            }
 
-<p>
-    <a href="@Url.Action("Crear")" class="btn btn-primary">Agendar nueva cita</a>
-</p>
+            <div class="text-end mb-3">
+                <a href="@Url.Action("Crear")" class="btn btn-custom">Agendar Nueva Cita</a>
+            </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Fecha cita</th>
-            <th>Hora cita</th>
-            <th>Especialidad</th>
-            <th>Estado</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    <td>
-    <tr>
-        <td>Sofía Ramírez Chacón</td>
-        <td>2025-04-12</td>
-        <td>10:30 a.m.</td>
-        <td>Examen Visual Completo</td>
-        <td>Confirmada</td>
-    </tr>
-    </td>
-    <form method="post" action="@Url.Action("VerCita", "CitaEnLinea")" style="display:inline;">
-        <input type="hidden" name="Nombre" value="Sofía Ramírez Chacón" />
-        <input type="hidden" name="Fecha cita" value="2025-04-12" />
-        <input type="hidden" name="Hora cita" value="10:30 a.m." />
-        <input type="hidden" name="Especialidad" value="Examen Visual Completo" />
-        <input type="hidden" name="Estado" value="Activo" />
-        <button type="submit" class="btn btn-info btn-sm">Ver</button>
-    </form>
-    <a href="@Url.Action("Editar")" class="btn btn-warning btn-sm">Editar</a>
-    </td>
-    </tr>
-    </tbody>
-</table>
+            <table class="table table-dark table-hover table-bordered">
+                <thead class="table-light text-dark" style="font-family: Raleway;">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha Cita</th>
+                        <th>Hora Cita</th>
+                        <th>Especialidad</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody style="font-family: Roboto;">
+                    <tr>
+                        <td>Sofía Ramírez Chacón</td>
+                        <td>2025-04-12</td>
+                        <td>10:30 a.m.</td>
+                        <td>Examen Visual Completo</td>
+                        <td>Confirmada</td>
+                        <td>
+                            <form method="post" action="@Url.Action("VerCita", "CitaEnLinea")" style="display:inline;">
+                                <input type="hidden" name="Nombre" value="Sofía Ramírez Chacón" />
+                                <input type="hidden" name="FechaCita" value="2025-04-12" />
+                                <input type="hidden" name="HoraCita" value="10:30 a.m." />
+                                <input type="hidden" name="Especialidad" value="Examen Visual Completo" />
+                                <input type="hidden" name="Estado" value="Confirmada" />
+                                <button type="submit" class="btn btn-info btn-sm" style="font-family: Roboto;">Ver</button>
+                            </form>
+                            <a href="@Url.Action("Editar")" class="btn btn-warning btn-sm" style="font-family: Roboto;">Editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

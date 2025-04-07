@@ -227,6 +227,7 @@
     <Content Include="Views\CitaEnLinea\Detalles.cshtml" />
     <Content Include="Views\CitaEnLinea\Editar.cshtml" />
     <Content Include="Views\CitaEnLinea\Index.cshtml" />
+    <Content Include="Views\CitaEnLinea\Calendario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

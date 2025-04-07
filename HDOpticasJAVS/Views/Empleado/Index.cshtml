@@ -1,54 +1,64 @@
 ﻿@{
-    ViewBag.Title = "Empleado Registrados";
+    ViewBag.Title = "Empleados Registrados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg w-100" style="max-width: 1100px; background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success" style="font-family: Roboto;">@TempData["SuccessMessage"]</div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger" style="font-family: Roboto;">@TempData["ErrorMessage"]</div>
+            }
 
-<p>
-    <a href="@Url.Action("Crear")" class="btn btn-primary">Registrar Nuevo Empleado</a>
-</p>
+            <div class="text-end mb-3">
+                <a href="@Url.Action("Crear")" class="btn btn-custom">Registrar Nuevo Empleado</a>
+            </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Cédula</th>
-            <th>Teléfono</th>
-            <th>Correo</th>
-            <th>Direccion</th>
-            <th>Contacto de emergencia</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <td>
-            <td>María Fernanda López</td>
-            <td>1-2345-6789</td>
-            <td>8888-1234</td>
-            <td>maria.lopez@example.com</td>
-            <td>San José, Costa Rica</td>
-            <td>Carlos López - 8822-3344</td>
-        </td>
-            <form method="post" action="@Url.Action("VerEmpleado", "Empleado")" style="display:inline;">
-                <input type="hidden" name="Nombre" value="María Fernanda López" />
-                <input type="hidden" name="Cedula" value="1-2345-6789" />
-                <input type="hidden" name="Telefono" value="8888-1234" />
-                <input type="hidden" name="Correo" value="maria.lopez@example.com" />
-                <input type="hidden" name="Direccion" value="San José, Costa Rica" />
-                <input type="hidden" name="ContactoEmergencia" value="Carlos López - 8822-3344" />
-                <button type="submit" class="btn btn-info btn-sm">Ver</button>
-            </form>
-                <a href="@Url.Action("Editar")" class="btn btn-warning btn-sm">Editar</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+            <table class="table table-dark table-hover table-bordered">
+                <thead class="table-light text-dark" style="font-family: Raleway;">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cédula</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Dirección</th>
+                        <th>Contacto de Emergencia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody style="font-family: Roboto;">
+                    <tr>
+                        <td>María Fernanda López</td>
+                        <td>1-2345-6789</td>
+                        <td>8888-1234</td>
+                        <td>maria.lopez@example.com</td>
+                        <td>San José, Costa Rica</td>
+                        <td>Carlos López - 8822-3344</td>
+                        <td>
+                            <form method="post" action="@Url.Action("VerEmpleado", "Empleado")" style="display:inline;">
+                                <input type="hidden" name="Nombre" value="María Fernanda López" />
+                                <input type="hidden" name="Cedula" value="1-2345-6789" />
+                                <input type="hidden" name="Telefono" value="8888-1234" />
+                                <input type="hidden" name="Correo" value="maria.lopez@example.com" />
+                                <input type="hidden" name="Direccion" value="San José, Costa Rica" />
+                                <input type="hidden" name="ContactoEmergencia" value="Carlos López - 8822-3344" />
+                                <button type="submit" class="btn btn-info btn-sm" style="font-family: Roboto;">Ver</button>
+                            </form>
+                            <a href="@Url.Action("Editar")" class="btn btn-warning btn-sm" style="font-family: Roboto;">Editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

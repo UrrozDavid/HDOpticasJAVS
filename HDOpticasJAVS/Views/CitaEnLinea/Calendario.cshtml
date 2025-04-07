@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Calendario de Citas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Flatpickr CSS -->
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- Flatpickr Español -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+<div class="container-fluid p-4" style="min-height: 100vh; background: rgba(0, 0, 0, 0.85); color: #F1E0C6;">
+    <div class="card shadow-lg mb-4" style="background: rgba(0,0,0,0.75); border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card bg-dark text-light" style="border-radius: 10px;">
+                        <div class="card-header bg-secondary">
+                            <h5 class="mb-0">Reservar Cita</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="@Url.Action("Crear", "CitaEnLinea")">
+                                <div class="mb-3">
+                                    <label for="Nombre" class="form-label">Nombre Completo</label>
+                                    <input type="text" class="form-control" id="Nombre" name="Nombre" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Especialidad" class="form-label">Especialidad</label>
+                                    <select class="form-select" id="Especialidad" name="Especialidad" required>
+                                        <option value="">Seleccione</option>
+                                        <option>Examen Visual Completo</option>
+                                        <option>Consulta General</option>
+                                        <option>Control de Lentes</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Fecha" class="form-label">Fecha</label>
+                                    <input type="text" class="form-control" id="Fecha" name="Fecha" required placeholder="Seleccione una fecha" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Hora" class="form-label">Hora</label>
+                                    <input type="text" class="form-control" id="Hora" name="Hora" required placeholder="Seleccione una hora" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Estado" class="form-label">Estado</label>
+                                    <input type="text" class="form-control" id="Estado" name="Estado" value="Pendiente" readonly />
+                                </div>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-success">Agendar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        flatpickr("#Fecha", {
+            locale: "es",
+            dateFormat: "Y-m-d",
+            minDate: "today"
+        });
+
+        flatpickr("#Hora", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            locale: "es"
+        });
+    </script>
+}

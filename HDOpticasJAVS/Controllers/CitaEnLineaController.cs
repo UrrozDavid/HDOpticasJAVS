@@ -25,6 +25,11 @@ namespace HDOpticasJAVS.Controllers
             return View();
         }
 
+        public ActionResult Calendario()
+        {
+            return View();
+        }
+
         // POST: Cita/Crear
         [HttpPost]
 
