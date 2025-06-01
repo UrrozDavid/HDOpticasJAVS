@@ -1,4 +1,5 @@
-﻿@model HDOpticasJAVS.Models.UsuarioViewModel
+﻿@model HDOpticasJAVS.Models.Usuario
+
 @{
     ViewBag.Title = "Crear Usuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,32 +16,35 @@
                     <form asp-action="GuardarUsuario" method="post">
                         <div class="form-group">
                             <label for="Cedula">Cédula:</label>
-                            <input type="text" asp-for="Cedula" class="form-control" required>
+                            <input type="text" asp-for="Cedula" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="Nombre">Nombre:</label>
-                            <input type="text" asp-for="Nombre" class="form-control" required>
+                            <input type="text" asp-for="Nombre" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="Apellido1">Primer Apellido:</label>
-                            <input type="text" asp-for="Apellido1" class="form-control" required>
+                            <input type="text" asp-for="Apellido1" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="Apellido2">Segundo Apellido:</label>
-                            <input type="text" asp-for="Apellido2" class="form-control">
+                            <input type="text" asp-for="Apellido2" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="Rol">Rol:</label>
-                            <select asp-for="Rol" class="form-control" required>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Cajero">Cajero</option>
-                                <option value="Bodeguero">Bodeguero</option>
-                                <option value="Contador">Contador</option>
-                                <option value="Recepcionista">Recepcionista</option>
-                                <option value="Especialista">Especialista</option>
+                            <label for="Id_Rol">Rol:</label>
+                            <select asp-for="Id_Rol" class="form-control" asp-items="ViewBag.Roles" required>
+                                <option value="">Seleccione un rol</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                        <div class="form-group">
+                            <label for="Correo">Correo:</label>
+                            <input type="email" asp-for="Correo" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Contrasenia">Contraseña:</label>
+                            <input type="password" asp-for="Contrasenia" class="form-control" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-3">Guardar</button>
                     </form>
                 </div>
             </div>

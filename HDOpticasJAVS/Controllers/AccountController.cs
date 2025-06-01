@@ -1,53 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using HDOpticasJAVS.Models;
+using System.Net;
+using System.Net.Mail;
+using System.Web.Helpers;
+using HDOpticasJAVS.Models; // Asegúrate de usar tu namespace real del EDMX
 
 namespace HDOpticasJAVS.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly string usuariosPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Usuarios.txt");
-        private readonly string clientesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Clientes.txt");
-
+        private HD_Opticas_JAVS_BDEntities db = new HD_Opticas_JAVS_BDEntities();
 
         public ActionResult Login()
         {
             return View();
         }
-        // GET: Login
+
         [HttpPost]
         public ActionResult Login(string Usuario, string Contrasenia)
         {
             try
             {
-                if (System.IO.File.Exists(usuariosPath))
+                var usuario = db.Usuario.FirstOrDefault(u =>
+                    (u.Correo == Usuario || u.Cedula == Usuario) &&
+                    u.Contrasenia == Contrasenia &&
+                    u.Estado == "A");
+
+                if (usuario != null)
                 {
-                    var lineas = System.IO.File.ReadAllLines(usuariosPath);
-                    foreach (var linea in lineas)
-                    {
-                        var partes = linea.Split(';');
-                        if (partes.Length >= 8)
-                        {
-                            var cedula = partes[0];
-                            var correo = partes[4];
-                            var contrasenia = partes[5];
-                            var rol = partes[7];
+                    Session["Usuario"] = usuario.Correo;
+                    Session["Rol"] = usuario.Id_Rol;
+                    Session["NombreCompleto"] = $"{usuario.Nombre} {usuario.Apellido1}";
 
-                            if ((correo == Usuario || cedula == Usuario) && contrasenia == Contrasenia)
-                            {
-                                // Autenticación exitosa
-                                Session["Usuario"] = correo;
-                                Session["Rol"] = rol;
-                                Session["NombreCompleto"] = $"{partes[1]} {partes[2]}";
-
-                                return RedirectToAction("Index", "Home");
-                            }
-                        }
-                    }
+                    return RedirectToAction("Index", "Home");
                 }
 
                 ViewBag.Mensaje = "Usuario o contraseña incorrectos.";
@@ -55,7 +41,7 @@ namespace HDOpticasJAVS.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensaje = "Error al iniciar sesión: " + ex.Message;
+                ViewBag.Mensaje = "Error: " + ex.Message;
                 return View();
             }
         }
@@ -66,47 +52,181 @@ namespace HDOpticasJAVS.Controllers
             return RedirectToAction("Login");
         }
 
-        private void CrearDirectorioSiNoExiste(string ruta)
+        public ActionResult RegistroCliente()
         {
-            string directorio = Path.GetDirectoryName(ruta);
-            if (!Directory.Exists(directorio))
+            ViewBag.Generos = db.Parametro
+                .Where(p => p.Id_TipoParametro == 2 && p.Estado == "A")
+                .ToList();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GuardarCliente(FormCollection form)
+        {
+            try
             {
-                Directory.CreateDirectory(directorio); // Crea la carpeta Data si no existe
+                string cedula = form["Cedula"];
+                string correo = form["Correo"];
+
+                if (db.Usuario.Any(u => u.Cedula == cedula || u.Correo == correo))
+                {
+                    ViewBag.Mensaje = "Ya existe un usuario con esa cédula o correo.";
+                    ViewBag.Generos = db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A").ToList();
+                    return View("RegistroCliente");
+                }
+
+                Usuario nuevoUsuario = new Usuario
+                {
+                    Cedula = cedula,
+                    Nombre = form["Nombre"],
+                    Apellido1 = form["Apellido1"],
+                    Apellido2 = form["Apellido2"],
+                    Correo = correo,
+                    Contrasenia = form["Contrasenia"],
+                    FechaNacimiento = Convert.ToDateTime(form["Fecha_Nacimiento"]),
+                    Id_Rol = 2, // Rol Cliente = 2
+                    Estado = "A",
+                    UsuarioCreador = "Sistema",
+                    FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+
+                db.Usuario.Add(nuevoUsuario);
+
+                Cliente nuevoCliente = new Cliente
+                {
+                    Cedula = cedula,
+                    Edad = int.Parse(form["Edad"]),
+                    Id_Genero = int.Parse(form["Id_Genero"]),
+                    Padecimiento = form["Padecimiento"],
+                    Numero_Telefono = form["Numero_Telefono"],
+                    Estado = "A",
+                    UsuarioCreador = "Sistema",
+                    FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+
+                db.Cliente.Add(nuevoCliente);
+                db.SaveChanges();
+
+                TempData["Exito"] = "Registro exitoso. Inicie sesión.";
+                return RedirectToAction("Login");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Mensaje = "Error al registrar: " + ex.Message;
+                ViewBag.Generos = db.Parametro.Where(p => p.Id_TipoParametro == 2 && p.Estado == "A").ToList();
+                return View("RegistroCliente");
             }
         }
 
-        public ActionResult RegistroCliente()
+        public ActionResult Recuperar()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult GuardarCliente(ClienteViewModel model)
+        public ActionResult Recuperar(string email)
         {
-            if (!ModelState.IsValid)
+            var usuario = db.Usuario.FirstOrDefault(u => u.Correo == email);
+
+            if (usuario != null)
             {
-                ViewBag.Mensaje = "Error en los datos ingresados.";
-                return View("RegistroCliente");
+                // Generar token
+                string token = Guid.NewGuid().ToString();
+
+                // Guardar en tabla temporal
+                db.Database.ExecuteSqlCommand(
+                    "INSERT INTO RecuperacionPassword (Correo, Token, FechaCreacion) VALUES (@p0, @p1, @p2)",
+                    email, token, DateTime.Now);
+
+                // Enlace de recuperación
+                var link = Url.Action("CambiarContrasena", "Account", new { token = token }, protocol: Request.Url.Scheme);
+
+                // Enviar correo
+                string asunto = "Recuperar contraseña - HD Ópticas JAVS";
+                string mensaje = $"Haz clic aquí para cambiar tu contraseña:<br><a href='{link}'>Cambiar Contraseña</a>";
+
+                EnviarCorreo(email, asunto, mensaje);
+
+                ViewBag.Mensaje = "Se envió un correo con el enlace de recuperación.";
+            }
+            else
+            {
+                ViewBag.Mensaje = "El correo no está registrado.";
             }
 
-            try
-            {
-                // Guardar en Usuarios.txt
-                string usuarioData = $"{model.Cedula};{model.Nombre};{model.Apellido1};{model.Apellido2};{model.Correo};{model.Contrasenia};{model.Fecha_Nacimiento};Cliente";
-                System.IO.File.AppendAllText(usuariosPath, usuarioData + Environment.NewLine);
+            return View();
+        }
 
-                // Guardar en Clientes.txt
-                string clienteData = $"{model.Cedula};{model.Edad};{model.Genero};{model.Padecimiento};{model.Numero_Telefono}";
-                System.IO.File.AppendAllText(clientesPath, clienteData + Environment.NewLine);
+        private void EnviarCorreo(string para, string asunto, string cuerpoHtml)
+        {
+            var fromAddress = new MailAddress("hdopticasjavs@gmail.com", "Soporte HD Ópticas JAVS");
+            var toAddress = new MailAddress(para);
+            //const string fromPassword = "LamejorOpt1ca!";
+            const string fromPassword = "ysuk wivj qivo dacj";
 
-                ViewBag.Mensaje = "Cliente registrado exitosamente.";
-                return RedirectToAction("Login");
-            }
-            catch (Exception ex)
+            var smtp = new SmtpClient
             {
-                ViewBag.Mensaje = "Error al guardar los datos: " + ex.Message;
-                return View("RegistroCliente");
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = asunto,
+                Body = cuerpoHtml,
+                IsBodyHtml = true
+            })
+            {
+                smtp.Send(message);
             }
         }
+
+        public ActionResult CambiarContrasena(string token)
+        {
+            var registro = db.Database.SqlQuery<RecuperacionPasswordModel>(
+                "SELECT * FROM RecuperacionPassword WHERE Token = @p0", token).FirstOrDefault();
+
+            if (registro == null || registro.FechaCreacion.AddMinutes(30) < DateTime.Now)
+            {
+                return Content("El enlace ha expirado o no es válido.");
+            }
+
+            ViewBag.Token = token;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CambiarContrasena(string token, string nuevaContrasena)
+        {
+            var registro = db.Database.SqlQuery<RecuperacionPasswordModel>(
+                "SELECT * FROM RecuperacionPassword WHERE Token = @p0", token).FirstOrDefault();
+
+            if (registro != null)
+            {
+                var usuario = db.Usuario.FirstOrDefault(u => u.Correo == registro.Correo);
+                if (usuario != null)
+                {
+                    usuario.Contrasenia = nuevaContrasena;
+                    db.SaveChanges();
+
+                    // Eliminar token usado
+                    db.Database.ExecuteSqlCommand("DELETE FROM RecuperacionPassword WHERE Token = @p0", token);
+
+                    ViewBag.Mensaje = "Contraseña actualizada con éxito.";
+                }
+            }
+            else
+            {
+                ViewBag.Mensaje = "Token inválido.";
+            }
+
+            return View();
+        }
+
     }
 }

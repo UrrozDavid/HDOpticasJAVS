@@ -1,4 +1,5 @@
-﻿@model HDOpticasJAVS.Models.UsuarioViewModel
+﻿@model HDOpticasJAVS.Usuario
+
 @{
     ViewBag.Title = "Detalles Usuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,16 +7,20 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card">
-                <div class="card-header text-center">
+                <div class="card-header text-center bg-primary text-white">
                     <h2 class="titulo">Detalles del Usuario</h2>
                 </div>
-                <div class="card-body">
+                <div class="card-body bg-dark">
                     <p><strong>Cédula:</strong> @Model.Cedula</p>
-                    <p><strong>Nombre:</strong> @Model.Nombre @Model.Apellido1 @Model.Apellido2</p>
-                    <p><strong>Rol:</strong> @Model.Rol</p>
-                    <a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>
+                    <p><strong>Nombre completo:</strong> @Model.Nombre @Model.Apellido1 @Model.Apellido2</p>
+                    <p><strong>Contraseña:</strong> @Model.Contrasenia</p>
+                    <p><strong>Fecha de nacimiento:</strong> @(Model.FechaNacimiento.HasValue ? Model.FechaNacimiento.Value.ToString("yyyy-MM-dd") : "Sin fecha")</p>
+                    <p><strong>Correo:</strong> @Model.Correo</p>
+                    <p><strong>Rol:</strong> @(Model.Parametro != null ? Model.Parametro.Nombre_Parametro : "Sin rol")</p>
+                    <p><strong>Estado:</strong> @(Model.Estado == "A" ? "Activo" : "Inactivo")</p>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary mt-3">Volver</a>
                 </div>
             </div>
         </div>

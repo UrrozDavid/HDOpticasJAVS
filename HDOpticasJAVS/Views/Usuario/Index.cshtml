@@ -1,4 +1,5 @@
-﻿@model List<HDOpticasJAVS.Models.UsuarioViewModel>
+﻿@model List<HDOpticasJAVS.Usuario>
+
 @{
     ViewBag.Title = "Usuarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,9 +12,11 @@
         </div>
         <div class="card-body" style="font-family: 'Roboto', sans-serif;">
             <div class="text-end mt-3">
-                <a href="@Url.Action("Crear")" class="btn btn-custom">Crear Usuario</a>
+                <a href="@Url.Action("CrearCliente", "Usuario")" class="btn btn-success me-2">Crear Usuario Cliente</a>
+                <a href="@Url.Action("CrearEmpleado", "Usuario")" class="btn btn-primary">Crear Usuario Empleado</a>
             </div>
-            <table class="table table-dark table-hover table-bordered rounded">
+
+            <table class="table table-dark table-hover table-bordered rounded mt-4">
                 <thead class="table-light text-dark">
                     <tr class="text-center">
                         <th>Cédula</th>
@@ -30,11 +33,12 @@
                             <td>@usuario.Cedula</td>
                             <td>@usuario.Nombre @usuario.Apellido1 @usuario.Apellido2</td>
                             <td>@usuario.Correo</td>
-                            <td>@usuario.Rol</td>
+                            <td>@usuario.Parametro.Nombre_Parametro</td>
                             <td class="text-center">
-                                <a href="@Url.Action("Detalles", new { id = usuario.Cedula })" class="btn btn-info btn-sm me-1">Ver</a>
-                                <a href="@Url.Action("Editar", new { id = usuario.Cedula })" class="btn btn-warning btn-sm me-1">Editar</a>
-                                <a href="@Url.Action("Eliminar", new { id = usuario.Cedula })" class="btn btn-danger btn-sm">Eliminar</a>
+                                <a href="@Url.Action("Detalles", new { cedula = usuario.Cedula })" class="btn btn-info btn-sm me-1">Ver</a>
+                                <a href="@Url.Action("Editar", "Usuario", new { cedula = usuario.Cedula })" class="btn btn-warning btn-sm me-1">Editar</a>
+                                <a href="@Url.Action("Eliminar", new { cedula = usuario.Cedula })" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('¿Estás seguro que deseas eliminar este usuario?')">Eliminar</a>
                             </td>
                         </tr>
                     }

@@ -168,8 +168,11 @@
 
         <span id="menuToggle"><i class="fa fa-bars"></i></span>
 
+        @{
+            int? rol = Session["Rol"] as int?;
+        }
         <div class="header-links">
-            @if (Session["Rol"] != null)
+            @if (rol != null)
             {
                 <a href="@Url.Action("Logout", "Account")" class="btn btn-link text-dark"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
             }
@@ -182,57 +185,55 @@
 
     <div id="sidebar" class="d-flex flex-column">
         <ul class="flex-grow-1">
-            @if (Session["Rol"] != null)
+            @if (rol != null)
             {
-                var rol = Session["Rol"].ToString();
-
-                if (rol == "Administrador" || rol == "Recepcionista")
+                // Dashboard y Citas (Administrador o Recepcionista)
+                if (rol == 1 || rol == 14)
                 {
                     <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-tachometer"></i> Dashboard</a></li>
                     <li><a href="@Url.Action("Index", "CitaEnLinea")"><i class="fa-solid fa-calendar"></i> Citas</a></li>
-                }
-
-                if (rol == "Administrador" || rol == "Recepcionista")
-                {
+                    <li><a href="@Url.Action("Index", "Clientes")"><i class="fa fa-users"></i> Clientes</a></li>
                     <li><a href="@Url.Action("Index", "Usuario")"><i class="fa fa-user"></i> Administración Usuarios</a></li>
                 }
 
-                if (rol == "Administrador" || rol == "Bodeguero")
+                // Inventario (Administrador o Bodeguero)
+                if (rol == 1 || rol == 15)
                 {
                     <li><a href="@Url.Action("Index", "Inventario")"><i class="fa fa-cogs"></i> Inventario</a></li>
                 }
 
-                if (rol == "Administrador" || rol == "Cajero")
+                // Punto de Venta (Administrador o Cajero)
+                if (rol == 1 || rol == 16)
                 {
                     <li><a href="@Url.Action("IndexAdmin", "PuntoVenta")"><i class="fa fa-shopping-cart"></i> Punto de Venta</a></li>
                 }
 
-                if (rol == "Administrador" || rol == "Recepcionista")
-                {
-                    <li><a href="@Url.Action("Index", "Clientes")"><i class="fa fa-users"></i> Clientes</a></li>
-                }
-
-                if (rol == "Administrador" || rol == "Marketing")
+                // Marketing (Administrador o Marketing)
+                if (rol == 1 || rol == 17)
                 {
                     <li><a href="@Url.Action("Index", "Marketing")"><i class="fa fa-bullhorn"></i> Marketing</a></li>
                 }
 
-                if (rol == "Administrador" || rol == "Contador")
+                // Contabilidad (Administrador o Contador)
+                if (rol == 1 || rol == 18)
                 {
                     <li><a href="@Url.Action("Index", "Contabilidad")"><i class="fa fa-line-chart"></i> Contabilidad</a></li>
                 }
 
-                if (rol == "Administrador")
+                // Solo Administrador
+                if (rol == 1)
                 {
                     <li><a href="@Url.Action("Index", "Empleado")"><i class="fa-solid fa-user-tie"></i> Empleados</a></li>
                 }
 
-                if (rol == "Cajero")
+                // Solo Cajero
+                if (rol == 16)
                 {
                     <li><a href="@Url.Action("Index", "PuntoVenta")"><i class="fa-solid fa-bag-shopping"></i> Realizar Venta</a></li>
                 }
 
-                if (rol == "Cliente")
+                // Solo Cliente
+                if (rol == 2)
                 {
                     <li><a href="@Url.Action("Perfil", "Clientes")"><i class="fa fa-user-circle"></i> Mi Perfil</a></li>
                     <li><a href="@Url.Action("Index", "PuntoVenta")"><i class="fa fa-shopping-cart"></i> Punto de Venta</a></li>

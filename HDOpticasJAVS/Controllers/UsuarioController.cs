@@ -1,151 +1,309 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
+using HDOpticasJAVS;
 using HDOpticasJAVS.Models;
 
 namespace HDOpticasJAVS.Controllers
 {
     public class UsuarioController : Controller
     {
-        private readonly string filePath = AppDomain.CurrentDomain.BaseDirectory + "/data/Usuarios.txt";
+        private HD_Opticas_JAVS_BDEntities db = new HD_Opticas_JAVS_BDEntities();
 
-        // Lista de roles disponibles
-        private readonly List<string> roles = new List<string>
-        {
-            "Administrador", "Cajero", "Bodeguero", "Contador", "Recepcionista", "Especialista"
-        };
-
+        // GET: Usuario
         public ActionResult Index()
         {
-            List<UsuarioViewModel> usuarios = new List<UsuarioViewModel>();
-            if (System.IO.File.Exists(filePath))
-            {
-                var lines = System.IO.File.ReadAllLines(filePath);
-                foreach (var line in lines)
-                {
-                    var data = line.Split(';');
-                    usuarios.Add(new UsuarioViewModel
-                    {
-                        Cedula = data[0],
-                        Nombre = data[1],
-                        Apellido1 = data[2],
-                        Apellido2 = data[3],
-                        Correo = data[4],
-                        Fecha_Nacimiento = DateTime.Parse(data[6]),
-                        Rol = data[7]
-                    });
-                }
-            }
+            var usuarios = db.Usuario
+                             .Include(u => u.Parametro)
+                             .Where(u => u.Estado == "A")
+                             .ToList();
             return View(usuarios);
         }
 
-        public ActionResult Crear()
+        // GET: Usuario/CrearCliente
+        public ActionResult CrearCliente()
         {
-            ViewBag.Roles = new SelectList(roles);
+            ViewBag.Generos = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 2 && p.Estado == "A"), "Id_Parametro", "Nombre_Parametro");
             return View();
         }
 
         [HttpPost]
-        public ActionResult Crear(UsuarioViewModel usuario)
+        [ValidateAntiForgeryToken]
+        public ActionResult GuardarCliente(FormCollection form)
         {
-            if (ModelState.IsValid)
+            try
             {
-                string userData = $"{usuario.Cedula};{usuario.Nombre};{usuario.Apellido1};{usuario.Apellido2};{usuario.Correo};{usuario.Fecha_Nacimiento};{usuario.Rol}";
-                System.IO.File.AppendAllText(filePath, userData + "\n");
+                string cedula = form["Cedula"];
+                string correo = form["Correo"];
+
+                if (db.Usuario.Any(u => u.Cedula == cedula || u.Correo == correo))
+                {
+                    ViewBag.Mensaje = "Ya existe un usuario con esa cédula o correo.";
+                    ViewBag.Generos = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 2 && p.Estado == "A"), "Id_Parametro", "Nombre_Parametro");
+                    return View("CrearCliente");
+                }
+
+                Usuario nuevoUsuario = new Usuario
+                {
+                    Cedula = cedula,
+                    Nombre = form["Nombre"],
+                    Apellido1 = form["Apellido1"],
+                    Apellido2 = form["Apellido2"],
+                    Correo = correo,
+                    Contrasenia = null,
+                    FechaNacimiento = Convert.ToDateTime(form["FechaNacimiento"]),
+                    Id_Rol = 2, // Rol Cliente
+                    Estado = "A",
+                    UsuarioCreador = Session["Cedula"]?.ToString() ?? "Sistema",
+                    FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+
+                db.Usuario.Add(nuevoUsuario);
+
+                Cliente nuevoCliente = new Cliente
+                {
+                    Cedula = cedula,
+                    Edad = int.Parse(form["Edad"]),
+                    Id_Genero = int.Parse(form["Id_Genero"]),
+                    Padecimiento = form["Padecimiento"],
+                    Numero_Telefono = form["Numero_Telefono"],
+                    Estado = "A",
+                    UsuarioCreador = Session["Cedula"]?.ToString() ?? "Sistema",
+                    FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+
+                db.Cliente.Add(nuevoCliente);
+                db.SaveChanges();
+
+                EnviarCorreoRecuperacion(correo);
+
+                TempData["Exito"] = "Usuario cliente creado exitosamente. Se ha enviado un correo para establecer la contraseña.";
                 return RedirectToAction("Index");
             }
-            ViewBag.Roles = new SelectList(roles);
+            catch (Exception ex)
+            {
+                ViewBag.Mensaje = "Error al registrar: " + ex.Message;
+                ViewBag.Generos = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 2 && p.Estado == "A"), "Id_Parametro", "Nombre_Parametro");
+                return View("CrearCliente");
+            }
+        }
+
+        // GET: Usuario/CrearEmpleado
+        public ActionResult CrearEmpleado()
+        {
+            ViewBag.Roles = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A"), "Id_Parametro", "Nombre_Parametro");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GuardarEmpleado(FormCollection form)
+        {
+            try
+            {
+                string cedula = form["Cedula"];
+                string correo = form["Correo"];
+
+                if (db.Usuario.Any(u => u.Cedula == cedula || u.Correo == correo))
+                {
+                    ViewBag.Mensaje = "Ya existe un usuario con esa cédula o correo.";
+                    ViewBag.Roles = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A"), "Id_Parametro", "Nombre_Parametro");
+                    return View("CrearEmpleado");
+                }
+
+                Usuario nuevoUsuario = new Usuario
+                {
+                    Cedula = cedula,
+                    Nombre = form["Nombre"],
+                    Apellido1 = form["Apellido1"],
+                    Apellido2 = form["Apellido2"],
+                    Correo = correo,
+                    Contrasenia = null,
+                    FechaNacimiento = Convert.ToDateTime(form["FechaNacimiento"]),
+                    Id_Rol = int.Parse(form["Id_Rol"]),
+                    Estado = "A",
+                    UsuarioCreador = Session["Cedula"]?.ToString() ?? "Sistema",
+                    FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+
+                db.Usuario.Add(nuevoUsuario);
+
+                Empleado nuevoEmpleado = new Empleado
+                {
+                    Cedula = cedula,
+                    Direccion = form["Direccion"],
+                    Placa_Vehiculo = form["Placa_Vehiculo"],
+                    Numero_Telefono = form["Numero_Telefono"],
+                    Contacto_Emergencia = form["Contacto_Emergencia"],
+                    Estado = "A",
+                    UsuarioCreador = Session["Cedula"]?.ToString() ?? "Sistema",
+                    FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+
+                db.Empleado.Add(nuevoEmpleado);
+                db.SaveChanges();
+
+                EnviarCorreoRecuperacion(correo);
+
+                TempData["Exito"] = "Usuario empleado creado exitosamente. Se ha enviado un correo para establecer la contraseña.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Mensaje = "Error al registrar: " + ex.Message;
+                ViewBag.Roles = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A"), "Id_Parametro", "Nombre_Parametro");
+                return View("CrearEmpleado");
+            }
+        }
+
+        // GET: Usuario/Editar/5
+        public ActionResult Editar(string cedula)
+        {
+            if (cedula == null) return HttpNotFound();
+
+            var usuario = db.Usuario.Find(cedula);
+            if (usuario == null || usuario.Estado == "I") return HttpNotFound();
+
+            ViewBag.Id_Rol = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 1), "Id_Parametro", "Nombre_Parametro", usuario.Id_Rol);
             return View(usuario);
         }
 
-        public ActionResult Editar(string cedula)
+        // POST: Usuario/Editar/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Editar(Usuario usuario)
         {
-            if (System.IO.File.Exists(filePath))
+            if (ModelState.IsValid)
             {
-                var lines = System.IO.File.ReadAllLines(filePath);
-                foreach (var line in lines)
-                {
-                    var data = line.Split(';');
-                    if (data[0] == cedula)
-                    {
-                        var usuario = new UsuarioViewModel
-                        {
-                            Cedula = data[0],
-                            Nombre = data[1],
-                            Apellido1 = data[2],
-                            Apellido2 = data[3],
-                            Correo = data[4],
-                            Fecha_Nacimiento = DateTime.Parse(data[6]),
-                            Rol = data[7]
-                        };
-                        ViewBag.Roles = new SelectList(roles, usuario.Rol);
-                        return View(usuario);
-                    }
-                }
+                usuario.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                usuario.UsuarioModificador = Session["Cedula"]?.ToString() ?? "Sistema";
+                usuario.Estado = "A"; // Aseguramos que no se sobrescriba el estado a null
+
+                db.Entry(usuario).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Id_Rol = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 1), "Id_Parametro", "Nombre_Parametro", usuario.Id_Rol);
+            return View(usuario);
+        }
+
+        // GET: Usuario/Detalles/5
+        public ActionResult Detalles(string cedula)
+        {
+            if (cedula == null) return HttpNotFound();
+
+            var usuario = db.Usuario.Include(u => u.Parametro).FirstOrDefault(u => u.Cedula == cedula && u.Estado == "A");
+            if (usuario == null) return HttpNotFound();
+
+            return View(usuario);
+        }
+
+        // GET: Usuario/Eliminar/5
+        public ActionResult Eliminar(string cedula)
+        {
+            if (cedula == null) return HttpNotFound();
+
+            var usuario = db.Usuario.Find(cedula);
+            if (usuario == null || usuario.Estado == "I") return HttpNotFound();
+
+            return View(usuario);
+        }
+
+        // POST: Usuario/Eliminar/5
+        [HttpPost, ActionName("Eliminar")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EliminarConfirmado(string cedula)
+        {
+            var usuario = db.Usuario.Find(cedula);
+            if (usuario != null && usuario.Estado != "I")
+            {
+                usuario.Estado = "I";
+                usuario.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                usuario.UsuarioModificador = Session["Cedula"]?.ToString() ?? "sistema";
+
+                db.Entry(usuario).State = EntityState.Modified;
+                db.SaveChanges();
             }
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public ActionResult Editar(UsuarioViewModel usuario)
+        [ValidateAntiForgeryToken]
+        public JsonResult EnviarRecuperacion(string correo)
         {
-            if (ModelState.IsValid && System.IO.File.Exists(filePath))
+            var usuario = db.Usuario.FirstOrDefault(u => u.Correo == correo);
+            if (usuario == null) return Json("Correo no registrado.");
+
+            string token = Guid.NewGuid().ToString();
+
+            db.Database.ExecuteSqlCommand(
+                "INSERT INTO RecuperacionPassword (Correo, Token, FechaCreacion) VALUES (@p0, @p1, @p2)",
+                correo, token, DateTime.Now);
+
+            var link = Url.Action("CambiarContrasena", "Account", new { token = token }, protocol: Request.Url.Scheme);
+
+            string asunto = "Recuperar contraseña - HD Ópticas JAVS";
+            string mensaje = $"Haz clic aquí para cambiar tu contraseña:<br><a href='{link}'>Cambiar Contraseña</a>";
+
+            try
             {
-                var lines = System.IO.File.ReadAllLines(filePath).ToList();
-                for (int i = 0; i < lines.Count; i++)
-                {
-                    var data = lines[i].Split(';');
-                    if (data[0] == usuario.Cedula)
-                    {
-                        lines[i] = $"{usuario.Cedula};{usuario.Nombre};{usuario.Apellido1};{usuario.Apellido2};{usuario.Correo};{usuario.Fecha_Nacimiento};{usuario.Rol}";
-                        break;
-                    }
-                }
-                System.IO.File.WriteAllLines(filePath, lines);
-                return RedirectToAction("Index");
+                EnviarCorreo(correo, asunto, mensaje);
+                return Json(new { mensaje = "Correo enviado exitosamente.", ok = true });
             }
-            ViewBag.Roles = new SelectList(roles);
-            return View(usuario);
+            catch (Exception ex)
+            {
+                return Json("Error al enviar el correo: " + ex.Message);
+            }
         }
 
-        public ActionResult Detalles(string cedula)
+        private void EnviarCorreo(string para, string asunto, string cuerpoHtml)
         {
-            if (System.IO.File.Exists(filePath))
+            var fromAddress = new MailAddress("hdopticasjavs@gmail.com", "Soporte HD Ópticas JAVS");
+            var toAddress = new MailAddress(para);
+            //const string fromPassword = "LamejorOpt1ca!";
+            const string fromPassword = "ysuk wivj qivo dacj";
+
+            var smtp = new SmtpClient
             {
-                var lines = System.IO.File.ReadAllLines(filePath);
-                foreach (var line in lines)
-                {
-                    var data = line.Split(';');
-                    if (data[0] == cedula)
-                    {
-                        var usuario = new UsuarioViewModel
-                        {
-                            Cedula = data[0],
-                            Nombre = data[1],
-                            Apellido1 = data[2],
-                            Apellido2 = data[3],
-                            Correo = data[4],
-                            Fecha_Nacimiento = DateTime.Parse(data[6]),
-                            Rol = data[7]
-                        };
-                        return View(usuario);
-                    }
-                }
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = asunto,
+                Body = cuerpoHtml,
+                IsBodyHtml = true
+            })
+            {
+                smtp.Send(message);
             }
-            return RedirectToAction("Index");
         }
 
-        public ActionResult Eliminar(string cedula)
+        private void EnviarCorreoRecuperacion(string correo)
         {
-            if (System.IO.File.Exists(filePath))
-            {
-                var lines = System.IO.File.ReadAllLines(filePath).ToList();
-                lines = lines.Where(line => !line.StartsWith(cedula + ";")).ToList();
-                System.IO.File.WriteAllLines(filePath, lines);
-            }
-            return RedirectToAction("Index");
+            string token = Guid.NewGuid().ToString();
+
+            db.Database.ExecuteSqlCommand(
+                "INSERT INTO RecuperacionPassword (Correo, Token, FechaCreacion) VALUES (@p0, @p1, @p2)",
+                correo, token, DateTime.Now);
+
+            var link = Url.Action("CambiarContrasena", "Account", new { token = token }, protocol: Request.Url.Scheme);
+
+            string asunto = "Establecer contraseña - HD Ópticas JAVS";
+            string mensaje = $"<p>Bienvenido a HD Ópticas JAVS.</p><p>Para establecer su contraseña, haga clic en el siguiente enlace:</p><p><a href='{link}'>Establecer Contraseña</a></p>";
+
+            EnviarCorreo(correo, asunto, mensaje);
         }
+
     }
 }

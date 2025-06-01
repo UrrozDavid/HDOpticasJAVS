@@ -1,4 +1,5 @@
-﻿@model HDOpticasJAVS.Models.UsuarioViewModel
+﻿@model HDOpticasJAVS.Usuario
+
 @{
     ViewBag.Title = "Editar Usuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,41 +7,84 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card">
-                <div class="card-header text-center">
+                <div class="card-header text-center bg-primary text-white">
                     <h2 class="titulo">Editar Usuario</h2>
                 </div>
-                <div class="card-body">
-                    <form asp-action="ActualizarUsuario" method="post">
-                        <input type="hidden" asp-for="Cedula">
+                <div class="card-body bg-dark">
+                    @using (Html.BeginForm("Editar", "Usuario", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Cedula)
+
                         <div class="form-group">
-                            <label for="Nombre">Nombre:</label>
-                            <input type="text" asp-for="Nombre" class="form-control" required>
+                            <label>Cédula:</label>
+                            @Html.TextBoxFor(model => model.Cedula, new { @class = "form-control", @readonly = "readonly" })
                         </div>
                         <div class="form-group">
-                            <label for="Apellido1">Primer Apellido:</label>
-                            <input type="text" asp-for="Apellido1" class="form-control" required>
+                            <label>Nombre:</label>
+                            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", required = "required" })
                         </div>
                         <div class="form-group">
-                            <label for="Apellido2">Segundo Apellido:</label>
-                            <input type="text" asp-for="Apellido2" class="form-control">
+                            <label>Primer Apellido:</label>
+                            @Html.TextBoxFor(model => model.Apellido1, new { @class = "form-control", required = "required" })
                         </div>
                         <div class="form-group">
-                            <label for="Rol">Rol:</label>
-                            <select asp-for="Rol" class="form-control" required>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Cajero">Cajero</option>
-                                <option value="Bodeguero">Bodeguero</option>
-                                <option value="Contador">Contador</option>
-                                <option value="Recepcionista">Recepcionista</option>
-                                <option value="Especialista">Especialista</option>
-                            </select>
+                            <label>Segundo Apellido:</label>
+                            @Html.TextBoxFor(model => model.Apellido2, new { @class = "form-control" })
                         </div>
+                        <div class="form-group">
+                            <label>Correo:</label>
+                            @Html.TextBoxFor(model => model.Correo, new { @class = "form-control", type = "email", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de Nacimiento:</label>
+                            @Html.TextBoxFor(model => model.FechaNacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña:</label>
+                            <div class="input-group">
+                                @Html.TextBox("Contrasenia", "********", new { @class = "form-control", @readonly = "readonly", type = "password" })
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-danger" onclick="enviarCorreoRecuperacion('@Model.Correo')">Enviar cambio</button>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted">No editable. Puedes enviar un enlace para cambiarla.</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Rol:</label>
+                            @Html.DropDownListFor(model => model.Id_Rol, (SelectList)ViewBag.Id_Rol, "Seleccione un rol", new { @class = "form-control", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label>Estado:</label>
+                            @Html.TextBoxFor(model => model.Estado, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+
                         <button type="submit" class="btn btn-warning btn-block">Actualizar</button>
-                    </form>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        function enviarCorreoRecuperacion(correo) {
+            if (confirm("¿Deseas enviar un enlace para cambiar la contraseña?")) {
+                fetch('@Url.Action("EnviarRecuperacion", "Usuario")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    body: JSON.stringify({ correo: correo })
+                })
+                .then(res => res.json())
+                .then(msg => alert(msg))
+                .catch(err => alert("Error al enviar el correo."));
+            }
+        }
+    </script>
+}
