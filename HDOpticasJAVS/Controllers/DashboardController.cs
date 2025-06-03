@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace HDOpticasJAVS.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         // GET: Dashboard
         public ActionResult Index()

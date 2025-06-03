@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace HDOpticasJAVS.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
@@ -24,6 +24,11 @@ namespace HDOpticasJAVS.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ActionResult SinPermiso()
+        {
             return View();
         }
     }

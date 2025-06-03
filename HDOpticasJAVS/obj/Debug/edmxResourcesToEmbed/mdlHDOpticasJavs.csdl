@@ -155,6 +155,7 @@
     <NavigationProperty Name="TipoParametro" Relationship="Self.FK__Parametro__Id_Ti__4BAC3F29" FromRole="Parametro" ToRole="TipoParametro" />
     <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__PuntoVent__Id_Me__5EBF139D" FromRole="Parametro" ToRole="PuntoVenta" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__Id_Rol__4E88ABD4" FromRole="Parametro" ToRole="Usuario" />
+    <NavigationProperty Name="PermisoRol" Relationship="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Ro__1CBC4616" FromRole="Parametro" ToRole="PermisoRol" />
   </EntityType>
   <EntityType Name="Proveedor">
     <Key>
@@ -241,6 +242,7 @@
     <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Usuar__6477ECF3" FromRole="Usuario" ToRole="Contabilidad" />
     <NavigationProperty Name="Empleado" Relationship="Self.FK__Empleado__Cedula__5535A963" FromRole="Usuario" ToRole="Empleado" />
     <NavigationProperty Name="Parametro" Relationship="Self.FK__Usuario__Id_Rol__4E88ABD4" FromRole="Usuario" ToRole="Parametro" />
+    <Property Name="FechaBloqueoHasta" Type="DateTime" Precision="3" />
   </EntityType>
   <Association Name="FK__CampaniaC__Cedul__70DDC3D8">
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
@@ -560,5 +562,99 @@
       <End Role="Parametro" EntitySet="Parametro" />
       <End Role="Usuario" EntitySet="Usuario" />
     </AssociationSet>
+    <EntitySet Name="RecuperacionPassword" EntityType="HD_Opticas_JAVS_BDModel.RecuperacionPassword" />
+    <EntitySet Name="IntentoLogin" EntityType="HD_Opticas_JAVS_BDModel.IntentoLogin" />
+    <EntitySet Name="Modulo" EntityType="HD_Opticas_JAVS_BDModel.Modulo" />
+    <EntitySet Name="PermisoRol" EntityType="HD_Opticas_JAVS_BDModel.PermisoRol" />
+    <AssociationSet Name="FK__PermisoRo__Id_Mo__1DB06A4F" Association="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Mo__1DB06A4F">
+      <End Role="Modulo" EntitySet="Modulo" />
+      <End Role="PermisoRol" EntitySet="PermisoRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PermisoRo__Id_Ro__1CBC4616" Association="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Ro__1CBC4616">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="PermisoRol" EntitySet="PermisoRol" />
+    </AssociationSet>
+    <EntitySet Name="Usuario_UltimoCambio" EntityType="HD_Opticas_JAVS_BDModel.Usuario_UltimoCambio" />
   </EntityContainer>
+  <EntityType Name="RecuperacionPassword">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Correo" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Token" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="IntentoLogin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioIntentado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Exito" Type="Boolean" />
+    <Property Name="Mensaje" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="FechaIntento" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Modulo">
+    <Key>
+      <PropertyRef Name="Id_Modulo" />
+    </Key>
+    <Property Name="Id_Modulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Controlador" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Accion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="PermisoRol" Relationship="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Mo__1DB06A4F" FromRole="Modulo" ToRole="PermisoRol" />
+  </EntityType>
+  <EntityType Name="PermisoRol">
+    <Key>
+      <PropertyRef Name="Id_PermisoRol" />
+    </Key>
+    <Property Name="Id_PermisoRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Rol" Type="Int32" />
+    <Property Name="Id_Modulo" Type="Int32" />
+    <NavigationProperty Name="Modulo" Relationship="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Mo__1DB06A4F" FromRole="PermisoRol" ToRole="Modulo" />
+    <NavigationProperty Name="Parametro" Relationship="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Ro__1CBC4616" FromRole="PermisoRol" ToRole="Parametro" />
+  </EntityType>
+  <Association Name="FK__PermisoRo__Id_Mo__1DB06A4F">
+    <End Type="HD_Opticas_JAVS_BDModel.Modulo" Role="Modulo" Multiplicity="0..1" />
+    <End Type="HD_Opticas_JAVS_BDModel.PermisoRol" Role="PermisoRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modulo">
+        <PropertyRef Name="Id_Modulo" />
+      </Principal>
+      <Dependent Role="PermisoRol">
+        <PropertyRef Name="Id_Modulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PermisoRo__Id_Ro__1CBC4616">
+    <End Type="HD_Opticas_JAVS_BDModel.Parametro" Role="Parametro" Multiplicity="0..1" />
+    <End Type="HD_Opticas_JAVS_BDModel.PermisoRol" Role="PermisoRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="PermisoRol">
+        <PropertyRef Name="Id_Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Usuario_UltimoCambio">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cedula" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Contrasenia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Id_Rol" Type="Int32" />
+    <Property Name="FechaBloqueoHasta" Type="DateTime" Precision="3" />
+    <Property Name="FechaCambio" Type="DateTime" Precision="3" />
+    <Property Name="Revertido" Type="Boolean" />
+  </EntityType>
 </Schema>

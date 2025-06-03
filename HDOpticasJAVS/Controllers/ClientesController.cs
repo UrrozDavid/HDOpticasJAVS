@@ -2,7 +2,7 @@
 
 namespace HDOpticasJAVS.Controllers
 {
-    public class ClientesController : Controller
+    public class ClientesController : BaseController
     {
         // GET: Clientes
         public ActionResult Index()

@@ -34,6 +34,7 @@ namespace HDOpticasJAVS
         public string FechaCreacion { get; set; }
         public string UsuarioModificador { get; set; }
         public string FechaModificacion { get; set; }
+        public Nullable<System.DateTime> FechaBloqueoHasta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cita> Cita { get; set; }

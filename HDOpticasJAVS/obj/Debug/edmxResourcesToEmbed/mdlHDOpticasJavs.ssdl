@@ -99,6 +99,16 @@
     <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
     <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
   </EntityType>
+  <EntityType Name="IntentoLogin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioIntentado" Type="varchar" MaxLength="50" />
+    <Property Name="Exito" Type="bit" />
+    <Property Name="Mensaje" Type="varchar" MaxLength="255" />
+    <Property Name="FechaIntento" Type="datetime" />
+  </EntityType>
   <EntityType Name="Inventario">
     <Key>
       <PropertyRef Name="Id_Producto" />
@@ -116,6 +126,16 @@
     <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
     <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
   </EntityType>
+  <EntityType Name="Modulo">
+    <Key>
+      <PropertyRef Name="Id_Modulo" />
+    </Key>
+    <Property Name="Id_Modulo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+    <Property Name="Controlador" Type="nvarchar" MaxLength="100" />
+    <Property Name="Accion" Type="nvarchar" MaxLength="100" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+  </EntityType>
   <EntityType Name="Parametro">
     <Key>
       <PropertyRef Name="Id_Parametro" />
@@ -128,6 +148,14 @@
     <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
     <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
     <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="PermisoRol">
+    <Key>
+      <PropertyRef Name="Id_PermisoRol" />
+    </Key>
+    <Property Name="Id_PermisoRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_Rol" Type="int" />
+    <Property Name="Id_Modulo" Type="int" />
   </EntityType>
   <EntityType Name="Proveedor">
     <Key>
@@ -163,6 +191,15 @@
     <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
     <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
     <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="RecuperacionPassword">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Correo" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Token" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -203,6 +240,24 @@
     <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
     <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
     <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="FechaBloqueoHasta" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Usuario_UltimoCambio">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cedula" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Apellido1" Type="varchar" MaxLength="50" />
+    <Property Name="Apellido2" Type="varchar" MaxLength="50" />
+    <Property Name="Contrasenia" Type="varchar" MaxLength="100" />
+    <Property Name="FechaNacimiento" Type="date" />
+    <Property Name="Correo" Type="varchar" MaxLength="100" />
+    <Property Name="Id_Rol" Type="int" />
+    <Property Name="FechaBloqueoHasta" Type="datetime" />
+    <Property Name="FechaCambio" Type="datetime" />
+    <Property Name="Revertido" Type="bit" />
   </EntityType>
   <Association Name="FK__CampaniaC__Cedul__70DDC3D8">
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
@@ -384,6 +439,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__PermisoRo__Id_Mo__1DB06A4F">
+    <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
+    <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modulo">
+        <PropertyRef Name="Id_Modulo" />
+      </Principal>
+      <Dependent Role="PermisoRol">
+        <PropertyRef Name="Id_Modulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PermisoRo__Id_Ro__1CBC4616">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="PermisoRol">
+        <PropertyRef Name="Id_Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__PuntoVent__Cedul__5DCAEF64">
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
     <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="*" />
@@ -439,13 +518,18 @@
     <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contabilidad" EntityType="Self.Contabilidad" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IntentoLogin" EntityType="Self.IntentoLogin" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Parametro" EntityType="Self.Parametro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PermisoRol" EntityType="Self.PermisoRol" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PuntoVenta" EntityType="Self.PuntoVenta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RecuperacionPassword" EntityType="Self.RecuperacionPassword" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoParametro" EntityType="Self.TipoParametro" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario_UltimoCambio" EntityType="Self.Usuario_UltimoCambio" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__CampaniaC__Cedul__70DDC3D8" Association="Self.FK__CampaniaC__Cedul__70DDC3D8">
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="CampaniaCliente" EntitySet="CampaniaCliente" />
@@ -505,6 +589,14 @@
     <AssociationSet Name="FK__Parametro__Id_Ti__4BAC3F29" Association="Self.FK__Parametro__Id_Ti__4BAC3F29">
       <End Role="TipoParametro" EntitySet="TipoParametro" />
       <End Role="Parametro" EntitySet="Parametro" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PermisoRo__Id_Mo__1DB06A4F" Association="Self.FK__PermisoRo__Id_Mo__1DB06A4F">
+      <End Role="Modulo" EntitySet="Modulo" />
+      <End Role="PermisoRol" EntitySet="PermisoRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PermisoRo__Id_Ro__1CBC4616" Association="Self.FK__PermisoRo__Id_Ro__1CBC4616">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="PermisoRol" EntitySet="PermisoRol" />
     </AssociationSet>
     <AssociationSet Name="FK__PuntoVent__Cedul__5DCAEF64" Association="Self.FK__PuntoVent__Cedul__5DCAEF64">
       <End Role="Cliente" EntitySet="Cliente" />

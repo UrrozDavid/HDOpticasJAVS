@@ -38,5 +38,10 @@ namespace HDOpticasJAVS
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TipoParametro> TipoParametro { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<RecuperacionPassword> RecuperacionPassword { get; set; }
+        public virtual DbSet<IntentoLogin> IntentoLogin { get; set; }
+        public virtual DbSet<Modulo> Modulo { get; set; }
+        public virtual DbSet<PermisoRol> PermisoRol { get; set; }
+        public virtual DbSet<Usuario_UltimoCambio> Usuario_UltimoCambio { get; set; }
     }
 }

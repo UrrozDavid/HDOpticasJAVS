@@ -23,6 +23,7 @@
                         <th>Nombre</th>
                         <th>Correo</th>
                         <th>Rol</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -34,6 +35,20 @@
                             <td>@usuario.Nombre @usuario.Apellido1 @usuario.Apellido2</td>
                             <td>@usuario.Correo</td>
                             <td>@usuario.Parametro.Nombre_Parametro</td>
+                            <td>
+                                @if (usuario.Estado == "A")
+                                {
+                                    <span class="badge bg-success">Activo</span>
+                                }
+                                else if (usuario.Estado == "I")
+                                {
+                                    <span class="badge bg-danger">Inactivo</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Desconocido</span>
+                                }
+                            </td>
                             <td class="text-center">
                                 <a href="@Url.Action("Detalles", new { cedula = usuario.Cedula })" class="btn btn-info btn-sm me-1">Ver</a>
                                 <a href="@Url.Action("Editar", "Usuario", new { cedula = usuario.Cedula })" class="btn btn-warning btn-sm me-1">Editar</a>

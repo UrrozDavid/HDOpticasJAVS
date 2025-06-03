@@ -1,0 +1,275 @@
+﻿@{
+    ViewBag.Title = "Roles y Permisos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg" style="max-width: 900px; width: 100%; background: rgba(0, 0, 0, 0.7); color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabRoles">Roles</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabPermisos">Permisos</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabMasiva">Asignar Roles Masivamente</a></li>
+            </ul>
+
+            <div class="tab-content mt-3">
+                <!-- TAB ROLES -->
+                <div class="tab-pane container active" id="tabRoles">
+                    <h4>Lista de Roles</h4>
+                    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalCrearRol">
+                        Crear nuevo rol
+                    </button>
+
+                    <div class="modal fade" id="modalCrearRol" tabindex="-1" aria-labelledby="modalCrearRolLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalCrearRolLabel">Crear nuevo rol</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" id="nombreRolNuevo" class="form-control" placeholder="Nombre del rol">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary" onclick="crearRol()">Crear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-dark table-hover table-bordered rounded mt-4">
+                        <thead class="table-light text-dark">
+                            <tr><th>Nombre</th><th>Acciones</th></tr>
+                        </thead>
+                        <tbody id="tablaRoles">
+                            @foreach (var rol in ViewBag.Roles)
+                            {
+                                <tr data-id="@rol.Id_Parametro">
+                                    <td>
+                                        <span class="nombre">@rol.Nombre_Parametro</span>
+                                        <input type="text" class="editarInput" style="display:none;" />
+                                    </td>
+                                    <td>
+                                        <button class="editarBtn">Editar</button>
+                                        <button class="guardarBtn" style="display:none;">Guardar</button>
+                                        <button class="eliminarBtn">Eliminar</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- TAB PERMISOS -->
+                <div class="tab-pane container fade" id="tabPermisos">
+                    <h4>Asignar Permisos</h4>
+                    <select id="rolPermiso" class="form-control mb-3">
+                        @foreach (var rol in ViewBag.Roles)
+                        {
+                            <option value="@rol.Id_Parametro">@rol.Nombre_Parametro</option>
+                        }
+                    </select>
+
+                    <table class="table table-dark table-hover table-bordered rounded mt-4">
+                        <thead class="table-light text-dark">
+                            <tr><th>Módulo</th><th>Permitir</th></tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var modulo in ViewBag.Modulos)
+                            {
+                                <tr>
+                                    <td>@modulo.Nombre</td>
+                                    <td><input type="checkbox" class="permisoCheck" data-modulo="@modulo.Id_Modulo" /></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <button id="btnAplicarPermisos" class="btn btn-success mt-3">Aplicar Cambios</button>
+                </div>
+
+                <!-- TAB ASINACIÓN MASIVA DE ROLES -->
+                <div class="tab-pane container fade" id="tabMasiva">
+                    <h4>Asignar Roles a Múltiples Usuarios</h4>
+                    <select id="rolMasivo" class="form-control mb-3">
+                        @foreach (var rol in ViewBag.Roles)
+                        {
+                            <option value="@rol.Id_Parametro">@rol.Nombre_Parametro</option>
+                        }
+                    </select>
+
+                    <table class="table table-dark table-hover table-bordered rounded mt-4">
+                        <thead class="table-light text-dark">
+                            <tr><th>Seleccionar</th><th>Nombre de Usuario</th><th>Correo</th></tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var usuario in ViewBag.Usuarios)
+                            {
+                                <tr>
+                                    <td><input type="checkbox" class="usuarioSeleccionado" value="@usuario.Cedula" /></td>
+                                    <td>@usuario.Nombre</td>
+                                    <td>@usuario.Correo</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-success mt-3" onclick="asignarRolMasivo()">Asignar Rol Seleccionado</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function asignarRolMasivo() {
+    const rolId = document.getElementById("rolMasivo").value;
+    const usuarios = Array.from(document.querySelectorAll(".usuarioSeleccionado:checked")).map(cb => parseInt(cb.value));
+    if (usuarios.length === 0) return alert("Seleccione al menos un usuario");
+
+    fetch('@Url.Action("AsignarRolMasivo")', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idsUsuarios: usuarios, idRol: parseInt(rolId) })
+    }).then(r => r.json()).then(resp => {
+        if (resp.success) {
+            alert("Rol asignado exitosamente");
+            location.reload();
+        } else {
+            alert("Error al asignar los roles");
+        }
+    });
+}
+
+    document.querySelectorAll(".permisoCheck").forEach(check => {
+        check.addEventListener("change", function () {
+            const rol = document.getElementById("rolPermiso").value;
+            const modulo = this.dataset.modulo;
+            const asignar = this.checked;
+            fetch('@Url.Action("AsignarPermiso")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idRol: rol, idModulo: modulo, asignar: asignar })
+            });
+        });
+    });
+
+    document.getElementById("rolPermiso").addEventListener("change", function () {
+        const rolId = this.value;
+
+        document.querySelectorAll(".permisoCheck").forEach(chk => chk.checked = false);
+
+        fetch('@Url.Action("ObtenerPermisosRol")?idRol=' + rolId)
+            .then(response => response.json())
+            .then(modulos => {
+                if (!Array.isArray(modulos)) return;
+
+                modulos.forEach(idModulo => {
+                    const check = document.querySelector(`.permisoCheck[data-modulo='${idModulo}']`);
+                    if (check) check.checked = true;
+                });
+            });
+    });
+
+    window.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("rolPermiso").dispatchEvent(new Event("change"));
+    });
+
+    document.getElementById("btnAplicarPermisos").addEventListener("click", function () {
+        const idRol = document.getElementById("rolPermiso").value;
+        const checkboxes = document.querySelectorAll(".permisoCheck");
+
+        const permisos = [];
+
+        checkboxes.forEach(cb => {
+            permisos.push({
+                Id_Modulo: parseInt(cb.dataset.modulo),
+                Asignar: cb.checked
+            });
+        });
+
+        fetch('@Url.Action("ActualizarPermisosRol")', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idRol: parseInt(idRol), permisos: permisos })
+        })
+        .then(res => res.json())
+        .then(resp => {
+            if (resp.success) {
+                alert("Cambios aplicados correctamente.");
+            } else {
+                alert("Error al aplicar los cambios.");
+            }
+        });
+    });
+
+    function crearRol() {
+    const nombre = document.getElementById("nombreRolNuevo").value;
+    if (!nombre) return alert("Debe escribir un nombre");
+
+    fetch('@Url.Action("CrearRol")', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre })
+    }).then(r => r.json()).then(data => {
+        alert("Rol creado exitosamente");
+        location.reload();
+    });
+}
+
+document.querySelectorAll(".editarBtn").forEach(btn => {
+    btn.addEventListener("click", function () {
+        const row = this.closest("tr");
+        row.querySelector(".nombre").style.display = "none";
+        const input = row.querySelector(".editarInput");
+        input.value = row.querySelector(".nombre").innerText;
+        input.style.display = "inline-block";
+        row.querySelector(".guardarBtn").style.display = "inline-block";
+        this.style.display = "none";
+    });
+});
+
+document.querySelectorAll(".guardarBtn").forEach(btn => {
+    btn.addEventListener("click", function () {
+        const row = this.closest("tr");
+        const id = row.dataset.id;
+        const nuevoNombre = row.querySelector(".editarInput").value;
+
+        fetch('@Url.Action("EditarRol")', {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, nuevoNombre })
+        }).then(r => r.json()).then(data => {
+            alert("Rol actualizado");
+            location.reload();
+        });
+    });
+});
+
+document.querySelectorAll(".eliminarBtn").forEach(btn => {
+    btn.addEventListener("click", function () {
+        const row = this.closest("tr");
+        const id = row.dataset.id;
+
+        if (!confirm("¿Está seguro de eliminar este rol?")) return;
+
+        fetch('@Url.Action("EliminarRol")', {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+        }).then(r => r.json()).then(resp => {
+            if (resp.success) {
+                alert("Rol eliminado");
+                location.reload();
+            } else {
+                alert(resp.mensaje);
+            }
+        });
+    });
+});
+</script>

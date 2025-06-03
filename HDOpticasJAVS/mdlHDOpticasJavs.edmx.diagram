@@ -37,6 +37,13 @@
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__Parametro__Id_Ti__4BAC3F29" ManuallyRouted="false" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__PuntoVent__Id_Me__5EBF139D" ManuallyRouted="false" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__Usuario__Id_Rol__4E88ABD4" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.RecuperacionPassword" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.IntentoLogin" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.Modulo" Width="1.5" PointX="3" PointY="14.25" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.PermisoRol" Width="1.5" PointX="5.25" PointY="13.25" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Mo__1DB06A4F" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Ro__1CBC4616" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.Usuario_UltimoCambio" Width="1.5" PointX="3.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

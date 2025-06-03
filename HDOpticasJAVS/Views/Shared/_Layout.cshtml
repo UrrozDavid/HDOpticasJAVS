@@ -185,59 +185,38 @@
 
     <div id="sidebar" class="d-flex flex-column">
         <ul class="flex-grow-1">
-            @if (rol != null)
+            @{
+                var modulos = ViewBag.Modulos as List<Modulo>;
+            }
+            @{
+                var iconos = new Dictionary<string, string>
+                {
+        { "Dashboard", "fa fa-tachometer" },
+        { "CitaEnLinea", "fa-solid fa-calendar" },
+        { "Clientes", "fa fa-users" },
+        { "Usuario", "fa fa-user" },
+        { "Inventario", "fa fa-cogs" },
+        { "PuntoVentaIndexAdmin", "fa fa-desktop" },
+        { "Marketing", "fa fa-bullhorn" },
+        { "Contabilidad", "fa fa-line-chart" },
+        { "Empleado", "fa-solid fa-user-tie" },
+        { "PuntoVentaCaja", "fa fa-cash-register" },
+        { "ClientesPerfil", "fa fa-user-circle" },
+        { "CitaEnLineaCalendario", "fa-solid fa-calendar-days" }
+    };
+            }
+            @if (modulos != null)
             {
-                // Dashboard y Citas (Administrador o Recepcionista)
-                if (rol == 1 || rol == 14)
+                foreach (var m in modulos)
                 {
-                    <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-tachometer"></i> Dashboard</a></li>
-                    <li><a href="@Url.Action("Index", "CitaEnLinea")"><i class="fa-solid fa-calendar"></i> Citas</a></li>
-                    <li><a href="@Url.Action("Index", "Clientes")"><i class="fa fa-users"></i> Clientes</a></li>
-                    <li><a href="@Url.Action("Index", "Usuario")"><i class="fa fa-user"></i> Administración Usuarios</a></li>
-                }
+                    var clave = m.Controlador + (m.Accion == "Index" ? "" : m.Accion);
+                    var icono = iconos.ContainsKey(clave) ? iconos[clave] : "fa fa-circle";
 
-                // Inventario (Administrador o Bodeguero)
-                if (rol == 1 || rol == 15)
-                {
-                    <li><a href="@Url.Action("Index", "Inventario")"><i class="fa fa-cogs"></i> Inventario</a></li>
-                }
-
-                // Punto de Venta (Administrador o Cajero)
-                if (rol == 1 || rol == 16)
-                {
-                    <li><a href="@Url.Action("IndexAdmin", "PuntoVenta")"><i class="fa fa-shopping-cart"></i> Punto de Venta</a></li>
-                }
-
-                // Marketing (Administrador o Marketing)
-                if (rol == 1 || rol == 17)
-                {
-                    <li><a href="@Url.Action("Index", "Marketing")"><i class="fa fa-bullhorn"></i> Marketing</a></li>
-                }
-
-                // Contabilidad (Administrador o Contador)
-                if (rol == 1 || rol == 18)
-                {
-                    <li><a href="@Url.Action("Index", "Contabilidad")"><i class="fa fa-line-chart"></i> Contabilidad</a></li>
-                }
-
-                // Solo Administrador
-                if (rol == 1)
-                {
-                    <li><a href="@Url.Action("Index", "Empleado")"><i class="fa-solid fa-user-tie"></i> Empleados</a></li>
-                }
-
-                // Solo Cajero
-                if (rol == 16)
-                {
-                    <li><a href="@Url.Action("Index", "PuntoVenta")"><i class="fa-solid fa-bag-shopping"></i> Realizar Venta</a></li>
-                }
-
-                // Solo Cliente
-                if (rol == 2)
-                {
-                    <li><a href="@Url.Action("Perfil", "Clientes")"><i class="fa fa-user-circle"></i> Mi Perfil</a></li>
-                    <li><a href="@Url.Action("Index", "PuntoVenta")"><i class="fa fa-shopping-cart"></i> Punto de Venta</a></li>
-                    <li><a href="@Url.Action("Calendario", "CitaEnLinea")"><i class="fa-solid fa-calendar"></i> Calendario de Citas</a></li>
+                    <li>
+                        <a href="@Url.Action(m.Accion, m.Controlador)">
+                            <i class="@icono"></i> @m.Nombre
+                        </a>
+                    </li>
                 }
             }
             else
@@ -267,6 +246,7 @@
         </p>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const menuToggle = document.getElementById('menuToggle');

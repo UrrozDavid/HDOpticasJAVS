@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
-using System.Web.Mvc;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Helpers;
-using HDOpticasJAVS.Models; // Asegúrate de usar tu namespace real del EDMX
+using System.Web.Mvc;
+using HDOpticasJAVS.Models;
 
 namespace HDOpticasJAVS.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private HD_Opticas_JAVS_BDEntities db = new HD_Opticas_JAVS_BDEntities();
 
@@ -20,29 +21,79 @@ namespace HDOpticasJAVS.Controllers
         [HttpPost]
         public ActionResult Login(string Usuario, string Contrasenia)
         {
-            try
+            using (var db = new HD_Opticas_JAVS_BDEntities())
             {
-                var usuario = db.Usuario.FirstOrDefault(u =>
-                    (u.Correo == Usuario || u.Cedula == Usuario) &&
-                    u.Contrasenia == Contrasenia &&
-                    u.Estado == "A");
+                var usuarioEncontrado = db.Usuario
+                    .FirstOrDefault(u => u.Correo == Usuario || u.Cedula == Usuario);
 
-                if (usuario != null)
+                if (usuarioEncontrado == null)
                 {
-                    Session["Usuario"] = usuario.Correo;
-                    Session["Rol"] = usuario.Id_Rol;
-                    Session["NombreCompleto"] = $"{usuario.Nombre} {usuario.Apellido1}";
-
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Mensaje = "El usuario ingresado no existe.";
+                    RegistrarIntento(Usuario, false, "Usuario no encontrado");
+                    return View();
                 }
 
-                ViewBag.Mensaje = "Usuario o contraseña incorrectos.";
-                return View();
+                if (usuarioEncontrado.Estado == "I")
+                {
+                    ViewBag.Mensaje = "La cuenta se encuentra inactiva.";
+                    RegistrarIntento(Usuario, false, "Cuenta inactiva");
+                    return View();
+                }
+
+                if (usuarioEncontrado.FechaBloqueoHasta != null && usuarioEncontrado.FechaBloqueoHasta > DateTime.Now)
+                {
+                    TimeSpan tiempoRestante = usuarioEncontrado.FechaBloqueoHasta.Value - DateTime.Now;
+                    ViewBag.Mensaje = $"El usuario está bloqueado temporalmente. Intente de nuevo en {tiempoRestante.Minutes} minutos.";
+                    RegistrarIntento(Usuario, false, "Usuario bloqueado temporalmente");
+                    return View();
+                }
+
+                if (usuarioEncontrado.Contrasenia != Contrasenia)
+                {
+                    ViewBag.Mensaje = "La contraseña ingresada es incorrecta.";
+                    RegistrarIntento(Usuario, false, "Contraseña incorrecta");
+
+                    DateTime hace30Min = DateTime.Now.AddMinutes(-30);
+                    int intentosFallidos = db.IntentoLogin
+                        .Where(i => i.UsuarioIntentado == Usuario && i.Exito == false && i.FechaIntento >= hace30Min)
+                        .Count();
+
+                    if (intentosFallidos >= 5)
+                    {
+                        usuarioEncontrado.FechaBloqueoHasta = DateTime.Now.AddMinutes(30);
+                        db.SaveChanges();
+                        ViewBag.Mensaje = "Demasiados intentos fallidos. Su cuenta ha sido bloqueada por 30 minutos.";
+                        return View();
+                    }
+
+                    return View();
+                }
+
+                // Login exitoso
+                RegistrarIntento(Usuario, true, "Inicio de sesión exitoso");
+                usuarioEncontrado.FechaBloqueoHasta = null;
+                db.SaveChanges();
+
+                Session["Usuario"] = usuarioEncontrado.Correo ?? usuarioEncontrado.Cedula;
+                Session["Rol"] = usuarioEncontrado.Id_Rol;
+                return RedirectToAction("Index", "Home");
             }
-            catch (Exception ex)
+        }
+
+        private void RegistrarIntento(string usuarioIntentado, bool exito, string razon)
+        {
+            using (var db = new HD_Opticas_JAVS_BDEntities())
             {
-                ViewBag.Mensaje = "Error: " + ex.Message;
-                return View();
+                var intento = new IntentoLogin
+                {
+                    UsuarioIntentado = usuarioIntentado,
+                    FechaIntento = DateTime.Now,
+                    Exito = exito,
+                    Mensaje = razon
+                };
+
+                db.IntentoLogin.Add(intento);
+                db.SaveChanges();
             }
         }
 

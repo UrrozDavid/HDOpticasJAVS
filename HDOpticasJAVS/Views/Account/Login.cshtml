@@ -83,6 +83,12 @@
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
+        @if (ViewBag.Mensaje != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Mensaje
+            </div>
+        }
         <form action="@Url.Action("Login", "Account")" method="post">
             <div class="mb-3">
                 <input type="text" name="Usuario" class="form-control" placeholder="Usuario" required>
@@ -102,3 +108,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            const motivo = "@Request.QueryString["motivo"]";
+            if (motivo === "timeout") {
+                alert("Tu sesión se cerró automáticamente por inactividad.");
+            }
+        });
+    </script>
+}

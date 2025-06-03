@@ -144,6 +144,7 @@
     <Compile Include="Contabilidad.cs">
       <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CitaEnLineaController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
@@ -154,12 +155,16 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\MarketingController.cs" />
     <Compile Include="Controllers\PuntoVentaController.cs" />
+    <Compile Include="Controllers\RolesPermisosController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Empleado.cs">
       <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="IntentoLogin.cs">
+      <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
     </Compile>
     <Compile Include="Inventario.cs">
       <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
@@ -182,7 +187,13 @@
     <Compile Include="Models\ClienteViewModel.cs" />
     <Compile Include="Models\RecuperacionPasswordModel.cs" />
     <Compile Include="Models\UsuarioViewModel.cs" />
+    <Compile Include="Modulo.cs">
+      <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
+    </Compile>
     <Compile Include="Parametro.cs">
+      <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PermisoRol.cs">
       <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -192,6 +203,9 @@
     <Compile Include="PuntoVenta.cs">
       <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
     </Compile>
+    <Compile Include="RecuperacionPassword.cs">
+      <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
+    </Compile>
     <Compile Include="sysdiagrams.cs">
       <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
     </Compile>
@@ -199,6 +213,9 @@
       <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
     </Compile>
     <Compile Include="Usuario.cs">
+      <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Usuario_UltimoCambio.cs">
       <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -312,9 +329,12 @@
     <Content Include="Views\Account\CambiarContrasena.cshtml" />
     <Content Include="Views\Usuario\CrearCliente.cshtml" />
     <Content Include="Views\Usuario\CrearEmpleado.cshtml" />
+    <Content Include="Views\RolesPermisos\Index.cshtml" />
+    <Content Include="Views\Home\SinPermiso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>

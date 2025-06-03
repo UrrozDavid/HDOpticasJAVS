@@ -201,6 +201,7 @@
     <EntitySetMapping Name="Usuario">
       <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.Usuario">
         <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="FechaBloqueoHasta" ColumnName="FechaBloqueoHasta" />
           <ScalarProperty Name="Cedula" ColumnName="Cedula" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
@@ -214,6 +215,65 @@
           <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
           <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
           <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RecuperacionPassword">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.RecuperacionPassword">
+        <MappingFragment StoreEntitySet="RecuperacionPassword">
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IntentoLogin">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.IntentoLogin">
+        <MappingFragment StoreEntitySet="IntentoLogin">
+          <ScalarProperty Name="FechaIntento" ColumnName="FechaIntento" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="Exito" ColumnName="Exito" />
+          <ScalarProperty Name="UsuarioIntentado" ColumnName="UsuarioIntentado" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modulo">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.Modulo">
+        <MappingFragment StoreEntitySet="Modulo">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Accion" ColumnName="Accion" />
+          <ScalarProperty Name="Controlador" ColumnName="Controlador" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id_Modulo" ColumnName="Id_Modulo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PermisoRol">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.PermisoRol">
+        <MappingFragment StoreEntitySet="PermisoRol">
+          <ScalarProperty Name="Id_Modulo" ColumnName="Id_Modulo" />
+          <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+          <ScalarProperty Name="Id_PermisoRol" ColumnName="Id_PermisoRol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario_UltimoCambio">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.Usuario_UltimoCambio">
+        <MappingFragment StoreEntitySet="Usuario_UltimoCambio">
+          <ScalarProperty Name="Revertido" ColumnName="Revertido" />
+          <ScalarProperty Name="FechaCambio" ColumnName="FechaCambio" />
+          <ScalarProperty Name="FechaBloqueoHasta" ColumnName="FechaBloqueoHasta" />
+          <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+          <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+          <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

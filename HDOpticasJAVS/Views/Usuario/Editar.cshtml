@@ -3,6 +3,13 @@
 @{
     ViewBag.Title = "Editar Usuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    bool estaInactivo = Model.Estado == "I";
+    var atributos = new Dictionary<string, object> { { "class", "form-control" } };
+
+    if (estaInactivo)
+    {
+        atributos.Add("disabled", "disabled");
+    }
 }
 
 <div class="container">
@@ -13,6 +20,7 @@
                     <h2 class="titulo">Editar Usuario</h2>
                 </div>
                 <div class="card-body bg-dark">
+                    @Html.AntiForgeryToken()
                     @using (Html.BeginForm("Editar", "Usuario", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
@@ -47,21 +55,52 @@
                             <div class="input-group">
                                 @Html.TextBox("Contrasenia", "********", new { @class = "form-control", @readonly = "readonly", type = "password" })
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-danger" onclick="enviarCorreoRecuperacion('@Model.Correo')">Enviar cambio</button>
+                                    <button id="btnEnviarCorreo" type="button" class="btn btn-danger" onclick="enviarCorreoRecuperacion('@Model.Correo')">Enviar cambio</button>
                                 </div>
                             </div>
-                            <small class="form-text text-muted">No editable. Puedes enviar un enlace para cambiarla.</small>
+                            <small class="form-text text-muted" style="color: #f8f9fa;">No editable. Puedes enviar un enlace para cambiarla.</small>
                         </div>
                         <div class="form-group">
                             <label>Rol:</label>
-                            @Html.DropDownListFor(model => model.Id_Rol, (SelectList)ViewBag.Id_Rol, "Seleccione un rol", new { @class = "form-control", required = "required" })
-                        </div>
-                        <div class="form-group">
-                            <label>Estado:</label>
-                            @Html.TextBoxFor(model => model.Estado, new { @class = "form-control", @readonly = "readonly" })
+
+                            @Html.DropDownListFor(model => model.Id_Rol,
+                                (List<SelectListItem>)ViewBag.Roles,
+                                atributos
+                            )
+
+                            @if (estaInactivo)
+                            {
+                                @Html.HiddenFor(model => model.Id_Rol)
+                            }
                         </div>
 
+                        <div class="form-group">
+                            <label>Fecha de Bloqueo Hasta:</label>
+                            @Html.TextBoxFor(model => model.FechaBloqueoHasta, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                            <small class="form-text text-muted" style="color: #f8f9fa;">Dejar en blanco si no desea establecer un bloqueo.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Estado:</label>
+                            @Html.DropDownListFor(model => model.Estado,
+                                new SelectList(new[] {
+                                    new { Value = "A", Text = "Activo" },
+                                    new { Value = "I", Text = "Inactivo" }
+                                }, "Value", "Text", Model.Estado),
+                                htmlAttributes: new { @class = "form-control" })
+                        </div>
+
+
+
                         <button type="submit" class="btn btn-warning btn-block">Actualizar</button>
+                    }
+                    @using (Html.BeginForm("RevertirUltimoCambio", "Usuario", FormMethod.Post))
+                    {
+
+                        @Html.Hidden("cedula", Model.Cedula)
+                        <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
+                            Revertir Último Cambio
+                        </button>
                     }
                 </div>
             </div>
@@ -71,20 +110,32 @@
 
 @section Scripts {
     <script>
-        function enviarCorreoRecuperacion(correo) {
-            if (confirm("¿Deseas enviar un enlace para cambiar la contraseña?")) {
-                fetch('@Url.Action("EnviarRecuperacion", "Usuario")', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
-                    },
-                    body: JSON.stringify({ correo: correo })
-                })
-                .then(res => res.json())
-                .then(msg => alert(msg))
-                .catch(err => alert("Error al enviar el correo."));
-            }
+    function enviarCorreoRecuperacion(correo) {
+        if (!correo) {
+            alert("El usuario no tiene un correo asignado.");
+            return;
         }
+
+        if (confirm("¿Deseas enviar un enlace para restablecer la contraseña?")) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("EnviarRecuperacion", "Usuario")',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                    correo: correo
+                },
+                success: function (response) {
+                    if (response.ok) {
+                        alert(response.mensaje);
+                    } else {
+                        alert("Error: " + response);
+                    }
+                },
+                error: function () {
+                    alert("Error al enviar la solicitud.");
+                }
+            });
+        }
+    }
     </script>
 }
