@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<HDOpticasJAVS.Models.PuntoVenta>
+
+@{
     ViewBag.Title = "Administración Punto de Venta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -6,7 +8,7 @@
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
     <div class="card shadow-lg w-100" style="max-width: 1100px; background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
 
-        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: black; border-top-left-radius: 15px; border-top-right-radius: 15px;">
             <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
         </div>
 
@@ -21,79 +23,66 @@
                 <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
             }
 
-            <div class="text-end mb-3">
-                <a href="@Url.Action("Create")" class="btn btn-custom">Registrar Venta</a>
+            <div class="text-end mb-4 d-flex flex-wrap justify-content-end gap-2">
+                <a href="@Url.Action("Create", "PuntoVenta")" class="btn btn-success">➕ Registrar Venta</a>
+                <a href="@Url.Action("Index", "NotaCredito")" class="btn btn-outline-warning">📄 Ver Notas Aplicadas</a>
+                <a href="@Url.Action("ExportarReporteEmpleado", "PuntoVenta")" class="btn btn-outline-info">📥 Exportar Ventas (CSV)</a>
+                <a href="@Url.Action("ReportePorEmpleado", "PuntoVenta")" class="btn btn-outline-primary">👥 Reporte por Empleado</a>
+                <a href="@Url.Action("Tendencias", "PuntoVenta")" class="btn btn-outline-light">📈 Ver Tendencias</a>
             </div>
 
             <table class="table table-dark table-hover table-bordered">
                 <thead class="table-light text-dark" style="font-family: Raleway;">
                     <tr>
-                        <th>Id Venta</th>
-                        <th>Id Producto</th>
+                        <th># Venta</th>
+                        <th>ID Producto</th>
                         <th>Cantidad</th>
                         <th>Subtotal</th>
                         <th>IVA</th>
                         <th>Total</th>
-                        <th>Fecha Venta</th>
-                        <th>Hora Venta</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Nota de Crédito</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody style="font-family: Roboto;">
-                    <tr>
-                        <td>V001</td>
-                        <td>P1001</td>
-                        <td>3</td>
-                        <td>₡12,000</td>
-                        <td>₡1,560</td>
-                        <td>₡13,560</td>
-                        <td>2025-04-06</td>
-                        <td>10:15 a.m.</td>
-                        <td>
-                            <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-info btn-sm">Ver</a>
-                            <form method="post" action="#" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta venta?');">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>V002</td>
-                        <td>P1003</td>
-                        <td>1</td>
-                        <td>₡4,500</td>
-                        <td>₡585</td>
-                        <td>₡5,085</td>
-                        <td>2025-04-06</td>
-                        <td>11:40 a.m.</td>
-                        <td>
-                            <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-info btn-sm">Ver</a>
-                            <form method="post" action="#" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta venta?');">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>V003</td>
-                        <td>P1007</td>
-                        <td>2</td>
-                        <td>₡9,000</td>
-                        <td>₡1,170</td>
-                        <td>₡10,170</td>
-                        <td>2025-04-06</td>
-                        <td>12:05 p.m.</td>
-                        <td>
-                            <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-info btn-sm">Ver</a>
-                            <form method="post" action="#" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta venta?');">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
+                    @foreach (var venta in Model)
+                    {
+                        <tr>
+                            <td>@venta.Id_Venta</td>
+                            <td>@venta.Id_Producto</td>
+                            <td>@venta.Cantidad</td>
+                            <td>₡@venta.Subtotal</td>
+                            <td>₡@venta.IVA</td>
+                            <td>₡@venta.Total</td>
+                            <td>@venta.Fecha_Venta.ToShortDateString()</td>
+                            <td>@venta.Hora_Venta</td>
+                            <td>
+                                @{
+                                    var notaAplicada = ViewBag.NotasCreditoAplicadas != null && ((List<int>)ViewBag.NotasCreditoAplicadas).Contains(venta.Id_Venta);
+                                }
+                                @if (notaAplicada)
+                                {
+                                    <span class="badge bg-success">Aplicada</span>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("CrearNotaCredito", "PuntoVenta", new { id = venta.Id_Venta })" class="btn btn-sm btn-outline-warning">Aplicar</a>
+                                }
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Detalles", "PuntoVenta", new { id = venta.Id_Venta })" class="btn btn-info btn-sm">Ver</a>
+                                <a href="@Url.Action("Edit", "PuntoVenta", new { id = venta.Id_Venta })" class="btn btn-warning btn-sm">Editar</a>
+                                @using (Html.BeginForm("Delete", "PuntoVenta", new { id = venta.Id_Venta }, FormMethod.Post, new { onsubmit = "return confirm('¿Desea eliminar esta venta?');", style = "display:inline;" }))
+                                {
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                }
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
-
         </div>
     </div>
 </div>

@@ -153,7 +153,9 @@
     <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\MarketingController.cs" />
+    <Compile Include="Controllers\NotaCreditoController.cs" />
     <Compile Include="Controllers\PuntoVentaController.cs" />
+    <Compile Include="Controllers\ReporteVentaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Empleado.cs">
       <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
@@ -180,7 +182,11 @@
       <DependentUpon>mdlHDOpticasJavs.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ClienteViewModel.cs" />
+    <Compile Include="Models\NotaCredito.cs" />
+    <Compile Include="Models\PuntoVenta.cs" />
     <Compile Include="Models\RecuperacionPasswordModel.cs" />
+    <Compile Include="Models\ReporteVenta.cs" />
+    <Compile Include="Models\TendenciaVentas.cs" />
     <Compile Include="Models\UsuarioViewModel.cs" />
     <Compile Include="Parametro.cs">
       <DependentUpon>mdlHDOpticasJavs.tt</DependentUpon>
@@ -312,6 +318,18 @@
     <Content Include="Views\Account\CambiarContrasena.cshtml" />
     <Content Include="Views\Usuario\CrearCliente.cshtml" />
     <Content Include="Views\Usuario\CrearEmpleado.cshtml" />
+    <Content Include="Views\NotaCredito\Aplicar.cshtml" />
+    <Content Include="Views\NotaCredito\Crear.cshtml" />
+    <Content Include="Views\NotaCredito\Index.cshtml" />
+    <Content Include="Views\PuntoVenta\Create.cshtml" />
+    <Content Include="Views\PuntoVenta\Detalles.cshtml" />
+    <Content Include="Views\PuntoVenta\Edit.cshtml" />
+    <Content Include="Views\PuntoVenta\ReporteMetodoPago.cshtml" />
+    <Content Include="Views\PuntoVenta\ReportePorEmpleado.cshtml" />
+    <Content Include="Views\PuntoVenta\ReporteProductoMasVendido.cshtml" />
+    <Content Include="Views\PuntoVenta\Tendencias.cshtml" />
+    <Content Include="Views\ReporteVenta\Index.cshtml" />
+    <Content Include="Views\ReporteVenta\ReporteMensual.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
