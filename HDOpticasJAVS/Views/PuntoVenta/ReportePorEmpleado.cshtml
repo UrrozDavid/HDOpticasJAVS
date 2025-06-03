@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Reporte por Empleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var reporte = ViewBag.Reporte as List<dynamic>;
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Reporte de Ventas por Empleado</h2>
+
+    @if (reporte != null && reporte.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>Empleado</th>
+                    <th>Total Vendido</th>
+                    <th>Cantidad de Ventas</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in reporte)
+                {
+                    <tr>
+                        <td>@item.Empleado</td>
+                        <td>₡@item.TotalVentas</td>
+                        <td>@item.CantidadVentas</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <a href="@Url.Action("IndexAdmin", "PuntoVenta")" class="btn btn-secondary">Volver</a>
+        <a href="@Url.Action("ExportarReporteEmpleado", "PuntoVenta")" class="btn btn-success">Exportar a Excel (CSV)</a>
+    }
+    else
+    {
+        <div class="alert alert-warning">No hay datos disponibles para mostrar el reporte.</div>
+    }
+</div>

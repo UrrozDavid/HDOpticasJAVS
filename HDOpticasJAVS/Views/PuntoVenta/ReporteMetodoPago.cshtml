@@ -1,0 +1,61 @@
+﻿@model List<HDOpticasJAVS.Models.PuntoVenta>
+@{
+    ViewBag.Title = "Reporte por Método de Pago";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">@ViewBag.Title</h2>
+
+    <div class="card p-4 mb-3">
+        @using (Html.BeginForm("ReporteMetodoPago", "PuntoVenta", FormMethod.Post))
+        {
+            <div class="form-group mb-3">
+                <label>Método de Pago</label>
+                <select name="metodoPago" class="form-control">
+                    <option value="">-- Seleccionar --</option>
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Tarjeta">Tarjeta</option>
+                    <option value="NotaCredito">Nota de Crédito</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Generar Reporte</button>
+        }
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="alert alert-info">
+            <strong>Total de ventas:</strong> ₡@ViewBag.Total <br />
+            <strong>Cantidad de transacciones:</strong> @ViewBag.Cantidad <br />
+            <strong>Método:</strong> @ViewBag.MetodoSeleccionado
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID Venta</th>
+                    <th>ID Producto</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var venta in Model)
+                {
+                    <tr>
+                        <td>@venta.Id_Venta</td>
+                        <td>@venta.Id_Producto</td>
+                        <td>@venta.Cantidad</td>
+                        <td>₡@venta.Total</td>
+                        <td>@venta.Fecha_Venta.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a href="@Url.Action("ExportarReporteEmpleado", "PuntoVenta")" class="btn btn-success mt-3">Exportar a Excel (CSV)</a>
+
+    }
+</div>
+    }

@@ -1,0 +1,39 @@
+﻿@model List<HDOpticasJAVS.Models.NotaCredito>
+@{
+    ViewBag.Title = "Notas de Crédito";
+}
+
+<h2>Notas de Crédito</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Factura Original</th>
+            <th>Monto</th>
+            <th>Motivo</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var n in Model)
+        {
+            <tr>
+                <td>@n.Id_NotaCredito</td>
+                <td>@n.Id_Venta</td>
+                <td>@n.Monto</td>
+                <td>@n.Motivo</td>
+                <td>@n.Fecha_Emision.ToShortDateString()</td>
+                <td>@(n.Estado == "A" ? "Activa" : "Usada")</td>
+                <td>
+                    @if (n.Estado == "A")
+                    {
+                        <a href="@Url.Action("Aplicar", new { id = n.Id_NotaCredito })" class="btn btn-success btn-sm">Aplicar</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
