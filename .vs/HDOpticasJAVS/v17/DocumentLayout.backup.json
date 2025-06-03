@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\",
+  "WorkspaceRootPath": "C:\\Users\\jason\\Downloads\\HDOpticasJAVS-main\\HDOpticasJAVS-main\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\jason\\documents\\github\\hdopticasjavs\\hdopticasjavs\\controllers\\rolespermisoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\jason\\downloads\\hdopticasjavs-main\\hdopticasjavs-main\\hdopticasjavs\\controllers\\rolespermisoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\controllers\\rolespermisoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\hdopticasjavs\\views\\rolespermisos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|C:\\Users\\jason\\Downloads\\HDOpticasJAVS-main\\HDOpticasJAVS-main\\hdopticasjavs\\views\\rolespermisos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\rolespermisos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
@@ -60,9 +60,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\RolesPermisos\\Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\jason\\Downloads\\HDOpticasJAVS-main\\HDOpticasJAVS-main\\HDOpticasJAVS\\Views\\RolesPermisos\\Index.cshtml",
               "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\RolesPermisos\\Index.cshtml",
-              "ToolTip": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\RolesPermisos\\Index.cshtml",
+              "ToolTip": "C:\\Users\\jason\\Downloads\\HDOpticasJAVS-main\\HDOpticasJAVS-main\\HDOpticasJAVS\\Views\\RolesPermisos\\Index.cshtml",
               "RelativeToolTip": "HDOpticasJAVS\\Views\\RolesPermisos\\Index.cshtml",
               "ViewState": "AgIAAAMAAAAAAAAAAAAowCoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -72,9 +72,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "RolesPermisosController.cs",
-              "DocumentMoniker": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\RolesPermisosController.cs",
+              "DocumentMoniker": "C:\\Users\\jason\\Downloads\\HDOpticasJAVS-main\\HDOpticasJAVS-main\\HDOpticasJAVS\\Controllers\\RolesPermisosController.cs",
               "RelativeDocumentMoniker": "HDOpticasJAVS\\Controllers\\RolesPermisosController.cs",
-              "ToolTip": "C:\\Users\\jason\\Documents\\GitHub\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\RolesPermisosController.cs",
+              "ToolTip": "C:\\Users\\jason\\Downloads\\HDOpticasJAVS-main\\HDOpticasJAVS-main\\HDOpticasJAVS\\Controllers\\RolesPermisosController.cs",
               "RelativeToolTip": "HDOpticasJAVS\\Controllers\\RolesPermisosController.cs",
               "ViewState": "AgIAAHoAAAAAAAAAAAA8wDkAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

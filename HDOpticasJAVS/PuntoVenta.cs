@@ -21,22 +21,21 @@ namespace HDOpticasJAVS
         }
     
         public int Id_Venta { get; set; }
-        public int Id_Producto { get; set; }
+        public Nullable<int> Id_Producto { get; set; }
         public string Cedula_Cliente { get; set; }
-        public int Cantidad { get; set; }
-        public decimal Subtotal { get; set; }
-        public decimal IVA { get; set; }
-        public decimal Total { get; set; }
-        public int Id_MetodoPago { get; set; }
-        public DateTime Fecha_Venta { get; set; }
-        public String Hora_Venta { get; set; }
+        public Nullable<int> Cantidad { get; set; }
+        public Nullable<decimal> Subtotal { get; set; }
+        public Nullable<decimal> IVA { get; set; }
+        public Nullable<decimal> Total { get; set; }
+        public Nullable<int> Id_MetodoPago { get; set; }
+        public Nullable<System.DateTime> Fecha_Venta { get; set; }
+        public Nullable<System.TimeSpan> Hora_Venta { get; set; }
         public string Estado { get; set; }
         public string UsuarioCreador { get; set; }
         public string FechaCreacion { get; set; }
         public string UsuarioModificador { get; set; }
         public string FechaModificacion { get; set; }
-        public string NombreEmpleado { get; set; }
-
+    
         public virtual Cliente Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contabilidad> Contabilidad { get; set; }

@@ -135,6 +135,5 @@ namespace HDOpticasJAVS.Controllers
         public string Cliente { get; set; }
         public string Tipo_Pago { get; set; }
         public string Status { get; set; }
-       
     }
 }
