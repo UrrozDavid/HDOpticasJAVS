@@ -1,399 +1,101 @@
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.dll.config
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.pdb
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.exe
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.exe.config
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.rsp
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.exe
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.exe.config
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.rsp
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Win32.Primitives.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.AppContext.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Console.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Globalization.Calendars.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.Compression.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.Compression.ZipFile.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Net.Http.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Net.Sockets.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Threading.Tasks.Extensions.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.ValueTuple.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.exe
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.exe.config
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.rsp
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\Antlr3.Runtime.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\Newtonsoft.Json.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Helpers.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Mvc.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Optimization.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Razor.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Razor.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\WebGrease.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Helpers.xml
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Mvc.xml
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Optimization.xml
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Razor.xml
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.xml
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.xml
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Razor.xml
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\Newtonsoft.Json.xml
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\Antlr3.Runtime.pdb
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.AssemblyReference.cache
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.CoreCompileInputs.cache
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOptica.15B28D0C.Up2Date
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.dll
-C:\Users\jason\source\repos\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.pdb
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.dll.config
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.pdb
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.exe
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.exe.config
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.rsp
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.exe
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.exe.config
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.rsp
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Win32.Primitives.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.AppContext.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Console.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Globalization.Calendars.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.Compression.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.Compression.ZipFile.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Net.Http.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Net.Sockets.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Threading.Tasks.Extensions.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.ValueTuple.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.exe
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.exe.config
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.rsp
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\Antlr3.Runtime.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\Newtonsoft.Json.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Helpers.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Mvc.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Optimization.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Razor.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Razor.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\WebGrease.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Helpers.xml
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Mvc.xml
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Optimization.xml
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Razor.xml
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.xml
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.xml
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Razor.xml
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\Newtonsoft.Json.xml
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\Antlr3.Runtime.pdb
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.AssemblyReference.cache
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.CoreCompileInputs.cache
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOptica.15B28D0C.Up2Date
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.dll
-C:\Users\smont\Source\Repos\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.pdb
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.dll.config
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.pdb
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.exe
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.exe.config
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.rsp
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.exe
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.exe.config
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.rsp
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Win32.Primitives.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.AppContext.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Console.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Globalization.Calendars.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.Compression.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.Compression.ZipFile.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Net.Http.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Net.Sockets.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Threading.Tasks.Extensions.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.ValueTuple.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.exe
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.exe.config
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.rsp
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\Antlr3.Runtime.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\Newtonsoft.Json.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Helpers.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Mvc.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Optimization.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Razor.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Razor.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\WebGrease.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Helpers.xml
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Mvc.xml
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Optimization.xml
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Razor.xml
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.xml
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Razor.xml
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\Newtonsoft.Json.xml
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\Antlr3.Runtime.pdb
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.AssemblyReference.cache
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.CoreCompileInputs.cache
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOptica.15B28D0C.Up2Date
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.dll
-C:\Users\Tamdav\Documents\Universidad\2025\Analisis de modelado\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.pdb
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.dll.config
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.pdb
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.exe
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.exe.config
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.rsp
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.exe
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.exe.config
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.rsp
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Win32.Primitives.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.AppContext.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Console.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Globalization.Calendars.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.Compression.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.Compression.ZipFile.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Net.Http.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Net.Sockets.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Threading.Tasks.Extensions.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.ValueTuple.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.exe
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.exe.config
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.rsp
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\Antlr3.Runtime.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\Newtonsoft.Json.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Helpers.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Mvc.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Optimization.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Razor.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Razor.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\WebGrease.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Helpers.xml
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Mvc.xml
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Optimization.xml
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Razor.xml
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.xml
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.xml
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Razor.xml
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\Newtonsoft.Json.xml
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\Antlr3.Runtime.pdb
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.AssemblyReference.cache
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.CoreCompileInputs.cache
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOptica.15B28D0C.Up2Date
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.pdb
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\HDOpticasJAVS.dll.config
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\HDOpticasJAVS.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\HDOpticasJAVS.pdb
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\csc.exe
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\csc.exe.config
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\csc.rsp
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\csi.exe
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\csi.exe.config
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\csi.rsp
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\Microsoft.Win32.Primitives.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.AppContext.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Console.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Globalization.Calendars.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.IO.Compression.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.IO.Compression.ZipFile.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Net.Http.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Net.Sockets.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Threading.Tasks.Extensions.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.ValueTuple.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\vbc.exe
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\vbc.exe.config
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\vbc.rsp
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Antlr3.Runtime.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\EntityFramework.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\EntityFramework.SqlServer.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Newtonsoft.Json.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Helpers.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Mvc.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Optimization.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Razor.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.WebPages.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.WebPages.Razor.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\WebGrease.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\EntityFramework.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\EntityFramework.SqlServer.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Helpers.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Mvc.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Optimization.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Razor.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.WebPages.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.WebPages.Razor.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Newtonsoft.Json.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Antlr3.Runtime.pdb
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.AssemblyReference.cache
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.CoreCompileInputs.cache
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOptica.15B28D0C.Up2Date
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.dll
-C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.pdb
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.dll.config
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\HDOpticasJAVS.pdb
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.exe
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.exe.config
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csc.rsp
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.exe
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.exe.config
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\csi.rsp
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.CSharp.Core.targets
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Managed.Core.targets
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.VisualBasic.Core.targets
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\Microsoft.Win32.Primitives.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.AppContext.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Collections.Immutable.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Console.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Diagnostics.StackTrace.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Globalization.Calendars.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.Compression.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.Compression.ZipFile.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.IO.FileSystem.Primitives.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Net.Http.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Net.Sockets.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Reflection.Metadata.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Encoding.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.Primitives.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Text.Encoding.CodePages.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Threading.Tasks.Extensions.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.ValueTuple.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.ReaderWriter.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XmlDocument.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\System.Xml.XPath.XDocument.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.exe
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.exe.config
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\vbc.rsp
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe.config
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Antlr3.Runtime.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.SqlServer.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Hangfire.Core.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Hangfire.SqlServer.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.Web.Infrastructure.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Newtonsoft.Json.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Helpers.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Mvc.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Optimization.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Razor.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Razor.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\WebGrease.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.SqlServer.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Hangfire.Core.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Hangfire.SqlServer.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Helpers.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Mvc.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Razor.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Deployment.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.WebPages.Razor.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\System.Web.Optimization.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Newtonsoft.Json.xml
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\Antlr3.Runtime.pdb
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\ca\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\de\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\es\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\fa\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\fr\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\nb\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\nl\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\pt\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\pt-BR\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\pt-PT\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\sv\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\tr-TR\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\zh\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\bin\zh-TW\Hangfire.Core.resources.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.AssemblyReference.cache
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.CoreCompileInputs.cache
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOptica.15B28D0C.Up2Date
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.dll
+S:\OpticaJune3rd\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.pdb

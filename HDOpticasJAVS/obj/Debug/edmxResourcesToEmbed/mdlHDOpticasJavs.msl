@@ -18,6 +18,7 @@
     <EntitySetMapping Name="CampaniaMarketing">
       <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.CampaniaMarketing">
         <MappingFragment StoreEntitySet="CampaniaMarketing">
+          <ScalarProperty Name="Fecha_Programada" ColumnName="Fecha_Programada" />
           <ScalarProperty Name="Id_Campania" ColumnName="Id_Campania" />
           <ScalarProperty Name="Nombre_Campania" ColumnName="Nombre_Campania" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -274,6 +275,17 @@
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Cedula" ColumnName="Cedula" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CampaniaMetrica">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.CampaniaMetrica">
+        <MappingFragment StoreEntitySet="CampaniaMetrica">
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="Click" ColumnName="Click" />
+          <ScalarProperty Name="Abierto" ColumnName="Abierto" />
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+          <ScalarProperty Name="Id_Campania" ColumnName="Id_Campania" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

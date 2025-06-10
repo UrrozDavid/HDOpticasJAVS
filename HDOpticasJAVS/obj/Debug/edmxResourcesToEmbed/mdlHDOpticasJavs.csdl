@@ -32,6 +32,8 @@
     <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="CampaniaCliente" Relationship="Self.FK__CampaniaC__Id_Ca__6FE99F9F" FromRole="CampaniaMarketing" ToRole="CampaniaCliente" />
+    <Property Name="Fecha_Programada" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="CampaniaMetrica" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__3D2915A8" FromRole="CampaniaMarketing" ToRole="CampaniaMetrica" />
   </EntityType>
   <EntityType Name="Cita">
     <Key>
@@ -72,6 +74,7 @@
     <NavigationProperty Name="Usuario" Relationship="Self.FK__Cliente__Cedula__5165187F" FromRole="Cliente" ToRole="Usuario" />
     <NavigationProperty Name="Parametro" Relationship="Self.FK__Cliente__Id_Gene__52593CB8" FromRole="Cliente" ToRole="Parametro" />
     <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__PuntoVent__Cedul__5DCAEF64" FromRole="Cliente" ToRole="PuntoVenta" />
+    <NavigationProperty Name="CampaniaMetrica" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__3E1D39E1" FromRole="Cliente" ToRole="CampaniaMetrica" />
   </EntityType>
   <EntityType Name="Contabilidad">
     <Key>
@@ -575,6 +578,15 @@
       <End Role="PermisoRol" EntitySet="PermisoRol" />
     </AssociationSet>
     <EntitySet Name="Usuario_UltimoCambio" EntityType="HD_Opticas_JAVS_BDModel.Usuario_UltimoCambio" />
+    <EntitySet Name="CampaniaMetrica" EntityType="HD_Opticas_JAVS_BDModel.CampaniaMetrica" />
+    <AssociationSet Name="FK__CampaniaM__Id_Ca__3D2915A8" Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__3D2915A8">
+      <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
+      <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CampaniaM__Cedul__3E1D39E1" Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__3E1D39E1">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="RecuperacionPassword">
     <Key>
@@ -657,4 +669,41 @@
     <Property Name="FechaCambio" Type="DateTime" Precision="3" />
     <Property Name="Revertido" Type="Boolean" />
   </EntityType>
+  <EntityType Name="CampaniaMetrica">
+    <Key>
+      <PropertyRef Name="Id_Campania" />
+      <PropertyRef Name="Cedula_Cliente" />
+    </Key>
+    <Property Name="Id_Campania" Type="Int32" Nullable="false" />
+    <Property Name="Cedula_Cliente" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Abierto" Type="Boolean" />
+    <Property Name="Click" Type="Boolean" />
+    <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CampaniaMarketing" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__3D2915A8" FromRole="CampaniaMetrica" ToRole="CampaniaMarketing" />
+    <NavigationProperty Name="Cliente" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__3E1D39E1" FromRole="CampaniaMetrica" ToRole="Cliente" />
+  </EntityType>
+  <Association Name="FK__CampaniaM__Id_Ca__3D2915A8">
+    <End Type="HD_Opticas_JAVS_BDModel.CampaniaMarketing" Role="CampaniaMarketing" Multiplicity="1" />
+    <End Type="HD_Opticas_JAVS_BDModel.CampaniaMetrica" Role="CampaniaMetrica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CampaniaMarketing">
+        <PropertyRef Name="Id_Campania" />
+      </Principal>
+      <Dependent Role="CampaniaMetrica">
+        <PropertyRef Name="Id_Campania" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CampaniaM__Cedul__3E1D39E1">
+    <End Type="HD_Opticas_JAVS_BDModel.Cliente" Role="Cliente" Multiplicity="1" />
+    <End Type="HD_Opticas_JAVS_BDModel.CampaniaMetrica" Role="CampaniaMetrica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="CampaniaMetrica">
+        <PropertyRef Name="Cedula_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

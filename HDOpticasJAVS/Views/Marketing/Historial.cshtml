@@ -1,0 +1,73 @@
+﻿@model List<HDOpticasJAVS.Models.ViewModels.CampaniaMarketingViewModel>
+
+@{
+    ViewBag.Title = "Historial de Campañas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Historial de Campañas</h2>
+
+<div class="mb-3 text-end">
+    <a href="@Url.Action("Crear", "Marketing")" class="btn btn-success">
+        + Crear Nueva Campaña
+    </a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id_Campania</td>
+                <td>@(item.Nombre_Campania ?? "Sin nombre")</td>
+                <td>@item.Fecha_Inicio.ToShortDateString()</td>
+                <td>@(item.Fecha_Fin.HasValue ? item.Fecha_Fin.Value.ToShortDateString() : "—")</td>
+                <td>
+                    <span class="badge @(item.Estado == "A" ? "bg-success" :
+                                         item.Estado == "P" ? "bg-primary" :
+                                         item.Estado == "I" ? "bg-secondary" : "bg-dark")">
+                        @(item.Estado == "A" ? "Activa" :
+                          item.Estado == "P" ? "Programada" :
+                          item.Estado == "I" ? "Inactiva" : "Otro")
+                    </span>
+                </td>
+                <td>
+                    <a href="@Url.Action("Reporte", "Marketing", new { id = item.Id_Campania })" class="btn btn-info btn-sm">Ver Reporte</a>
+
+                    <a href="@Url.Action("EditarHistorial", "Marketing", new { id = item.Id_Campania })" class="btn btn-warning btn-sm">Editar</a>
+
+                    @using (Html.BeginForm("Eliminar", "Marketing", FormMethod.Post, new { onsubmit = "return confirm('¿Estás seguro que deseas eliminar esta campaña?');" }))
+                    {
+                        @Html.Hidden("id", item.Id_Campania)
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    }
+
+                    @if (!item.Fecha_Fin.HasValue) // Solo si no está finalizada
+                    {
+                        using (Html.BeginForm("Finalizar", "Marketing", FormMethod.Post, new { onsubmit = "return confirm('¿Deseas finalizar esta campaña?');" }))
+                        {
+                            @Html.Hidden("id", item.Id_Campania)
+                            <button type="submit" class="btn btn-dark btn-sm">Finalizar</button>
+                        }
+
+                        using (Html.BeginForm("EnviarCampaniaManual", "Marketing", FormMethod.Post, new { onsubmit = "return confirm('¿Deseas reenviar la campaña por correo?');" }))
+                        {
+                            @Html.Hidden("id", item.Id_Campania)
+                            <button type="submit" class="btn btn-secondary btn-sm">Enviar Manual</button>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

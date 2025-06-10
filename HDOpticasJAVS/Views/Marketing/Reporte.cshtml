@@ -1,0 +1,36 @@
+﻿@model HDOpticasJAVS.Models.ViewModels.CampaniaReporteViewModel
+@{
+    ViewBag.Title = "Reporte de Campaña";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Asegúrate de usar tu layout actual
+}
+
+<h2>Reporte de Métricas - @Model.Nombre_Campania</h2>
+
+<div class="card p-3">
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>Nombre de Campaña</th>
+            <td>@Model.Nombre_Campania</td>
+        </tr>
+        <tr>
+            <th>Descripción</th>
+            <td>@Model.Descripcion</td>
+        </tr>
+        <tr>
+            <th>Total de Destinatarios</th>
+            <td>@Model.TotalDestinatarios</td>
+        </tr>
+        <tr>
+            <th>Correos Abiertos</th>
+            <td>@Model.TotalAbiertos (@Model.PorcentajeApertura%)</td>
+        </tr>
+        <tr>
+            <th>Clicks Registrados</th>
+            <td>@Model.TotalClicks (@Model.PorcentajeClicks%)</td>
+        </tr>
+    </table>
+
+    <a href="@Url.Action("ExportarExcel", "Marketing", new { id = Model.Id_Campania })" class="btn btn-primary">
+        Exportar a Excel
+    </a>
+</div>

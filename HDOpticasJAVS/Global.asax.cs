@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Hangfire;
+using Hangfire.SqlServer;
 
 namespace HDOpticasJAVS
 {
@@ -16,6 +15,19 @@ namespace HDOpticasJAVS
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            GlobalConfiguration.Configuration
+             .UseSqlServerStorage("HangfireConnection"); // esta es la cadena sin metadata
+
+            var server = new BackgroundJobServer();
+
+            RecurringJob.AddOrUpdate(
+                "revisar-campanias",
+                () => HDOpticasJAVS.Helpers.CampaniaHelper.ProcesarCampaniasProgramadas(),
+                "*/5 * * * *"
+
+            );
         }
     }
 }
+

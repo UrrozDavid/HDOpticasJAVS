@@ -29,6 +29,18 @@
     <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
     <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
     <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="Fecha_Programada" Type="date" />
+  </EntityType>
+  <EntityType Name="CampaniaMetrica">
+    <Key>
+      <PropertyRef Name="Id_Campania" />
+      <PropertyRef Name="Cedula_Cliente" />
+    </Key>
+    <Property Name="Id_Campania" Type="int" Nullable="false" />
+    <Property Name="Cedula_Cliente" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Abierto" Type="bit" />
+    <Property Name="Click" Type="bit" />
+    <Property Name="FechaRegistro" Type="datetime" />
   </EntityType>
   <EntityType Name="Cita">
     <Key>
@@ -283,6 +295,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__CampaniaM__Cedul__3E1D39E1">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="CampaniaMetrica" Type="Self.CampaniaMetrica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="CampaniaMetrica">
+        <PropertyRef Name="Cedula_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CampaniaM__Id_Ca__3D2915A8">
+    <End Role="CampaniaMarketing" Type="Self.CampaniaMarketing" Multiplicity="1" />
+    <End Role="CampaniaMetrica" Type="Self.CampaniaMetrica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CampaniaMarketing">
+        <PropertyRef Name="Id_Campania" />
+      </Principal>
+      <Dependent Role="CampaniaMetrica">
+        <PropertyRef Name="Id_Campania" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Cita__Cedula_Esp__6A30C649">
     <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
     <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
@@ -439,7 +475,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PermisoRo__Id_Mo__1DB06A4F">
+  <Association Name="FK__PermisoRo__Id_Mo__30C33EC3">
     <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
     <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
     <ReferentialConstraint>
@@ -451,7 +487,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PermisoRo__Id_Ro__1CBC4616">
+  <Association Name="FK__PermisoRo__Id_Ro__2FCF1A8A">
     <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
     <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
     <ReferentialConstraint>
@@ -514,6 +550,7 @@
   <EntityContainer Name="HD_Opticas_JAVS_BDModelStoreContainer">
     <EntitySet Name="CampaniaCliente" EntityType="Self.CampaniaCliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CampaniaMarketing" EntityType="Self.CampaniaMarketing" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CampaniaMetrica" EntityType="Self.CampaniaMetrica" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cita" EntityType="Self.Cita" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contabilidad" EntityType="Self.Contabilidad" Schema="dbo" store:Type="Tables" />
@@ -537,6 +574,14 @@
     <AssociationSet Name="FK__CampaniaC__Id_Ca__6FE99F9F" Association="Self.FK__CampaniaC__Id_Ca__6FE99F9F">
       <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
       <End Role="CampaniaCliente" EntitySet="CampaniaCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CampaniaM__Cedul__3E1D39E1" Association="Self.FK__CampaniaM__Cedul__3E1D39E1">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CampaniaM__Id_Ca__3D2915A8" Association="Self.FK__CampaniaM__Id_Ca__3D2915A8">
+      <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
+      <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
     </AssociationSet>
     <AssociationSet Name="FK__Cita__Cedula_Esp__6A30C649" Association="Self.FK__Cita__Cedula_Esp__6A30C649">
       <End Role="Empleado" EntitySet="Empleado" />
@@ -590,11 +635,11 @@
       <End Role="TipoParametro" EntitySet="TipoParametro" />
       <End Role="Parametro" EntitySet="Parametro" />
     </AssociationSet>
-    <AssociationSet Name="FK__PermisoRo__Id_Mo__1DB06A4F" Association="Self.FK__PermisoRo__Id_Mo__1DB06A4F">
+    <AssociationSet Name="FK__PermisoRo__Id_Mo__30C33EC3" Association="Self.FK__PermisoRo__Id_Mo__30C33EC3">
       <End Role="Modulo" EntitySet="Modulo" />
       <End Role="PermisoRol" EntitySet="PermisoRol" />
     </AssociationSet>
-    <AssociationSet Name="FK__PermisoRo__Id_Ro__1CBC4616" Association="Self.FK__PermisoRo__Id_Ro__1CBC4616">
+    <AssociationSet Name="FK__PermisoRo__Id_Ro__2FCF1A8A" Association="Self.FK__PermisoRo__Id_Ro__2FCF1A8A">
       <End Role="Parametro" EntitySet="Parametro" />
       <End Role="PermisoRol" EntitySet="PermisoRol" />
     </AssociationSet>

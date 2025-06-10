@@ -1,30 +1,76 @@
-﻿@{
-    ViewBag.Title = "Crear Campaña de Marketing";
+﻿@model HDOpticasJAVS.Models.ViewModels.CampaniaMarketingViewModel
+@{
+    ViewBag.Title = "Campañas de Marketing";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Crear Campaña Promocional</h2>
 
-@if (TempData["ErrorMessage"] != null)
+@using (Html.BeginForm("EnviarCampania", "Marketing", FormMethod.Post))
 {
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nombre_Campania)
+        @Html.TextBoxFor(m => m.Nombre_Campania, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Descripcion)
+        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Tipo)
+        @Html.TextBoxFor(m => m.Tipo, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Fecha_Inicio)
+        @Html.TextBoxFor(m => m.Fecha_Inicio, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Fecha_Programada, "Fecha Programada (opcional)")
+        @Html.TextBoxFor(m => m.Fecha_Programada, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+    </div>
+
+    <h4>Seleccionar Clientes:</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Seleccionar</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.ClientesSeleccionados.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.HiddenFor(m => m.ClientesSeleccionados[i].Cedula)
+                        @Html.HiddenFor(m => m.ClientesSeleccionados[i].Correo)
+                        @Html.CheckBoxFor(m => m.ClientesSeleccionados[i].Seleccionado)
+                    </td>
+                    <td>@Model.ClientesSeleccionados[i].NombreCompleto</td>
+                    <td>@Model.ClientesSeleccionados[i].Correo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">Enviar Campaña</button>
 }
 
-<form method="post">
-    <div class="form-group">
-        <label>Título</label>
-        <input type="text" name="Titulo" class="form-control" />
+@if (TempData["Mensaje"] != null)
+{
+    var mensaje = TempData["Mensaje"].ToString();
+    var esError = mensaje.Contains("⚠️");
+    <div class="alert @(esError ? "alert-warning" : "alert-success")">
+        @mensaje
     </div>
-    <div class="form-group">
-        <label>Segmento</label>
-        <input type="text" name="Segmento" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Fecha de Envío</label>
-        <input type="date" name="FechaEnvio" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Mensaje</label>
-        <textarea name="Mensaje" class="form-control" rows="4"></textarea>
-    </div>
-    <button type="submit" class="btn btn-success">Guardar Campaña</button>
-</form>
+}
+
+<a href="@Url.Action("Historial", "Marketing")" class="btn btn-secondary mt-3">
+    Ver Historial de Campañas
+</a>

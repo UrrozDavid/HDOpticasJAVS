@@ -18,6 +18,7 @@ namespace HDOpticasJAVS
         public CampaniaMarketing()
         {
             this.CampaniaCliente = new HashSet<CampaniaCliente>();
+            this.CampaniaMetrica = new HashSet<CampaniaMetrica>();
         }
     
         public int Id_Campania { get; set; }
@@ -31,8 +32,11 @@ namespace HDOpticasJAVS
         public string FechaCreacion { get; set; }
         public string UsuarioModificador { get; set; }
         public string FechaModificacion { get; set; }
+        public Nullable<System.DateTime> Fecha_Programada { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CampaniaCliente> CampaniaCliente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CampaniaMetrica> CampaniaMetrica { get; set; }
     }
 }

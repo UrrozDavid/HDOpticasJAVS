@@ -43,5 +43,6 @@ namespace HDOpticasJAVS
         public virtual DbSet<Modulo> Modulo { get; set; }
         public virtual DbSet<PermisoRol> PermisoRol { get; set; }
         public virtual DbSet<Usuario_UltimoCambio> Usuario_UltimoCambio { get; set; }
+        public virtual DbSet<CampaniaMetrica> CampaniaMetrica { get; set; }
     }
 }
