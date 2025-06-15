@@ -1,0 +1,36 @@
+﻿@model HDOpticasJAVS.CriteriosPromocionRecurrente
+
+
+@{
+    ViewBag.Title = "Configurar Criterios de Clientes Recurrentes";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Ajusta según tu layout principal
+}
+
+<div class="container mt-5 bg-dark text-white p-4 rounded shadow-lg">
+    <h2 class="text-primary mb-4">⚙️ Configurar criterios de promociones automáticas</h2>
+
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success">@TempData["Exito"]</div>
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label>Mínimo de Compras</label>
+            @Html.TextBoxFor(m => m.MinimoCompras, new { @class = "form-control", type = "number", min = "1" })
+            @Html.ValidationMessageFor(m => m.MinimoCompras, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group mt-3">
+            <label>Días del Rango</label>
+            @Html.TextBoxFor(m => m.DiasRango, new { @class = "form-control", type = "number", min = "1" })
+            @Html.ValidationMessageFor(m => m.DiasRango, "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">💾 Guardar Criterios</button>
+    }
+</div>
+``

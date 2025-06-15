@@ -16,18 +16,20 @@ namespace HDOpticasJAVS
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            // Configuración de Hangfire
             GlobalConfiguration.Configuration
-             .UseSqlServerStorage("HangfireConnection"); // esta es la cadena sin metadata
+                .UseSqlServerStorage("HangfireConnection");
 
             var server = new BackgroundJobServer();
 
+            // ⏰ Tarea programada: promociones recurrentes
             RecurringJob.AddOrUpdate(
-                "revisar-campanias",
-                () => HDOpticasJAVS.Helpers.CampaniaHelper.ProcesarCampaniasProgramadas(),
-                "*/5 * * * *"
-
+                "promociones-recurrentes",
+                () => HDOpticasJAVS.Helpers.PromocionHelper.ProcesarPromocionesRecurrentes(),
+                Cron.Daily
             );
         }
+        
     }
 }
 

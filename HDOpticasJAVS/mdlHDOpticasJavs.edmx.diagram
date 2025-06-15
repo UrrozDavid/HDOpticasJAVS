@@ -47,6 +47,12 @@
         <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.CampaniaMetrica" Width="1.5" PointX="12.75" PointY="18.375" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__3D2915A8" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__3E1D39E1" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentada" Width="1.5" PointX="5.375" PointY="0.875" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente" Width="1.5" PointX="7.625" PointY="0.875" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__7849DB76" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.ConfiguracionRecurrencia" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.CriteriosPromocionRecurrente" Width="1.5" PointX="7.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.LogSistema" Width="1.5" PointX="9.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

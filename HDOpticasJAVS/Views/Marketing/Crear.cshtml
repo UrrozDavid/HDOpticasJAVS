@@ -4,73 +4,82 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Crear Campaña Promocional</h2>
-
-@using (Html.BeginForm("EnviarCampania", "Marketing", FormMethod.Post))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.Nombre_Campania)
-        @Html.TextBoxFor(m => m.Nombre_Campania, new { @class = "form-control" })
+<div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
+    <div class="card-header bg-primary text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0">Crear Campaña Promocional</h4>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Descripcion)
-        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control" })
+    <div class="card-body">
+
+        @using (Html.BeginForm("EnviarCampania", "Marketing", FormMethod.Post))
+        {
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Nombre_Campania)
+                @Html.TextBoxFor(m => m.Nombre_Campania, new { @class = "form-control bg-light text-dark" })
+            </div>
+
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Descripcion)
+                @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control bg-light text-dark" })
+            </div>
+
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Tipo)
+                @Html.TextBoxFor(m => m.Tipo, new { @class = "form-control bg-light text-dark" })
+            </div>
+
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.Fecha_Inicio)
+                @Html.TextBoxFor(m => m.Fecha_Inicio, "{0:yyyy-MM-dd}", new { @class = "form-control bg-light text-dark", type = "date" })
+            </div>
+
+            <div class="form-group mb-4">
+                @Html.LabelFor(m => m.Fecha_Programada, "Fecha Programada (opcional)")
+                @Html.TextBoxFor(m => m.Fecha_Programada, "{0:yyyy-MM-dd}", new { @class = "form-control bg-light text-dark", type = "date" })
+            </div>
+
+            <h5 class="fw-semibold mb-2">Seleccionar Clientes:</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-dark table-hover text-white">
+                    <thead class="bg-primary text-white text-center">
+                        <tr>
+                            <th>Seleccionar</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.ClientesSeleccionados.Count; i++)
+                        {
+                            <tr class="text-center">
+                                <td>
+                                    @Html.HiddenFor(m => m.ClientesSeleccionados[i].Cedula)
+                                    @Html.HiddenFor(m => m.ClientesSeleccionados[i].Correo)
+                                    @Html.CheckBoxFor(m => m.ClientesSeleccionados[i].Seleccionado)
+                                </td>
+                                <td>@Model.ClientesSeleccionados[i].NombreCompleto</td>
+                                <td>@Model.ClientesSeleccionados[i].Correo</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="submit" class="btn btn-success fw-semibold">Enviar Campaña</button>
+        }
+
+        @if (TempData["Mensaje"] != null)
+        {
+            var mensaje = TempData["Mensaje"].ToString();
+            var esError = mensaje.Contains("⚠️");
+            <div class="alert @(esError ? "alert-warning" : "alert-success") mt-3">
+                @mensaje
+            </div>
+        }
+
+        <a href="@Url.Action("Historial", "Marketing")" class="btn btn-outline-light mt-3 fw-semibold">
+            Ver Historial de Campañas
+        </a>
+
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Tipo)
-        @Html.TextBoxFor(m => m.Tipo, new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Fecha_Inicio)
-        @Html.TextBoxFor(m => m.Fecha_Inicio, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Fecha_Programada, "Fecha Programada (opcional)")
-        @Html.TextBoxFor(m => m.Fecha_Programada, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-    </div>
-
-    <h4>Seleccionar Clientes:</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Seleccionar</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 0; i < Model.ClientesSeleccionados.Count; i++)
-            {
-                <tr>
-                    <td>
-                        @Html.HiddenFor(m => m.ClientesSeleccionados[i].Cedula)
-                        @Html.HiddenFor(m => m.ClientesSeleccionados[i].Correo)
-                        @Html.CheckBoxFor(m => m.ClientesSeleccionados[i].Seleccionado)
-                    </td>
-                    <td>@Model.ClientesSeleccionados[i].NombreCompleto</td>
-                    <td>@Model.ClientesSeleccionados[i].Correo</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <button type="submit" class="btn btn-success">Enviar Campaña</button>
-}
-
-@if (TempData["Mensaje"] != null)
-{
-    var mensaje = TempData["Mensaje"].ToString();
-    var esError = mensaje.Contains("⚠️");
-    <div class="alert @(esError ? "alert-warning" : "alert-success")">
-        @mensaje
-    </div>
-}
-
-<a href="@Url.Action("Historial", "Marketing")" class="btn btn-secondary mt-3">
-    Ver Historial de Campañas
-</a>
+</div>

@@ -281,11 +281,65 @@
     <EntitySetMapping Name="CampaniaMetrica">
       <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.CampaniaMetrica">
         <MappingFragment StoreEntitySet="CampaniaMetrica">
+          <ScalarProperty Name="Automatica" ColumnName="Automatica" />
           <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
           <ScalarProperty Name="Click" ColumnName="Click" />
           <ScalarProperty Name="Abierto" ColumnName="Abierto" />
           <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
           <ScalarProperty Name="Id_Campania" ColumnName="Id_Campania" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ListaSegmentada">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.ListaSegmentada">
+        <MappingFragment StoreEntitySet="ListaSegmentada">
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="NombreLista" ColumnName="NombreLista" />
+          <ScalarProperty Name="Id_Lista" ColumnName="Id_Lista" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ListaSegmentadaCliente">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente">
+        <MappingFragment StoreEntitySet="ListaSegmentadaCliente">
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+          <ScalarProperty Name="Id_Lista" ColumnName="Id_Lista" />
+          <ScalarProperty Name="Id_ListaCliente" ColumnName="Id_ListaCliente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConfiguracionRecurrencia">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.ConfiguracionRecurrencia">
+        <MappingFragment StoreEntitySet="ConfiguracionRecurrencia">
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UmbralCompras" ColumnName="UmbralCompras" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CriteriosPromocionRecurrente">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.CriteriosPromocionRecurrente">
+        <MappingFragment StoreEntitySet="CriteriosPromocionRecurrente">
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="DiasRango" ColumnName="DiasRango" />
+          <ScalarProperty Name="MinimoCompras" ColumnName="MinimoCompras" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LogSistema">
+      <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.LogSistema">
+        <MappingFragment StoreEntitySet="LogSistema">
+          <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="Modulo" ColumnName="Modulo" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

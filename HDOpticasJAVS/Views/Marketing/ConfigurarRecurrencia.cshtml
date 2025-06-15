@@ -1,0 +1,22 @@
+﻿@model HDOpticasJAVS.Models.ViewModels.ReglasRecurrenciaViewModel
+
+@{
+    ViewBag.Title = "Configuración de Clientes Recurrentes";
+}
+
+<div class="card bg-dark text-white">
+    <div class="card-body">
+        <h3 class="text-info">🎯 Reglas para Clientes Recurrentes</h3>
+
+        @using (Html.BeginForm("GuardarConfiguracionRecurrencia", "Marketing", FormMethod.Post))
+        {
+            <div class="form-group mt-3">
+                <label>@Html.DisplayNameFor(m => m.UmbralCompras)</label>
+                @Html.TextBoxFor(m => m.UmbralCompras, new { @class = "form-control", type = "number" })
+                @Html.ValidationMessageFor(m => m.UmbralCompras, null, new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Guardar configuración</button>
+        }
+    </div>
+</div>

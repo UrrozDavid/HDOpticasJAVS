@@ -21,9 +21,9 @@ namespace HDOpticasJAVS.Helpers
                 {
                     string asunto = $"Promoción: {campania.Nombre_Campania}";
 
-                    string redirectUrl = "https://localhost:44300/Home/About";
-                    string urlClick = $"https://localhost:44300/Marketing/ContarClick?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}&redirect={Uri.EscapeDataString(redirectUrl)}";
-                    string urlApertura = $"https://localhost:44300/Marketing/ContarApertura?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}";
+                    string redirectUrl = $"https://localhost:44305/Marketing/PromocionesCliente?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}";
+                    string urlClick = $"https://localhost:44305/Marketing/ContarClick?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}&redirect={Uri.EscapeDataString(redirectUrl)}";
+                    string urlApertura = $"https://localhost:44305/Marketing/ContarApertura?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}";
 
                     string mensaje = $@"
                         <div style='text-align:center; font-family:Arial, sans-serif;'>
@@ -71,9 +71,9 @@ namespace HDOpticasJAVS.Helpers
                     {
                         string asunto = $"Promoción: {campania.Nombre_Campania}";
 
-                        string redirectUrl = "https://localhost:44300/Home/About";
-                        string urlClick = $"https://localhost:44300/Marketing/ContarClick?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}&redirect={Uri.EscapeDataString(redirectUrl)}";
-                        string urlApertura = $"https://localhost:44300/Marketing/ContarApertura?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}";
+                        string redirectUrl = $"https://localhost:44305/Marketing/PromocionesCliente?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}";
+                        string urlClick = $"https://localhost:44305/Marketing/ContarClick?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}&redirect={Uri.EscapeDataString(redirectUrl)}";
+                        string urlApertura = $"https://localhost:44305/Marketing/ContarApertura?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}";
 
                         string mensaje = $@"
                             <div style='text-align:center; font-family:Arial, sans-serif;'>

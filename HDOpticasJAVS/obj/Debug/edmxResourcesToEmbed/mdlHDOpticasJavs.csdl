@@ -587,6 +587,15 @@
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
     </AssociationSet>
+    <EntitySet Name="ListaSegmentada" EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentada" />
+    <EntitySet Name="ListaSegmentadaCliente" EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente" />
+    <AssociationSet Name="FK__ListaSegm__Id_Li__7849DB76" Association="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__7849DB76">
+      <End Role="ListaSegmentada" EntitySet="ListaSegmentada" />
+      <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
+    </AssociationSet>
+    <EntitySet Name="ConfiguracionRecurrencia" EntityType="HD_Opticas_JAVS_BDModel.ConfiguracionRecurrencia" />
+    <EntitySet Name="CriteriosPromocionRecurrente" EntityType="HD_Opticas_JAVS_BDModel.CriteriosPromocionRecurrente" />
+    <EntitySet Name="LogSistema" EntityType="HD_Opticas_JAVS_BDModel.LogSistema" />
   </EntityContainer>
   <EntityType Name="RecuperacionPassword">
     <Key>
@@ -681,6 +690,7 @@
     <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
     <NavigationProperty Name="CampaniaMarketing" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__3D2915A8" FromRole="CampaniaMetrica" ToRole="CampaniaMarketing" />
     <NavigationProperty Name="Cliente" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__3E1D39E1" FromRole="CampaniaMetrica" ToRole="Cliente" />
+    <Property Name="Automatica" Type="Boolean" />
   </EntityType>
   <Association Name="FK__CampaniaM__Id_Ca__3D2915A8">
     <End Type="HD_Opticas_JAVS_BDModel.CampaniaMarketing" Role="CampaniaMarketing" Multiplicity="1" />
@@ -706,4 +716,66 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="ListaSegmentada">
+    <Key>
+      <PropertyRef Name="Id_Lista" />
+    </Key>
+    <Property Name="Id_Lista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreLista" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="ListaSegmentadaCliente" Relationship="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__7849DB76" FromRole="ListaSegmentada" ToRole="ListaSegmentadaCliente" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ListaSegmentadaCliente">
+    <Key>
+      <PropertyRef Name="Id_ListaCliente" />
+    </Key>
+    <Property Name="Id_ListaCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Lista" Type="Int32" />
+    <Property Name="Cedula_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ListaSegmentada" Relationship="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__7849DB76" FromRole="ListaSegmentadaCliente" ToRole="ListaSegmentada" />
+  </EntityType>
+  <Association Name="FK__ListaSegm__Id_Li__7849DB76">
+    <End Type="HD_Opticas_JAVS_BDModel.ListaSegmentada" Role="ListaSegmentada" Multiplicity="0..1" />
+    <End Type="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente" Role="ListaSegmentadaCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListaSegmentada">
+        <PropertyRef Name="Id_Lista" />
+      </Principal>
+      <Dependent Role="ListaSegmentadaCliente">
+        <PropertyRef Name="Id_Lista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ConfiguracionRecurrencia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UmbralCompras" Type="Int32" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CriteriosPromocionRecurrente">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MinimoCompras" Type="Int32" Nullable="false" />
+    <Property Name="DiasRango" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="LogSistema">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Modulo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

@@ -1,73 +1,121 @@
 ﻿@model List<HDOpticasJAVS.Models.ViewModels.CampaniaMarketingViewModel>
-
 @{
     ViewBag.Title = "Historial de Campañas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Historial de Campañas</h2>
+<div class="container mt-4">
+    <h2 class="text-white mb-4">📊 Historial de Campañas</h2>
 
-<div class="mb-3 text-end">
-    <a href="@Url.Action("Crear", "Marketing")" class="btn btn-success">
-        + Crear Nueva Campaña
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-info">@TempData["Mensaje"]</div>
+    }
+
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success">@TempData["Exito"]</div>
+    }
+
+    <!-- Botones principales -->
+<div class="mb-4 d-flex flex-wrap gap-2">
+    <a href="@Url.Action("Crear", "Marketing")" class="btn btn-primary">
+        ➕ Crear Campaña Manual
     </a>
+    <a href="@Url.Action("SegmentarClientes", "Marketing")" class="btn btn-secondary">
+        🔍 Segmentar Clientes
+    </a>
+
+
+    <a href="@Url.Action("EnviarCampaniaSegmentada", "Marketing")" class="btn btn-info">
+        📤 Enviar a Lista Segmentada
+    </a>
+
+    <a href="@Url.Action("ConfigurarCriteriosRecurrentes", "Marketing")" class="btn btn-warning">
+        ⚙️ Criterios Clientes Recurrentes
+    </a>
+    <a href="@Url.Action("LogErrores", "Marketing")" class="btn btn-danger btn-sm">
+        🧾 Ver Errores
+    </a>
+
+
 </div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Fin</th>
-            <th>Estado</th>
-            <th>Acción</th>
-        </tr>
-    </thead>
-    <tbody>
+    <!-- Cards por campaña -->
+    <div class="row">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.Id_Campania</td>
-                <td>@(item.Nombre_Campania ?? "Sin nombre")</td>
-                <td>@item.Fecha_Inicio.ToShortDateString()</td>
-                <td>@(item.Fecha_Fin.HasValue ? item.Fecha_Fin.Value.ToShortDateString() : "—")</td>
-                <td>
-                    <span class="badge @(item.Estado == "A" ? "bg-success" :
-                                         item.Estado == "P" ? "bg-primary" :
-                                         item.Estado == "I" ? "bg-secondary" : "bg-dark")">
-                        @(item.Estado == "A" ? "Activa" :
-                          item.Estado == "P" ? "Programada" :
-                          item.Estado == "I" ? "Inactiva" : "Otro")
-                    </span>
-                </td>
-                <td>
-                    <a href="@Url.Action("Reporte", "Marketing", new { id = item.Id_Campania })" class="btn btn-info btn-sm">Ver Reporte</a>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card bg-dark text-white shadow-lg h-100 border-light rounded-4">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-info">@item.Nombre_Campania</h5>
+                        <p class="card-text">@item.Descripcion</p>
 
-                    <a href="@Url.Action("EditarHistorial", "Marketing", new { id = item.Id_Campania })" class="btn btn-warning btn-sm">Editar</a>
+                        <p class="mb-1">
+                            <strong>Tipo:</strong> @item.Tipo <br />
+                            <strong>Estado:</strong>
+                            @switch (item.Estado)
+                            {
+                                case "A":
+                                    @:<span class="badge bg-success">Activa</span>
+                                    break;
+                                case "P":
+                                    @:<span class="badge bg-warning text-dark">Programada</span>
+                                    break;
+                                case "I":
+                                    @:<span class="badge bg-secondary">Inactiva</span>
+                                    break;
+                            }
+                        </p>
 
-                    @using (Html.BeginForm("Eliminar", "Marketing", FormMethod.Post, new { onsubmit = "return confirm('¿Estás seguro que deseas eliminar esta campaña?');" }))
-                    {
-                        @Html.Hidden("id", item.Id_Campania)
-                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                    }
+                        <p class="mb-1"><strong>Inicio:</strong> @item.Fecha_Inicio.ToShortDateString()</p>
+                        <p class="mb-3"><strong>Programada:</strong> @(item.Fecha_Programada?.ToShortDateString() ?? "-")</p>
 
-                    @if (!item.Fecha_Fin.HasValue) // Solo si no está finalizada
-                    {
-                        using (Html.BeginForm("Finalizar", "Marketing", FormMethod.Post, new { onsubmit = "return confirm('¿Deseas finalizar esta campaña?');" }))
-                        {
-                            @Html.Hidden("id", item.Id_Campania)
-                            <button type="submit" class="btn btn-dark btn-sm">Finalizar</button>
-                        }
+                        <!-- Botones -->
+                        <div class="mt-auto d-flex flex-wrap gap-2">
+                            <a href="@Url.Action("ExportarExcel", new { id = item.Id_Campania })" class="btn btn-outline-success btn-sm">
+                                📄 Exportar a Excel
+                            </a>
 
-                        using (Html.BeginForm("EnviarCampaniaManual", "Marketing", FormMethod.Post, new { onsubmit = "return confirm('¿Deseas reenviar la campaña por correo?');" }))
-                        {
-                            @Html.Hidden("id", item.Id_Campania)
-                            <button type="submit" class="btn btn-secondary btn-sm">Enviar Manual</button>
-                        }
-                    }
-                </td>
-            </tr>
+                            <a href="@Url.Action("ExportarPDF", new { id = item.Id_Campania })" class="btn btn-outline-danger btn-sm">
+                                📝 Exportar a PDF
+                            </a>
+
+
+                            <a href="@Url.Action("EditarHistorial", new { id = item.Id_Campania })" class="btn btn-outline-warning btn-sm">
+                                ✏️ Editar
+                            </a>
+
+                            @if (item.Estado != "I")
+                            {
+                                using (Html.BeginForm("Finalizar", "Marketing", FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("id", item.Id_Campania)
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">🛑 Finalizar</button>
+                                }
+                            }
+
+                            @using (Html.BeginForm("EnviarCampaniaManual", "Marketing", FormMethod.Post, new { @class = "d-inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", item.Id_Campania)
+                                <button type="submit" class="btn btn-outline-danger btn-sm">🗑️ Eliminar</button>
+                            }
+
+                            @if (item.Estado == "A" && item.Tipo == "Manual")
+                            {
+                                using (Html.BeginForm("EnviarCampaniaManual", "Marketing", FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("id", item.Id_Campania)
+                                    <button type="submit" class="btn btn-outline-success btn-sm">📤 Enviar</button>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>

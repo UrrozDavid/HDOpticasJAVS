@@ -3,16 +3,8 @@
   "WorkspaceRootPath": "S:\\OpticaJune3rd\\HDOpticasJAVS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|s:\\opticajune3rd\\hdopticasjavs\\hdopticasjavs\\helpers\\campaniahelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\helpers\\campaniahelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|s:\\opticajune3rd\\hdopticasjavs\\hdopticasjavs\\helpers\\correohelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\helpers\\correohelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|s:\\opticajune3rd\\hdopticasjavs\\hdopticasjavs\\controllers\\marketingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\controllers\\marketingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|s:\\opticajune3rd\\hdopticasjavs\\hdopticasjavs\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|s:\\opticajune3rd\\hdopticasjavs\\hdopticasjavs\\views\\marketing\\historial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -26,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 963,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,54 +62,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CampaniaHelper.cs",
-              "DocumentMoniker": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Helpers\\CampaniaHelper.cs",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Helpers\\CampaniaHelper.cs",
-              "ToolTip": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Helpers\\CampaniaHelper.cs",
-              "RelativeToolTip": "HDOpticasJAVS\\Helpers\\CampaniaHelper.cs",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAiwGsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T02:20:32.535Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CorreoHelper.cs",
-              "DocumentMoniker": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Helpers\\CorreoHelper.cs",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Helpers\\CorreoHelper.cs",
-              "ToolTip": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Helpers\\CorreoHelper.cs",
-              "RelativeToolTip": "HDOpticasJAVS\\Helpers\\CorreoHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T02:15:49.573Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MarketingController.cs",
-              "DocumentMoniker": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\MarketingController.cs",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Controllers\\MarketingController.cs",
-              "ToolTip": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\MarketingController.cs",
-              "RelativeToolTip": "HDOpticasJAVS\\Controllers\\MarketingController.cs",
-              "ViewState": "AgIAABgBAAAAAAAAAAA+wEcBAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T01:40:31.087Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "Historial.cshtml",
               "DocumentMoniker": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Marketing\\Historial.cshtml",
               "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Marketing\\Historial.cshtml",
-              "ToolTip": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Marketing\\Historial.cshtml",
-              "RelativeToolTip": "HDOpticasJAVS\\Views\\Marketing\\Historial.cshtml",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAuwEkAAAAAAAAAAAAAAA==",
+              "ToolTip": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Marketing\\Historial.cshtml*",
+              "RelativeToolTip": "HDOpticasJAVS\\Views\\Marketing\\Historial.cshtml*",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-08T01:25:09.219Z",
+              "WhenOpened": "2025-06-15T04:53:51.436Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Web.config",
+              "DocumentMoniker": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Web.config",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Web.config",
+              "ToolTip": "S:\\OpticaJune3rd\\HDOpticasJAVS\\HDOpticasJAVS\\Web.config",
+              "RelativeToolTip": "HDOpticasJAVS\\Web.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-06-15T04:47:34.269Z",
               "EditorCaption": ""
             }
           ]

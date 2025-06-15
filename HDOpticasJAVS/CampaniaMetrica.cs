@@ -19,6 +19,7 @@ namespace HDOpticasJAVS
         public Nullable<bool> Abierto { get; set; }
         public Nullable<bool> Click { get; set; }
         public Nullable<System.DateTime> FechaRegistro { get; set; }
+        public Nullable<bool> Automatica { get; set; }
     
         public virtual CampaniaMarketing CampaniaMarketing { get; set; }
         public virtual Cliente Cliente { get; set; }

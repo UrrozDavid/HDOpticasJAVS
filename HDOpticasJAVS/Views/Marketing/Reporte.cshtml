@@ -1,36 +1,40 @@
 ﻿@model HDOpticasJAVS.Models.ViewModels.CampaniaReporteViewModel
-@{
-    ViewBag.Title = "Reporte de Campaña";
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Asegúrate de usar tu layout actual
-}
 
-<h2>Reporte de Métricas - @Model.Nombre_Campania</h2>
+<div class="container mt-4 bg-dark text-white p-4 rounded">
+    <h2 class="text-primary">@Model.Nombre_Campania</h2>
+    <p>@Model.Descripcion</p>
 
-<div class="card p-3">
-    <table class="table table-striped table-bordered">
-        <tr>
-            <th>Nombre de Campaña</th>
-            <td>@Model.Nombre_Campania</td>
-        </tr>
-        <tr>
-            <th>Descripción</th>
-            <td>@Model.Descripcion</td>
-        </tr>
-        <tr>
-            <th>Total de Destinatarios</th>
-            <td>@Model.TotalDestinatarios</td>
-        </tr>
-        <tr>
-            <th>Correos Abiertos</th>
-            <td>@Model.TotalAbiertos (@Model.PorcentajeApertura%)</td>
-        </tr>
-        <tr>
-            <th>Clicks Registrados</th>
-            <td>@Model.TotalClicks (@Model.PorcentajeClicks%)</td>
-        </tr>
-    </table>
+    <div class="row text-center mt-4">
+        <div class="col-md-4">
+            <div class="card bg-secondary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Destinatarios</h5>
+                    <p class="card-text display-4">@Model.TotalDestinatarios</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Correos abiertos</h5>
+                    <p class="card-text display-4">@Model.TotalAbiertos</p>
+                    <small>@Model.PorcentajeApertura % de apertura</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Promociones aplicadas</h5>
+                    <p class="card-text display-4">@Model.TotalClicks</p>
+                    <small>@Model.PorcentajeClicks % de conversión</small>
+                </div>
+                <div class="mt-4">
+                    <a href="@Url.Action("ExportarExcel", "Marketing", new { id = Model.Id_Campania })" class="btn btn-outline-success">Exportar a Excel</a>
+                    <a href="@Url.Action("ExportarPdf", "Marketing", new { id = Model.Id_Campania })" class="btn btn-outline-danger ml-2">Exportar a PDF</a>
+                </div>
 
-    <a href="@Url.Action("ExportarExcel", "Marketing", new { id = Model.Id_Campania })" class="btn btn-primary">
-        Exportar a Excel
-    </a>
+            </div>
+        </div>
+    </div>
 </div>
