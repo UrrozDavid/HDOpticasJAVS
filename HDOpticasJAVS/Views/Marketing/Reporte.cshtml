@@ -1,0 +1,40 @@
+﻿@model HDOpticasJAVS.Models.ViewModels.CampaniaReporteViewModel
+
+<div class="container mt-4 bg-dark text-white p-4 rounded">
+    <h2 class="text-primary">@Model.Nombre_Campania</h2>
+    <p>@Model.Descripcion</p>
+
+    <div class="row text-center mt-4">
+        <div class="col-md-4">
+            <div class="card bg-secondary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Destinatarios</h5>
+                    <p class="card-text display-4">@Model.TotalDestinatarios</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Correos abiertos</h5>
+                    <p class="card-text display-4">@Model.TotalAbiertos</p>
+                    <small>@Model.PorcentajeApertura % de apertura</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Promociones aplicadas</h5>
+                    <p class="card-text display-4">@Model.TotalClicks</p>
+                    <small>@Model.PorcentajeClicks % de conversión</small>
+                </div>
+                <div class="mt-4">
+                    <a href="@Url.Action("ExportarExcel", "Marketing", new { id = Model.Id_Campania })" class="btn btn-outline-success">Exportar a Excel</a>
+                    <a href="@Url.Action("ExportarPdf", "Marketing", new { id = Model.Id_Campania })" class="btn btn-outline-danger ml-2">Exportar a PDF</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

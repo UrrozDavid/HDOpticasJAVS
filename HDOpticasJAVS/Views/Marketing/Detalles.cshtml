@@ -1,24 +1,36 @@
 ﻿@{
     ViewBag.Title = "Detalles de la Campaña";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="card mt-4 bg-dark text-white shadow-lg rounded-4">
+    <div class="card-header bg-primary text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0">Detalles de la Campaña</h4>
+    </div>
 
-<div class="form-horizontal">
-    <div class="form-group">
-        <label class="control-label col-md-2">Título:</label>
-        <div class="col-md-10">@ViewBag.Titulo</div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-2">Segmento:</label>
-        <div class="col-md-10">@ViewBag.Segmento</div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-2">Fecha de Envío:</label>
-        <div class="col-md-10">@ViewBag.FechaEnvio</div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-2">Mensaje:</label>
-        <div class="col-md-10">@ViewBag.Mensaje</div>
+    <div class="card-body rounded-bottom-4">
+        <div class="mb-3">
+            <strong>Título:</strong>
+            <p>@ViewBag.Titulo</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Segmento:</strong>
+            <p>@ViewBag.Segmento</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Fecha de Envío:</strong>
+            <p>@ViewBag.FechaEnvio</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Mensaje:</strong>
+            <div class="border p-3 bg-light text-dark rounded">
+                @Html.Raw(ViewBag.Mensaje)
+            </div>
+        </div>
+
+        <a href="@Url.Action("Historial", "Marketing")" class="btn btn-outline-light mt-3">Volver al Historial</a>
     </div>
 </div>

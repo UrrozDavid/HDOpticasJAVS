@@ -1,4 +1,6 @@
-﻿@{
+﻿
+
+@{
     Layout = null;
     ViewBag.Title = "Iniciar Sesión";
 }
@@ -13,7 +15,8 @@
     <style>
         body {
             position: relative;
-            background: url('/img/optica-bg.jpg') no-repeat center center/cover;
+            background: url('/img/optica-bg.jpg') no-repeat center center;
+            background-size: cover;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -81,15 +84,23 @@
     </style>
 </head>
 <body>
+    @{
+        string returnUrl = Request.QueryString["returnUrl"];
+    }
+
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
+
         @if (ViewBag.Mensaje != null)
         {
             <div class="alert alert-danger" role="alert">
                 @ViewBag.Mensaje
             </div>
         }
+
         <form action="@Url.Action("Login", "Account")" method="post">
+            <input type="hidden" name="returnUrl" value="@returnUrl" />
+
             <div class="mb-3">
                 <input type="text" name="Usuario" class="form-control" placeholder="Usuario" required>
             </div>
@@ -104,6 +115,7 @@
             </div>
         </form>
     </div>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
