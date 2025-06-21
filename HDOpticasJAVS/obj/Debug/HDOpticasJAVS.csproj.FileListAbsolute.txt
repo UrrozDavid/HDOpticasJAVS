@@ -397,3 +397,7 @@ C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOptica.15B28D0C.Up2Date
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.dll
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.pdb
+C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.dll
+C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.SqlServer.dll
+C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.xml
+C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.SqlServer.xml

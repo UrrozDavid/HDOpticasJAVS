@@ -1,0 +1,29 @@
+﻿@model HDOpticasJAVS.PuntoVenta
+
+@{
+    ViewBag.Title = "Registrar Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-body">
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Cedula_Cliente)
+            @Html.DropDownList("Cedula_Cliente", (SelectList)ViewBag.Clientes, "Seleccione", new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Id_Producto)
+            @Html.DropDownList("Id_Producto", (SelectList)ViewBag.Productos, "Seleccione", new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Cantidad)
+            @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Id_MetodoPago)
+            @Html.DropDownList("Id_MetodoPago", (SelectList)ViewBag.MetodosPago, "Seleccione", new { @class = "form-control" })
+        </div>
+        <button type="submit" class="btn btn-success mt-2">Guardar Venta</button>
+    }
+</div>

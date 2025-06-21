@@ -331,6 +331,7 @@
     <Content Include="Views\Usuario\CrearEmpleado.cshtml" />
     <Content Include="Views\RolesPermisos\Index.cshtml" />
     <Content Include="Views\Home\SinPermiso.cshtml" />
+    <Content Include="Views\PuntoVenta\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

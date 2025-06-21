@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<HDOpticasJAVS.PuntoVenta>
+@{
     ViewBag.Title = "Administración Punto de Venta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -25,74 +26,50 @@
                 <a href="@Url.Action("Create")" class="btn btn-custom">Registrar Venta</a>
             </div>
 
-            <table class="table table-dark table-hover table-bordered">
-                <thead class="table-light text-dark" style="font-family: Raleway;">
-                    <tr>
-                        <th>Id Venta</th>
-                        <th>Id Producto</th>
-                        <th>Cantidad</th>
-                        <th>Subtotal</th>
-                        <th>IVA</th>
-                        <th>Total</th>
-                        <th>Fecha Venta</th>
-                        <th>Hora Venta</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody style="font-family: Roboto;">
-                    <tr>
-                        <td>V001</td>
-                        <td>P1001</td>
-                        <td>3</td>
-                        <td>₡12,000</td>
-                        <td>₡1,560</td>
-                        <td>₡13,560</td>
-                        <td>2025-04-06</td>
-                        <td>10:15 a.m.</td>
-                        <td>
-                            <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-info btn-sm">Ver</a>
-                            <form method="post" action="#" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta venta?');">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>V002</td>
-                        <td>P1003</td>
-                        <td>1</td>
-                        <td>₡4,500</td>
-                        <td>₡585</td>
-                        <td>₡5,085</td>
-                        <td>2025-04-06</td>
-                        <td>11:40 a.m.</td>
-                        <td>
-                            <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-info btn-sm">Ver</a>
-                            <form method="post" action="#" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta venta?');">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>V003</td>
-                        <td>P1007</td>
-                        <td>2</td>
-                        <td>₡9,000</td>
-                        <td>₡1,170</td>
-                        <td>₡10,170</td>
-                        <td>2025-04-06</td>
-                        <td>12:05 p.m.</td>
-                        <td>
-                            <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-info btn-sm">Ver</a>
-                            <form method="post" action="#" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar esta venta?');">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover table-bordered">
+                    <thead class="table-light text-dark" style="font-family: Raleway;">
+                        <tr>
+                            <th>Id Venta</th>
+                            <th>Producto</th>
+                            <th>Cliente</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>IVA</th>
+                            <th>Total</th>
+                            <th>Método de Pago</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-family: Roboto;">
+                        @foreach (var venta in Model)
+                        {
+                            <tr>
+                                <td>@venta.Id_Venta</td>
+                                <td>@venta.Inventario?.Nombre_Producto</td>
+                                <td>@venta.Cliente?.Cedula</td>
+                                <td>@venta.Cantidad</td>
+                                <td>₡@venta.Subtotal.ToString("N2")</td>
+                                <td>₡@venta.IVA.ToString("N2")</td>
+                                <td>₡@venta.Total.ToString("N2")</td>
+                                <td>@venta.Parametro?.Nombre_Parametro</td>
+                                <td>@venta.Fecha_Venta?.ToString("yyyy-MM-dd")</td>
+                                <td>@venta.Hora_Venta?.ToString(@"hh\:mm")</td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { id = venta.Id_Venta })" class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="@Url.Action("Details", new { id = venta.Id_Venta })" class="btn btn-info btn-sm">Ver</a>
+                                    @using (Html.BeginForm("Eliminar", "PuntoVenta", new { id = venta.Id_Venta }, FormMethod.Post, new { onsubmit = "return confirm('¿Desea eliminar esta venta?');" }))
+                                    {
+                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     </div>
