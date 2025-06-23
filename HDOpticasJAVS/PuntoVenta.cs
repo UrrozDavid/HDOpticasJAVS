@@ -18,12 +18,12 @@ namespace HDOpticasJAVS
         public PuntoVenta()
         {
             this.Contabilidad = new HashSet<Contabilidad>();
+            this.PagoVenta = new HashSet<PagoVenta>();
+            this.DetalleVenta = new HashSet<DetalleVenta>();
         }
     
         public int Id_Venta { get; set; }
-        public Nullable<int> Id_Producto { get; set; }
         public string Cedula_Cliente { get; set; }
-        public Nullable<int> Cantidad { get; set; }
         public Nullable<decimal> Subtotal { get; set; }
         public Nullable<decimal> IVA { get; set; }
         public Nullable<decimal> Total { get; set; }
@@ -39,7 +39,10 @@ namespace HDOpticasJAVS
         public virtual Cliente Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contabilidad> Contabilidad { get; set; }
-        public virtual Inventario Inventario { get; set; }
         public virtual Parametro Parametro { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PagoVenta> PagoVenta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetalleVenta> DetalleVenta { get; set; }
     }
 }

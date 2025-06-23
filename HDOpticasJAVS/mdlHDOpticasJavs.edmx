@@ -122,6 +122,17 @@
           <Property Name="UsuarioModificador" Type="nvarchar" MaxLength="50" />
           <Property Name="FechaModificacion" Type="datetime" />
         </EntityType>
+        <EntityType Name="DetalleVenta">
+          <Key>
+            <PropertyRef Name="Id_Detalle" />
+          </Key>
+          <Property Name="Id_Detalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Venta" Type="int" />
+          <Property Name="Id_Producto" Type="int" />
+          <Property Name="Cantidad" Type="int" />
+          <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
         <EntityType Name="Empleado">
           <Key>
             <PropertyRef Name="Cedula" />
@@ -180,7 +191,7 @@
           </Key>
           <Property Name="Id_ListaCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id_Lista" Type="int" />
-          <Property Name="Cedula_Cliente" Type="nvarchar" MaxLength="50" />
+          <Property Name="Cedula_Cliente" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="LogSistema">
           <Key>
@@ -201,6 +212,15 @@
           <Property Name="Controlador" Type="nvarchar" MaxLength="100" />
           <Property Name="Accion" Type="nvarchar" MaxLength="100" />
           <Property Name="Estado" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="PagoVenta">
+          <Key>
+            <PropertyRef Name="Id_Pago" />
+          </Key>
+          <Property Name="Id_Pago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Venta" Type="int" />
+          <Property Name="Metodo" Type="varchar" MaxLength="20" />
+          <Property Name="Monto" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="Parametro">
           <Key>
@@ -243,9 +263,7 @@
             <PropertyRef Name="Id_Venta" />
           </Key>
           <Property Name="Id_Venta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Id_Producto" Type="int" />
           <Property Name="Cedula_Cliente" Type="varchar" MaxLength="20" />
-          <Property Name="Cantidad" Type="int" />
           <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" />
           <Property Name="IVA" Type="decimal" Precision="10" Scale="2" />
           <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
@@ -276,6 +294,17 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TarjetaSimulada">
+          <Key>
+            <PropertyRef Name="Id_Tarjeta" />
+          </Key>
+          <Property Name="Id_Tarjeta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroTarjeta" Type="varchar" MaxLength="20" />
+          <Property Name="NombreTitular" Type="varchar" MaxLength="100" />
+          <Property Name="FechaVencimiento" Type="varchar" MaxLength="7" />
+          <Property Name="CVV" Type="varchar" MaxLength="5" />
+          <Property Name="Saldo" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="TipoParametro">
           <Key>
@@ -349,7 +378,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CampaniaM__Cedul__3E1D39E1">
+        <Association Name="FK__CampaniaM__Cedul__2A164134">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
           <End Role="CampaniaMetrica" Type="Self.CampaniaMetrica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -361,7 +390,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CampaniaM__Id_Ca__3D2915A8">
+        <Association Name="FK__CampaniaM__Id_Ca__29221CFB">
           <End Role="CampaniaMarketing" Type="Self.CampaniaMarketing" Multiplicity="1" />
           <End Role="CampaniaMetrica" Type="Self.CampaniaMetrica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -493,6 +522,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__DetalleVe__Id_Pr__55F4C372">
+          <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
+          <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventario">
+              <PropertyRef Name="Id_Producto" />
+            </Principal>
+            <Dependent Role="DetalleVenta">
+              <PropertyRef Name="Id_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleVe__Id_Ve__55009F39">
+          <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
+          <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuntoVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Principal>
+            <Dependent Role="DetalleVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Empleado__Cedula__5535A963">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
@@ -517,7 +570,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ListaSegm__Id_Li__7849DB76">
+        <Association Name="FK__ListaSegm__Cedul__3E1D39E1">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="ListaSegmentadaCliente" Type="Self.ListaSegmentadaCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="ListaSegmentadaCliente">
+              <PropertyRef Name="Cedula_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ListaSegm__Id_Li__3D2915A8">
           <End Role="ListaSegmentada" Type="Self.ListaSegmentada" Multiplicity="0..1" />
           <End Role="ListaSegmentadaCliente" Type="Self.ListaSegmentadaCliente" Multiplicity="*" />
           <ReferentialConstraint>
@@ -526,6 +591,18 @@
             </Principal>
             <Dependent Role="ListaSegmentadaCliente">
               <PropertyRef Name="Id_Lista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PagoVenta__Id_Ve__5224328E">
+          <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
+          <End Role="PagoVenta" Type="Self.PagoVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuntoVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Principal>
+            <Dependent Role="PagoVenta">
+              <PropertyRef Name="Id_Venta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -541,7 +618,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PermisoRo__Id_Mo__30C33EC3">
+        <Association Name="FK__PermisoRo__Id_Mo__1DB06A4F">
           <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
           <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
           <ReferentialConstraint>
@@ -553,7 +630,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PermisoRo__Id_Ro__2FCF1A8A">
+        <Association Name="FK__PermisoRo__Id_Ro__1CBC4616">
           <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
           <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
           <ReferentialConstraint>
@@ -589,18 +666,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PuntoVent__Id_Pr__5CD6CB2B">
-          <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
-          <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inventario">
-              <PropertyRef Name="Id_Producto" />
-            </Principal>
-            <Dependent Role="PuntoVenta">
-              <PropertyRef Name="Id_Producto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Usuario__Id_Rol__4E88ABD4">
           <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -622,6 +687,7 @@
           <EntitySet Name="ConfiguracionRecurrencia" EntityType="Self.ConfiguracionRecurrencia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contabilidad" EntityType="Self.Contabilidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CriteriosPromocionRecurrente" EntityType="Self.CriteriosPromocionRecurrente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleVenta" EntityType="Self.DetalleVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IntentoLogin" EntityType="Self.IntentoLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
@@ -629,12 +695,14 @@
           <EntitySet Name="ListaSegmentadaCliente" EntityType="Self.ListaSegmentadaCliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogSistema" EntityType="Self.LogSistema" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PagoVenta" EntityType="Self.PagoVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parametro" EntityType="Self.Parametro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PermisoRol" EntityType="Self.PermisoRol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PuntoVenta" EntityType="Self.PuntoVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RecuperacionPassword" EntityType="Self.RecuperacionPassword" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TarjetaSimulada" EntityType="Self.TarjetaSimulada" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoParametro" EntityType="Self.TipoParametro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario_UltimoCambio" EntityType="Self.Usuario_UltimoCambio" Schema="dbo" store:Type="Tables" />
@@ -646,11 +714,11 @@
             <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
             <End Role="CampaniaCliente" EntitySet="CampaniaCliente" />
           </AssociationSet>
-          <AssociationSet Name="FK__CampaniaM__Cedul__3E1D39E1" Association="Self.FK__CampaniaM__Cedul__3E1D39E1">
+          <AssociationSet Name="FK__CampaniaM__Cedul__2A164134" Association="Self.FK__CampaniaM__Cedul__2A164134">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
           </AssociationSet>
-          <AssociationSet Name="FK__CampaniaM__Id_Ca__3D2915A8" Association="Self.FK__CampaniaM__Id_Ca__3D2915A8">
+          <AssociationSet Name="FK__CampaniaM__Id_Ca__29221CFB" Association="Self.FK__CampaniaM__Id_Ca__29221CFB">
             <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
             <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
           </AssociationSet>
@@ -694,6 +762,14 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Contabilidad" EntitySet="Contabilidad" />
           </AssociationSet>
+          <AssociationSet Name="FK__DetalleVe__Id_Pr__55F4C372" Association="Self.FK__DetalleVe__Id_Pr__55F4C372">
+            <End Role="Inventario" EntitySet="Inventario" />
+            <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleVe__Id_Ve__55009F39" Association="Self.FK__DetalleVe__Id_Ve__55009F39">
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+            <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+          </AssociationSet>
           <AssociationSet Name="FK__Empleado__Cedula__5535A963" Association="Self.FK__Empleado__Cedula__5535A963">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Empleado" EntitySet="Empleado" />
@@ -702,19 +778,27 @@
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="Inventario" EntitySet="Inventario" />
           </AssociationSet>
-          <AssociationSet Name="FK__ListaSegm__Id_Li__7849DB76" Association="Self.FK__ListaSegm__Id_Li__7849DB76">
+          <AssociationSet Name="FK__ListaSegm__Cedul__3E1D39E1" Association="Self.FK__ListaSegm__Cedul__3E1D39E1">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ListaSegm__Id_Li__3D2915A8" Association="Self.FK__ListaSegm__Id_Li__3D2915A8">
             <End Role="ListaSegmentada" EntitySet="ListaSegmentada" />
             <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PagoVenta__Id_Ve__5224328E" Association="Self.FK__PagoVenta__Id_Ve__5224328E">
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+            <End Role="PagoVenta" EntitySet="PagoVenta" />
           </AssociationSet>
           <AssociationSet Name="FK__Parametro__Id_Ti__4BAC3F29" Association="Self.FK__Parametro__Id_Ti__4BAC3F29">
             <End Role="TipoParametro" EntitySet="TipoParametro" />
             <End Role="Parametro" EntitySet="Parametro" />
           </AssociationSet>
-          <AssociationSet Name="FK__PermisoRo__Id_Mo__30C33EC3" Association="Self.FK__PermisoRo__Id_Mo__30C33EC3">
+          <AssociationSet Name="FK__PermisoRo__Id_Mo__1DB06A4F" Association="Self.FK__PermisoRo__Id_Mo__1DB06A4F">
             <End Role="Modulo" EntitySet="Modulo" />
             <End Role="PermisoRol" EntitySet="PermisoRol" />
           </AssociationSet>
-          <AssociationSet Name="FK__PermisoRo__Id_Ro__2FCF1A8A" Association="Self.FK__PermisoRo__Id_Ro__2FCF1A8A">
+          <AssociationSet Name="FK__PermisoRo__Id_Ro__1CBC4616" Association="Self.FK__PermisoRo__Id_Ro__1CBC4616">
             <End Role="Parametro" EntitySet="Parametro" />
             <End Role="PermisoRol" EntitySet="PermisoRol" />
           </AssociationSet>
@@ -724,10 +808,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__PuntoVent__Id_Me__5EBF139D" Association="Self.FK__PuntoVent__Id_Me__5EBF139D">
             <End Role="Parametro" EntitySet="Parametro" />
-            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PuntoVent__Id_Pr__5CD6CB2B" Association="Self.FK__PuntoVent__Id_Pr__5CD6CB2B">
-            <End Role="Inventario" EntitySet="Inventario" />
             <End Role="PuntoVenta" EntitySet="PuntoVenta" />
           </AssociationSet>
           <AssociationSet Name="FK__Usuario__Id_Rol__4E88ABD4" Association="Self.FK__Usuario__Id_Rol__4E88ABD4">
@@ -772,7 +852,7 @@
           <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CampaniaCliente" Relationship="Self.FK__CampaniaC__Id_Ca__6FE99F9F" FromRole="CampaniaMarketing" ToRole="CampaniaCliente" />
           <Property Name="Fecha_Programada" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CampaniaMetrica" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__3D2915A8" FromRole="CampaniaMarketing" ToRole="CampaniaMetrica" />
+          <NavigationProperty Name="CampaniaMetrica" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__29221CFB" FromRole="CampaniaMarketing" ToRole="CampaniaMetrica" />
         </EntityType>
         <EntityType Name="Cita">
           <Key>
@@ -813,7 +893,8 @@
           <NavigationProperty Name="Usuario" Relationship="Self.FK__Cliente__Cedula__5165187F" FromRole="Cliente" ToRole="Usuario" />
           <NavigationProperty Name="Parametro" Relationship="Self.FK__Cliente__Id_Gene__52593CB8" FromRole="Cliente" ToRole="Parametro" />
           <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__PuntoVent__Cedul__5DCAEF64" FromRole="Cliente" ToRole="PuntoVenta" />
-          <NavigationProperty Name="CampaniaMetrica" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__3E1D39E1" FromRole="Cliente" ToRole="CampaniaMetrica" />
+          <NavigationProperty Name="CampaniaMetrica" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__2A164134" FromRole="Cliente" ToRole="CampaniaMetrica" />
+          <NavigationProperty Name="ListaSegmentadaCliente" Relationship="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Cedul__3E1D39E1" FromRole="Cliente" ToRole="ListaSegmentadaCliente" />
         </EntityType>
         <EntityType Name="Contabilidad">
           <Key>
@@ -876,7 +957,7 @@
           <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Id_Pr__6383C8BA" FromRole="Inventario" ToRole="Contabilidad" />
           <NavigationProperty Name="Proveedor" Relationship="Self.FK__Inventari__Id_Pr__59FA5E80" FromRole="Inventario" ToRole="Proveedor" />
-          <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__PuntoVent__Id_Pr__5CD6CB2B" FromRole="Inventario" ToRole="PuntoVenta" />
+          <NavigationProperty Name="DetalleVenta" Relationship="HD_Opticas_JAVS_BDModel.FK__DetalleVe__Id_Pr__55F4C372" FromRole="Inventario" ToRole="DetalleVenta" />
         </EntityType>
         <EntityType Name="Parametro">
           <Key>
@@ -920,9 +1001,7 @@
             <PropertyRef Name="Id_Venta" />
           </Key>
           <Property Name="Id_Venta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Producto" Type="Int32" />
           <Property Name="Cedula_Cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Cantidad" Type="Int32" />
           <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="IVA" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
@@ -936,8 +1015,9 @@
           <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cliente" Relationship="Self.FK__PuntoVent__Cedul__5DCAEF64" FromRole="PuntoVenta" ToRole="Cliente" />
           <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Id_Ve__628FA481" FromRole="PuntoVenta" ToRole="Contabilidad" />
-          <NavigationProperty Name="Inventario" Relationship="Self.FK__PuntoVent__Id_Pr__5CD6CB2B" FromRole="PuntoVenta" ToRole="Inventario" />
           <NavigationProperty Name="Parametro" Relationship="Self.FK__PuntoVent__Id_Me__5EBF139D" FromRole="PuntoVenta" ToRole="Parametro" />
+          <NavigationProperty Name="PagoVenta" Relationship="HD_Opticas_JAVS_BDModel.FK__PagoVenta__Id_Ve__5224328E" FromRole="PuntoVenta" ToRole="PagoVenta" />
+          <NavigationProperty Name="DetalleVenta" Relationship="HD_Opticas_JAVS_BDModel.FK__DetalleVe__Id_Ve__55009F39" FromRole="PuntoVenta" ToRole="DetalleVenta" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1166,18 +1246,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PuntoVent__Id_Pr__5CD6CB2B">
-          <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
-          <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inventario">
-              <PropertyRef Name="Id_Producto" />
-            </Principal>
-            <Dependent Role="PuntoVenta">
-              <PropertyRef Name="Id_Producto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Parametro__Id_Ti__4BAC3F29">
           <End Role="TipoParametro" Type="Self.TipoParametro" Multiplicity="1" />
           <End Role="Parametro" Type="Self.Parametro" Multiplicity="*" />
@@ -1288,10 +1356,6 @@
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="Inventario" EntitySet="Inventario" />
           </AssociationSet>
-          <AssociationSet Name="FK__PuntoVent__Id_Pr__5CD6CB2B" Association="Self.FK__PuntoVent__Id_Pr__5CD6CB2B">
-            <End Role="Inventario" EntitySet="Inventario" />
-            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
-          </AssociationSet>
           <AssociationSet Name="FK__Parametro__Id_Ti__4BAC3F29" Association="Self.FK__Parametro__Id_Ti__4BAC3F29">
             <End Role="TipoParametro" EntitySet="TipoParametro" />
             <End Role="Parametro" EntitySet="Parametro" />
@@ -1317,24 +1381,43 @@
             <End Role="PermisoRol" EntitySet="PermisoRol" />
           </AssociationSet>
           <EntitySet Name="Usuario_UltimoCambio" EntityType="HD_Opticas_JAVS_BDModel.Usuario_UltimoCambio" />
+          <EntitySet Name="PagoVenta" EntityType="HD_Opticas_JAVS_BDModel.PagoVenta" />
+          <EntitySet Name="TarjetaSimulada" EntityType="HD_Opticas_JAVS_BDModel.TarjetaSimulada" />
+          <AssociationSet Name="FK__PagoVenta__Id_Ve__5224328E" Association="HD_Opticas_JAVS_BDModel.FK__PagoVenta__Id_Ve__5224328E">
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+            <End Role="PagoVenta" EntitySet="PagoVenta" />
+          </AssociationSet>
+          <EntitySet Name="DetalleVenta" EntityType="HD_Opticas_JAVS_BDModel.DetalleVenta" />
+          <AssociationSet Name="FK__DetalleVe__Id_Pr__55F4C372" Association="HD_Opticas_JAVS_BDModel.FK__DetalleVe__Id_Pr__55F4C372">
+            <End Role="Inventario" EntitySet="Inventario" />
+            <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleVe__Id_Ve__55009F39" Association="HD_Opticas_JAVS_BDModel.FK__DetalleVe__Id_Ve__55009F39">
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+            <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+          </AssociationSet>
           <EntitySet Name="CampaniaMetrica" EntityType="HD_Opticas_JAVS_BDModel.CampaniaMetrica" />
-          <AssociationSet Name="FK__CampaniaM__Id_Ca__3D2915A8" Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__3D2915A8">
+          <EntitySet Name="ConfiguracionRecurrencia" EntityType="HD_Opticas_JAVS_BDModel.ConfiguracionRecurrencia" />
+          <EntitySet Name="CriteriosPromocionRecurrente" EntityType="HD_Opticas_JAVS_BDModel.CriteriosPromocionRecurrente" />
+          <EntitySet Name="ListaSegmentada" EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentada" />
+          <EntitySet Name="ListaSegmentadaCliente" EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente" />
+          <EntitySet Name="LogSistema" EntityType="HD_Opticas_JAVS_BDModel.LogSistema" />
+          <AssociationSet Name="FK__CampaniaM__Id_Ca__29221CFB" Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__29221CFB">
             <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
             <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
           </AssociationSet>
-          <AssociationSet Name="FK__CampaniaM__Cedul__3E1D39E1" Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__3E1D39E1">
+          <AssociationSet Name="FK__CampaniaM__Cedul__2A164134" Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__2A164134">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
           </AssociationSet>
-          <EntitySet Name="ListaSegmentada" EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentada" />
-          <EntitySet Name="ListaSegmentadaCliente" EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente" />
-          <AssociationSet Name="FK__ListaSegm__Id_Li__7849DB76" Association="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__7849DB76">
+          <AssociationSet Name="FK__ListaSegm__Cedul__3E1D39E1" Association="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Cedul__3E1D39E1">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ListaSegm__Id_Li__3D2915A8" Association="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__3D2915A8">
             <End Role="ListaSegmentada" EntitySet="ListaSegmentada" />
             <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
           </AssociationSet>
-          <EntitySet Name="ConfiguracionRecurrencia" EntityType="HD_Opticas_JAVS_BDModel.ConfiguracionRecurrencia" />
-          <EntitySet Name="CriteriosPromocionRecurrente" EntityType="HD_Opticas_JAVS_BDModel.CriteriosPromocionRecurrente" />
-          <EntitySet Name="LogSistema" EntityType="HD_Opticas_JAVS_BDModel.LogSistema" />
         </EntityContainer>
         <EntityType Name="RecuperacionPassword">
           <Key>
@@ -1417,6 +1500,76 @@
           <Property Name="FechaCambio" Type="DateTime" Precision="3" />
           <Property Name="Revertido" Type="Boolean" />
         </EntityType>
+        <EntityType Name="PagoVenta">
+          <Key>
+            <PropertyRef Name="Id_Pago" />
+          </Key>
+          <Property Name="Id_Pago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Venta" Type="Int32" />
+          <Property Name="Metodo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Monto" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="PuntoVenta" Relationship="HD_Opticas_JAVS_BDModel.FK__PagoVenta__Id_Ve__5224328E" FromRole="PagoVenta" ToRole="PuntoVenta" />
+        </EntityType>
+        <EntityType Name="TarjetaSimulada">
+          <Key>
+            <PropertyRef Name="Id_Tarjeta" />
+          </Key>
+          <Property Name="Id_Tarjeta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroTarjeta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NombreTitular" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FechaVencimiento" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="CVV" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Saldo" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <Association Name="FK__PagoVenta__Id_Ve__5224328E">
+          <End Type="HD_Opticas_JAVS_BDModel.PuntoVenta" Role="PuntoVenta" Multiplicity="0..1" />
+          <End Type="HD_Opticas_JAVS_BDModel.PagoVenta" Role="PagoVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuntoVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Principal>
+            <Dependent Role="PagoVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DetalleVenta">
+          <Key>
+            <PropertyRef Name="Id_Detalle" />
+          </Key>
+          <Property Name="Id_Detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Venta" Type="Int32" />
+          <Property Name="Id_Producto" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" />
+          <Property Name="PrecioUnitario" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Inventario" Relationship="HD_Opticas_JAVS_BDModel.FK__DetalleVe__Id_Pr__55F4C372" FromRole="DetalleVenta" ToRole="Inventario" />
+          <NavigationProperty Name="PuntoVenta" Relationship="HD_Opticas_JAVS_BDModel.FK__DetalleVe__Id_Ve__55009F39" FromRole="DetalleVenta" ToRole="PuntoVenta" />
+        </EntityType>
+        <Association Name="FK__DetalleVe__Id_Pr__55F4C372">
+          <End Type="HD_Opticas_JAVS_BDModel.Inventario" Role="Inventario" Multiplicity="0..1" />
+          <End Type="HD_Opticas_JAVS_BDModel.DetalleVenta" Role="DetalleVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventario">
+              <PropertyRef Name="Id_Producto" />
+            </Principal>
+            <Dependent Role="DetalleVenta">
+              <PropertyRef Name="Id_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleVe__Id_Ve__55009F39">
+          <End Type="HD_Opticas_JAVS_BDModel.PuntoVenta" Role="PuntoVenta" Multiplicity="0..1" />
+          <End Type="HD_Opticas_JAVS_BDModel.DetalleVenta" Role="DetalleVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuntoVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Principal>
+            <Dependent Role="DetalleVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="CampaniaMetrica">
           <Key>
             <PropertyRef Name="Id_Campania" />
@@ -1427,66 +1580,10 @@
           <Property Name="Abierto" Type="Boolean" />
           <Property Name="Click" Type="Boolean" />
           <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CampaniaMarketing" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__3D2915A8" FromRole="CampaniaMetrica" ToRole="CampaniaMarketing" />
-          <NavigationProperty Name="Cliente" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__3E1D39E1" FromRole="CampaniaMetrica" ToRole="Cliente" />
           <Property Name="Automatica" Type="Boolean" />
+          <NavigationProperty Name="CampaniaMarketing" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__29221CFB" FromRole="CampaniaMetrica" ToRole="CampaniaMarketing" />
+          <NavigationProperty Name="Cliente" Relationship="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__2A164134" FromRole="CampaniaMetrica" ToRole="Cliente" />
         </EntityType>
-        <Association Name="FK__CampaniaM__Id_Ca__3D2915A8">
-          <End Type="HD_Opticas_JAVS_BDModel.CampaniaMarketing" Role="CampaniaMarketing" Multiplicity="1" />
-          <End Type="HD_Opticas_JAVS_BDModel.CampaniaMetrica" Role="CampaniaMetrica" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CampaniaMarketing">
-              <PropertyRef Name="Id_Campania" />
-            </Principal>
-            <Dependent Role="CampaniaMetrica">
-              <PropertyRef Name="Id_Campania" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CampaniaM__Cedul__3E1D39E1">
-          <End Type="HD_Opticas_JAVS_BDModel.Cliente" Role="Cliente" Multiplicity="1" />
-          <End Type="HD_Opticas_JAVS_BDModel.CampaniaMetrica" Role="CampaniaMetrica" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="Cedula" />
-            </Principal>
-            <Dependent Role="CampaniaMetrica">
-              <PropertyRef Name="Cedula_Cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ListaSegmentada">
-          <Key>
-            <PropertyRef Name="Id_Lista" />
-          </Key>
-          <Property Name="Id_Lista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NombreLista" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ListaSegmentadaCliente" Relationship="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__7849DB76" FromRole="ListaSegmentada" ToRole="ListaSegmentadaCliente" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="UsuarioCreador" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="ListaSegmentadaCliente">
-          <Key>
-            <PropertyRef Name="Id_ListaCliente" />
-          </Key>
-          <Property Name="Id_ListaCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id_Lista" Type="Int32" />
-          <Property Name="Cedula_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ListaSegmentada" Relationship="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__7849DB76" FromRole="ListaSegmentadaCliente" ToRole="ListaSegmentada" />
-        </EntityType>
-        <Association Name="FK__ListaSegm__Id_Li__7849DB76">
-          <End Type="HD_Opticas_JAVS_BDModel.ListaSegmentada" Role="ListaSegmentada" Multiplicity="0..1" />
-          <End Type="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente" Role="ListaSegmentadaCliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ListaSegmentada">
-              <PropertyRef Name="Id_Lista" />
-            </Principal>
-            <Dependent Role="ListaSegmentadaCliente">
-              <PropertyRef Name="Id_Lista" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ConfiguracionRecurrencia">
           <Key>
             <PropertyRef Name="Id" />
@@ -1507,6 +1604,27 @@
           <Property Name="UsuarioModificador" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="ListaSegmentada">
+          <Key>
+            <PropertyRef Name="Id_Lista" />
+          </Key>
+          <Property Name="Id_Lista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreLista" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UsuarioCreador" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ListaSegmentadaCliente" Relationship="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__3D2915A8" FromRole="ListaSegmentada" ToRole="ListaSegmentadaCliente" />
+        </EntityType>
+        <EntityType Name="ListaSegmentadaCliente">
+          <Key>
+            <PropertyRef Name="Id_ListaCliente" />
+          </Key>
+          <Property Name="Id_ListaCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Lista" Type="Int32" />
+          <Property Name="Cedula_Cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cliente" Relationship="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Cedul__3E1D39E1" FromRole="ListaSegmentadaCliente" ToRole="Cliente" />
+          <NavigationProperty Name="ListaSegmentada" Relationship="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__3D2915A8" FromRole="ListaSegmentadaCliente" ToRole="ListaSegmentada" />
+        </EntityType>
         <EntityType Name="LogSistema">
           <Key>
             <PropertyRef Name="Id" />
@@ -1517,6 +1635,54 @@
           <Property Name="Mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <Association Name="FK__CampaniaM__Id_Ca__29221CFB">
+          <End Type="HD_Opticas_JAVS_BDModel.CampaniaMarketing" Role="CampaniaMarketing" Multiplicity="1" />
+          <End Type="HD_Opticas_JAVS_BDModel.CampaniaMetrica" Role="CampaniaMetrica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaniaMarketing">
+              <PropertyRef Name="Id_Campania" />
+            </Principal>
+            <Dependent Role="CampaniaMetrica">
+              <PropertyRef Name="Id_Campania" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CampaniaM__Cedul__2A164134">
+          <End Type="HD_Opticas_JAVS_BDModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="HD_Opticas_JAVS_BDModel.CampaniaMetrica" Role="CampaniaMetrica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="CampaniaMetrica">
+              <PropertyRef Name="Cedula_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ListaSegm__Cedul__3E1D39E1">
+          <End Type="HD_Opticas_JAVS_BDModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente" Role="ListaSegmentadaCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="ListaSegmentadaCliente">
+              <PropertyRef Name="Cedula_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ListaSegm__Id_Li__3D2915A8">
+          <End Type="HD_Opticas_JAVS_BDModel.ListaSegmentada" Role="ListaSegmentada" Multiplicity="0..1" />
+          <End Type="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente" Role="ListaSegmentadaCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaSegmentada">
+              <PropertyRef Name="Id_Lista" />
+            </Principal>
+            <Dependent Role="ListaSegmentadaCliente">
+              <PropertyRef Name="Id_Lista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1680,9 +1846,7 @@
             <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.PuntoVenta">
               <MappingFragment StoreEntitySet="PuntoVenta">
                 <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
-                <ScalarProperty Name="Id_Producto" ColumnName="Id_Producto" />
                 <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
                 <ScalarProperty Name="IVA" ColumnName="IVA" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
@@ -1800,6 +1964,40 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PagoVenta">
+            <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.PagoVenta">
+              <MappingFragment StoreEntitySet="PagoVenta">
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Metodo" ColumnName="Metodo" />
+                <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+                <ScalarProperty Name="Id_Pago" ColumnName="Id_Pago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TarjetaSimulada">
+            <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.TarjetaSimulada">
+              <MappingFragment StoreEntitySet="TarjetaSimulada">
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="CVV" ColumnName="CVV" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="NombreTitular" ColumnName="NombreTitular" />
+                <ScalarProperty Name="NumeroTarjeta" ColumnName="NumeroTarjeta" />
+                <ScalarProperty Name="Id_Tarjeta" ColumnName="Id_Tarjeta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleVenta">
+            <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.DetalleVenta">
+              <MappingFragment StoreEntitySet="DetalleVenta">
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Id_Producto" ColumnName="Id_Producto" />
+                <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+                <ScalarProperty Name="Id_Detalle" ColumnName="Id_Detalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CampaniaMetrica">
             <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.CampaniaMetrica">
               <MappingFragment StoreEntitySet="CampaniaMetrica">
@@ -1809,26 +2007,6 @@
                 <ScalarProperty Name="Abierto" ColumnName="Abierto" />
                 <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
                 <ScalarProperty Name="Id_Campania" ColumnName="Id_Campania" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ListaSegmentada">
-            <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.ListaSegmentada">
-              <MappingFragment StoreEntitySet="ListaSegmentada">
-                <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-                <ScalarProperty Name="NombreLista" ColumnName="NombreLista" />
-                <ScalarProperty Name="Id_Lista" ColumnName="Id_Lista" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ListaSegmentadaCliente">
-            <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente">
-              <MappingFragment StoreEntitySet="ListaSegmentadaCliente">
-                <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
-                <ScalarProperty Name="Id_Lista" ColumnName="Id_Lista" />
-                <ScalarProperty Name="Id_ListaCliente" ColumnName="Id_ListaCliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1851,6 +2029,26 @@
                 <ScalarProperty Name="DiasRango" ColumnName="DiasRango" />
                 <ScalarProperty Name="MinimoCompras" ColumnName="MinimoCompras" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListaSegmentada">
+            <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.ListaSegmentada">
+              <MappingFragment StoreEntitySet="ListaSegmentada">
+                <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="NombreLista" ColumnName="NombreLista" />
+                <ScalarProperty Name="Id_Lista" ColumnName="Id_Lista" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListaSegmentadaCliente">
+            <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente">
+              <MappingFragment StoreEntitySet="ListaSegmentadaCliente">
+                <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+                <ScalarProperty Name="Id_Lista" ColumnName="Id_Lista" />
+                <ScalarProperty Name="Id_ListaCliente" ColumnName="Id_ListaCliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

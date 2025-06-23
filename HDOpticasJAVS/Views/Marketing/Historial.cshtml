@@ -18,25 +18,34 @@
     }
 
     <!-- Botones principales -->
-<div class="mb-4 d-flex flex-wrap gap-2">
-    <a href="@Url.Action("Crear", "Marketing")" class="btn btn-primary">
-        ➕ Crear Campaña Manual
-    </a>
-    <a href="@Url.Action("SegmentarClientes", "Marketing")" class="btn btn-secondary">
-        🔍 Segmentar Clientes
-    </a>
+    <div class="d-flex flex-wrap gap-2 mt-4">
 
+        <a href="@Url.Action("Crear", "Marketing")" class="btn" style="background-color:#1f57f2; color:white;">
+            <i class="fas fa-plus"></i> Crear Campaña Manual
+        </a>
 
-    <a href="@Url.Action("EnviarCampaniaSegmentada", "Marketing")" class="btn btn-info">
-        📤 Enviar a Lista Segmentada
-    </a>
+        <a href="@Url.Action("SegmentarClientes", "Marketing")" class="btn" style="background-color:#5f6368; color:white;">
+            <i class="fas fa-search"></i> Segmentar Clientes
+        </a>
 
-    <a href="@Url.Action("ConfigurarCriteriosRecurrentes", "Marketing")" class="btn btn-warning">
-        ⚙️ Criterios Clientes Recurrentes
-    </a>
-    <a href="@Url.Action("LogErrores", "Marketing")" class="btn btn-danger btn-sm">
-        🧾 Ver Errores
-    </a>
+        <a href="@Url.Action("EnviarCampaniaSegmentada", "Marketing")" class="btn" style="background-color:#00cfd5; color:white;">
+            <i class="fas fa-paper-plane"></i> Enviar a Lista Segmentada
+        </a>
+
+        <a href="@Url.Action("ConfigurarCriteriosRecurrentes", "Marketing")" class="btn" style="background-color:#f7c744; color:white;">
+            <i class="fas fa-cog"></i> Criterios Clientes Recurrentes
+        </a>
+
+        <a href="@Url.Action("LogErrores", "Marketing")" class="btn" style="background-color:#d81b60; color:white;">
+            <i class="fas fa-exclamation-triangle"></i> Ver Errores
+        </a>
+
+        <a href="@Url.Action("Tendencias", "Marketing")" class="btn" style="background-color:#8e24aa; color:white;">
+            <i class="fas fa-chart-line"></i> Ver Análisis de Tendencias
+        </a>
+
+    </div>
+
 
 
 </div>
@@ -118,4 +127,4 @@
             </div>
         }
     </div>
-</div>
+

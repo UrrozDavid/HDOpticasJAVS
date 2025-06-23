@@ -19,6 +19,7 @@ namespace HDOpticasJAVS.Models.ViewModels
         [DataType(DataType.Date)]
         public DateTime Fecha_Inicio { get; set; }
 
+        [Required(ErrorMessage = "La fecha de finalización es obligatoria")]
         [DataType(DataType.Date)]
         public DateTime? Fecha_Fin { get; set; }
 

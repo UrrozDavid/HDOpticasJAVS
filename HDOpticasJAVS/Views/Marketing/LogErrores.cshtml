@@ -13,8 +13,8 @@
 }
 else
 {
-    <table class="table table-bordered table-striped bg-dark text-white mt-3">
-        <thead class="thead-dark">
+    <table class="table table-bordered mt-3" style="background-color: #212529; color: white;">
+        <thead style="background-color: #343a40; color: white;">
             <tr>
                 <th>Fecha</th>
                 <th>Módulo</th>
@@ -25,7 +25,7 @@ else
         <tbody>
             @foreach (var log in Model)
             {
-                <tr>
+                <tr style="color: white;">
                     <td>@log.Fecha.ToString("yyyy-MM-dd HH:mm")</td>
                     <td>@log.Modulo</td>
                     <td>@log.Mensaje</td>

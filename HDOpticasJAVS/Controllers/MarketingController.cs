@@ -8,6 +8,7 @@ using HDOpticasJAVS.Helpers;
 using System.Data.Entity;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using HDOpticasJAVS.ViewModels;
 
 
 namespace HDOpticasJAVS.Controllers
@@ -58,6 +59,7 @@ namespace HDOpticasJAVS.Controllers
                 Tipo = model.Tipo,
                 Fecha_Inicio = model.Fecha_Inicio,
                 Fecha_Programada = model.Fecha_Programada,
+                Fecha_Fin = model.Fecha_Fin, 
                 Estado = model.Fecha_Programada.HasValue ? "P" : "A",
                 UsuarioCreador = User.Identity.Name,
                 FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
@@ -774,6 +776,93 @@ namespace HDOpticasJAVS.Controllers
                 .ToList();
 
             return View(logs);
+        }
+        public ActionResult Tendencias(DateTime? desde = null, DateTime? hasta = null)
+        {
+            var fechaInicio = desde ?? DateTime.MinValue;
+            var fechaFin = hasta ?? DateTime.MaxValue;
+
+            var campañas = db.CampaniaMarketing
+                .Where(c => c.Fecha_Inicio >= fechaInicio && c.Fecha_Inicio <= fechaFin)
+                .ToList();
+
+            var metricas = db.CampaniaMetrica
+                .Where(m => m.FechaRegistro >= fechaInicio && m.FechaRegistro <= fechaFin)
+                .ToList();
+
+            var lista = campañas.Select(c => new CampaniaTendenciaViewModel
+            {
+                NombreCampania = c.Nombre_Campania,
+                FechaInicio = c.Fecha_Inicio ?? DateTime.MinValue,
+                FechaFin = c.Fecha_Fin,
+                TotalEnviados = db.CampaniaCliente.Count(x => x.Id_Campania == c.Id_Campania),
+                TotalAbiertos = metricas.Count(x => x.Id_Campania == c.Id_Campania && x.Abierto == true),
+                TotalClicks = metricas.Count(x => x.Id_Campania == c.Id_Campania && x.Click == true)
+            }).ToList();
+
+            foreach (var item in lista)
+            {
+                item.PorcentajeApertura = item.TotalEnviados > 0 ? Math.Round((double)item.TotalAbiertos / item.TotalEnviados * 100, 2) : 0;
+                item.PorcentajeClick = item.TotalEnviados > 0 ? Math.Round((double)item.TotalClicks / item.TotalEnviados * 100, 2) : 0;
+            }
+
+            if (!lista.Any())
+            {
+                ViewBag.Mensaje = "No hay datos para mostrar en el periodo seleccionado.";
+            }
+
+            return View(lista);
+        }
+
+        [HttpPost]
+        public ActionResult ExportarTendencias(DateTime? desde, DateTime? hasta)
+        {
+            var fechaInicio = desde ?? DateTime.MinValue;
+            var fechaFin = hasta ?? DateTime.MaxValue;
+
+            var campañas = db.CampaniaMarketing
+                .Where(c => c.Fecha_Inicio >= fechaInicio && c.Fecha_Inicio <= fechaFin)
+                .ToList();
+
+            var metricas = db.CampaniaMetrica
+                .Where(m => m.FechaRegistro >= fechaInicio && m.FechaRegistro <= fechaFin)
+                .ToList();
+
+            var lista = campañas.Select(c => new CampaniaTendenciaViewModel
+            {
+                NombreCampania = c.Nombre_Campania,
+                FechaInicio = c.Fecha_Inicio ?? DateTime.MinValue,
+                FechaFin = c.Fecha_Fin ?? DateTime.MinValue,
+                TotalEnviados = db.CampaniaCliente.Count(x => x.Id_Campania == c.Id_Campania),
+                TotalAbiertos = metricas.Count(x => x.Id_Campania == c.Id_Campania && x.Abierto == true),
+                TotalClicks = metricas.Count(x => x.Id_Campania == c.Id_Campania && x.Click == true)
+            }).ToList();
+
+            foreach (var item in lista)
+            {
+                item.PorcentajeApertura = item.TotalEnviados > 0 ? Math.Round((double)item.TotalAbiertos / item.TotalEnviados * 100, 2) : 0;
+                item.PorcentajeClick = item.TotalEnviados > 0 ? Math.Round((double)item.TotalClicks / item.TotalEnviados * 100, 2) : 0;
+            }
+
+            if (!lista.Any())
+            {
+                return Content("No hay datos para exportar.");
+            }
+
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine("Campaña,Enviados,Abiertos,Clicks,% Apertura,% Click,Desde,Hasta");
+
+            foreach (var item in lista)
+            {
+                sb.AppendLine($"{item.NombreCampania},{item.TotalEnviados},{item.TotalAbiertos},{item.TotalClicks}," +
+                              $"{item.PorcentajeApertura:F2},{item.PorcentajeClick:F2},{item.FechaInicio:yyyy-MM-dd},{item.FechaFin:yyyy-MM-dd}");
+            }
+
+            return File(
+                new System.Text.UTF8Encoding().GetBytes(sb.ToString()),
+                "text/csv",
+                "TendenciasMarketing.csv"
+            );
         }
 
     }

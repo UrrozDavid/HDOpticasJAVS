@@ -18,7 +18,7 @@ namespace HDOpticasJAVS
         public Inventario()
         {
             this.Contabilidad = new HashSet<Contabilidad>();
-            this.PuntoVenta = new HashSet<PuntoVenta>();
+            this.DetalleVenta = new HashSet<DetalleVenta>();
         }
     
         public int Id_Producto { get; set; }
@@ -38,6 +38,6 @@ namespace HDOpticasJAVS
         public virtual ICollection<Contabilidad> Contabilidad { get; set; }
         public virtual Proveedor Proveedor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PuntoVenta> PuntoVenta { get; set; }
+        public virtual ICollection<DetalleVenta> DetalleVenta { get; set; }
     }
 }

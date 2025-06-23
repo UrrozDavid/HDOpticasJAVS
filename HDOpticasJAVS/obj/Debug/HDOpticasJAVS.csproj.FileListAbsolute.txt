@@ -367,8 +367,11 @@ C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Antlr3.Runtime.dll
+C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\BouncyCastle.Crypto.dll
+C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\BouncyCastle.Cryptography.dll
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\EntityFramework.dll
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\EntityFramework.SqlServer.dll
+C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\itextsharp.dll
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\Newtonsoft.Json.dll
@@ -380,8 +383,10 @@ C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.WebPages.dll
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.WebPages.Razor.dll
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\WebGrease.dll
+C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\BouncyCastle.Cryptography.xml
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\EntityFramework.xml
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\EntityFramework.SqlServer.xml
+C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\itextsharp.xml
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Helpers.xml
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Mvc.xml
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\bin\System.Web.Optimization.xml
@@ -397,7 +402,3 @@ C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOptica.15B28D0C.Up2Date
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.dll
 C:\Users\jason\Downloads\HDOpticasJAVS-main\HDOpticasJAVS-main\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.pdb
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.SqlServer.dll
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.xml
-C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\bin\EntityFramework.SqlServer.xml

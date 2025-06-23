@@ -33,7 +33,6 @@
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__Contabili__Usuar__6477ECF3" ManuallyRouted="false" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__Empleado__Cedula__5535A963" ManuallyRouted="false" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__Inventari__Id_Pr__59FA5E80" ManuallyRouted="false" />
-        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__PuntoVent__Id_Pr__5CD6CB2B" ManuallyRouted="false" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__Parametro__Id_Ti__4BAC3F29" ManuallyRouted="false" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__PuntoVent__Id_Me__5EBF139D" ManuallyRouted="false" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__Usuario__Id_Rol__4E88ABD4" ManuallyRouted="false" />
@@ -44,15 +43,22 @@
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Mo__1DB06A4F" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Ro__1CBC4616" />
         <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.Usuario_UltimoCambio" Width="1.5" PointX="3.375" PointY="3.75" />
-        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.CampaniaMetrica" Width="1.5" PointX="12.75" PointY="18.375" />
-        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__3D2915A8" />
-        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__3E1D39E1" />
-        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentada" Width="1.5" PointX="5.375" PointY="0.875" />
-        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente" Width="1.5" PointX="7.625" PointY="0.875" />
-        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__7849DB76" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.PagoVenta" Width="1.5" PointX="12" PointY="9.75" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.TarjetaSimulada" Width="1.5" PointX="5.375" PointY="0.75" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__PagoVenta__Id_Ve__5224328E" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.DetalleVenta" Width="1.5" PointX="15" PointY="9.5" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__DetalleVe__Id_Pr__55F4C372" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__DetalleVe__Id_Ve__55009F39" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.CampaniaMetrica" Width="1.5" PointX="15.75" PointY="19.375" />
         <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.ConfiguracionRecurrencia" Width="1.5" PointX="5.375" PointY="3.75" />
-        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.CriteriosPromocionRecurrente" Width="1.5" PointX="7.375" PointY="3.75" />
-        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.LogSistema" Width="1.5" PointX="9.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.CriteriosPromocionRecurrente" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentada" Width="1.5" PointX="10.5" PointY="24.125" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.ListaSegmentadaCliente" Width="1.5" PointX="12.75" PointY="18.125" />
+        <EntityTypeShape EntityType="HD_Opticas_JAVS_BDModel.LogSistema" Width="1.5" PointX="7.375" PointY="4.75" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Id_Ca__29221CFB" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__2A164134" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Cedul__3E1D39E1" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__3D2915A8" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

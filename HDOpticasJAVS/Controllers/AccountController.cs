@@ -5,24 +5,21 @@ using System.Net;
 using System.Net.Mail;
 using System.Web.Helpers;
 using System.Web.Mvc;
-using System.Web.Security;
 using HDOpticasJAVS.Models;
-
 
 namespace HDOpticasJAVS.Controllers
 {
     public class AccountController : BaseController
     {
         private HD_Opticas_JAVS_BDEntities db = new HD_Opticas_JAVS_BDEntities();
-        
+
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Login(string Usuario, string Contrasenia, string returnUrl)
-
+        public ActionResult Login(string Usuario, string Contrasenia)
         {
             using (var db = new HD_Opticas_JAVS_BDEntities())
             {
@@ -77,26 +74,13 @@ namespace HDOpticasJAVS.Controllers
                 usuarioEncontrado.FechaBloqueoHasta = null;
                 db.SaveChanges();
 
-                // 🔐 AUTENTICAR FORMALMENTE
-                System.Web.Security.FormsAuthentication.SetAuthCookie(
-                    usuarioEncontrado.Correo ?? usuarioEncontrado.Cedula, false);
-
-                // 👉 ESTABLECER SESSION
                 Session["Usuario"] = usuarioEncontrado.Correo ?? usuarioEncontrado.Cedula;
-                Session["Cedula"] = usuarioEncontrado.Cedula; // si ocupás usarla para consultar promociones
                 Session["Rol"] = usuarioEncontrado.Id_Rol;
-
-                // 🔁 REDIRECCIÓN
-                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                {
-                    return Redirect(returnUrl);
-                }
-
                 return RedirectToAction("Index", "Home");
             }
-            }
+        }
 
-            private void RegistrarIntento(string usuarioIntentado, bool exito, string razon)
+        private void RegistrarIntento(string usuarioIntentado, bool exito, string razon)
         {
             using (var db = new HD_Opticas_JAVS_BDEntities())
             {
