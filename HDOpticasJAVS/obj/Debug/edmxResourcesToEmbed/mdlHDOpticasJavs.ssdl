@@ -59,6 +59,7 @@
     <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
     <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
     <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="TokenConfirmacion" Type="uniqueidentifier" />
   </EntityType>
   <EntityType Name="Cliente">
     <Key>
@@ -142,6 +143,7 @@
     <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
     <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
     <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="Id_Especialidad" Type="int" />
   </EntityType>
   <EntityType Name="IntentoLogin">
     <Key>
@@ -673,6 +675,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Empleado_Especialidad">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Empleado">
+        <PropertyRef Name="Id_Especialidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="HD_Opticas_JAVS_BDModelStoreContainer">
     <EntitySet Name="CampaniaCliente" EntityType="Self.CampaniaCliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CampaniaMarketing" EntityType="Self.CampaniaMarketing" Schema="dbo" store:Type="Tables" />
@@ -808,6 +822,10 @@
     <AssociationSet Name="FK__Usuario__Id_Rol__4E88ABD4" Association="Self.FK__Usuario__Id_Rol__4E88ABD4">
       <End Role="Parametro" EntitySet="Parametro" />
       <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Empleado_Especialidad" Association="Self.FK_Empleado_Especialidad">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Empleado" EntitySet="Empleado" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

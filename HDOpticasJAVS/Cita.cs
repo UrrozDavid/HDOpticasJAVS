@@ -26,6 +26,7 @@ namespace HDOpticasJAVS
         public string FechaCreacion { get; set; }
         public string UsuarioModificador { get; set; }
         public string FechaModificacion { get; set; }
+        public Nullable<System.Guid> TokenConfirmacion { get; set; }
     
         public virtual Empleado Empleado { get; set; }
         public virtual Usuario Usuario { get; set; }

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<HDOpticasJAVS.Cita>
+
+@{
     ViewBag.Title = "Citas Agendadas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -9,53 +11,56 @@
             <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
         </div>
         <div class="card-body" style="font-family: 'Roboto', sans-serif;">
-
-            @if (TempData["SuccessMessage"] != null)
-            {
-                <div class="alert alert-success" style="font-family: Roboto;">@TempData["SuccessMessage"]</div>
-            }
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <div class="alert alert-danger" style="font-family: Roboto;">@TempData["ErrorMessage"]</div>
-            }
-
-            <div class="text-end mb-3">
-                <a href="@Url.Action("Crear")" class="btn btn-custom">Agendar Nueva Cita</a>
+            <div class="mb-3 text-end">
+                @Html.ActionLink("Crear Nueva Cita", "Create", null, new { @class = "btn btn-success" })
             </div>
 
-            <table class="table table-dark table-hover table-bordered">
-                <thead class="table-light text-dark" style="font-family: Raleway;">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Fecha Cita</th>
-                        <th>Hora Cita</th>
-                        <th>Especialidad</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody style="font-family: Roboto;">
-                    <tr>
-                        <td>Sofía Ramírez Chacón</td>
-                        <td>2025-04-12</td>
-                        <td>10:30 a.m.</td>
-                        <td>Examen Visual Completo</td>
-                        <td>Confirmada</td>
-                        <td>
-                            <form method="post" action="@Url.Action("VerCita", "CitaEnLinea")" style="display:inline;">
-                                <input type="hidden" name="Nombre" value="Sofía Ramírez Chacón" />
-                                <input type="hidden" name="FechaCita" value="2025-04-12" />
-                                <input type="hidden" name="HoraCita" value="10:30 a.m." />
-                                <input type="hidden" name="Especialidad" value="Examen Visual Completo" />
-                                <input type="hidden" name="Estado" value="Confirmada" />
-                                <button type="submit" class="btn btn-info btn-sm" style="font-family: Roboto;">Ver</button>
-                            </form>
-                            <a href="@Url.Action("Editar")" class="btn btn-warning btn-sm" style="font-family: Roboto;">Editar</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <div class="table-responsive">
+                <table class="table table-dark table-hover table-bordered">
+                    <thead class="table-light text-dark" style="font-family: Raleway;">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Fecha_Cita)</th>
+                            <th>@Html.DisplayNameFor(model => model.Hora_Cita)</th>
+                            <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                            <th>@Html.DisplayNameFor(model => model.Empleado.Direccion)</th>
+                            <th>Nombre cliente</th>
+                            <th>Estado de la Cita</th>
+                            <th>Especialidad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Fecha_Cita)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Hora_Cita)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Estado)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Empleado.Direccion)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Parametro.Nombre_Parametro)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Parametro1.Nombre_Parametro)</td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { id = item.Id_Cita })" class="btn btn-warning btn-sm" title="Editar">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <a href="@Url.Action("Details", new { id = item.Id_Cita })" class="btn btn-info btn-sm" title="Ver Detalles">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    @using (Html.BeginForm("DeleteConfirmed", "Cita", FormMethod.Post, new { onsubmit = "return confirm('¿Desea eliminar esta cita?');", style = "display:inline;" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("id", item.Id_Cita)
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

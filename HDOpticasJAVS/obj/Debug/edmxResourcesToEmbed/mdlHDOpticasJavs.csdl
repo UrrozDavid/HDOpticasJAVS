@@ -55,6 +55,7 @@
     <NavigationProperty Name="Usuario" Relationship="Self.FK__Cita__Cedula_Usu__68487DD7" FromRole="Cita" ToRole="Usuario" />
     <NavigationProperty Name="Parametro" Relationship="Self.FK__Cita__Id_EstadoC__6B24EA82" FromRole="Cita" ToRole="Parametro" />
     <NavigationProperty Name="Parametro1" Relationship="Self.FK__Cita__Id_TipoEsp__693CA210" FromRole="Cita" ToRole="Parametro" />
+    <Property Name="TokenConfirmacion" Type="Guid" />
   </EntityType>
   <EntityType Name="Cliente">
     <Key>
@@ -119,6 +120,8 @@
     <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__Cedula_Esp__6A30C649" FromRole="Empleado" ToRole="Cita" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK__Empleado__Cedula__5535A963" FromRole="Empleado" ToRole="Usuario" />
+    <Property Name="Id_Especialidad" Type="Int32" />
+    <NavigationProperty Name="Parametro" Relationship="HD_Opticas_JAVS_BDModel.FK_Empleado_Especialidad" FromRole="Empleado" ToRole="Parametro" />
   </EntityType>
   <EntityType Name="Inventario">
     <Key>
@@ -160,6 +163,7 @@
     <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__PuntoVent__Id_Me__5EBF139D" FromRole="Parametro" ToRole="PuntoVenta" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__Id_Rol__4E88ABD4" FromRole="Parametro" ToRole="Usuario" />
     <NavigationProperty Name="PermisoRol" Relationship="HD_Opticas_JAVS_BDModel.FK__PermisoRo__Id_Ro__1CBC4616" FromRole="Parametro" ToRole="PermisoRol" />
+    <NavigationProperty Name="Empleado" Relationship="HD_Opticas_JAVS_BDModel.FK_Empleado_Especialidad" FromRole="Parametro" ToRole="Empleado" />
   </EntityType>
   <EntityType Name="Proveedor">
     <Key>
@@ -599,6 +603,10 @@
       <End Role="ListaSegmentada" EntitySet="ListaSegmentada" />
       <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
     </AssociationSet>
+    <AssociationSet Name="FK_Empleado_Especialidad" Association="HD_Opticas_JAVS_BDModel.FK_Empleado_Especialidad">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Empleado" EntitySet="Empleado" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="RecuperacionPassword">
     <Key>
@@ -861,6 +869,18 @@
       </Principal>
       <Dependent Role="ListaSegmentadaCliente">
         <PropertyRef Name="Id_Lista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Empleado_Especialidad">
+    <End Type="HD_Opticas_JAVS_BDModel.Parametro" Role="Parametro" Multiplicity="0..1" />
+    <End Type="HD_Opticas_JAVS_BDModel.Empleado" Role="Empleado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Empleado">
+        <PropertyRef Name="Id_Especialidad" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

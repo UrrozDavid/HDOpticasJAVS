@@ -30,9 +30,11 @@ namespace HDOpticasJAVS
         public string FechaCreacion { get; set; }
         public string UsuarioModificador { get; set; }
         public string FechaModificacion { get; set; }
+        public Nullable<int> Id_Especialidad { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cita> Cita { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual Parametro Parametro { get; set; }
     }
 }

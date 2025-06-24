@@ -1,0 +1,122 @@
+﻿@model HDOpticasJAVS.Cita
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Cita</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Fecha_Cita)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Fecha_Cita)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Hora_Cita)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Hora_Cita)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Estado)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Estado)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.UsuarioCreador)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.UsuarioCreador)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaCreacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.FechaCreacion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.UsuarioModificador)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.UsuarioModificador)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaModificacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.FechaModificacion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TokenConfirmacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TokenConfirmacion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Empleado.Direccion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Empleado.Direccion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Usuario.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Usuario.Nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Parametro.Nombre_Parametro)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Parametro.Nombre_Parametro)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Parametro1.Nombre_Parametro)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Parametro1.Nombre_Parametro)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id_Cita }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

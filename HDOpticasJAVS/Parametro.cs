@@ -24,6 +24,7 @@ namespace HDOpticasJAVS
             this.PuntoVenta = new HashSet<PuntoVenta>();
             this.Usuario = new HashSet<Usuario>();
             this.PermisoRol = new HashSet<PermisoRol>();
+            this.Empleado = new HashSet<Empleado>();
         }
     
         public int Id_Parametro { get; set; }
@@ -50,5 +51,7 @@ namespace HDOpticasJAVS
         public virtual ICollection<Usuario> Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PermisoRol> PermisoRol { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Empleado> Empleado { get; set; }
     }
 }

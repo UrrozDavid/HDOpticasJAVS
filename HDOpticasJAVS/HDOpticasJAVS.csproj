@@ -368,11 +368,6 @@
     <Content Include="Views\Empleado\Editar.cshtml" />
     <Content Include="Views\Empleado\Eliminar.cshtml" />
     <Content Include="Views\Empleado\Index.cshtml" />
-    <Content Include="Views\CitaEnLinea\Crear.cshtml" />
-    <Content Include="Views\CitaEnLinea\Detalles.cshtml" />
-    <Content Include="Views\CitaEnLinea\Editar.cshtml" />
-    <Content Include="Views\CitaEnLinea\Index.cshtml" />
-    <Content Include="Views\CitaEnLinea\Calendario.cshtml" />
     <Content Include="Views\Account\Recuperar.cshtml" />
     <Content Include="Views\Account\CambiarContrasena.cshtml" />
     <Content Include="Views\Usuario\CrearCliente.cshtml" />
@@ -385,6 +380,14 @@
     <Content Include="Views\PuntoVenta\Edit.cshtml" />
     <Content Include="Views\PuntoVenta\Index.cshtml" />
     <Content Include="Views\PuntoVenta\IndexCajero.cshtml" />
+    <Content Include="Views\CitaEnLinea\Create.cshtml" />
+    <Content Include="Views\CitaEnLinea\Delete.cshtml" />
+    <Content Include="Views\CitaEnLinea\Details.cshtml" />
+    <Content Include="Views\CitaEnLinea\Edit.cshtml" />
+    <Content Include="Views\CitaEnLinea\Index.cshtml" />
+    <Content Include="Views\CitaEnLinea\Calendario.cshtml" />
+    <Content Include="Views\CitaEnLinea\_CitasDelEspecialista.cshtml" />
+    <Content Include="Views\CitaEnLinea\_CitasDelCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

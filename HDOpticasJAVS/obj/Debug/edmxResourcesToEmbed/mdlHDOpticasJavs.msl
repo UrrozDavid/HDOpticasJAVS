@@ -36,6 +36,7 @@
     <EntitySetMapping Name="Cita">
       <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.Cita">
         <MappingFragment StoreEntitySet="Cita">
+          <ScalarProperty Name="TokenConfirmacion" ColumnName="TokenConfirmacion" />
           <ScalarProperty Name="Id_Cita" ColumnName="Id_Cita" />
           <ScalarProperty Name="Cedula_Usuario" ColumnName="Cedula_Usuario" />
           <ScalarProperty Name="Fecha_Cita" ColumnName="Fecha_Cita" />
@@ -93,6 +94,7 @@
     <EntitySetMapping Name="Empleado">
       <EntityTypeMapping TypeName="HD_Opticas_JAVS_BDModel.Empleado">
         <MappingFragment StoreEntitySet="Empleado">
+          <ScalarProperty Name="Id_Especialidad" ColumnName="Id_Especialidad" />
           <ScalarProperty Name="Cedula" ColumnName="Cedula" />
           <ScalarProperty Name="Direccion" ColumnName="Direccion" />
           <ScalarProperty Name="Placa_Vehiculo" ColumnName="Placa_Vehiculo" />

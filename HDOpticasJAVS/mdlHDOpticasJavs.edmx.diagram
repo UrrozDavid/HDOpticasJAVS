@@ -59,6 +59,7 @@
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__CampaniaM__Cedul__2A164134" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Cedul__3E1D39E1" />
         <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK__ListaSegm__Id_Li__3D2915A8" />
+        <AssociationConnector Association="HD_Opticas_JAVS_BDModel.FK_Empleado_Especialidad" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

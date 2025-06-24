@@ -76,6 +76,7 @@ namespace HDOpticasJAVS.Controllers
 
                 Session["Usuario"] = usuarioEncontrado.Correo ?? usuarioEncontrado.Cedula;
                 Session["Rol"] = usuarioEncontrado.Id_Rol;
+                Session["Cedula"] = usuarioEncontrado.Cedula;
                 return RedirectToAction("Index", "Home");
             }
         }
