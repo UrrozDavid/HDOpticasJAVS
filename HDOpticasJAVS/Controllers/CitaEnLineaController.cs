@@ -18,7 +18,8 @@ namespace HDOpticasJAVS.Controllers
         // GET: CitaEnLinea
         public ActionResult Index()
         {
-            var cita = db.Cita.Include(c => c.Empleado).Include(c => c.Usuario).Include(c => c.Parametro).Include(c => c.Parametro1);
+            var cita = db.Cita.Include(c => c.Empleado).Include(c => c.Usuario).Include(c => c.Parametro).Include(c => c.Parametro1).Where(u => u.Estado == "A")
+                             .ToList();
             return View(cita.ToList());
         }
 
@@ -42,8 +43,12 @@ namespace HDOpticasJAVS.Controllers
         {
             ViewBag.Cedula_Especialista = new SelectList(db.Empleado, "Cedula", "Direccion");
             ViewBag.Cedula_Usuario = new SelectList(db.Usuario, "Cedula", "Nombre");
-            ViewBag.Id_EstadoCita = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro");
-            ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro");
+            ViewBag.Id_EstadoCita = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 4),
+                "Id_Parametro", "Nombre_Parametro"
+            );
+            ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 6),
+                "Id_Parametro", "Nombre_Parametro"
+            );
             return View();
         }
 
@@ -82,8 +87,12 @@ namespace HDOpticasJAVS.Controllers
             }
             ViewBag.Cedula_Especialista = new SelectList(db.Empleado, "Cedula", "Direccion", cita.Cedula_Especialista);
             ViewBag.Cedula_Usuario = new SelectList(db.Usuario, "Cedula", "Nombre", cita.Cedula_Usuario);
-            ViewBag.Id_EstadoCita = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro", cita.Id_EstadoCita);
-            ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro", cita.Id_TipoEspecialista);
+            ViewBag.Id_EstadoCita = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 4),
+                "Id_Parametro", "Nombre_Parametro"
+            );
+            ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 6),
+                "Id_Parametro", "Nombre_Parametro"
+            );
             return View(cita);
         }
 
