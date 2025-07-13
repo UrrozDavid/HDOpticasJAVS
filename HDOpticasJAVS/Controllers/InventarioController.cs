@@ -1,138 +1,382 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using HDOpticasJAVS;
+using HDOpticasJAVS.Models;
 
 namespace HDOpticasJAVS.Controllers
 {
     public class InventarioController : Controller
     {
-        // Lista de productos simulada en memoria
-        private static List<Producto> productos = new List<Producto>
-        {
-            new Producto { Id_Producto = 1, Nombre_Producto = "Lente 2x1", Codigo_Producto = "001", Stock = 100, Precio = 5000, Id_Proveedor = 1, Descripcion = "Lentes ópticos" },
-            new Producto { Id_Producto = 2, Nombre_Producto = "Lente de Sol", Codigo_Producto = "002", Stock = 50, Precio = 8000, Id_Proveedor = 2, Descripcion = "Lentes de sol deportivos" }
-        };
+        private HD_Opticas_JAVS_BDEntities db = new HD_Opticas_JAVS_BDEntities();
 
-        public ActionResult Index()
+        // GET: Inventarios
+        public async Task<ActionResult> Index(string filtro)
         {
-            ViewBag.Productos = productos;
-            return View();
-        }
+            var inventario = db.Inventario.Include(i => i.Proveedor).AsQueryable();
 
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            string nombreProducto = collection["Nombre_Producto"];
-            string codigoProducto = collection["Codigo_Producto"];
-            string stock = collection["Stock"];
-            string precio = collection["Precio"];
-            string descripcion = collection["Descripcion"];
-            string idProveedor = collection["Id_Proveedor"];
-
-            if (string.IsNullOrWhiteSpace(nombreProducto) || string.IsNullOrWhiteSpace(codigoProducto) ||
-                string.IsNullOrWhiteSpace(stock) || string.IsNullOrWhiteSpace(precio) ||
-                string.IsNullOrWhiteSpace(descripcion) || string.IsNullOrWhiteSpace(idProveedor))
+            if (!string.IsNullOrWhiteSpace(filtro))
             {
-                TempData["ErrorMessage"] = "Todos los campos son obligatorios para crear un producto.";
-                return RedirectToAction("Crear");
+                // Si el filtro es un número, intentamos buscar por ID
+                if (int.TryParse(filtro, out int id))
+                {
+                    var resultado = await inventario.Where(i => i.Id_Producto == id).ToListAsync();
+                    if (!resultado.Any())
+                    {
+                        TempData["Mensaje"] = "❌ No se encontró ningún producto con ese ID.";
+                        return View(new List<Inventario>());
+                    }
+                    return View(resultado);
+                }
+                else
+                {
+                    // Validación de caracteres especiales (ajustable según tu criterio)
+                    if (System.Text.RegularExpressions.Regex.IsMatch(filtro, @"[^a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]"))
+                    {
+                        TempData["Mensaje"] = "⚠️ El valor ingresado no es válido.";
+                        return View(new List<Inventario>());
+                    }
+
+                    var resultado = await inventario
+                        .Where(i => i.Nombre_Producto.Contains(filtro))
+                        .ToListAsync();
+
+                    if (!resultado.Any())
+                    {
+                        TempData["Mensaje"] = "❌ No se encontró ningún producto con ese nombre.";
+                        return View(new List<Inventario>());
+                    }
+
+                    return View(resultado);
+                }
             }
 
-            int nuevoId = productos.Count > 0 ? productos.Max(p => p.Id_Producto) + 1 : 1;
+            // Si no hay filtro, devolvés todo
+            return View(await inventario.ToListAsync());
+        }
 
-            // Agregar producto a la lista en memoria
-            productos.Add(new Producto
+        // GET: Inventarios/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
             {
-                Id_Producto = nuevoId,
-                Nombre_Producto = nombreProducto,
-                Codigo_Producto = codigoProducto,
-                Stock = int.Parse(stock),
-                Precio = decimal.Parse(precio),
-                Descripcion = descripcion,
-                Id_Proveedor = int.Parse(idProveedor)
-            });
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Inventario inventario = await db.Inventario.FindAsync(id);
+            if (inventario == null)
+            {
+                return HttpNotFound();
+            }
+            return View(inventario);
+        }
 
-            TempData["SuccessMessage"] = "Producto creado exitosamente.";
+        // GET: Inventario/Create
+        public ActionResult Create()
+        {
+            ViewBag.Id_Proveedor = new SelectList(db.Proveedor, "Id_Proveedor", "Nombre_Proveedor");
+            return View(new HDOpticasJAVS.Models.ViewModels.Inventario());
+        }
+
+        // POST: Inventario/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(HDOpticasJAVS.Models.ViewModels.Inventario model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Validar si ya existe producto con ese nombre (ignorar mayúsculas/minúsculas)
+                bool nombreExiste = db.Inventario.Any(p => p.Nombre_Producto.ToLower() == model.Nombre_Producto.ToLower());
+                bool codigoExiste = db.Inventario.Any(p => p.Codigo_Producto.ToLower() == model.Codigo_Producto.ToLower());
+
+                if (nombreExiste)
+                {
+                    ModelState.AddModelError("Nombre_Producto", "Ya existe un producto con ese nombre.");
+                }
+
+                if (codigoExiste)
+                {
+                    ModelState.AddModelError("Codigo_Producto", "Ya existe un producto con ese código.");
+                }
+
+                if (nombreExiste || codigoExiste)
+                {
+                    ViewBag.Id_Proveedor = new SelectList(db.Proveedor, "Id_Proveedor", "Nombre_Proveedor", model.Id_Proveedor);
+                    return View(model);
+                }
+                // Mapear ViewModel a Entidad
+                var entidad = new HDOpticasJAVS.Inventario
+                {
+                    Nombre_Producto = model.Nombre_Producto,
+                    Codigo_Producto = model.Codigo_Producto,
+                    Stock = model.Stock,
+                    Precio = model.Precio,
+                    Id_Proveedor = model.Id_Proveedor,
+                    Descripcion = model.Descripcion,
+                    Estado = model.Estado ?? "Activo", // asigna un estado por defecto si quieres
+                    UsuarioCreador = model.UsuarioCreador,
+                    FechaCreacion = model.FechaCreacion,
+                    UsuarioModificador = model.UsuarioModificador,
+                    FechaModificacion = model.FechaModificacion
+                };
+
+                TempData["Mensaje"] = "Producto creado correctamente.";
+                db.Inventario.Add(entidad);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Id_Proveedor = new SelectList(db.Proveedor, "Id_Proveedor", "Nombre_Proveedor", model.Id_Proveedor);
+            return View(model);
+        }
+
+        // GET: Inventarios/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var entidad = await db.Inventario.FindAsync(id);
+            if (entidad == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Mapeo: Entidad → ViewModel
+            var model = new HDOpticasJAVS.Models.ViewModels.Inventario
+            {
+                Id_Producto = entidad.Id_Producto,
+                Nombre_Producto = entidad.Nombre_Producto,
+                Codigo_Producto = entidad.Codigo_Producto,
+                Stock = entidad.Stock ?? 0,
+                Precio = entidad.Precio ?? 0m,
+                Id_Proveedor = entidad.Id_Proveedor ?? 0,
+                Descripcion = entidad.Descripcion,
+                Estado = entidad.Estado,
+                UsuarioCreador = entidad.UsuarioCreador,
+                FechaCreacion = entidad.FechaCreacion ?? "",
+                UsuarioModificador = entidad.UsuarioModificador,
+                FechaModificacion = entidad.FechaModificacion ?? ""
+            };
+
+            ViewBag.Id_Proveedor = new SelectList(db.Proveedor, "Id_Proveedor", "Nombre_Proveedor", model.Id_Proveedor);
+            return View(model);
+        }
+
+        // POST: Inventarios/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(HDOpticasJAVS.Models.ViewModels.Inventario model)
+        {
+            var productoEnBD = await db.Inventario.FindAsync(model.Id_Producto);
+            if (productoEnBD == null)
+            {
+                ModelState.AddModelError("", "El producto que intenta editar no existe.");
+                ViewBag.Id_Proveedor = new SelectList(db.Proveedor, "Id_Proveedor", "Nombre_Proveedor", model.Id_Proveedor);
+                return View(model);
+            }
+
+            model.Codigo_Producto = model.Codigo_Producto?.Trim();
+            model.Nombre_Producto = model.Nombre_Producto?.Trim();
+
+            // Validar manualmente binding de numéricos
+            if (Request.Form["Stock"] != null)
+            {
+                int tempStock;
+                if (!int.TryParse(Request.Form["Stock"], out tempStock))
+                {
+                    ModelState.AddModelError("Stock", "Debe ingresar un número válido para el stock.");
+                }
+            }
+            if (Request.Form["Precio"] != null)
+            {
+                decimal tempPrecio;
+                if (!decimal.TryParse(Request.Form["Precio"], out tempPrecio))
+                {
+                    ModelState.AddModelError("Precio", "Debe ingresar un número válido para el precio.");
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Id_Proveedor = new SelectList(db.Proveedor, "Id_Proveedor", "Nombre_Proveedor", model.Id_Proveedor);
+                return View(model);
+            }
+
+            bool nombreDuplicado = db.Inventario.Any(p =>
+                p.Id_Producto != model.Id_Producto &&
+                p.Nombre_Producto.ToLower().Trim() == model.Nombre_Producto.ToLower());
+
+            bool codigoDuplicado = db.Inventario.Any(p =>
+                p.Id_Producto != model.Id_Producto &&
+                p.Codigo_Producto.ToLower().Trim() == model.Codigo_Producto.ToLower());
+
+            if (nombreDuplicado)
+            {
+                ModelState.AddModelError("Nombre_Producto", "Ya existe otro producto con este nombre.");
+            }
+            if (codigoDuplicado)
+            {
+                ModelState.AddModelError("Codigo_Producto", "Ya existe otro producto con este código.");
+            }
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Id_Proveedor = new SelectList(db.Proveedor, "Id_Proveedor", "Nombre_Proveedor", model.Id_Proveedor);
+                return View(model);
+            }
+
+            productoEnBD.Nombre_Producto = model.Nombre_Producto;
+            productoEnBD.Codigo_Producto = model.Codigo_Producto;
+            productoEnBD.Stock = model.Stock;
+            productoEnBD.Precio = model.Precio;
+            productoEnBD.Id_Proveedor = model.Id_Proveedor;
+            productoEnBD.Descripcion = model.Descripcion;
+            productoEnBD.Estado = model.Estado;
+            productoEnBD.UsuarioModificador = model.UsuarioModificador;
+            productoEnBD.FechaModificacion = model.FechaModificacion;
+
+            await db.SaveChangesAsync();
+
+            TempData["Mensaje"] = "Producto editado correctamente.";
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id)
+        // GET: Inventarios/Delete/5
+        public async Task<ActionResult> Delete(int? id)
         {
-            var producto = productos.FirstOrDefault(p => p.Id_Producto == id);
-            if (producto == null)
-                return HttpNotFound();
+            // Caso 4: id no seleccionado o inválido
+            if (id == null || id <= 0)
+            {
+                TempData["Mensaje"] = "⚠️ No se ha seleccionado un producto válido para eliminar.";
+                return RedirectToAction("Index");
+            }
 
-            ViewBag.Producto = producto;
-            return View();
+            var inventario = await db.Inventario.FindAsync(id);
+
+            // Caso 2: producto no existe
+            if (inventario == null)
+            {
+                TempData["Mensaje"] = "❌ El producto que intentó eliminar no se encuentra registrado.";
+                return RedirectToAction("Index");
+            }
+
+            // Caso 1: producto encontrado, mostrar confirmación
+            return View(inventario);
         }
 
-        [HttpPost]
-        public ActionResult Edit(FormCollection collection, int id)
+        // POST: Inventarios/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            var producto = productos.FirstOrDefault(p => p.Id_Producto == id);
-            if (producto == null)
-                return HttpNotFound();
+            var inventario = await db.Inventario.FindAsync(id);
 
-            producto.Nombre_Producto = collection["Nombre_Producto"];
-            producto.Codigo_Producto = collection["Codigo_Producto"];
-            producto.Stock = int.Parse(collection["Stock"]);
-            producto.Precio = decimal.Parse(collection["Precio"]);
-            producto.Descripcion = collection["Descripcion"];
-            producto.Id_Proveedor = int.Parse(collection["Id_Proveedor"]);
+            // Caso 2: producto no existe
+            if (inventario == null)
+            {
+                TempData["Mensaje"] = "❌ No se pudo eliminar el producto porque no está registrado.";
+                return RedirectToAction("Index");
+            }
 
-            TempData["SuccessMessage"] = "Producto actualizado correctamente.";
+            // Caso 1: eliminar producto
+            db.Inventario.Remove(inventario);
+            await db.SaveChangesAsync();
+
+            TempData["Mensaje"] = "✅ Producto eliminado correctamente.";
             return RedirectToAction("Index");
         }
-
-        [HttpPost]
-        public ActionResult Delete(int id)
+        public JsonResult GetProductoDatos(int id)
         {
-            var producto = productos.FirstOrDefault(p => p.Id_Producto == id);
-            if (producto != null)
+            var producto = db.Inventario
+                .Where(p => p.Id_Producto == id)
+                .Select(p => new { p.Precio, p.Stock })  // Agrego Stock
+                .FirstOrDefault();
+
+            return Json(producto, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: Inventarios/AjustarStock/5
+        public async Task<ActionResult> AjustarStock(int id)
+        {
+            var producto = await db.Inventario.FindAsync(id);
+            if (producto == null)
             {
-                productos.Remove(producto);
-                TempData["SuccessMessage"] = "Producto eliminado exitosamente.";
+                TempData["MensajeError"] = "Producto no encontrado.";
+                return RedirectToAction("Index", "Inventario");
+            }
+
+            var model = new AjusteStockViewModel
+            {
+                Id_Producto = producto.Id_Producto,
+                Nombre_Producto = producto.Nombre_Producto,
+                StockActual = (int)producto.Stock // <-- asignamos el stock actual aquí
+            };
+
+            return View(model);
+        }
+
+        // POST: Inventarios/AjustarStock
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AjustarStock(AjusteStockViewModel model)
+        {
+            var producto = await db.Inventario.FindAsync(model.Id_Producto);
+            if (producto == null)
+            {
+                TempData["MensajeError"] = "No se encontró el producto.";
+                return RedirectToAction("Index");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.Nombre_Producto = producto.Nombre_Producto; // para no perder el nombre si hay error
+                return View(model);
+            }
+
+            int nuevoStock = (int)producto.Stock;
+
+            if (model.Tipo == "Aumentar")
+            {
+                nuevoStock += model.Cantidad;
+            }
+            else if (model.Tipo == "Disminuir")
+            {
+                nuevoStock -= model.Cantidad;
+                if (nuevoStock < 0)
+                {
+                    ModelState.AddModelError("Cantidad", "No se puede disminuir más del stock disponible.");
+                    model.Nombre_Producto = producto.Nombre_Producto;
+                    return View(model);
+                }
             }
             else
             {
-                TempData["ErrorMessage"] = "Producto no encontrado.";
+                ModelState.AddModelError("Tipo", "Tipo de ajuste inválido.");
+                model.Nombre_Producto = producto.Nombre_Producto;
+                return View(model);
             }
 
+            producto.Stock = nuevoStock;
+            producto.UsuarioModificador = User.Identity.Name;
+            producto.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            // Opcional: aquí podrías registrar el motivo del ajuste en un log o tabla aparte
+
+            await db.SaveChangesAsync();
+
+            TempData["Mensaje"] = "Stock ajustado correctamente.";
             return RedirectToAction("Index");
         }
-    
 
-    public ActionResult Details(int id)
-        {
-            var producto = productos.FirstOrDefault(p => p.Id_Producto == id);
 
-            if (producto == null)
-            {
-                return HttpNotFound();
-            }
-
-            // Pasamos el producto como modelo a la vista
-            return View(producto);
-        }
     }
-
-    // Clase para simular los productos
-    public class Producto
-    {
-        public int Id_Producto { get; set; }
-        public string Nombre_Producto { get; set; }
-        public string Codigo_Producto { get; set; }
-        public int Stock { get; set; }
-        public decimal Precio { get; set; }
-        public string Descripcion { get; set; }
-        public int Id_Proveedor { get; set; }
-    }
-
-  
-
-
 }

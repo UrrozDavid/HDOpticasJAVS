@@ -1,33 +1,43 @@
-﻿@model HDOpticasJAVS.Controllers.Venta
+﻿@model HDOpticasJAVS.Contabilidad
 
 @{
-    ViewBag.Title = "Detalles de la linea";
+    ViewBag.Title = "Detalles Contabilidad";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Detalles de Contabilidad</h2>
 
 <div>
-    <dl class="row">
-        <dt class="col-sm-3">Factura</dt>
-        <dd class="col-sm-9">@Model.Numero_Factura</dd>
+    <dl class="dl-horizontal">
+        <dt>ID</dt>
+        <dd>@Model.Id_Contabilidad</dd>
 
-        <dt class="col-sm-3">Producto</dt>
-        <dd class="col-sm-9">@Model.Id_Producto</dd>
+        <dt>Id Venta</dt>
+        <dd>@Model.Id_Venta</dd>
 
-        <dt class="col-sm-3">Total</dt>
-        <dd class="col-sm-9">@Model.Total</dd>
+        <dt>Id Producto</dt>
+        <dd>@Model.Id_Producto</dd>
 
-        <dt class="col-sm-3">Fecha</dt>
-        <dd class="col-sm-9">@Model.Fecha</dd>
+        <dt>Cantidad</dt>
+        <dd>@Model.Cantidad</dd>
 
-        <dt class="col-sm-3">Cliente</dt>
-        <dd class="col-sm-9">@Model.Cliente</dd>
+        <dt>Precio Unitario</dt>
+        <dd>@Model.PrecioUnitario</dd>
 
-        <dt class="col-sm-3">Tipo de Pago</dt>
-        <dd class="col-sm-9">@Model.Tipo_Pago</dd>
+        <dt>Subtotal</dt>
+        <dd>@Model.Subtotal</dd>
 
-        <dt class="col-sm-3">Status</dt>
-        <dd class="col-sm-9">@Model.Status</dd>
+        <dt>IVA</dt>
+        <dd>@Model.IVA</dd>
+
+        <dt>Total</dt>
+        <dd>@Model.Total</dd>
+
+        <dt>Fecha Registro</dt>
+        <dd>@Model.Fecha_Registro</dd>
+
+        <dt>Estado</dt>
+        <dd>@Model.Estado</dd>
     </dl>
-    <a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>
 </div>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>

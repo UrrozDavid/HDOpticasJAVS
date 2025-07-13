@@ -1,64 +1,141 @@
-﻿@{
-    ViewBag.Title = "Ventas";
+﻿@model IEnumerable<HDOpticasJAVS.Contabilidad>
+
+@{
+    ViewBag.Title = "Contabilidad";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (TempData["SuccessMessage"] != null || TempData["MensajeExito"] != null)
+{
+    var mensaje = TempData["SuccessMessage"] ?? TempData["MensajeExito"];
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>¡Éxito!</strong> @mensaje
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+@if (TempData["MensajeError"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error:</strong> @TempData["MensajeError"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
+<!-- Filtro por cédula -->
+@using (Html.BeginForm("Index", "Contabilidad", FormMethod.Get))
+{
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <label for="usuarioFiltro" class="form-label fw-bold text-primary">Filtrar por Cédula</label>
+            @Html.DropDownList("usuarioFiltro", (SelectList)ViewBag.UsuarioFiltro, "Todos", new { @class = "form-select", onchange = "this.form.submit();" })
+        </div>
+    </div>
+}
+
+@{
+    var parametros = ViewBag.Parametros as Dictionary<int, string>;
+}
+
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
-    <div class="card shadow-lg w-100" style="max-width: 1100px; background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+    <div class="card shadow-lg w-100" style="max-width: 1200px; background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
         <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
             <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
         </div>
-        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
 
-            @if (TempData["SuccessMessage"] != null)
-            {
-                <div class="alert alert-success" style="font-family: Roboto;">@TempData["SuccessMessage"]</div>
-            }
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <div class="alert alert-danger" style="font-family: Roboto;">@TempData["ErrorMessage"]</div>
-            }
-
-        <div class="text-end mb-3">
-            <a href="@Url.Action("Create")" class="btn btn-custom">Registrar Nueva Contabilidad</a>
+        <!-- Botón de Reporte arriba -->
+        <div class="d-flex justify-content-end mt-3 me-3">
+            <a href="@Url.Action("ReporteEgresosPorCategoria", "Contabilidad")" class="btn btn-info">
+                📊 Reporte de Egresos por Categoría
+            </a>
         </div>
 
-        <table class="table table-dark table-hover table-bordered">
-            <thead class="table-light text-dark" style="font-family: Raleway;">
-                <tr>
-                    <th>Factura</th>
-                    <th>Producto</th>
-                    <th>Total</th>
-                    <th>Fecha</th>
-                    <th>Cliente</th>
-                    <th>Tipo de Pago</th>
-                    <th>Status</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody style="font-family: Roboto;">
-                @foreach (var venta in ViewBag.Ventas)
-                {
-                    <tr>
-                        <td>@venta.Numero_Factura</td>
-                        <td>@venta.Id_Producto</td>
-                        <td>@venta.Total</td>
-                        <td>@venta.Fecha</td>
-                        <td>@venta.Cliente</td>
-                        <td>@venta.Tipo_Pago</td>
-                        <td>@venta.Status</td>
-                        <td>
-                            <a href="@Url.Action("Edit", new { id = venta.Id_Venta })" class="btn btn-warning btn-sm" style="font-family: Roboto;">Editar</a>
-                            <a href="@Url.Action("Details", new { id = venta.Id_Venta })" class="btn btn-info btn-sm" style="font-family: Roboto;">Ver</a>
-                            <form method="post" action="@Url.Action("Delete", new { id = venta.Id_Venta })" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm" style="font-family: Roboto;" onclick="return confirm('¿Desea eliminar esta venta?');">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+            <div class="mb-3 text-end">
+                @Html.ActionLink("Crear Nuevo Registro", "Create", null, new { @class = "btn btn-success" })
+            </div>
 
+            <div class="table-responsive">
+                <table class="table table-dark table-hover table-bordered align-middle text-center">
+                    <thead class="table-light text-dark" style="font-family: Raleway;">
+                        <tr>
+                            <th>Id</th>
+                            <th>Venta</th>
+                            <th>Producto</th>
+                            <th>Cant.</th>
+                            <th>Precio Unitario</th>
+                            <th>Subtotal</th>
+                            <th>Descuento</th>
+                            <th>IVA</th>
+                            <th>Total</th>
+                            <th>F. Registro</th>
+                            <th>Usuario Reg.</th>
+                            <th>Tipo Mov.</th>
+                            <th>Estado</th>
+                            <th>Usuario Creador</th>
+                            <th>F. Creación</th>
+                            <th>Usuario Mod.</th>
+                            <th>F. Modificación</th>
+                            <th>Tipo Operación</th>
+                            <th>Tipo Servicio</th>
+                            <th>Ing/Egr</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id_Contabilidad</td>
+                                <td>@item.Id_Venta</td>
+                                <td>@(item.Inventario != null ? item.Inventario.Nombre_Producto : "N/A")</td>
+                                <td>@item.Cantidad</td>
+                                <td>@string.Format("{0:C}", item.PrecioUnitario)</td>
+                                <td>@string.Format("{0:C}", item.Subtotal)</td>
+                                <td>@string.Format("{0:C}", item.Descuento)</td>
+                                <td>@string.Format("{0:C}", item.IVA)</td>
+                                <td>@string.Format("{0:C}", item.Total)</td>
+                                <td>@item.Fecha_Registro</td>
+                                <td>@item.Usuario_Registro</td>
+                                <td>
+                                    @{
+                                        if (parametros != null && item.Id_TipoMovimiento.HasValue && parametros.ContainsKey(item.Id_TipoMovimiento.Value))
+                                        {
+                                            @parametros[item.Id_TipoMovimiento.Value]
+                                        }
+                                        else
+                                        {
+                                            @:Sin categoría
+                                        }
+                                    }
+                                </td>
+                                <td>@item.Estado</td>
+                                <td>@item.UsuarioCreador</td>
+                                <td>@item.FechaCreacion</td>
+                                <td>@item.UsuarioModificador</td>
+                                <td>@item.FechaModificacion</td>
+                                <td>@item.TipoOperacion</td>
+                                <td>@item.TipoServicio</td>
+                                <td>@item.TipoMovimientoIngresoEgreso</td>
+                                <td class="text-nowrap">
+                                    @Html.ActionLink("✏️", "Edit", new { id = item.Id_Contabilidad }, new { @class = "btn btn-sm btn-warning me-1" })
+                                    @Html.ActionLink("👁️", "Details", new { id = item.Id_Contabilidad }, new { @class = "btn btn-sm btn-info me-1" })
+                                    @Html.ActionLink("🗑️", "Delete", new { id = item.Id_Contabilidad }, new { @class = "btn btn-sm btn-danger" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-light fw-bold">
+                        <tr>
+                            <td colspan="5" class="text-end">Totales:</td>
+                            <td>@string.Format("{0:C}", ViewBag.TotalSubtotal ?? 0)</td>
+                            <td></td>
+                            <td></td>
+                            <td>@string.Format("{0:C}", ViewBag.TotalTotal ?? 0)</td>
+                            <td colspan="11"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
 </div>

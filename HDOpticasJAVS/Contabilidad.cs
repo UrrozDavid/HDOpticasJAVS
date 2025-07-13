@@ -16,13 +16,13 @@ namespace HDOpticasJAVS
     {
         public int Id_Contabilidad { get; set; }
         public int Id_Venta { get; set; }
-        public int Id_Producto { get; set; }
-        public int Cantidad { get; set; }
-        public decimal PrecioUnitario { get; set; }
+        public Nullable<int> Id_Producto { get; set; }
+        public Nullable<int> Cantidad { get; set; }
+        public Nullable<decimal> PrecioUnitario { get; set; }
         public Nullable<decimal> Subtotal { get; set; }
         public Nullable<decimal> Descuento { get; set; }
         public Nullable<decimal> IVA { get; set; }
-        public decimal Total { get; set; }
+        public Nullable<decimal> Total { get; set; }
         public Nullable<System.DateTime> Fecha_Registro { get; set; }
         public string Usuario_Registro { get; set; }
         public Nullable<int> Id_TipoMovimiento { get; set; }
@@ -31,6 +31,9 @@ namespace HDOpticasJAVS
         public string FechaCreacion { get; set; }
         public string UsuarioModificador { get; set; }
         public string FechaModificacion { get; set; }
+        public string TipoOperacion { get; set; }
+        public string TipoServicio { get; set; }
+        public string TipoMovimientoIngresoEgreso { get; set; }
     
         public virtual Inventario Inventario { get; set; }
         public virtual Parametro Parametro { get; set; }

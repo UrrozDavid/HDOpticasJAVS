@@ -81,7 +81,7 @@ namespace HDOpticasJAVS.Controllers
 
         // POST:   Empleado/Editar
         [HttpPost]
-        public ActionResult Editar(FormCollection collection)
+        public ActionResult Editar(FormCollection  collection)
         {
             string nombre = collection["EmpleadoNombre"];
             string cedula = collection["Cedula"];

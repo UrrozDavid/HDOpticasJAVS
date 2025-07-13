@@ -90,13 +90,13 @@
     </Key>
     <Property Name="Id_Contabilidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Id_Venta" Type="int" Nullable="false" />
-    <Property Name="Id_Producto" Type="int" Nullable="false" />
-    <Property Name="Cantidad" Type="int" Nullable="false" />
-    <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Id_Producto" Type="int" />
+    <Property Name="Cantidad" Type="int" />
+    <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" />
     <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" />
     <Property Name="Descuento" Type="decimal" Precision="10" Scale="2" />
     <Property Name="IVA" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
     <Property Name="Fecha_Registro" Type="datetime" />
     <Property Name="Usuario_Registro" Type="varchar" MaxLength="20" />
     <Property Name="Id_TipoMovimiento" Type="int" />
@@ -105,6 +105,9 @@
     <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
     <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
     <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="TipoOperacion" Type="varchar" MaxLength="50" />
+    <Property Name="TipoServicio" Type="varchar" MaxLength="50" />
+    <Property Name="TipoMovimientoIngresoEgreso" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="CriteriosPromocionRecurrente">
     <Key>
@@ -282,16 +285,6 @@
     <Property Name="Token" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
   <EntityType Name="TarjetaSimulada">
     <Key>
       <PropertyRef Name="Id_Tarjeta" />
@@ -351,7 +344,7 @@
     <Property Name="FechaCambio" Type="datetime" />
     <Property Name="Revertido" Type="bit" />
   </EntityType>
-  <Association Name="FK__CampaniaC__Cedul__70DDC3D8">
+  <Association Name="FK__CampaniaC__Cedul__619B8048">
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
     <End Role="CampaniaCliente" Type="Self.CampaniaCliente" Multiplicity="*" />
     <ReferentialConstraint>
@@ -363,7 +356,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__CampaniaC__Id_Ca__6FE99F9F">
+  <Association Name="FK__CampaniaC__Id_Ca__60A75C0F">
     <End Role="CampaniaMarketing" Type="Self.CampaniaMarketing" Multiplicity="1" />
     <End Role="CampaniaCliente" Type="Self.CampaniaCliente" Multiplicity="*" />
     <ReferentialConstraint>
@@ -375,7 +368,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__CampaniaM__Cedul__2A164134">
+  <Association Name="FK__CampaniaM__Cedul__73BA3083">
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
     <End Role="CampaniaMetrica" Type="Self.CampaniaMetrica" Multiplicity="*" />
     <ReferentialConstraint>
@@ -387,7 +380,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__CampaniaM__Id_Ca__29221CFB">
+  <Association Name="FK__CampaniaM__Id_Ca__72C60C4A">
     <End Role="CampaniaMarketing" Type="Self.CampaniaMarketing" Multiplicity="1" />
     <End Role="CampaniaMetrica" Type="Self.CampaniaMetrica" Multiplicity="*" />
     <ReferentialConstraint>
@@ -399,7 +392,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Cita__Cedula_Esp__6A30C649">
+  <Association Name="FK__Cita__Cedula_Esp__5AEE82B9">
     <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
     <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
     <ReferentialConstraint>
@@ -411,7 +404,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Cita__Cedula_Usu__68487DD7">
+  <Association Name="FK__Cita__Cedula_Usu__59063A47">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
     <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
     <ReferentialConstraint>
@@ -423,7 +416,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Cita__Id_EstadoC__6B24EA82">
+  <Association Name="FK__Cita__Id_EstadoC__5BE2A6F2">
     <End Role="Parametro" Type="Self.Parametro" Multiplicity="1" />
     <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
     <ReferentialConstraint>
@@ -435,7 +428,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Cita__Id_TipoEsp__693CA210">
+  <Association Name="FK__Cita__Id_TipoEsp__59FA5E80">
     <End Role="Parametro" Type="Self.Parametro" Multiplicity="1" />
     <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
     <ReferentialConstraint>
@@ -447,7 +440,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Cliente__Cedula__5165187F">
+  <Association Name="FK__Cliente__Cedula__3F466844">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
     <ReferentialConstraint>
@@ -459,7 +452,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Cliente__Id_Gene__52593CB8">
+  <Association Name="FK__Cliente__Id_Gene__403A8C7D">
     <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
     <ReferentialConstraint>
@@ -471,8 +464,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Contabili__Id_Pr__6383C8BA">
-    <End Role="Inventario" Type="Self.Inventario" Multiplicity="1" />
+  <Association Name="FK__Contabili__Id_Pr__5441852A">
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
     <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Inventario">
@@ -483,7 +476,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Contabili__Id_Ti__656C112C">
+  <Association Name="FK__Contabili__Id_Ti__5629CD9C">
     <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
     <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
     <ReferentialConstraint>
@@ -495,7 +488,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Contabili__Id_Ve__628FA481">
+  <Association Name="FK__Contabili__Id_Ve__534D60F1">
     <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="1" />
     <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
     <ReferentialConstraint>
@@ -507,7 +500,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Contabili__Usuar__6477ECF3">
+  <Association Name="FK__Contabili__Usuar__5535A963">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
     <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
     <ReferentialConstraint>
@@ -519,7 +512,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DetalleVe__Id_Pr__55F4C372">
+  <Association Name="FK__DetalleVe__Id_Pr__17036CC0">
     <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
     <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
     <ReferentialConstraint>
@@ -531,7 +524,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DetalleVe__Id_Ve__55009F39">
+  <Association Name="FK__DetalleVe__Id_Ve__160F4887">
     <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
     <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
     <ReferentialConstraint>
@@ -543,7 +536,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Empleado__Cedula__5535A963">
+  <Association Name="FK__Empleado__Cedula__4316F928">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
     <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
     <ReferentialConstraint>
@@ -555,7 +548,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Inventari__Id_Pr__59FA5E80">
+  <Association Name="FK__Inventari__Id_Pr__47DBAE45">
     <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
     <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
     <ReferentialConstraint>
@@ -567,7 +560,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ListaSegm__Cedul__3E1D39E1">
+  <Association Name="FK__ListaSegm__Cedul__7D439ABD">
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
     <End Role="ListaSegmentadaCliente" Type="Self.ListaSegmentadaCliente" Multiplicity="*" />
     <ReferentialConstraint>
@@ -579,7 +572,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__ListaSegm__Id_Li__3D2915A8">
+  <Association Name="FK__ListaSegm__Id_Li__7C4F7684">
     <End Role="ListaSegmentada" Type="Self.ListaSegmentada" Multiplicity="0..1" />
     <End Role="ListaSegmentadaCliente" Type="Self.ListaSegmentadaCliente" Multiplicity="*" />
     <ReferentialConstraint>
@@ -591,7 +584,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PagoVenta__Id_Ve__5224328E">
+  <Association Name="FK__PagoVenta__Id_Ve__04E4BC85">
     <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
     <End Role="PagoVenta" Type="Self.PagoVenta" Multiplicity="*" />
     <ReferentialConstraint>
@@ -603,7 +596,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Parametro__Id_Ti__4BAC3F29">
+  <Association Name="FK__Parametro__Id_Ti__398D8EEE">
     <End Role="TipoParametro" Type="Self.TipoParametro" Multiplicity="1" />
     <End Role="Parametro" Type="Self.Parametro" Multiplicity="*" />
     <ReferentialConstraint>
@@ -615,7 +608,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PermisoRo__Id_Mo__1DB06A4F">
+  <Association Name="FK__PermisoRo__Id_Mo__6C190EBB">
     <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
     <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
     <ReferentialConstraint>
@@ -627,7 +620,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PermisoRo__Id_Ro__1CBC4616">
+  <Association Name="FK__PermisoRo__Id_Ro__6B24EA82">
     <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
     <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
     <ReferentialConstraint>
@@ -639,7 +632,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PuntoVent__Cedul__5DCAEF64">
+  <Association Name="FK__PuntoVent__Cedul__4BAC3F29">
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
     <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="*" />
     <ReferentialConstraint>
@@ -651,7 +644,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PuntoVent__Id_Me__5EBF139D">
+  <Association Name="FK__PuntoVent__Id_Me__4CA06362">
     <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
     <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="*" />
     <ReferentialConstraint>
@@ -663,7 +656,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Usuario__Id_Rol__4E88ABD4">
+  <Association Name="FK__Usuario__Id_Rol__3C69FB99">
     <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
     <ReferentialConstraint>
@@ -672,18 +665,6 @@
       </Principal>
       <Dependent Role="Usuario">
         <PropertyRef Name="Id_Rol" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Empleado_Especialidad">
-    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
-    <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Parametro">
-        <PropertyRef Name="Id_Parametro" />
-      </Principal>
-      <Dependent Role="Empleado">
-        <PropertyRef Name="Id_Especialidad" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -710,122 +691,117 @@
     <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PuntoVenta" EntityType="Self.PuntoVenta" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RecuperacionPassword" EntityType="Self.RecuperacionPassword" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TarjetaSimulada" EntityType="Self.TarjetaSimulada" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoParametro" EntityType="Self.TipoParametro" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario_UltimoCambio" EntityType="Self.Usuario_UltimoCambio" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__CampaniaC__Cedul__70DDC3D8" Association="Self.FK__CampaniaC__Cedul__70DDC3D8">
+    <AssociationSet Name="FK__CampaniaC__Cedul__619B8048" Association="Self.FK__CampaniaC__Cedul__619B8048">
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="CampaniaCliente" EntitySet="CampaniaCliente" />
     </AssociationSet>
-    <AssociationSet Name="FK__CampaniaC__Id_Ca__6FE99F9F" Association="Self.FK__CampaniaC__Id_Ca__6FE99F9F">
+    <AssociationSet Name="FK__CampaniaC__Id_Ca__60A75C0F" Association="Self.FK__CampaniaC__Id_Ca__60A75C0F">
       <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
       <End Role="CampaniaCliente" EntitySet="CampaniaCliente" />
     </AssociationSet>
-    <AssociationSet Name="FK__CampaniaM__Cedul__2A164134" Association="Self.FK__CampaniaM__Cedul__2A164134">
+    <AssociationSet Name="FK__CampaniaM__Cedul__73BA3083" Association="Self.FK__CampaniaM__Cedul__73BA3083">
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
     </AssociationSet>
-    <AssociationSet Name="FK__CampaniaM__Id_Ca__29221CFB" Association="Self.FK__CampaniaM__Id_Ca__29221CFB">
+    <AssociationSet Name="FK__CampaniaM__Id_Ca__72C60C4A" Association="Self.FK__CampaniaM__Id_Ca__72C60C4A">
       <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
       <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
     </AssociationSet>
-    <AssociationSet Name="FK__Cita__Cedula_Esp__6A30C649" Association="Self.FK__Cita__Cedula_Esp__6A30C649">
+    <AssociationSet Name="FK__Cita__Cedula_Esp__5AEE82B9" Association="Self.FK__Cita__Cedula_Esp__5AEE82B9">
       <End Role="Empleado" EntitySet="Empleado" />
       <End Role="Cita" EntitySet="Cita" />
     </AssociationSet>
-    <AssociationSet Name="FK__Cita__Cedula_Usu__68487DD7" Association="Self.FK__Cita__Cedula_Usu__68487DD7">
+    <AssociationSet Name="FK__Cita__Cedula_Usu__59063A47" Association="Self.FK__Cita__Cedula_Usu__59063A47">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Cita" EntitySet="Cita" />
     </AssociationSet>
-    <AssociationSet Name="FK__Cita__Id_EstadoC__6B24EA82" Association="Self.FK__Cita__Id_EstadoC__6B24EA82">
+    <AssociationSet Name="FK__Cita__Id_EstadoC__5BE2A6F2" Association="Self.FK__Cita__Id_EstadoC__5BE2A6F2">
       <End Role="Parametro" EntitySet="Parametro" />
       <End Role="Cita" EntitySet="Cita" />
     </AssociationSet>
-    <AssociationSet Name="FK__Cita__Id_TipoEsp__693CA210" Association="Self.FK__Cita__Id_TipoEsp__693CA210">
+    <AssociationSet Name="FK__Cita__Id_TipoEsp__59FA5E80" Association="Self.FK__Cita__Id_TipoEsp__59FA5E80">
       <End Role="Parametro" EntitySet="Parametro" />
       <End Role="Cita" EntitySet="Cita" />
     </AssociationSet>
-    <AssociationSet Name="FK__Cliente__Cedula__5165187F" Association="Self.FK__Cliente__Cedula__5165187F">
+    <AssociationSet Name="FK__Cliente__Cedula__3F466844" Association="Self.FK__Cliente__Cedula__3F466844">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Cliente" EntitySet="Cliente" />
     </AssociationSet>
-    <AssociationSet Name="FK__Cliente__Id_Gene__52593CB8" Association="Self.FK__Cliente__Id_Gene__52593CB8">
+    <AssociationSet Name="FK__Cliente__Id_Gene__403A8C7D" Association="Self.FK__Cliente__Id_Gene__403A8C7D">
       <End Role="Parametro" EntitySet="Parametro" />
       <End Role="Cliente" EntitySet="Cliente" />
     </AssociationSet>
-    <AssociationSet Name="FK__Contabili__Id_Pr__6383C8BA" Association="Self.FK__Contabili__Id_Pr__6383C8BA">
+    <AssociationSet Name="FK__Contabili__Id_Pr__5441852A" Association="Self.FK__Contabili__Id_Pr__5441852A">
       <End Role="Inventario" EntitySet="Inventario" />
       <End Role="Contabilidad" EntitySet="Contabilidad" />
     </AssociationSet>
-    <AssociationSet Name="FK__Contabili__Id_Ti__656C112C" Association="Self.FK__Contabili__Id_Ti__656C112C">
+    <AssociationSet Name="FK__Contabili__Id_Ti__5629CD9C" Association="Self.FK__Contabili__Id_Ti__5629CD9C">
       <End Role="Parametro" EntitySet="Parametro" />
       <End Role="Contabilidad" EntitySet="Contabilidad" />
     </AssociationSet>
-    <AssociationSet Name="FK__Contabili__Id_Ve__628FA481" Association="Self.FK__Contabili__Id_Ve__628FA481">
+    <AssociationSet Name="FK__Contabili__Id_Ve__534D60F1" Association="Self.FK__Contabili__Id_Ve__534D60F1">
       <End Role="PuntoVenta" EntitySet="PuntoVenta" />
       <End Role="Contabilidad" EntitySet="Contabilidad" />
     </AssociationSet>
-    <AssociationSet Name="FK__Contabili__Usuar__6477ECF3" Association="Self.FK__Contabili__Usuar__6477ECF3">
+    <AssociationSet Name="FK__Contabili__Usuar__5535A963" Association="Self.FK__Contabili__Usuar__5535A963">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Contabilidad" EntitySet="Contabilidad" />
     </AssociationSet>
-    <AssociationSet Name="FK__DetalleVe__Id_Pr__55F4C372" Association="Self.FK__DetalleVe__Id_Pr__55F4C372">
+    <AssociationSet Name="FK__DetalleVe__Id_Pr__17036CC0" Association="Self.FK__DetalleVe__Id_Pr__17036CC0">
       <End Role="Inventario" EntitySet="Inventario" />
       <End Role="DetalleVenta" EntitySet="DetalleVenta" />
     </AssociationSet>
-    <AssociationSet Name="FK__DetalleVe__Id_Ve__55009F39" Association="Self.FK__DetalleVe__Id_Ve__55009F39">
+    <AssociationSet Name="FK__DetalleVe__Id_Ve__160F4887" Association="Self.FK__DetalleVe__Id_Ve__160F4887">
       <End Role="PuntoVenta" EntitySet="PuntoVenta" />
       <End Role="DetalleVenta" EntitySet="DetalleVenta" />
     </AssociationSet>
-    <AssociationSet Name="FK__Empleado__Cedula__5535A963" Association="Self.FK__Empleado__Cedula__5535A963">
+    <AssociationSet Name="FK__Empleado__Cedula__4316F928" Association="Self.FK__Empleado__Cedula__4316F928">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Empleado" EntitySet="Empleado" />
     </AssociationSet>
-    <AssociationSet Name="FK__Inventari__Id_Pr__59FA5E80" Association="Self.FK__Inventari__Id_Pr__59FA5E80">
+    <AssociationSet Name="FK__Inventari__Id_Pr__47DBAE45" Association="Self.FK__Inventari__Id_Pr__47DBAE45">
       <End Role="Proveedor" EntitySet="Proveedor" />
       <End Role="Inventario" EntitySet="Inventario" />
     </AssociationSet>
-    <AssociationSet Name="FK__ListaSegm__Cedul__3E1D39E1" Association="Self.FK__ListaSegm__Cedul__3E1D39E1">
+    <AssociationSet Name="FK__ListaSegm__Cedul__7D439ABD" Association="Self.FK__ListaSegm__Cedul__7D439ABD">
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
     </AssociationSet>
-    <AssociationSet Name="FK__ListaSegm__Id_Li__3D2915A8" Association="Self.FK__ListaSegm__Id_Li__3D2915A8">
+    <AssociationSet Name="FK__ListaSegm__Id_Li__7C4F7684" Association="Self.FK__ListaSegm__Id_Li__7C4F7684">
       <End Role="ListaSegmentada" EntitySet="ListaSegmentada" />
       <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
     </AssociationSet>
-    <AssociationSet Name="FK__PagoVenta__Id_Ve__5224328E" Association="Self.FK__PagoVenta__Id_Ve__5224328E">
+    <AssociationSet Name="FK__PagoVenta__Id_Ve__04E4BC85" Association="Self.FK__PagoVenta__Id_Ve__04E4BC85">
       <End Role="PuntoVenta" EntitySet="PuntoVenta" />
       <End Role="PagoVenta" EntitySet="PagoVenta" />
     </AssociationSet>
-    <AssociationSet Name="FK__Parametro__Id_Ti__4BAC3F29" Association="Self.FK__Parametro__Id_Ti__4BAC3F29">
+    <AssociationSet Name="FK__Parametro__Id_Ti__398D8EEE" Association="Self.FK__Parametro__Id_Ti__398D8EEE">
       <End Role="TipoParametro" EntitySet="TipoParametro" />
       <End Role="Parametro" EntitySet="Parametro" />
     </AssociationSet>
-    <AssociationSet Name="FK__PermisoRo__Id_Mo__1DB06A4F" Association="Self.FK__PermisoRo__Id_Mo__1DB06A4F">
+    <AssociationSet Name="FK__PermisoRo__Id_Mo__6C190EBB" Association="Self.FK__PermisoRo__Id_Mo__6C190EBB">
       <End Role="Modulo" EntitySet="Modulo" />
       <End Role="PermisoRol" EntitySet="PermisoRol" />
     </AssociationSet>
-    <AssociationSet Name="FK__PermisoRo__Id_Ro__1CBC4616" Association="Self.FK__PermisoRo__Id_Ro__1CBC4616">
+    <AssociationSet Name="FK__PermisoRo__Id_Ro__6B24EA82" Association="Self.FK__PermisoRo__Id_Ro__6B24EA82">
       <End Role="Parametro" EntitySet="Parametro" />
       <End Role="PermisoRol" EntitySet="PermisoRol" />
     </AssociationSet>
-    <AssociationSet Name="FK__PuntoVent__Cedul__5DCAEF64" Association="Self.FK__PuntoVent__Cedul__5DCAEF64">
+    <AssociationSet Name="FK__PuntoVent__Cedul__4BAC3F29" Association="Self.FK__PuntoVent__Cedul__4BAC3F29">
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="PuntoVenta" EntitySet="PuntoVenta" />
     </AssociationSet>
-    <AssociationSet Name="FK__PuntoVent__Id_Me__5EBF139D" Association="Self.FK__PuntoVent__Id_Me__5EBF139D">
+    <AssociationSet Name="FK__PuntoVent__Id_Me__4CA06362" Association="Self.FK__PuntoVent__Id_Me__4CA06362">
       <End Role="Parametro" EntitySet="Parametro" />
       <End Role="PuntoVenta" EntitySet="PuntoVenta" />
     </AssociationSet>
-    <AssociationSet Name="FK__Usuario__Id_Rol__4E88ABD4" Association="Self.FK__Usuario__Id_Rol__4E88ABD4">
+    <AssociationSet Name="FK__Usuario__Id_Rol__3C69FB99" Association="Self.FK__Usuario__Id_Rol__3C69FB99">
       <End Role="Parametro" EntitySet="Parametro" />
       <End Role="Usuario" EntitySet="Usuario" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Empleado_Especialidad" Association="Self.FK_Empleado_Especialidad">
-      <End Role="Parametro" EntitySet="Parametro" />
-      <End Role="Empleado" EntitySet="Empleado" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -1,16 +1,70 @@
-﻿@model HDOpticasJAVS.Controllers.Venta
+﻿@model HDOpticasJAVS.Contabilidad
 
 @{
-    ViewBag.Title = "Eliminar linea";
+    ViewBag.Title = "Eliminar Movimiento Contable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="card mt-4 bg-dark text-white shadow-lg rounded-4" style="max-width: 800px; margin: auto;">
+    <div class="card-header bg-danger text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0">@ViewBag.Title</h4>
+    </div>
 
-<p>¿Estás seguro de que deseas eliminar la venta con el número de factura <strong>@Model.Numero_Factura</strong>?</p>
+    <div class="card-body rounded-bottom-4">
+        <h5 class="mb-4 text-center text-warning">¿Está seguro que desea eliminar este movimiento contable?</h5>
 
-<div>
-    <form method="post">
-        <button type="submit" class="btn btn-danger">Eliminar</button>
-        <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
-    </form>
+        <dl class="row">
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.TipoOperacion)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(m => m.TipoOperacion)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.TipoServicio)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(m => m.TipoServicio)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.TipoMovimientoIngresoEgreso)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(m => m.TipoMovimientoIngresoEgreso)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Inventario.Nombre_Producto)</dt>
+            <dd class="col-sm-8">@(Model.Inventario != null ? Model.Inventario.Nombre_Producto : "N/A")</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Cantidad)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(m => m.Cantidad)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.PrecioUnitario)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(m => m.PrecioUnitario)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Subtotal)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(m => m.Subtotal)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Descuento)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(m => m.Descuento)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.IVA)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(m => m.IVA)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Total)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(m => m.Total)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Fecha_Registro)</dt>
+            <dd class="col-sm-8">
+                @(Model.Fecha_Registro.HasValue ? Model.Fecha_Registro.Value.ToString("dd/MM/yyyy") : "N/A")
+            </dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Estado)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(m => m.Estado)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(m => m.Usuario.Nombre)</dt>
+            <dd class="col-sm-8">@((Model.Usuario != null) ? Model.Usuario.Nombre : "N/A")</dd>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id_Contabilidad)
+
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <input type="submit" value="Eliminar" class="btn btn-danger btn-lg" />
+                <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg">Cancelar</a>
+            </div>
+        }
+    </div>
 </div>

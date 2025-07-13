@@ -17,14 +17,13 @@ namespace HDOpticasJAVS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Parametro()
         {
-            this.Cita = new HashSet<Cita>();
-            this.Cita1 = new HashSet<Cita>();
             this.Cliente = new HashSet<Cliente>();
-            this.Contabilidad = new HashSet<Contabilidad>();
             this.PuntoVenta = new HashSet<PuntoVenta>();
             this.Usuario = new HashSet<Usuario>();
             this.PermisoRol = new HashSet<PermisoRol>();
-            this.Empleado = new HashSet<Empleado>();
+            this.Contabilidad = new HashSet<Contabilidad>();
+            this.Cita = new HashSet<Cita>();
+            this.Cita1 = new HashSet<Cita>();
         }
     
         public int Id_Parametro { get; set; }
@@ -37,13 +36,7 @@ namespace HDOpticasJAVS
         public string FechaModificacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cita> Cita { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cita> Cita1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cliente> Cliente { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contabilidad> Contabilidad { get; set; }
         public virtual TipoParametro TipoParametro { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PuntoVenta> PuntoVenta { get; set; }
@@ -52,6 +45,10 @@ namespace HDOpticasJAVS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PermisoRol> PermisoRol { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Empleado> Empleado { get; set; }
+        public virtual ICollection<Contabilidad> Contabilidad { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cita> Cita { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cita> Cita1 { get; set; }
     }
 }

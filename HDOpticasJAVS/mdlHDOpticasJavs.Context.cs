@@ -10,6 +10,7 @@
 namespace HDOpticasJAVS
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
@@ -27,15 +28,11 @@ namespace HDOpticasJAVS
     
         public virtual DbSet<CampaniaCliente> CampaniaCliente { get; set; }
         public virtual DbSet<CampaniaMarketing> CampaniaMarketing { get; set; }
-        public virtual DbSet<Cita> Cita { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
-        public virtual DbSet<Contabilidad> Contabilidad { get; set; }
-        public virtual DbSet<Empleado> Empleado { get; set; }
         public virtual DbSet<Inventario> Inventario { get; set; }
         public virtual DbSet<Parametro> Parametro { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
         public virtual DbSet<PuntoVenta> PuntoVenta { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TipoParametro> TipoParametro { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<RecuperacionPassword> RecuperacionPassword { get; set; }
@@ -52,5 +49,9 @@ namespace HDOpticasJAVS
         public virtual DbSet<ListaSegmentada> ListaSegmentada { get; set; }
         public virtual DbSet<ListaSegmentadaCliente> ListaSegmentadaCliente { get; set; }
         public virtual DbSet<LogSistema> LogSistema { get; set; }
+        public virtual DbSet<Contabilidad> Contabilidad { get; set; }
+        public virtual DbSet<Empleado> Empleado { get; set; }
+        public virtual DbSet<Cita> Cita { get; set; }
+        public IEnumerable<object> TipoMovimiento { get; internal set; }
     }
 }

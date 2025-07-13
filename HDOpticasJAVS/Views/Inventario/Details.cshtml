@@ -1,30 +1,74 @@
-﻿@model HDOpticasJAVS.Controllers.Producto
+﻿@model HDOpticasJAVS.Inventario
 
 @{
     ViewBag.Title = "Detalles del Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="card mt-4 bg-dark text-white shadow-lg rounded-4" style="max-width: 1000px; margin: auto;">
+    <div class="card-header bg-primary text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0">@ViewBag.Title</h4>
+    </div>
 
-<div>
-    <dl class="row">
-        <dt class="col-sm-3">Nombre Producto</dt>
-        <dd class="col-sm-9">@Model.Nombre_Producto</dd>
+    <div class="card-body rounded-bottom-4">
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.Nombre_Producto):</strong>
+            <p>@Html.DisplayFor(model => model.Nombre_Producto)</p>
+        </div>
 
-        <dt class="col-sm-3">Código Producto</dt>
-        <dd class="col-sm-9">@Model.Codigo_Producto</dd>
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.Codigo_Producto):</strong>
+            <p>@Html.DisplayFor(model => model.Codigo_Producto)</p>
+        </div>
 
-        <dt class="col-sm-3">Stock</dt>
-        <dd class="col-sm-9">@Model.Stock</dd>
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.Stock):</strong>
+            <p>@Html.DisplayFor(model => model.Stock)</p>
+        </div>
 
-        <dt class="col-sm-3">Precio</dt>
-        <dd class="col-sm-9">@Model.Precio</dd>
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.Precio):</strong>
+            <p>@Html.DisplayFor(model => model.Precio)</p>
+        </div>
 
-        <dt class="col-sm-3">Proveedor</dt>
-        <dd class="col-sm-9">@Model.Id_Proveedor</dd>
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.Descripcion):</strong>
+            <p>@Html.DisplayFor(model => model.Descripcion)</p>
+        </div>
 
-        <dt class="col-sm-3">Descripción</dt>
-        <dd class="col-sm-9">@Model.Descripcion</dd>
-    </dl>
-    <a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.Estado):</strong>
+            <p>@Html.DisplayFor(model => model.Estado)</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.UsuarioCreador):</strong>
+            <p>@Html.DisplayFor(model => model.UsuarioCreador)</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.FechaCreacion):</strong>
+            <p>@Html.DisplayFor(model => model.FechaCreacion)</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.UsuarioModificador):</strong>
+            <p>@Html.DisplayFor(model => model.UsuarioModificador)</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.FechaModificacion):</strong>
+            <p>@Html.DisplayFor(model => model.FechaModificacion)</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>@Html.DisplayNameFor(model => model.Proveedor.Nombre_Proveedor):</strong>
+            <p>@Html.DisplayFor(model => model.Proveedor.Nombre_Proveedor)</p>
+        </div>
+
+        <div class="text-end mt-4">
+            <a href="@Url.Action("Edit", new { id = Model.Id_Producto })" class="btn btn-warning me-2">Editar</a>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>
+        </div>
+    </div>
 </div>

@@ -1,46 +1,326 @@
-﻿@{
-    ViewBag.Title = "Editar Contabilidad";
+﻿@model HDOpticasJAVS.Contabilidad
+
+@{
+    ViewBag.Title = "Editar Movimiento Contable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 class="text-primary fw-bold mb-4">Editar Movimiento Contable</h2>
 
-@if (TempData["ErrorMessage"] != null)
+@if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
 }
 
-<form method="post">
-    <div class="form-group">
-        <label>Producto</label>
-        <input type="number" name="Id_Producto" class="form-control" value="@Model.Id_Producto" required />
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
     </div>
-    <div class="form-group">
-        <label>Total</label>
-        <input type="number" name="Total" class="form-control" value="@Model.Total" required />
+}
+
+@using (Html.BeginForm("Edit", "Contabilidad", FormMethod.Post, new { id = "formContabilidad" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id_Contabilidad) <!-- Agrega el ID para identificar el registro -->
+
+    <div class="card shadow-sm p-4 bg-light rounded">
+
+        <!-- Tipo de Operación -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.TipoOperacion, "Tipo de Movimiento", new { @class = "form-label fw-bold text-primary" })
+                @Html.DropDownListFor(m => m.TipoOperacion, new SelectList(new[] {
+                    new { Value = "producto", Text = "Producto (Inventario)" },
+                    new { Value = "servicio", Text = "Servicio" },
+                    new { Value = "pago", Text = "Pago" },
+                    new { Value = "ingreso", Text = "Ingreso" }
+                }, "Value", "Text", Model.TipoOperacion), "Seleccione...", new { @class = "form-select", id = "TipoOperacion" })
+                @Html.ValidationMessageFor(m => m.TipoOperacion, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Id_TipoMovimiento, "Tipo de Movimiento Contable", new { @class = "form-label fw-bold text-primary" })
+                @Html.DropDownListFor(m => m.Id_TipoMovimiento, (SelectList)ViewBag.Id_TipoMovimiento, "Seleccione tipo", new { @class = "form-select", id = "IdTipoMovimiento" })
+                @Html.ValidationMessageFor(m => m.Id_TipoMovimiento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Producto -->
+        <div class="row mb-3" id="productoContainer" style="display:none;">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Id_Producto, "Producto", new { @class = "form-label fw-bold text-primary" })
+                @Html.DropDownListFor(m => m.Id_Producto, (SelectList)ViewBag.Id_Producto, "Seleccione un producto", new { @class = "form-select", id = "Id_Producto" })
+                @Html.ValidationMessageFor(m => m.Id_Producto, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-bold text-primary">Stock Disponible</label>
+                <input type="number" id="StockDisponible" class="form-control" readonly />
+            </div>
+        </div>
+
+        <!-- Servicio -->
+        <div class="row mb-3" id="servicioContainer" style="display:none;">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.TipoServicio, new { @class = "form-label fw-bold text-primary" })
+                @Html.DropDownListFor(m => m.TipoServicio, new SelectList(new[] {
+                    "Luz", "Agua", "Teléfono", "Internet", "Mantenimiento", "Publicidad"
+                }, Model.TipoServicio), "Seleccione un servicio", new { @class = "form-select", id = "TipoServicio" })
+                @Html.ValidationMessageFor(m => m.TipoServicio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Ingreso/Egreso -->
+        <div class="row mb-3" id="tipoIngresoEgresoContainer">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.TipoMovimientoIngresoEgreso, "Ingreso / Egreso", new { @class = "form-label fw-bold text-primary" })
+                @Html.DropDownListFor(m => m.TipoMovimientoIngresoEgreso, new SelectList(new[] {
+                    "Ingreso", "Egreso"
+                }, Model.TipoMovimientoIngresoEgreso), "Seleccione...", new { @class = "form-select", id = "TipoMovimientoIngresoEgreso" })
+                @Html.ValidationMessageFor(m => m.TipoMovimientoIngresoEgreso, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Montos -->
+        <div class="row mb-3" id="pagoIngresoContainer" style="display:none;">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Subtotal, new { @class = "form-label fw-bold text-primary" })
+                @Html.EditorFor(m => m.Subtotal, new { htmlAttributes = new { @class = "form-control", id = "Subtotal" } })
+                @Html.ValidationMessageFor(m => m.Subtotal, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Descuento, new { @class = "form-label fw-bold text-primary" })
+                @Html.EditorFor(m => m.Descuento, new { htmlAttributes = new { @class = "form-control", id = "Descuento" } })
+                @Html.ValidationMessageFor(m => m.Descuento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- IVA y Total -->
+        <div class="row mb-3" id="pagoIngresoIvaTotal" style="display:none;">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.IVA, new { @class = "form-label fw-bold text-primary" })
+                @Html.EditorFor(m => m.IVA, new { htmlAttributes = new { @class = "form-control", id = "IVA", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(m => m.IVA, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Total, new { @class = "form-label fw-bold text-primary" })
+                @Html.EditorFor(m => m.Total, new { htmlAttributes = new { @class = "form-control", id = "Total", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(m => m.Total, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Cantidad y PrecioUnitario -->
+        <div class="row mb-3" id="productoCantidadPrecio" style="display:none;">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Cantidad, new { @class = "form-label fw-bold text-primary" })
+                @Html.EditorFor(m => m.Cantidad, new { htmlAttributes = new { @class = "form-control", min = "1", id = "Cantidad" } })
+                @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.PrecioUnitario, new { @class = "form-label fw-bold text-primary" })
+                @Html.EditorFor(m => m.PrecioUnitario, new { htmlAttributes = new { @class = "form-control", id = "PrecioUnitario" } })
+                @Html.ValidationMessageFor(m => m.PrecioUnitario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Campos comunes -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Fecha_Registro, new { @class = "form-label fw-bold text-primary" })
+                @Html.EditorFor(m => m.Fecha_Registro, new { htmlAttributes = new { @class = "form-control", type = "date", id = "Fecha_Registro" } })
+                @Html.ValidationMessageFor(m => m.Fecha_Registro, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Usuario_Registro, new { @class = "form-label fw-bold text-primary" })
+                @Html.DropDownList("Usuario_Registro", null, "Seleccione usuario", new { @class = "form-select" })
+                @Html.ValidationMessageFor(m => m.Usuario_Registro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Estado, new { @class = "form-label fw-bold text-primary" })
+                @Html.EditorFor(m => m.Estado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <hr />
+        <div class="text-end">
+            <input type="submit" value="Guardar Cambios" class="btn btn-success px-4" />
+            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary ms-2" })
+        </div>
     </div>
-    <div class="form-group">
-        <label>Número de Factura</label>
-        <input type="text" name="Numero_Factura" class="form-control" value="@Model.Numero_Factura" required />
-    </div>
-    <div class="form-group">
-        <label>Fecha</label>
-        <input type="date" name="Fecha" class="form-control" value="@Model.Fecha" required />
-    </div>
-    <div class="form-group">
-        <label>Monto</label>
-        <input type="number" name="Monto" class="form-control" value="@Model.Monto" required />
-    </div>
-    <div class="form-group">
-        <label>Cliente</label>
-        <input type="text" name="Cliente" class="form-control" value="@Model.Cliente" required />
-    </div>
-    <div class="form-group">
-        <label>Tipo de Pago</label>
-        <input type="text" name="Tipo_Pago" class="form-control" value="@Model.Tipo_Pago" required />
-    </div>
-    <div class="form-group">
-        <label>Status</label>
-        <input type="text" name="Status" class="form-control" value="@Model.Status" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Actualizar Venta</button>
-</form>
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        // Detectar si estamos en Create (por el título h2)
+        var esCreate = $('h2').text().includes('Registrar Movimiento Contable');
+
+        function toggleSections() {
+            var tipo = $('#TipoOperacion').val();
+
+            $('#productoContainer').hide();
+            $('#servicioContainer').hide();
+            $('#pagoIngresoContainer').hide();
+            $('#pagoIngresoIvaTotal').hide();
+            $('#productoCantidadPrecio').hide();
+
+            $('#tipoIngresoEgresoContainer').show();
+
+            if (tipo === 'producto') {
+                $('#productoContainer').show();
+                $('#productoCantidadPrecio').show();
+                $('#pagoIngresoContainer').show();
+                $('#pagoIngresoIvaTotal').show();
+            }
+            else if (tipo === 'servicio') {
+                $('#servicioContainer').show();
+                $('#pagoIngresoContainer').show();
+                $('#pagoIngresoIvaTotal').show();
+            }
+            else if (tipo === 'pago' || tipo === 'ingreso') {
+                $('#pagoIngresoContainer').show();
+                $('#pagoIngresoIvaTotal').show();
+            }
+            else {
+                $('#tipoIngresoEgresoContainer').show();
+            }
+        }
+
+        $('#TipoOperacion').change(toggleSections);
+        toggleSections();
+
+        $('#Id_Producto').change(function () {
+            var productId = $(this).val();
+            if (productId) {
+                $.getJSON('@Url.Action("GetProductoDatos", "Inventario")', { id: productId }, function (data) {
+                    if (data) {
+                        $('#PrecioUnitario').val(data.Precio.toFixed(2));
+                        $('#StockDisponible').val(data.Stock);
+                        calcularMontosProducto();
+                    } else {
+                        $('#PrecioUnitario').val('');
+                        $('#StockDisponible').val('');
+                    }
+                });
+            } else {
+                $('#PrecioUnitario').val('');
+                $('#StockDisponible').val('');
+            }
+        });
+
+        function calcularMontosPagoIngreso() {
+            var subtotal = parseFloat($('#Subtotal').val()) || 0;
+            var descuento = parseFloat($('#Descuento').val()) || 0;
+            var subtotalDesc = subtotal - descuento;
+            if (subtotalDesc < 0) subtotalDesc = 0;
+
+            var iva = subtotalDesc * 0.13;
+            var total = subtotalDesc + iva;
+
+            var tipo = $('#TipoOperacion').val();
+
+            if (tipo === 'pago') {
+                total = -Math.abs(total);
+            } else if (tipo === 'ingreso' || tipo === 'servicio' || tipo === 'producto') {
+                total = Math.abs(total);
+            }
+
+            $('#IVA').val(iva.toFixed(2));
+            $('#Total').val(total.toFixed(2));
+        }
+
+        function calcularMontosProducto() {
+            var cantidad = parseFloat($('#Cantidad').val()) || 0;
+            var precioUnitario = parseFloat($('#PrecioUnitario').val()) || 0;
+            var descuento = parseFloat($('#Descuento').val()) || 0;
+
+            var subtotal = cantidad * precioUnitario;
+            var subtotalDesc = subtotal - descuento;
+            if (subtotalDesc < 0) subtotalDesc = 0;
+
+            var iva = subtotalDesc * 0.13;
+            var total = subtotalDesc + iva;
+
+            $('#Subtotal').val(subtotal.toFixed(2));
+            $('#IVA').val(iva.toFixed(2));
+            $('#Total').val(total.toFixed(2));
+        }
+
+        $('#Subtotal, #Descuento').on('input', calcularMontosPagoIngreso);
+        $('#Cantidad, #PrecioUnitario, #Descuento').on('input', function () {
+            if ($('#TipoOperacion').val() === 'producto') {
+                calcularMontosProducto();
+            }
+        });
+
+        $('#formContabilidad').submit(function (e) {
+            var errors = [];
+
+            if (esCreate) {
+                var descripcion = $('#Descripcion').val();
+                if (!descripcion || descripcion.trim() === "") {
+                    errors.push("Debe ingresar una descripción.");
+                }
+            }
+
+            var total = parseFloat($('#Total').val());
+            if (isNaN(total)) {
+                errors.push("El monto debe ser un número válido.");
+            } else if (Math.abs(total) <= 0) {
+                errors.push("El monto debe ser mayor que cero.");
+            }
+
+            if (!$('#TipoOperacion').val()) {
+                errors.push("Debe seleccionar un tipo de operación.");
+            }
+            if (!$('#IdTipoMovimiento').val()) {
+                errors.push("Debe seleccionar un tipo de movimiento contable.");
+            }
+            if (!$('#Fecha_Registro').val()) {
+                errors.push("Debe seleccionar una fecha de registro.");
+            }
+            if (!$('#TipoMovimientoIngresoEgreso').val()) {
+                errors.push("Debe seleccionar Ingreso o Egreso.");
+            }
+
+            if ($('#TipoOperacion').val() === 'producto') {
+                if (!$('#Id_Producto').val()) {
+                    errors.push("Debe seleccionar un producto.");
+                }
+                var cantidad = parseInt($('#Cantidad').val());
+                if (isNaN(cantidad) || cantidad <= 0) {
+                    errors.push("La cantidad debe ser un número entero mayor que cero.");
+                }
+            }
+
+            if (errors.length > 0) {
+                e.preventDefault();
+
+                var errorHtml = "<div class='alert alert-danger alert-dismissible fade show' role='alert'><ul>";
+                errors.forEach(function (err) {
+                    errorHtml += "<li>" + err + "</li>";
+                });
+                errorHtml += "</ul><button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Cerrar'></button></div>";
+
+                $('.alert').remove();
+                $('#formContabilidad').before(errorHtml);
+                $('html, body').animate({ scrollTop: 0 }, 'fast');
+            }
+        });
+    });
+    </script>
+}

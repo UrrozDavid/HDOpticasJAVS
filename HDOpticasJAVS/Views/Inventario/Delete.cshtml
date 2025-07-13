@@ -1,15 +1,45 @@
-﻿@{
+﻿@model HDOpticasJAVS.Inventario
+
+@{
     ViewBag.Title = "Eliminar Producto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 style="font-family: Montserrat; color: #C62828;">@ViewBag.Title</h2>
+<div class="card mt-4 bg-dark text-white shadow-lg rounded-4" style="max-width: 700px; margin: auto;">
+    <div class="card-header bg-danger text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0">@ViewBag.Title</h4>
+    </div>
 
-<div style="font-family: Roboto;">
-    <p>¿Estás seguro que deseas eliminar el producto <strong>@ViewBag.Nombre_Producto</strong>?</p>
+    <div class="card-body rounded-bottom-4">
+        <h5 class="mb-4 text-center text-warning">¿Está seguro que desea eliminar este producto?</h5>
 
-    <form method="post" action="@Url.Action("DeleteConfirmed", new { id = ViewBag.Id_Producto })">
-        <button type="submit" class="btn btn-danger" style="background-color:#D32F2F; border-color:#D32F2F; font-family: Poppins;">Eliminar</button>
-        <a href="@Url.Action("Index")" class="btn btn-secondary" style="font-family: Poppins;">Cancelar</a>
-    </form>
+        <dl class="row">
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Nombre_Producto)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Nombre_Producto)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Codigo_Producto)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Codigo_Producto)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Stock)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Stock)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Precio)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Precio)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Descripcion)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Descripcion)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Proveedor.Nombre_Proveedor)</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Proveedor.Nombre_Proveedor)</dd>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <input type="submit" value="Eliminar" class="btn btn-danger btn-lg" />
+                <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg">Cancelar</a>
+            </div>
+        }
+    </div>
 </div>
