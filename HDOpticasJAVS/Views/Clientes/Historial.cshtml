@@ -1,0 +1,164 @@
+﻿@model List<HDOpticasJAVS.Models.ViewModels.HistorialClienteViewModel>
+
+@{
+    ViewBag.Title = "Historial del Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var fechasSeguimiento = ViewBag.FechasSeguimiento as Dictionary<string, DateTime?>;
+}
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #808080 !important;
+        color: #ffffff !important;
+    }
+
+        .table-hover tbody tr:hover td,
+        .table-hover tbody tr:hover a,
+        .table-hover tbody tr:hover i {
+            color: #ffffff !important;
+        }
+
+    .table td, .table th {
+        vertical-align: middle;
+        color: #ffffff;
+    }
+
+    .btn-warning i,
+    .btn-danger i {
+        color: white !important;
+    }
+
+    .btn-action {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 1rem;
+    }
+
+        .btn-action:hover {
+            opacity: 0.9;
+        }
+</style>
+
+<div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
+    <div class="card-header bg-primary text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0">📂 Historial de @ViewBag.NombreCliente</h4>
+    </div>
+
+    <div class="card-body">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        }
+
+        <!-- BOTONES SUPERIORES -->
+        <div class="d-flex justify-content-end flex-wrap mb-3">
+            <a href="@Url.Action("ExportarHistorialExcel", "Clientes", new { cedula = ViewBag.CedulaCliente })" class="btn btn-outline-light me-2 mb-2">
+                <i class="bi bi-file-earmark-excel"></i> Exportar a Excel
+            </a>
+
+            <a href="@Url.Action("ExportarHistorialPdf", "Clientes", new { cedula = ViewBag.CedulaCliente })" class="btn btn-outline-danger me-2 mb-2">
+                <i class="bi bi-file-earmark-pdf"></i> Exportar a PDF
+            </a>
+
+            @if (Session["Rol"] != null && ((int)Session["Rol"] == 1 || (int)Session["Rol"] == 2))
+            {
+                <a href="@Url.Action("RegistrarHistorial", "Clientes", new { cedula = ViewBag.CedulaCliente })" class="btn btn-success mb-2">
+                    <i class="bi bi-plus-square"></i> Registrar Nuevo Historial
+                </a>
+            }
+        </div>
+
+        @if (Model.Count == 0)
+        {
+            <div class="alert alert-warning">No hay registros disponibles.</div>
+        }
+        else
+        {
+            <table class="table table-bordered table-hover bg-dark text-white mt-4">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Antecedentes</th>
+                        <th>Diagnóstico</th>
+                        <th>Tratamiento</th>
+                        <th>Observaciones</th>
+                        <th>Próximo Seguimiento</th>
+                        <th>Registrado por</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var key = ((DateTime)item.FechaRegistro).ToString("yyyyMMddHHmmss");
+                        DateTime? fechaSeguimiento = fechasSeguimiento != null && fechasSeguimiento.ContainsKey(key) ? fechasSeguimiento[key] : null;
+
+                        <tr>
+                            <td>@(((DateTime)item.FechaRegistro).ToString("yyyy-MM-dd HH:mm"))</td>
+                            <td>@item.Antecedentes</td>
+                            <td>@item.Diagnostico</td>
+                            <td>@item.Tratamiento</td>
+                            <td>@item.Observaciones</td>
+                            <td>
+                                @(fechaSeguimiento.HasValue ? fechaSeguimiento.Value.ToString("yyyy-MM-dd") : "—")
+                            </td>
+                            <td>@item.UsuarioRegistro</td>
+                            <td class="text-center">
+                                <a href="@Url.Action("EditarHistorial", "Clientes", new { cedula = item.CedulaCliente, fecha = ((DateTime)item.FechaRegistro).ToString("o") })"
+                                   class="btn btn-warning btn-sm me-1" title="Editar">
+                                    Editar
+                                </a>
+
+                                @using (Html.BeginForm("EliminarHistorial", "Clientes", FormMethod.Post, new { onsubmit = "return confirm('¿Estás seguro de eliminar este registro?');", style = "display:inline-block;" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("cedula", item.CedulaCliente)
+                                    @Html.Hidden("fecha", ((DateTime)item.FechaRegistro).ToString("o"))
+
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+                                        Eliminar
+                                    </button>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <div class="text-center mt-4">
+            <a href="@Url.Action("Index", "Clientes")" class="btn btn-secondary me-2">
+                <i class="bi bi-arrow-left-circle"></i> Volver a Clientes
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        setTimeout(function () {
+            var alerts = document.querySelectorAll('.alert-dismissible');
+            alerts.forEach(function (alert) {
+                var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
+}

@@ -17,8 +17,8 @@ namespace HDOpticasJAVS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
-            this.Contabilidad = new HashSet<Contabilidad>();
             this.Cita = new HashSet<Cita>();
+            this.Contabilidad = new HashSet<Contabilidad>();
         }
     
         public string Cedula { get; set; }
@@ -36,12 +36,11 @@ namespace HDOpticasJAVS
         public string FechaModificacion { get; set; }
         public Nullable<System.DateTime> FechaBloqueoHasta { get; set; }
     
-        public virtual Cliente Cliente { get; set; }
-        public virtual Parametro Parametro { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cita> Cita { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contabilidad> Contabilidad { get; set; }
         public virtual Empleado Empleado { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cita> Cita { get; set; }
+        public virtual Parametro Parametro { get; set; }
     }
 }

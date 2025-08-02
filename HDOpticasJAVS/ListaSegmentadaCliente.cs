@@ -18,7 +18,6 @@ namespace HDOpticasJAVS
         public Nullable<int> Id_Lista { get; set; }
         public string Cedula_Cliente { get; set; }
     
-        public virtual Cliente Cliente { get; set; }
         public virtual ListaSegmentada ListaSegmentada { get; set; }
     }
 }

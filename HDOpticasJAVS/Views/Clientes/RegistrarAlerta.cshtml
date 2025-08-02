@@ -1,0 +1,64 @@
+﻿@model HDOpticasJAVS.AlertaSeguimiento
+
+@{
+    ViewBag.Title = "Registrar Alerta de Seguimiento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string hoy = DateTime.Now.ToString("yyyy-MM-dd");
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg" style="background-color: #1e1e1e; color: #f1f1f1;">
+        <div class="card-header text-center bg-primary text-white">
+            <h3 class="fw-bold">Registrar Alerta de Seguimiento</h3>
+        </div>
+
+        <div class="card-body">
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success text-center">
+                    <i class="bi bi-check-circle-fill"></i> @TempData["SuccessMessage"]
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger text-center">
+                    <i class="bi bi-x-circle-fill"></i> @TempData["ErrorMessage"]
+                </div>
+            }
+
+            @using (Html.BeginForm("RegistrarAlertaSeguimiento", "Clientes", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.Cedula_Cliente)
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(model => model.FechaAlerta)
+                    @Html.TextBoxFor(model => model.FechaAlerta, new { @class = "form-control", type = "date", min = hoy })
+                    @Html.ValidationMessageFor(model => model.FechaAlerta, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(model => model.TipoAlerta)
+                    @Html.TextBoxFor(model => model.TipoAlerta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TipoAlerta, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(model => model.Mensaje)
+                    @Html.TextAreaFor(model => model.Mensaje, new { @class = "form-control", rows = 4 })
+                    @Html.ValidationMessageFor(model => model.Mensaje, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-send-check"></i> Registrar Alerta
+                    </button>
+                    <a href="@Url.Action("Historial", "Clientes", new { cedula = Model.Cedula_Cliente })" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Volver
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

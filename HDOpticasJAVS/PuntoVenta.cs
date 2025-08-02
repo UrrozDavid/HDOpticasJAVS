@@ -17,9 +17,9 @@ namespace HDOpticasJAVS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PuntoVenta()
         {
-            this.PagoVenta = new HashSet<PagoVenta>();
-            this.DetalleVenta = new HashSet<DetalleVenta>();
             this.Contabilidad = new HashSet<Contabilidad>();
+            this.DetalleVenta = new HashSet<DetalleVenta>();
+            this.PagoVenta = new HashSet<PagoVenta>();
         }
     
         public int Id_Venta { get; set; }
@@ -37,12 +37,12 @@ namespace HDOpticasJAVS
         public string FechaModificacion { get; set; }
     
         public virtual Cliente Cliente { get; set; }
-        public virtual Parametro Parametro { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagoVenta> PagoVenta { get; set; }
+        public virtual ICollection<Contabilidad> Contabilidad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleVenta> DetalleVenta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contabilidad> Contabilidad { get; set; }
+        public virtual ICollection<PagoVenta> PagoVenta { get; set; }
+        public virtual Parametro Parametro { get; set; }
     }
 }

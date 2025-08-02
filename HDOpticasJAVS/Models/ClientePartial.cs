@@ -7,8 +7,15 @@ namespace HDOpticasJAVS
 {
     public partial class Cliente
     {
-        public string NombreCompleto => Usuario != null
-            ? $"{Usuario.Nombre} {Usuario.Apellido1} {Usuario.Apellido2}"
-            : "(Sin nombre)";
+        public Usuario Usuario
+        {
+            get
+            {
+                using (var db = new HD_Opticas_JAVS_BDEntities())
+                {
+                    return db.Usuario.FirstOrDefault(u => u.Cedula == this.Cedula);
+                }
+            }
+        }
     }
 }

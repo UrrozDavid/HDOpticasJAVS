@@ -1,22 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Tamdav\\Documents\\Universidad\\2025\\II C\\Dise\u00F1o \u0026 Desarrollo\\09\\HDOpticasJAVS\\",
+  "WorkspaceRootPath": "S:\\OpticaJuly27\\HDOpticasJAVS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\tamdav\\documents\\universidad\\2025\\ii c\\dise\u00F1o \u0026 desarrollo\\09\\hdopticasjavs\\hdopticasjavs\\views\\contabilidad\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\contabilidad\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\tamdav\\documents\\universidad\\2025\\ii c\\dise\u00F1o \u0026 desarrollo\\09\\hdopticasjavs\\hdopticasjavs\\models\\contabilidadmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\models\\contabilidadmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\tamdav\\documents\\universidad\\2025\\ii c\\dise\u00F1o \u0026 desarrollo\\09\\hdopticasjavs\\hdopticasjavs\\controllers\\contabilidadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|s:\\opticajuly27\\hdopticasjavs\\hdopticasjavs\\controllers\\contabilidadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\controllers\\contabilidadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|c:\\users\\tamdav\\documents\\universidad\\2025\\ii c\\dise\u00F1o \u0026 desarrollo\\09\\hdopticasjavs\\hdopticasjavs\\views\\contabilidad\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\contabilidad\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|s:\\opticajuly27\\hdopticasjavs\\hdopticasjavs\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|S:\\OpticaJuly27\\HDOpticasJAVS\\hdopticasjavs\\views\\clientes\\editarhistorial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\clientes\\editarhistorial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|s:\\opticajuly27\\hdopticasjavs\\hdopticasjavs\\controllers\\clientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\controllers\\clientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|S:\\OpticaJuly27\\HDOpticasJAVS\\hdopticasjavs\\views\\clientes\\historial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\clientes\\historial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|S:\\OpticaJuly27\\HDOpticasJAVS\\hdopticasjavs\\views\\clientes\\registrarhistorial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{77CD041B-46EA-4363-8575-015355707212}|HDOpticasJAVS\\HDOpticasJAVS.csproj|solutionrelative:hdopticasjavs\\views\\clientes\\registrarhistorial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,11 +34,35 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d562c6a0-d2fe-4c19-a8b3-e5cbc09bf375}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{5c82a791-7c9f-441e-952b-8848655dd85e}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{5e929736-0e81-4d52-a78e-546a1649faca}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a34b1c5d-6d37-4a0c-a8b0-99f8e8158b48}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Bookmark",
@@ -50,55 +82,79 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Tamdav\\Documents\\Universidad\\2025\\II C\\Dise\u00F1o \u0026 Desarrollo\\09\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Contabilidad\\Index.cshtml",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Contabilidad\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Tamdav\\Documents\\Universidad\\2025\\II C\\Dise\u00F1o \u0026 Desarrollo\\09\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Contabilidad\\Index.cshtml",
-              "RelativeToolTip": "HDOpticasJAVS\\Views\\Contabilidad\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-12T22:10:29.148Z",
+              "DocumentIndex": 1,
+              "Title": "Web.config",
+              "DocumentMoniker": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Web.config",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Web.config",
+              "ToolTip": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Web.config",
+              "RelativeToolTip": "HDOpticasJAVS\\Views\\Web.config",
+              "ViewState": "AgIAABsAAAAAAAAAAAAUwB8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-08-02T18:34:54.255Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ContabilidadModel.cs",
-              "DocumentMoniker": "C:\\Users\\Tamdav\\Documents\\Universidad\\2025\\II C\\Dise\u00F1o \u0026 Desarrollo\\09\\HDOpticasJAVS\\HDOpticasJAVS\\Models\\ContabilidadModel.cs",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Models\\ContabilidadModel.cs",
-              "ToolTip": "C:\\Users\\Tamdav\\Documents\\Universidad\\2025\\II C\\Dise\u00F1o \u0026 Desarrollo\\09\\HDOpticasJAVS\\HDOpticasJAVS\\Models\\ContabilidadModel.cs",
-              "RelativeToolTip": "HDOpticasJAVS\\Models\\ContabilidadModel.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA5wBUAAAAIAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "ContabilidadController.cs",
+              "DocumentMoniker": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\ContabilidadController.cs",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Controllers\\ContabilidadController.cs",
+              "ToolTip": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\ContabilidadController.cs",
+              "RelativeToolTip": "HDOpticasJAVS\\Controllers\\ContabilidadController.cs",
+              "ViewState": "AgIAAE8BAAAAAAAAAAASwFoBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-12T22:10:05.466Z",
+              "WhenOpened": "2025-08-02T17:52:10.091Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RegistrarHistorial.cshtml",
+              "DocumentMoniker": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\RegistrarHistorial.cshtml",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Clientes\\RegistrarHistorial.cshtml",
+              "ToolTip": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\RegistrarHistorial.cshtml",
+              "RelativeToolTip": "HDOpticasJAVS\\Views\\Clientes\\RegistrarHistorial.cshtml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAUwDcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-28T05:22:32.361Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ClientesController.cs",
+              "DocumentMoniker": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\ClientesController.cs",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Controllers\\ClientesController.cs",
+              "ToolTip": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\ClientesController.cs",
+              "RelativeToolTip": "HDOpticasJAVS\\Controllers\\ClientesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T02:13:42.075Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ContabilidadController.cs",
-              "DocumentMoniker": "C:\\Users\\Tamdav\\Documents\\Universidad\\2025\\II C\\Dise\u00F1o \u0026 Desarrollo\\09\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\ContabilidadController.cs",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Controllers\\ContabilidadController.cs",
-              "ToolTip": "C:\\Users\\Tamdav\\Documents\\Universidad\\2025\\II C\\Dise\u00F1o \u0026 Desarrollo\\09\\HDOpticasJAVS\\HDOpticasJAVS\\Controllers\\ContabilidadController.cs",
-              "RelativeToolTip": "HDOpticasJAVS\\Controllers\\ContabilidadController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwC4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-12T22:05:57.831Z",
+              "Title": "EditarHistorial.cshtml",
+              "DocumentMoniker": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\EditarHistorial.cshtml",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Clientes\\EditarHistorial.cshtml",
+              "ToolTip": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\EditarHistorial.cshtml",
+              "RelativeToolTip": "HDOpticasJAVS\\Views\\Clientes\\EditarHistorial.cshtml",
+              "ViewState": "AgIAACgAAAAAAAAAAAAUwD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-28T05:38:56.387Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\Tamdav\\Documents\\Universidad\\2025\\II C\\Dise\u00F1o \u0026 Desarrollo\\09\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Contabilidad\\Edit.cshtml",
-              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Contabilidad\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\Tamdav\\Documents\\Universidad\\2025\\II C\\Dise\u00F1o \u0026 Desarrollo\\09\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Contabilidad\\Edit.cshtml",
-              "RelativeToolTip": "HDOpticasJAVS\\Views\\Contabilidad\\Edit.cshtml",
-              "ViewState": "AgIAACIBAAAAAAAAAAAkwEQBAAANAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "Historial.cshtml",
+              "DocumentMoniker": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\Historial.cshtml",
+              "RelativeDocumentMoniker": "HDOpticasJAVS\\Views\\Clientes\\Historial.cshtml",
+              "ToolTip": "S:\\OpticaJuly27\\HDOpticasJAVS\\HDOpticasJAVS\\Views\\Clientes\\Historial.cshtml",
+              "RelativeToolTip": "HDOpticasJAVS\\Views\\Clientes\\Historial.cshtml",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAUwIoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-12T21:58:00.959Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-28T04:37:42.083Z"
             }
           ]
         },
@@ -106,6 +162,26 @@
           "DockedWidth": 99,
           "SelectedChildIndex": -1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d98f7c4d-b652-422c-bcdf-3d0e2b2da2c1}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:18:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:19:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:21:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -121,6 +197,20 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 150,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             }
           ]
         }

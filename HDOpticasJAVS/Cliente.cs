@@ -18,9 +18,8 @@ namespace HDOpticasJAVS
         public Cliente()
         {
             this.CampaniaCliente = new HashSet<CampaniaCliente>();
-            this.PuntoVenta = new HashSet<PuntoVenta>();
             this.CampaniaMetrica = new HashSet<CampaniaMetrica>();
-            this.ListaSegmentadaCliente = new HashSet<ListaSegmentadaCliente>();
+            this.PuntoVenta = new HashSet<PuntoVenta>();
         }
     
         public string Cedula { get; set; }
@@ -33,16 +32,21 @@ namespace HDOpticasJAVS
         public string FechaCreacion { get; set; }
         public string UsuarioModificador { get; set; }
         public string FechaModificacion { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido1 { get; set; }
+        public string Apellido2 { get; set; }
+        public string Correo { get; set; }
+        public Nullable<System.DateTime> Fecha_Nacimiento { get; set; }
+        public string Genero { get; set; }
+        public bool Activo { get; set; }
+        public string CedulaNormalizada { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CampaniaCliente> CampaniaCliente { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CampaniaMetrica> CampaniaMetrica { get; set; }
         public virtual Parametro Parametro { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PuntoVenta> PuntoVenta { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CampaniaMetrica> CampaniaMetrica { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ListaSegmentadaCliente> ListaSegmentadaCliente { get; set; }
     }
 }
