@@ -1,0 +1,27 @@
+﻿@model IEnumerable<HDOpticasJAVS.Cita>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Cliente</th>
+            <th>Especialidad</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cita in Model)
+        {
+            var usuario = cita.Usuario;
+            var especialidad = cita.Parametro1;
+            <tr>
+                <td>@cita.Fecha_Cita.ToString("dd/MM/yyyy")</td>
+                <td>@cita.Hora_Cita</td>
+                <td>@(usuario?.Nombre + " " + usuario?.Apellido1 + " " + usuario?.Apellido2)</td>
+                <td>@especialidad.Nombre_Parametro</td>
+                <td>@(cita.Id_EstadoCita == 9 ? "Confirmada" : "Pendiente")</td>
+            </tr>
+        }
+    </tbody>
+</table>

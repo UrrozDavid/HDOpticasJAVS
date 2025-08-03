@@ -1,0 +1,40 @@
+﻿@model HDOpticasJAVS.Cita
+
+@{
+    ViewBag.Title = "Detalles de Cita";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg w-100" style="max-width: 1000px; background: rgba(0, 0, 0, 0.85); color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Fecha_Cita)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Fecha_Cita)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Hora_Cita)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Hora_Cita)</dd>
+
+                <dt class="col-sm-4">Cédula especialista</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Empleado.Cedula)</dd>
+
+                <dt class="col-sm-4">Cliente</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Usuario.Nombre)</dd>
+
+                <dt class="col-sm-4">Estado de la cita</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Parametro.Nombre_Parametro)</dd>
+
+                <dt class="col-sm-4">Especialidad</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Parametro1.Nombre_Parametro)</dd>
+            </dl>
+
+            <div class="text-end mt-4">
+                <a href="@Url.Action("Edit", new { id = Model.Id_Cita })" class="btn btn-warning">Editar</a>
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>

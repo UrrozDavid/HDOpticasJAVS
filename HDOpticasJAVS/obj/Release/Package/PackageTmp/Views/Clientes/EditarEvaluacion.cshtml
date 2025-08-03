@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Editar Evaluación Médica";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" name="Fecha" class="form-control" value="@ViewBag.Fecha" />
+    </div>
+    <div class="form-group">
+        <label>Diagnóstico</label>
+        <input type="text" name="Diagnostico" class="form-control" value="@ViewBag.Diagnostico" />
+    </div>
+    <div class="form-group">
+        <label>Tratamiento</label>
+        <input type="text" name="Tratamiento" class="form-control" value="@ViewBag.Tratamiento" />
+    </div>
+    <div class="form-group">
+        <label>Observaciones</label>
+        <textarea name="Observaciones" class="form-control" rows="3">@ViewBag.Observaciones</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>

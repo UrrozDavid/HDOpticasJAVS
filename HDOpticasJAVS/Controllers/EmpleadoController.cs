@@ -4,7 +4,7 @@ using System.Web.Razor.Parser.SyntaxTree;
 
 namespace HDOpticasJAVS.Controllers
 {
-    public class EmpleadoController : Controller
+    public class EmpleadoController : BaseController
     {
         // GET: Empleado
         public ActionResult Index()

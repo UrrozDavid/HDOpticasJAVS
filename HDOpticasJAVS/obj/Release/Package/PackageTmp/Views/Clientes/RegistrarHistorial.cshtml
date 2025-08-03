@@ -1,0 +1,55 @@
+﻿@model HDOpticasJAVS.Models.ViewModels.HistorialClienteViewModel
+
+@{
+    ViewBag.Title = "Registrar Historial Clínico";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
+    <div class="card-header bg-success text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0"><i class="bi bi-journal-plus"></i> Registrar Historial de @ViewBag.NombreCliente</h4>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm("RegistrarHistorial", "Clientes", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.CedulaCliente)
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Antecedentes)
+                @Html.TextAreaFor(m => m.Antecedentes, new { @class = "form-control", rows = 3 })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Diagnostico)
+                @Html.TextAreaFor(m => m.Diagnostico, new { @class = "form-control", rows = 3 })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Tratamiento)
+                @Html.TextAreaFor(m => m.Tratamiento, new { @class = "form-control", rows = 3 })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Observaciones)
+                @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control", rows = 3 })
+            </div>
+
+            <div class="mb-3">
+                <label for="fechaSeguimiento" class="form-label">Fecha de próximo seguimiento (opcional)</label>
+                <input type="date" class="form-control" name="fechaSeguimiento" id="fechaSeguimiento" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span class="text-danger">@ViewBag.FechaInvalida</span>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-save2"></i> Guardar
+                </button>
+                <a href="@Url.Action("Historial", "Clientes", new { cedula = Model.CedulaCliente })" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle"></i> Cancelar
+                </a>
+            </div>
+        }
+    </div>
+</div>

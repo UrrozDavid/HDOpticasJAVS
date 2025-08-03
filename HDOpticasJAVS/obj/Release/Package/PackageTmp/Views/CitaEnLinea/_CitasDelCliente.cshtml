@@ -1,0 +1,41 @@
+﻿@model List<HDOpticasJAVS.Cita>
+
+<table class="table table-bordered table-dark table-hover mt-3">
+    <thead class="table-light text-dark">
+        <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Especialidad</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="5" class="text-center">No tienes citas agendadas.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var cita in Model)
+            {
+                <tr>
+                    <td>@cita.Fecha_Cita.ToString("yyyy-MM-dd")</td>
+                    <td>@cita.Hora_Cita</td>
+                    <td>@cita.Parametro1.Nombre_Parametro</td>
+                    <td>@cita.Parametro.Nombre_Parametro</td>
+                    <td>
+                        @using (Html.BeginForm("CancelarCita", "CitaEnLinea", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("idCita", cita.Id_Cita)
+                            <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Deseas cancelar esta cita?');">Cancelar</button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

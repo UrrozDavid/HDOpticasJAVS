@@ -567,20 +567,15 @@ namespace HDOpticasJAVS.Controllers
 
                 TempData["SuccessMessage"] = "Historial actualizado correctamente.";
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) { 
+                                    
                 TempData["ErrorMessage"] = "Error al guardar los cambios: " + ex.Message;
-            }
+        }
+           return RedirectToAction("Historial", "Clientes", new { cedula = model.CedulaCliente
+    });
+      }
 
-            return RedirectToAction("EditarHistorial", new
-            {
-                cedula = model.CedulaCliente,
-                fecha = model.FechaRegistro?.ToString("o")
-            });
-
-}
-
-            [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EliminarHistorial(string cedula, DateTime? fecha)
         {

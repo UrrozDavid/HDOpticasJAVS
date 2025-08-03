@@ -1,0 +1,71 @@
+﻿@model HDOpticasJAVS.Models.AjusteStockViewModel
+
+@{
+    ViewBag.Title = "Ajustar Stock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>¡Éxito!</strong> @TempData["Mensaje"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
+@if (TempData["MensajeError"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error:</strong> @TempData["MensajeError"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
+<div class="card mt-4 bg-dark text-white shadow-lg rounded-4" style="max-width: 600px; margin: auto;">
+    <div class="card-header bg-primary text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0">Ajustar Stock - @Model.Nombre_Producto</h4>
+    </div>
+
+    <div class="card-body rounded-bottom-4">
+        @using (Html.BeginForm("AjustarStock", "Inventario", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id_Producto)
+
+            <div class="mb-3">
+                <label class="form-label">Stock Actual</label>
+                <input type="number" class="form-control" value="@Model.StockActual" readonly />
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Cantidad)
+                @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", type = "number", min = "1" })
+                @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Tipo)
+                @Html.DropDownListFor(m => m.Tipo, new SelectList(new[] {
+                    new { Value = "Aumentar", Text = "Aumentar" },
+                    new { Value = "Disminuir", Text = "Disminuir" }
+                }, "Value", "Text"), "Seleccione una opción", new { @class = "form-select" })
+                @Html.ValidationMessageFor(m => m.Tipo, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Motivo)
+                @Html.TextAreaFor(m => m.Motivo, new { @class = "form-control", rows = 3, placeholder = "Describa el motivo del ajuste..." })
+                @Html.ValidationMessageFor(m => m.Motivo, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-success">Aplicar Ajuste</button>
+                <a href="@Url.Action("Index", "Inventario")" class="btn btn-secondary ms-2">Cancelar</a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

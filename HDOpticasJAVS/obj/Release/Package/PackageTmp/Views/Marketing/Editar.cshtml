@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Editar Campaña de Marketing";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>Título</label>
+        <input type="text" name="Titulo" class="form-control" value="@ViewBag.Titulo" />
+    </div>
+    <div class="form-group">
+        <label>Segmento</label>
+        <input type="text" name="Segmento" class="form-control" value="@ViewBag.Segmento" />
+    </div>
+    <div class="form-group">
+        <label>Fecha de Envío</label>
+        <input type="date" name="FechaEnvio" class="form-control" value="@ViewBag.FechaEnvio" />
+    </div>
+    <div class="form-group">
+        <label>Mensaje</label>
+        <textarea name="Mensaje" class="form-control" rows="4">@ViewBag.Mensaje</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>

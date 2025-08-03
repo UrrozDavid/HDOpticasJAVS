@@ -1,0 +1,43 @@
+﻿@model List<HDOpticasJAVS.ViewModels.AlertaHistorialViewModel>
+@{
+    ViewBag.Title = "Historial de Alertas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow" style="background: #1e1e2f; color: #fff;">
+        <div class="card-header bg-primary text-white">
+            <h4>Historial de Alertas para @ViewBag.Cedula</h4>
+        </div>
+        <div class="card-body">
+            @if (Model.Count == 0)
+            {
+                <p>No hay alertas enviadas registradas.</p>
+            }
+            else
+            {
+                <table class="table table-dark table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Fecha de Alerta</th>
+                            <th>Mensaje</th>
+                            <th>Estado</th>
+                            <th>Medio de Envío</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var alerta in Model)
+                        {
+                            <tr>
+                                <td>@(alerta.FechaAlerta.HasValue ? alerta.FechaAlerta.Value.ToString("yyyy-MM-dd HH:mm") : "Sin fecha")</td>
+                                <td>@alerta.Mensaje</td>
+                                <td>@(alerta.Enviada == true ? "Enviada" : "No enviada")</td>
+                                <td>@alerta.MedioEnvio</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,580 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="mdlHDOpticasJavsStoreContainer" CdmEntityContainer="HD_Opticas_JAVS_BDEntities">
+    <EntitySetMapping Name="AccesoHistorialLog">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.AccesoHistorialLog">
+        <MappingFragment StoreEntitySet="AccesoHistorialLog">
+          <ScalarProperty Name="Id_Log" ColumnName="Id_Log" />
+          <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+          <ScalarProperty Name="Rol" ColumnName="Rol" />
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+          <ScalarProperty Name="FechaIntento" ColumnName="FechaIntento" />
+          <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AlertaSeguimiento">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.AlertaSeguimiento">
+        <MappingFragment StoreEntitySet="AlertaSeguimiento">
+          <ScalarProperty Name="Enviada" ColumnName="Enviada" />
+          <ScalarProperty Name="MedioEnvio" ColumnName="MedioEnvio" />
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="Id_Alerta" ColumnName="Id_Alerta" />
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+          <ScalarProperty Name="FechaAlerta" ColumnName="FechaAlerta" />
+          <ScalarProperty Name="TipoAlerta" ColumnName="TipoAlerta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+          <ScalarProperty Name="ConfiguradaPor" ColumnName="ConfiguradaPor" />
+          <ScalarProperty Name="FechaConfiguracion" ColumnName="FechaConfiguracion" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AlertaSeguimientoHistorial">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.AlertaSeguimientoHistorial">
+        <MappingFragment StoreEntitySet="AlertaSeguimientoHistorial">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+          <ScalarProperty Name="FechaAlerta" ColumnName="FechaAlerta" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="Enviada" ColumnName="Enviada" />
+          <ScalarProperty Name="MedioEnvio" ColumnName="MedioEnvio" />
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CampaniaCliente">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.CampaniaCliente">
+        <MappingFragment StoreEntitySet="CampaniaCliente">
+          <ScalarProperty Name="Id_Campania" ColumnName="Id_Campania" />
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+          <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CampaniaMarketing">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.CampaniaMarketing">
+        <MappingFragment StoreEntitySet="CampaniaMarketing">
+          <ScalarProperty Name="Id_Campania" ColumnName="Id_Campania" />
+          <ScalarProperty Name="Nombre_Campania" ColumnName="Nombre_Campania" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Fecha_Inicio" ColumnName="Fecha_Inicio" />
+          <ScalarProperty Name="Fecha_Fin" ColumnName="Fecha_Fin" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="Fecha_Programada" ColumnName="Fecha_Programada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CampaniaMetrica">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.CampaniaMetrica">
+        <MappingFragment StoreEntitySet="CampaniaMetrica">
+          <ScalarProperty Name="Id_Campania" ColumnName="Id_Campania" />
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+          <ScalarProperty Name="Abierto" ColumnName="Abierto" />
+          <ScalarProperty Name="Click" ColumnName="Click" />
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="Automatica" ColumnName="Automatica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cita">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Cita">
+        <MappingFragment StoreEntitySet="Cita">
+          <ScalarProperty Name="Id_Cita" ColumnName="Id_Cita" />
+          <ScalarProperty Name="Cedula_Usuario" ColumnName="Cedula_Usuario" />
+          <ScalarProperty Name="Fecha_Cita" ColumnName="Fecha_Cita" />
+          <ScalarProperty Name="Hora_Cita" ColumnName="Hora_Cita" />
+          <ScalarProperty Name="Id_TipoEspecialista" ColumnName="Id_TipoEspecialista" />
+          <ScalarProperty Name="Cedula_Especialista" ColumnName="Cedula_Especialista" />
+          <ScalarProperty Name="Id_EstadoCita" ColumnName="Id_EstadoCita" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="TokenConfirmacion" ColumnName="TokenConfirmacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cliente">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Cliente">
+        <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+          <ScalarProperty Name="Edad" ColumnName="Edad" />
+          <ScalarProperty Name="Id_Genero" ColumnName="Id_Genero" />
+          <ScalarProperty Name="Padecimiento" ColumnName="Padecimiento" />
+          <ScalarProperty Name="Numero_Telefono" ColumnName="Numero_Telefono" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+          <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Fecha_Nacimiento" ColumnName="Fecha_Nacimiento" />
+          <ScalarProperty Name="Genero" ColumnName="Genero" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="CedulaNormalizada" ColumnName="CedulaNormalizada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConfiguracionRecurrencia">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.ConfiguracionRecurrencia">
+        <MappingFragment StoreEntitySet="ConfiguracionRecurrencia">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UmbralCompras" ColumnName="UmbralCompras" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contabilidad">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Contabilidad">
+        <MappingFragment StoreEntitySet="Contabilidad">
+          <ScalarProperty Name="TipoMovimientoIngresoEgreso" ColumnName="TipoMovimientoIngresoEgreso" />
+          <ScalarProperty Name="TipoServicio" ColumnName="TipoServicio" />
+          <ScalarProperty Name="TipoOperacion" ColumnName="TipoOperacion" />
+          <ScalarProperty Name="Id_Contabilidad" ColumnName="Id_Contabilidad" />
+          <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+          <ScalarProperty Name="Id_Producto" ColumnName="Id_Producto" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+          <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+          <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Fecha_Registro" ColumnName="Fecha_Registro" />
+          <ScalarProperty Name="Usuario_Registro" ColumnName="Usuario_Registro" />
+          <ScalarProperty Name="Id_TipoMovimiento" ColumnName="Id_TipoMovimiento" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CriteriosPromocionRecurrente">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.CriteriosPromocionRecurrente">
+        <MappingFragment StoreEntitySet="CriteriosPromocionRecurrente">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MinimoCompras" ColumnName="MinimoCompras" />
+          <ScalarProperty Name="DiasRango" ColumnName="DiasRango" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetalleVenta">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.DetalleVenta">
+        <MappingFragment StoreEntitySet="DetalleVenta">
+          <ScalarProperty Name="Id_Detalle" ColumnName="Id_Detalle" />
+          <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+          <ScalarProperty Name="Id_Producto" ColumnName="Id_Producto" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+          <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empleado">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Empleado">
+        <MappingFragment StoreEntitySet="Empleado">
+          <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Placa_Vehiculo" ColumnName="Placa_Vehiculo" />
+          <ScalarProperty Name="Numero_Telefono" ColumnName="Numero_Telefono" />
+          <ScalarProperty Name="Contacto_Emergencia" ColumnName="Contacto_Emergencia" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="Id_Especialidad" ColumnName="Id_Especialidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistorialCambiosCliente">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.HistorialCambiosCliente">
+        <MappingFragment StoreEntitySet="HistorialCambiosCliente">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+          <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Fecha_Nacimiento" ColumnName="Fecha_Nacimiento" />
+          <ScalarProperty Name="Edad" ColumnName="Edad" />
+          <ScalarProperty Name="Genero" ColumnName="Genero" />
+          <ScalarProperty Name="Padecimiento" ColumnName="Padecimiento" />
+          <ScalarProperty Name="Numero_Telefono" ColumnName="Numero_Telefono" />
+          <ScalarProperty Name="FechaCambio" ColumnName="FechaCambio" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistorialCliente">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.HistorialCliente">
+        <MappingFragment StoreEntitySet="HistorialCliente">
+          <ScalarProperty Name="Id_Historial" ColumnName="Id_Historial" />
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="Antecedentes" ColumnName="Antecedentes" />
+          <ScalarProperty Name="Diagnostico" ColumnName="Diagnostico" />
+          <ScalarProperty Name="Tratamiento" ColumnName="Tratamiento" />
+          <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+          <ScalarProperty Name="Usuario_Registro" ColumnName="Usuario_Registro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IntentoAccesoHistorial">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.IntentoAccesoHistorial">
+        <MappingFragment StoreEntitySet="IntentoAccesoHistorial">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CedulaCliente" ColumnName="CedulaCliente" />
+          <ScalarProperty Name="FechaIntento" ColumnName="FechaIntento" />
+          <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+          <ScalarProperty Name="RolUsuario" ColumnName="RolUsuario" />
+          <ScalarProperty Name="Motivo" ColumnName="Motivo" />
+          <ScalarProperty Name="AccesoAutorizado" ColumnName="AccesoAutorizado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IntentoLogin">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.IntentoLogin">
+        <MappingFragment StoreEntitySet="IntentoLogin">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UsuarioIntentado" ColumnName="UsuarioIntentado" />
+          <ScalarProperty Name="Exito" ColumnName="Exito" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="FechaIntento" ColumnName="FechaIntento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Inventario">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Inventario">
+        <MappingFragment StoreEntitySet="Inventario">
+          <ScalarProperty Name="Id_Producto" ColumnName="Id_Producto" />
+          <ScalarProperty Name="Nombre_Producto" ColumnName="Nombre_Producto" />
+          <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Id_Proveedor" ColumnName="Id_Proveedor" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ListaSegmentada">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.ListaSegmentada">
+        <MappingFragment StoreEntitySet="ListaSegmentada">
+          <ScalarProperty Name="Id_Lista" ColumnName="Id_Lista" />
+          <ScalarProperty Name="NombreLista" ColumnName="NombreLista" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ListaSegmentadaCliente">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.ListaSegmentadaCliente">
+        <MappingFragment StoreEntitySet="ListaSegmentadaCliente">
+          <ScalarProperty Name="Id_ListaCliente" ColumnName="Id_ListaCliente" />
+          <ScalarProperty Name="Id_Lista" ColumnName="Id_Lista" />
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LogSistema">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.LogSistema">
+        <MappingFragment StoreEntitySet="LogSistema">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Modulo" ColumnName="Modulo" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modulo">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Modulo">
+        <MappingFragment StoreEntitySet="Modulo">
+          <ScalarProperty Name="Id_Modulo" ColumnName="Id_Modulo" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Controlador" ColumnName="Controlador" />
+          <ScalarProperty Name="Accion" ColumnName="Accion" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PagoVenta">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.PagoVenta">
+        <MappingFragment StoreEntitySet="PagoVenta">
+          <ScalarProperty Name="Id_Pago" ColumnName="Id_Pago" />
+          <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+          <ScalarProperty Name="Metodo" ColumnName="Metodo" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parametro">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Parametro">
+        <MappingFragment StoreEntitySet="Parametro">
+          <ScalarProperty Name="Id_Parametro" ColumnName="Id_Parametro" />
+          <ScalarProperty Name="Id_TipoParametro" ColumnName="Id_TipoParametro" />
+          <ScalarProperty Name="Nombre_Parametro" ColumnName="Nombre_Parametro" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PermisoRol">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.PermisoRol">
+        <MappingFragment StoreEntitySet="PermisoRol">
+          <ScalarProperty Name="Id_PermisoRol" ColumnName="Id_PermisoRol" />
+          <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+          <ScalarProperty Name="Id_Modulo" ColumnName="Id_Modulo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Proveedor">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Proveedor">
+        <MappingFragment StoreEntitySet="Proveedor">
+          <ScalarProperty Name="Id_Proveedor" ColumnName="Id_Proveedor" />
+          <ScalarProperty Name="Nombre_Proveedor" ColumnName="Nombre_Proveedor" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PuntoVenta">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.PuntoVenta">
+        <MappingFragment StoreEntitySet="PuntoVenta">
+          <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+          <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Id_MetodoPago" ColumnName="Id_MetodoPago" />
+          <ScalarProperty Name="Fecha_Venta" ColumnName="Fecha_Venta" />
+          <ScalarProperty Name="Hora_Venta" ColumnName="Hora_Venta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RecuperacionPassword">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.RecuperacionPassword">
+        <MappingFragment StoreEntitySet="RecuperacionPassword">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TarjetaSimulada">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.TarjetaSimulada">
+        <MappingFragment StoreEntitySet="TarjetaSimulada">
+          <ScalarProperty Name="Id_Tarjeta" ColumnName="Id_Tarjeta" />
+          <ScalarProperty Name="NumeroTarjeta" ColumnName="NumeroTarjeta" />
+          <ScalarProperty Name="NombreTitular" ColumnName="NombreTitular" />
+          <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+          <ScalarProperty Name="CVV" ColumnName="CVV" />
+          <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoParametro">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.TipoParametro">
+        <MappingFragment StoreEntitySet="TipoParametro">
+          <ScalarProperty Name="Id_TipoParametro" ColumnName="Id_TipoParametro" />
+          <ScalarProperty Name="Nombre_TipoParametro" ColumnName="Nombre_TipoParametro" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+          <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+          <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="FechaBloqueoHasta" ColumnName="FechaBloqueoHasta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario_UltimoCambio">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Usuario_UltimoCambio">
+        <MappingFragment StoreEntitySet="Usuario_UltimoCambio">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+          <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+          <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+          <ScalarProperty Name="FechaBloqueoHasta" ColumnName="FechaBloqueoHasta" />
+          <ScalarProperty Name="FechaCambio" ColumnName="FechaCambio" />
+          <ScalarProperty Name="Revertido" ColumnName="Revertido" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AggregatedCounter">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.AggregatedCounter">
+        <MappingFragment StoreEntitySet="AggregatedCounter">
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Counter">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Counter">
+        <MappingFragment StoreEntitySet="Counter">
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hash">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Hash">
+        <MappingFragment StoreEntitySet="Hash">
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Field" ColumnName="Field" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Job">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Job">
+        <MappingFragment StoreEntitySet="Job">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="InvocationData" ColumnName="InvocationData" />
+          <ScalarProperty Name="Arguments" ColumnName="Arguments" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobParameter">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.JobParameter">
+        <MappingFragment StoreEntitySet="JobParameter">
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobQueue">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.JobQueue">
+        <MappingFragment StoreEntitySet="JobQueue">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="Queue" ColumnName="Queue" />
+          <ScalarProperty Name="FetchedAt" ColumnName="FetchedAt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="List">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.List">
+        <MappingFragment StoreEntitySet="List">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Schema">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Schema">
+        <MappingFragment StoreEntitySet="Schema">
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Server">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Server">
+        <MappingFragment StoreEntitySet="Server">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="LastHeartbeat" ColumnName="LastHeartbeat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Set">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Set">
+        <MappingFragment StoreEntitySet="Set">
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="State">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.State">
+        <MappingFragment StoreEntitySet="State">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

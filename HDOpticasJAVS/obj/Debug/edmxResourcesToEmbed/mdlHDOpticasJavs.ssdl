@@ -1,0 +1,1041 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mdlHDOpticasJavs.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AccesoHistorialLog">
+    <Key>
+      <PropertyRef Name="Id_Log" />
+    </Key>
+    <Property Name="Id_Log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Usuario" Type="nvarchar" MaxLength="100" />
+    <Property Name="Rol" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cedula_Cliente" Type="nvarchar" MaxLength="50" />
+    <Property Name="FechaIntento" Type="datetime" Nullable="false" />
+    <Property Name="Resultado" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="AlertaSeguimiento">
+    <Key>
+      <PropertyRef Name="Id_Alerta" />
+    </Key>
+    <Property Name="Id_Alerta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cedula_Cliente" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="FechaAlerta" Type="datetime" Nullable="false" />
+    <Property Name="TipoAlerta" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FechaEnvio" Type="datetime" />
+    <Property Name="ConfiguradaPor" Type="varchar" MaxLength="100" />
+    <Property Name="FechaConfiguracion" Type="datetime" Nullable="false" />
+    <Property Name="Mensaje" Type="varchar" MaxLength="500" />
+    <Property Name="FechaRegistro" Type="datetime" />
+    <Property Name="MedioEnvio" Type="nvarchar" MaxLength="100" />
+    <Property Name="Enviada" Type="bit" />
+  </EntityType>
+  <EntityType Name="AlertaSeguimientoHistorial">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cedula_Cliente" Type="nvarchar" MaxLength="50" />
+    <Property Name="FechaAlerta" Type="datetime" />
+    <Property Name="Mensaje" Type="nvarchar(max)" />
+    <Property Name="Enviada" Type="bit" />
+    <Property Name="MedioEnvio" Type="nvarchar" MaxLength="20" />
+    <Property Name="FechaRegistro" Type="datetime" />
+    <Property Name="Estado" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CampaniaCliente">
+    <Key>
+      <PropertyRef Name="Id_Campania" />
+      <PropertyRef Name="Cedula_Cliente" />
+    </Key>
+    <Property Name="Id_Campania" Type="int" Nullable="false" />
+    <Property Name="Cedula_Cliente" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Correo_Cliente" Type="varchar" MaxLength="100" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="CampaniaMarketing">
+    <Key>
+      <PropertyRef Name="Id_Campania" />
+    </Key>
+    <Property Name="Id_Campania" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_Campania" Type="varchar" MaxLength="100" />
+    <Property Name="Descripcion" Type="text" />
+    <Property Name="Tipo" Type="varchar" MaxLength="50" />
+    <Property Name="Fecha_Inicio" Type="date" />
+    <Property Name="Fecha_Fin" Type="date" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="Fecha_Programada" Type="date" />
+  </EntityType>
+  <EntityType Name="CampaniaMetrica">
+    <Key>
+      <PropertyRef Name="Id_Campania" />
+      <PropertyRef Name="Cedula_Cliente" />
+    </Key>
+    <Property Name="Id_Campania" Type="int" Nullable="false" />
+    <Property Name="Cedula_Cliente" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Abierto" Type="bit" />
+    <Property Name="Click" Type="bit" />
+    <Property Name="FechaRegistro" Type="datetime" />
+    <Property Name="Automatica" Type="bit" />
+  </EntityType>
+  <EntityType Name="Cita">
+    <Key>
+      <PropertyRef Name="Id_Cita" />
+    </Key>
+    <Property Name="Id_Cita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cedula_Usuario" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Fecha_Cita" Type="date" Nullable="false" />
+    <Property Name="Hora_Cita" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Id_TipoEspecialista" Type="int" Nullable="false" />
+    <Property Name="Cedula_Especialista" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Id_EstadoCita" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="TokenConfirmacion" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Edad" Type="int" />
+    <Property Name="Id_Genero" Type="int" />
+    <Property Name="Padecimiento" Type="text" />
+    <Property Name="Numero_Telefono" Type="varchar" MaxLength="20" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+    <Property Name="Apellido1" Type="nvarchar" MaxLength="100" />
+    <Property Name="Apellido2" Type="nvarchar" MaxLength="100" />
+    <Property Name="Correo" Type="nvarchar" MaxLength="150" />
+    <Property Name="Fecha_Nacimiento" Type="date" />
+    <Property Name="Genero" Type="nvarchar" MaxLength="50" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="CedulaNormalizada" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ConfiguracionRecurrencia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UmbralCompras" Type="int" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Contabilidad">
+    <Key>
+      <PropertyRef Name="Id_Contabilidad" />
+    </Key>
+    <Property Name="Id_Contabilidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_Venta" Type="int" Nullable="false" />
+    <Property Name="Id_Producto" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Descuento" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="IVA" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Fecha_Registro" Type="datetime" />
+    <Property Name="Usuario_Registro" Type="varchar" MaxLength="20" />
+    <Property Name="Id_TipoMovimiento" Type="int" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="TipoOperacion" Type="varchar" MaxLength="50" />
+    <Property Name="TipoServicio" Type="varchar" MaxLength="50" />
+    <Property Name="TipoMovimientoIngresoEgreso" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CriteriosPromocionRecurrente">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MinimoCompras" Type="int" Nullable="false" />
+    <Property Name="DiasRango" Type="int" Nullable="false" />
+    <Property Name="UsuarioCreador" Type="nvarchar" MaxLength="50" />
+    <Property Name="FechaCreacion" Type="datetime" />
+    <Property Name="UsuarioModificador" Type="nvarchar" MaxLength="50" />
+    <Property Name="FechaModificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="DetalleVenta">
+    <Key>
+      <PropertyRef Name="Id_Detalle" />
+    </Key>
+    <Property Name="Id_Detalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_Venta" Type="int" />
+    <Property Name="Id_Producto" Type="int" />
+    <Property Name="Cantidad" Type="int" />
+    <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" />
+  </EntityType>
+  <EntityType Name="Empleado">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Direccion" Type="text" />
+    <Property Name="Placa_Vehiculo" Type="varchar" MaxLength="20" />
+    <Property Name="Numero_Telefono" Type="varchar" MaxLength="20" />
+    <Property Name="Contacto_Emergencia" Type="varchar" MaxLength="100" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="Id_Especialidad" Type="int" />
+  </EntityType>
+  <EntityType Name="HistorialCambiosCliente">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cedula" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+    <Property Name="Apellido1" Type="nvarchar" MaxLength="100" />
+    <Property Name="Apellido2" Type="nvarchar" MaxLength="100" />
+    <Property Name="Correo" Type="nvarchar" MaxLength="150" />
+    <Property Name="Fecha_Nacimiento" Type="date" />
+    <Property Name="Edad" Type="int" />
+    <Property Name="Genero" Type="nvarchar" MaxLength="50" />
+    <Property Name="Padecimiento" Type="text" />
+    <Property Name="Numero_Telefono" Type="varchar" MaxLength="20" />
+    <Property Name="FechaCambio" Type="datetime" />
+    <Property Name="UsuarioModificador" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="HistorialCliente">
+    <Key>
+      <PropertyRef Name="Id_Historial" />
+    </Key>
+    <Property Name="Id_Historial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cedula_Cliente" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+    <Property Name="Antecedentes" Type="nvarchar(max)" />
+    <Property Name="Diagnostico" Type="nvarchar(max)" />
+    <Property Name="Tratamiento" Type="nvarchar(max)" />
+    <Property Name="Observaciones" Type="nvarchar(max)" />
+    <Property Name="Usuario_Registro" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="IntentoAccesoHistorial">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CedulaCliente" Type="nvarchar" MaxLength="50" />
+    <Property Name="FechaIntento" Type="datetime" />
+    <Property Name="Usuario" Type="nvarchar" MaxLength="100" />
+    <Property Name="RolUsuario" Type="int" />
+    <Property Name="Motivo" Type="nvarchar" MaxLength="255" />
+    <Property Name="AccesoAutorizado" Type="bit" />
+  </EntityType>
+  <EntityType Name="IntentoLogin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioIntentado" Type="varchar" MaxLength="50" />
+    <Property Name="Exito" Type="bit" />
+    <Property Name="Mensaje" Type="varchar" MaxLength="255" />
+    <Property Name="FechaIntento" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Inventario">
+    <Key>
+      <PropertyRef Name="Id_Producto" />
+    </Key>
+    <Property Name="Id_Producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_Producto" Type="varchar" MaxLength="100" />
+    <Property Name="Codigo_Producto" Type="varchar" MaxLength="50" />
+    <Property Name="Stock" Type="int" />
+    <Property Name="Precio" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Id_Proveedor" Type="int" />
+    <Property Name="Descripcion" Type="text" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="ListaSegmentada">
+    <Key>
+      <PropertyRef Name="Id_Lista" />
+    </Key>
+    <Property Name="Id_Lista" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreLista" Type="nvarchar" MaxLength="100" />
+    <Property Name="FechaCreacion" Type="datetime" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+    <Property Name="UsuarioCreador" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ListaSegmentadaCliente">
+    <Key>
+      <PropertyRef Name="Id_ListaCliente" />
+    </Key>
+    <Property Name="Id_ListaCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_Lista" Type="int" />
+    <Property Name="Cedula_Cliente" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="LogSistema">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+    <Property Name="Modulo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Mensaje" Type="nvarchar(max)" />
+    <Property Name="Usuario" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Modulo">
+    <Key>
+      <PropertyRef Name="Id_Modulo" />
+    </Key>
+    <Property Name="Id_Modulo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+    <Property Name="Controlador" Type="nvarchar" MaxLength="100" />
+    <Property Name="Accion" Type="nvarchar" MaxLength="100" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="PagoVenta">
+    <Key>
+      <PropertyRef Name="Id_Pago" />
+    </Key>
+    <Property Name="Id_Pago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_Venta" Type="int" />
+    <Property Name="Metodo" Type="varchar" MaxLength="20" />
+    <Property Name="Monto" Type="decimal" Precision="10" Scale="2" />
+  </EntityType>
+  <EntityType Name="Parametro">
+    <Key>
+      <PropertyRef Name="Id_Parametro" />
+    </Key>
+    <Property Name="Id_Parametro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_TipoParametro" Type="int" Nullable="false" />
+    <Property Name="Nombre_Parametro" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="PermisoRol">
+    <Key>
+      <PropertyRef Name="Id_PermisoRol" />
+    </Key>
+    <Property Name="Id_PermisoRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_Rol" Type="int" />
+    <Property Name="Id_Modulo" Type="int" />
+  </EntityType>
+  <EntityType Name="Proveedor">
+    <Key>
+      <PropertyRef Name="Id_Proveedor" />
+    </Key>
+    <Property Name="Id_Proveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_Proveedor" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Telefono" Type="varchar" MaxLength="20" />
+    <Property Name="Correo" Type="varchar" MaxLength="100" />
+    <Property Name="Direccion" Type="text" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="PuntoVenta">
+    <Key>
+      <PropertyRef Name="Id_Venta" />
+    </Key>
+    <Property Name="Id_Venta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cedula_Cliente" Type="varchar" MaxLength="20" />
+    <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="IVA" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Id_MetodoPago" Type="int" />
+    <Property Name="Fecha_Venta" Type="date" />
+    <Property Name="Hora_Venta" Type="time" Precision="7" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="RecuperacionPassword">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Correo" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Token" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TarjetaSimulada">
+    <Key>
+      <PropertyRef Name="Id_Tarjeta" />
+    </Key>
+    <Property Name="Id_Tarjeta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NumeroTarjeta" Type="varchar" MaxLength="20" />
+    <Property Name="NombreTitular" Type="varchar" MaxLength="100" />
+    <Property Name="FechaVencimiento" Type="varchar" MaxLength="7" />
+    <Property Name="CVV" Type="varchar" MaxLength="5" />
+    <Property Name="Saldo" Type="decimal" Precision="10" Scale="2" />
+  </EntityType>
+  <EntityType Name="TipoParametro">
+    <Key>
+      <PropertyRef Name="Id_TipoParametro" />
+    </Key>
+    <Property Name="Id_TipoParametro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_TipoParametro" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Apellido1" Type="varchar" MaxLength="50" />
+    <Property Name="Apellido2" Type="varchar" MaxLength="50" />
+    <Property Name="Contrasenia" Type="varchar" MaxLength="100" />
+    <Property Name="FechaNacimiento" Type="date" />
+    <Property Name="Correo" Type="varchar" MaxLength="100" />
+    <Property Name="Id_Rol" Type="int" />
+    <Property Name="Estado" Type="char" MaxLength="1" />
+    <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+    <Property Name="FechaCreacion" Type="varchar" MaxLength="25" />
+    <Property Name="UsuarioModificador" Type="varchar" MaxLength="20" />
+    <Property Name="FechaModificacion" Type="varchar" MaxLength="25" />
+    <Property Name="FechaBloqueoHasta" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Usuario_UltimoCambio">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cedula" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Apellido1" Type="varchar" MaxLength="50" />
+    <Property Name="Apellido2" Type="varchar" MaxLength="50" />
+    <Property Name="Contrasenia" Type="varchar" MaxLength="100" />
+    <Property Name="FechaNacimiento" Type="date" />
+    <Property Name="Correo" Type="varchar" MaxLength="100" />
+    <Property Name="Id_Rol" Type="int" />
+    <Property Name="FechaBloqueoHasta" Type="datetime" />
+    <Property Name="FechaCambio" Type="datetime" />
+    <Property Name="Revertido" Type="bit" />
+  </EntityType>
+  <EntityType Name="AggregatedCounter">
+    <Key>
+      <PropertyRef Name="Key" />
+    </Key>
+    <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Value" Type="bigint" Nullable="false" />
+    <Property Name="ExpireAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Counter">
+    <Key>
+      <PropertyRef Name="Key" />
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
+    <Property Name="ExpireAt" Type="datetime" />
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hash">
+    <Key>
+      <PropertyRef Name="Key" />
+      <PropertyRef Name="Field" />
+    </Key>
+    <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Field" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" />
+    <Property Name="ExpireAt" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="Job">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StateId" Type="bigint" />
+    <Property Name="StateName" Type="nvarchar" MaxLength="20" />
+    <Property Name="InvocationData" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Arguments" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ExpireAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="JobParameter">
+    <Key>
+      <PropertyRef Name="JobId" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="JobId" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="JobQueue">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Queue" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JobId" Type="bigint" Nullable="false" />
+    <Property Name="Queue" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FetchedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="List">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Key" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" />
+    <Property Name="ExpireAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Schema">
+    <Key>
+      <PropertyRef Name="Version" />
+    </Key>
+    <Property Name="Version" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Server">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Data" Type="nvarchar(max)" />
+    <Property Name="LastHeartbeat" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Set">
+    <Key>
+      <PropertyRef Name="Key" />
+      <PropertyRef Name="Value" />
+    </Key>
+    <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Score" Type="float" Nullable="false" />
+    <Property Name="Value" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="ExpireAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="JobId" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JobId" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="100" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="Data" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK__CampaniaC__Cedul__3D2915A8">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="CampaniaCliente" Type="Self.CampaniaCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="CampaniaCliente">
+        <PropertyRef Name="Cedula_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CampaniaC__Id_Ca__3C34F16F">
+    <End Role="CampaniaMarketing" Type="Self.CampaniaMarketing" Multiplicity="1" />
+    <End Role="CampaniaCliente" Type="Self.CampaniaCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CampaniaMarketing">
+        <PropertyRef Name="Id_Campania" />
+      </Principal>
+      <Dependent Role="CampaniaCliente">
+        <PropertyRef Name="Id_Campania" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CampaniaM__Cedul__3F115E1A">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="CampaniaMetrica" Type="Self.CampaniaMetrica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="CampaniaMetrica">
+        <PropertyRef Name="Cedula_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CampaniaM__Id_Ca__3E1D39E1">
+    <End Role="CampaniaMarketing" Type="Self.CampaniaMarketing" Multiplicity="1" />
+    <End Role="CampaniaMetrica" Type="Self.CampaniaMetrica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CampaniaMarketing">
+        <PropertyRef Name="Id_Campania" />
+      </Principal>
+      <Dependent Role="CampaniaMetrica">
+        <PropertyRef Name="Id_Campania" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cita__Cedula_Esp__41EDCAC5">
+    <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleado">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="Cedula_Especialista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cita__Cedula_Usu__40058253">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="Cedula_Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cita__Id_EstadoC__42E1EEFE">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="Id_EstadoCita" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cita__Id_TipoEsp__40F9A68C">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="Id_TipoEspecialista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cliente__Id_Gene__43D61337">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Cliente">
+        <PropertyRef Name="Id_Genero" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Id_Pr__45BE5BA9">
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="1" />
+    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="Id_Producto" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Id_Producto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Id_Ti__47A6A41B">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Id_TipoMovimiento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Id_Ve__44CA3770">
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="1" />
+    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PuntoVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Id_Venta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Usuar__46B27FE2">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Usuario_Registro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetalleVe__Id_Pr__498EEC8D">
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
+    <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="Id_Producto" />
+      </Principal>
+      <Dependent Role="DetalleVenta">
+        <PropertyRef Name="Id_Producto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetalleVe__Id_Ve__489AC854">
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
+    <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PuntoVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Principal>
+      <Dependent Role="DetalleVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Empleado__Cedula__4A8310C6">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Empleado">
+        <PropertyRef Name="Cedula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Inventari__Id_Pr__4C6B5938">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="Id_Proveedor" />
+      </Principal>
+      <Dependent Role="Inventario">
+        <PropertyRef Name="Id_Proveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ListaSegm__Id_Li__4D5F7D71">
+    <End Role="ListaSegmentada" Type="Self.ListaSegmentada" Multiplicity="0..1" />
+    <End Role="ListaSegmentadaCliente" Type="Self.ListaSegmentadaCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListaSegmentada">
+        <PropertyRef Name="Id_Lista" />
+      </Principal>
+      <Dependent Role="ListaSegmentadaCliente">
+        <PropertyRef Name="Id_Lista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PagoVenta__Id_Ve__4E53A1AA">
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
+    <End Role="PagoVenta" Type="Self.PagoVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PuntoVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Principal>
+      <Dependent Role="PagoVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Parametro__Id_Ti__4F47C5E3">
+    <End Role="TipoParametro" Type="Self.TipoParametro" Multiplicity="1" />
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoParametro">
+        <PropertyRef Name="Id_TipoParametro" />
+      </Principal>
+      <Dependent Role="Parametro">
+        <PropertyRef Name="Id_TipoParametro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PermisoRo__Id_Mo__51300E55">
+    <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
+    <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modulo">
+        <PropertyRef Name="Id_Modulo" />
+      </Principal>
+      <Dependent Role="PermisoRol">
+        <PropertyRef Name="Id_Modulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PermisoRo__Id_Ro__503BEA1C">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="PermisoRol">
+        <PropertyRef Name="Id_Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PuntoVent__Cedul__5224328E">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="PuntoVenta">
+        <PropertyRef Name="Cedula_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PuntoVent__Id_Me__531856C7">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="PuntoVenta">
+        <PropertyRef Name="Id_MetodoPago" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Usuario__Id_Rol__540C7B00">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="Id_Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Empleado_Especialidad">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Empleado">
+        <PropertyRef Name="Id_Especialidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HangFire_JobParameter_Job">
+    <End Role="Job" Type="Self.Job" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="JobParameter" Type="Self.JobParameter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Job">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobParameter">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HangFire_State_Job">
+    <End Role="Job" Type="Self.Job" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Job">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="mdlHDOpticasJavsStoreContainer">
+    <EntitySet Name="AccesoHistorialLog" EntityType="Self.AccesoHistorialLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AlertaSeguimiento" EntityType="Self.AlertaSeguimiento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AlertaSeguimientoHistorial" EntityType="Self.AlertaSeguimientoHistorial" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CampaniaCliente" EntityType="Self.CampaniaCliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CampaniaMarketing" EntityType="Self.CampaniaMarketing" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CampaniaMetrica" EntityType="Self.CampaniaMetrica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cita" EntityType="Self.Cita" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConfiguracionRecurrencia" EntityType="Self.ConfiguracionRecurrencia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Contabilidad" EntityType="Self.Contabilidad" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CriteriosPromocionRecurrente" EntityType="Self.CriteriosPromocionRecurrente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetalleVenta" EntityType="Self.DetalleVenta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HistorialCambiosCliente" EntityType="Self.HistorialCambiosCliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HistorialCliente" EntityType="Self.HistorialCliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IntentoAccesoHistorial" EntityType="Self.IntentoAccesoHistorial" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IntentoLogin" EntityType="Self.IntentoLogin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ListaSegmentada" EntityType="Self.ListaSegmentada" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ListaSegmentadaCliente" EntityType="Self.ListaSegmentadaCliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogSistema" EntityType="Self.LogSistema" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PagoVenta" EntityType="Self.PagoVenta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parametro" EntityType="Self.Parametro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PermisoRol" EntityType="Self.PermisoRol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PuntoVenta" EntityType="Self.PuntoVenta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RecuperacionPassword" EntityType="Self.RecuperacionPassword" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TarjetaSimulada" EntityType="Self.TarjetaSimulada" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoParametro" EntityType="Self.TipoParametro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario_UltimoCambio" EntityType="Self.Usuario_UltimoCambio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AggregatedCounter" EntityType="Self.AggregatedCounter" Schema="HangFire" store:Type="Tables" />
+    <EntitySet Name="Counter" EntityType="Self.Counter" Schema="HangFire" store:Type="Tables" />
+    <EntitySet Name="Hash" EntityType="Self.Hash" Schema="HangFire" store:Type="Tables" />
+    <EntitySet Name="Job" EntityType="Self.Job" Schema="HangFire" store:Type="Tables" />
+    <EntitySet Name="JobParameter" EntityType="Self.JobParameter" Schema="HangFire" store:Type="Tables" />
+    <EntitySet Name="JobQueue" EntityType="Self.JobQueue" Schema="HangFire" store:Type="Tables" />
+    <EntitySet Name="List" EntityType="Self.List" Schema="HangFire" store:Type="Tables" />
+    <EntitySet Name="Schema" EntityType="Self.Schema" Schema="HangFire" store:Type="Tables" />
+    <EntitySet Name="Server" EntityType="Self.Server" Schema="HangFire" store:Type="Tables" />
+    <EntitySet Name="Set" EntityType="Self.Set" Schema="HangFire" store:Type="Tables" />
+    <EntitySet Name="State" EntityType="Self.State" Schema="HangFire" store:Type="Tables" />
+    <AssociationSet Name="FK__CampaniaC__Cedul__3D2915A8" Association="Self.FK__CampaniaC__Cedul__3D2915A8">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="CampaniaCliente" EntitySet="CampaniaCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CampaniaC__Id_Ca__3C34F16F" Association="Self.FK__CampaniaC__Id_Ca__3C34F16F">
+      <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
+      <End Role="CampaniaCliente" EntitySet="CampaniaCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CampaniaM__Cedul__3F115E1A" Association="Self.FK__CampaniaM__Cedul__3F115E1A">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CampaniaM__Id_Ca__3E1D39E1" Association="Self.FK__CampaniaM__Id_Ca__3E1D39E1">
+      <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
+      <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cita__Cedula_Esp__41EDCAC5" Association="Self.FK__Cita__Cedula_Esp__41EDCAC5">
+      <End Role="Empleado" EntitySet="Empleado" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cita__Cedula_Usu__40058253" Association="Self.FK__Cita__Cedula_Usu__40058253">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cita__Id_EstadoC__42E1EEFE" Association="Self.FK__Cita__Id_EstadoC__42E1EEFE">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cita__Id_TipoEsp__40F9A68C" Association="Self.FK__Cita__Id_TipoEsp__40F9A68C">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cliente__Id_Gene__43D61337" Association="Self.FK__Cliente__Id_Gene__43D61337">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Cliente" EntitySet="Cliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Id_Pr__45BE5BA9" Association="Self.FK__Contabili__Id_Pr__45BE5BA9">
+      <End Role="Inventario" EntitySet="Inventario" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Id_Ti__47A6A41B" Association="Self.FK__Contabili__Id_Ti__47A6A41B">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Id_Ve__44CA3770" Association="Self.FK__Contabili__Id_Ve__44CA3770">
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Usuar__46B27FE2" Association="Self.FK__Contabili__Usuar__46B27FE2">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetalleVe__Id_Pr__498EEC8D" Association="Self.FK__DetalleVe__Id_Pr__498EEC8D">
+      <End Role="Inventario" EntitySet="Inventario" />
+      <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetalleVe__Id_Ve__489AC854" Association="Self.FK__DetalleVe__Id_Ve__489AC854">
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+      <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Empleado__Cedula__4A8310C6" Association="Self.FK__Empleado__Cedula__4A8310C6">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Empleado" EntitySet="Empleado" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Inventari__Id_Pr__4C6B5938" Association="Self.FK__Inventari__Id_Pr__4C6B5938">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Inventario" EntitySet="Inventario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ListaSegm__Id_Li__4D5F7D71" Association="Self.FK__ListaSegm__Id_Li__4D5F7D71">
+      <End Role="ListaSegmentada" EntitySet="ListaSegmentada" />
+      <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PagoVenta__Id_Ve__4E53A1AA" Association="Self.FK__PagoVenta__Id_Ve__4E53A1AA">
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+      <End Role="PagoVenta" EntitySet="PagoVenta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Parametro__Id_Ti__4F47C5E3" Association="Self.FK__Parametro__Id_Ti__4F47C5E3">
+      <End Role="TipoParametro" EntitySet="TipoParametro" />
+      <End Role="Parametro" EntitySet="Parametro" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PermisoRo__Id_Mo__51300E55" Association="Self.FK__PermisoRo__Id_Mo__51300E55">
+      <End Role="Modulo" EntitySet="Modulo" />
+      <End Role="PermisoRol" EntitySet="PermisoRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PermisoRo__Id_Ro__503BEA1C" Association="Self.FK__PermisoRo__Id_Ro__503BEA1C">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="PermisoRol" EntitySet="PermisoRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PuntoVent__Cedul__5224328E" Association="Self.FK__PuntoVent__Cedul__5224328E">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PuntoVent__Id_Me__531856C7" Association="Self.FK__PuntoVent__Id_Me__531856C7">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuario__Id_Rol__540C7B00" Association="Self.FK__Usuario__Id_Rol__540C7B00">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Empleado_Especialidad" Association="Self.FK_Empleado_Especialidad">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Empleado" EntitySet="Empleado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HangFire_JobParameter_Job" Association="Self.FK_HangFire_JobParameter_Job">
+      <End Role="Job" EntitySet="Job" />
+      <End Role="JobParameter" EntitySet="JobParameter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HangFire_State_Job" Association="Self.FK_HangFire_State_Job">
+      <End Role="Job" EntitySet="Job" />
+      <End Role="State" EntitySet="State" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

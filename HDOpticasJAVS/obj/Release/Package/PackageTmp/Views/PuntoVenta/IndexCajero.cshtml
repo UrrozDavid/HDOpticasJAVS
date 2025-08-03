@@ -1,0 +1,194 @@
+﻿@model HDOpticasJAVS.Models.VentaViewModel
+
+@{
+    ViewBag.Title = "Punto de Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("IndexCajero", "PuntoVenta", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="container py-4" style="min-height: 90vh;">
+    <div class="card shadow-lg mx-auto" style="max-width: 1200px; background: rgba(0, 0, 0, 0.85); color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
+
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+
+            @if (TempData["MensajeExito"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["MensajeExito"]
+                </div>
+            }
+
+            <!-- Tabs -->
+            <ul class="nav nav-tabs mb-3" id="ventaTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="productos-tab" data-bs-toggle="tab" data-bs-target="#productos" type="button" role="tab">Venta</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pago-tab" data-bs-toggle="tab" data-bs-target="#pago" type="button" role="tab">Método de Pago</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="ventaTabsContent">
+                <!-- TAB 1: Venta -->
+                <div class="tab-pane fade show active" id="productos" role="tabpanel">
+                    <div class="row">
+                        <!-- Lista de productos -->
+                        <div class="col-md-6">
+                            <h4 style="color: #00B5E2;">Seleccionar Producto</h4>
+                            <input type="text" class="form-control mb-3" placeholder="Buscar producto..." />
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover table-bordered">
+                                    <thead class="table-light text-dark">
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Precio</th>
+                                            <th>Cantidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.ProductosDisponibles.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>@Model.ProductosDisponibles[i].Nombre</td>
+                                                <td>₡@Model.ProductosDisponibles[i].Precio</td>
+                                                <td>
+                                                    <input type="number" name="Carrito[@i].Cantidad" class="form-control" value="0" min="0" />
+                                                    <input type="hidden" name="Carrito[@i].Id_Producto" value="@Model.ProductosDisponibles[i].Id_Producto" />
+                                                    <input type="hidden" name="Carrito[@i].Nombre" value="@Model.ProductosDisponibles[i].Nombre" />
+                                                    <input type="hidden" name="Carrito[@i].Precio" value="@Model.ProductosDisponibles[i].Precio" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Carrito (sólo vista previa de selección) -->
+                        <div class="col-md-6">
+                            <h4 style="color: #FF7043;">Detalles de la Compra</h4>
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item d-flex justify-content-between bg-dark text-light">
+                                    <span>Se calculará al procesar</span>
+                                    <span>—</span>
+                                </li>
+                            </ul>
+                            @{
+                                decimal subtotal = Model.Carrito.Sum(c => c.Cantidad * c.Precio);
+                                decimal iva = subtotal * 0.13m;
+                                decimal total = subtotal + iva;
+                            }
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item d-flex justify-content-between bg-dark text-light">
+                                    <span>Subtotal</span>
+                                    <span id="subtotal">₡0.00</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between bg-dark text-light">
+                                    <span>IVA (13%)</span>
+                                    <span id="iva">₡0.00</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between bg-dark text-light">
+                                    <strong>Total Estimado</strong>
+                                    <strong id="total">₡0.00</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: Método de pago -->
+                <div class="tab-pane fade" id="pago" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 style="color: #00B5E2;">Método de Pago</h4>
+
+                            <div class="mb-2">
+                                <label>Cédula Cliente</label>
+                                @Html.TextBoxFor(m => m.CedulaCliente, new { @class = "form-control", placeholder = "Ej: 1-2345-6789" })
+                            </div>
+
+                            <div class="mb-2">
+                                <label>Efectivo</label>
+                                @Html.TextBoxFor(m => m.Efectivo, new { @class = "form-control", type = "number", step = "0.01", placeholder = "Monto en efectivo" })
+                            </div>
+
+                            <div class="mb-2">
+                                <label>Tarjeta</label>
+                                @Html.TextBoxFor(m => m.NumeroTarjeta, new { @class = "form-control", placeholder = "Número de tarjeta" })
+                                @Html.TextBoxFor(m => m.NombreTitular, new { @class = "form-control mt-1", placeholder = "Nombre del titular" })
+                                @Html.TextBoxFor(m => m.FechaVencimiento, new { @class = "form-control mt-1", placeholder = "MM/AA" })
+                                @Html.TextBoxFor(m => m.CVV, new { @class = "form-control mt-1", placeholder = "CVV" })
+                                @Html.TextBoxFor(m => m.MontoTarjeta, new { @class = "form-control mt-2", type = "number", step = "0.01", placeholder = "Monto con tarjeta" })
+                            </div>
+
+                            <!-- <div class="alert alert-info mt-3">
+                                <strong>Saldo Restante:</strong> $@(Model.TotalCompra - (Model.Efectivo + Model.MontoTarjeta)).ToString("F2")
+                            </div> -->
+                        </div>
+
+                        <!-- Confirmación -->
+                        <div class="col-md-6 text-center d-flex flex-column justify-content-center">
+                            <h5 class="mb-4" style="color: #FF7043;">Verifique los datos antes de continuar</h5>
+                            <button type="submit" class="btn btn-success w-75" style="background-color: #00B5E2; font-family: Poppins;">
+                                Procesar Venta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const cantidadInputs = document.querySelectorAll("input[name*='Carrito'][name*='Cantidad']");
+                const precios = document.querySelectorAll("input[name*='Carrito'][name*='Precio']");
+                const subtotalSpan = document.getElementById("subtotal");
+                const ivaSpan = document.getElementById("iva");
+                const totalSpan = document.getElementById("total");
+
+                function actualizarTotales() {
+                    let subtotal = 0;
+                    cantidadInputs.forEach((input, i) => {
+                        const cantidad = parseFloat(input.value) || 0;
+                        const precio = parseFloat(precios[i].value) || 0;
+                        subtotal += cantidad * precio;
+                    });
+
+                    const iva = subtotal * 0.13;
+                    const total = subtotal + iva;
+
+                    subtotalSpan.textContent = `₡${subtotal.toFixed(2)}`;
+                    ivaSpan.textContent = `₡${iva.toFixed(2)}`;
+                    totalSpan.textContent = `₡${total.toFixed(2)}`;
+                }
+
+                cantidadInputs.forEach(input => {
+                    input.addEventListener("input", actualizarTotales);
+                });
+
+                actualizarTotales();
+            });
+        </script>
+    }
+
+</div>
+}

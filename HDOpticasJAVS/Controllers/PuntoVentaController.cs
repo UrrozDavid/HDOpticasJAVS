@@ -23,7 +23,7 @@ namespace HDOpticasJAVS.Controllers
         public ActionResult Index()
         {
             var puntoVenta = db.PuntoVenta
-            .Include(p => p.Cliente.Usuario)
+            .Include(p => p.Cliente)
             .Include(p => p.Parametro)
             .Include(p => p.DetalleVenta.Select(d => d.Inventario));
 
@@ -52,14 +52,16 @@ namespace HDOpticasJAVS.Controllers
         public ActionResult Create()
         {
             ViewBag.Cedula_Cliente = new SelectList(
-                db.Cliente.Include(c => c.Usuario).ToList()
-                    .Select(c => new
-                    {
-                        Cedula = c.Cedula,
-                        NombreCompleto = c.Usuario.Nombre + " " + c.Usuario.Apellido1 + " " + c.Usuario.Apellido2
-                    }),
-                "Cedula", "NombreCompleto"
-            );
+     (from c in db.Cliente
+      join u in db.Usuario on c.Cedula equals u.Cedula
+      select new
+      {
+          Cedula = c.Cedula,
+          NombreCompleto = u.Nombre + " " + u.Apellido1 + " " + u.Apellido2
+      }).ToList(),
+     "Cedula", "NombreCompleto"
+ );
+
             ViewBag.Id_MetodoPago = new SelectList(
                 db.Parametro.Where(p => p.Id_TipoParametro == 3),
                 "Id_Parametro", "Nombre_Parametro"
@@ -127,7 +129,7 @@ namespace HDOpticasJAVS.Controllers
 
             var puntoVenta = db.PuntoVenta
                 .Include(p => p.DetalleVenta.Select(d => d.Inventario))
-                .Include(p => p.Cliente.Usuario)
+                .Include(p => p.Cliente)
                 .Include(p => p.Parametro)
                 .FirstOrDefault(p => p.Id_Venta == id);
 

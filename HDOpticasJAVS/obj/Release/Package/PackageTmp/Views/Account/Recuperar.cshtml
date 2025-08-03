@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Recuperar Contraseña";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>Recuperar Contraseña</h3>
+        </div>
+
+        @if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+        {
+            <div class="alert alert-info">@ViewBag.Mensaje</div>
+        }
+
+        <form method="post" action="@Url.Action("Recuperar", "Account")">
+            <div class="form-group mb-3">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" name="email" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Enviar Enlace</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="@Url.Action("Login", "Account")">Volver al inicio de sesión</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+
+    .card {
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #F4F4F9;
+    }
+
+    .card-header {
+        background-color: #00B5E2;
+        color: white;
+        font-family: "Montserrat", sans-serif;
+    }
+
+    .titulo {
+        font-size: 1.8rem;
+    }
+
+    .form-group label {
+        font-family: "Raleway", sans-serif;
+        font-size: 1rem;
+        color: #424242;
+    }
+
+    .form-control {
+        font-family: "Roboto", sans-serif;
+    }
+
+    .btn-primary {
+        background-color: #1A73E8;
+        border: none;
+        font-family: "Poppins", sans-serif;
+    }
+
+        .btn-primary:hover {
+            background-color: #01579B;
+        }
+</style>

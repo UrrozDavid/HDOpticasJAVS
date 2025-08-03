@@ -1,0 +1,217 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+
+    <div class="row">
+        <!-- Estado General -->
+        <div class="col-md-4">
+            <div class="card shadow-lg p-4 mb-4 rounded" style="background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+                <h5 style="font-family: Raleway; color: #00B5E2;">Estado General</h5>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center">
+                        <div class="badge bg-success p-2">Ventas Activas</div>
+                        <h4 class="ml-2">456</h4>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="badge bg-danger p-2">Deudas Pendientes</div>
+                        <h4 class="ml-2">120</h4>
+                    </div>
+                </div>
+                <p style="font-family: Roboto;">Este es un resumen general del estado de las operaciones del negocio. Aquí puedes ver ventas activas y deudas pendientes.</p>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notificaciones -->
+        <div class="col-md-4">
+            <div class="card shadow-lg p-4 mb-4 rounded" style="background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+                <h5 style="font-family: Raleway; color: #FF7043;">Notificaciones</h5>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Cita pendiente con el cliente Juan Pérez
+                        <span class="badge bg-warning text-dark">Hoy</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Pedido #1243 en espera de confirmación
+                        <span class="badge bg-info text-dark">2 días</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Tarea urgente para el equipo de ventas
+                        <span class="badge bg-danger text-white">Urgente</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Reportes Financieros -->
+        <div class="col-md-4">
+            <div class="card shadow-lg p-4 mb-4 rounded" style="background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+                <h5 style="font-family: Raleway; color: #1A73E8;">Reportes Financieros</h5>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h3 class="fw-bold" style="font-family: Raleway;">₡@String.Format("{0:N0}", ViewBag.TotalIngresos)</h3>
+                        <p>Total de Ventas</p>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold" style="font-family: Raleway;">₡1,120</h3>
+                        <p>Total de Gastos</p>
+                    </div>
+                </div>
+                <div class="my-4">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos de datos -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4 mb-4 rounded" style="background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+                <h5 style="font-family: Raleway; color: #00B5E2;">Desempeño de Ventas</h5>
+                <div class="my-4">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4 mb-4 rounded" style="background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+                <h5 style="font-family: Raleway; color: #FF7043;">Gastos vs Ingresos</h5>
+                <div class="my-4">
+                    <canvas id="expensesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Ventas por Método de Pago -->
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4 mb-4 rounded" style="background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+                <h5 style="font-family: Raleway; color: #1A73E8;">Ventas por Método de Pago</h5>
+                <div class="my-4">
+                    <canvas id="chartMetodoPago"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Productos más Vendidos -->
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4 mb-4 rounded" style="background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+                <h5 style="font-family: Raleway; color: #FF7043;">Productos más Vendidos</h5>
+                <div class="my-4">
+                    <canvas id="chartProductos"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+        // Datos desde el servidor
+        const ventasMensuales = @Html.Raw(Json.Encode(ViewBag.VentasMensuales));
+        const desempeñoMensual = @Html.Raw(Json.Encode(ViewBag.DesempeñoMensual));
+        const totalIngresos = @ViewBag.TotalIngresos;
+        const totalGastos = @ViewBag.TotalGastos;
+        const ventasMetodoPago = @Html.Raw(Json.Encode(ViewBag.VentasPorMetodoPago));
+        const productosMasVendidos = @Html.Raw(Json.Encode(ViewBag.ProductosMasVendidos));
+
+        // Gráfico de Ventas por Mes
+        const ctx1 = document.getElementById('salesChart').getContext('2d');
+        const salesChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ventasMensuales.map(v => ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][v.Mes - 1]),
+                datasets: [{
+                    label: 'Ventas Totales',
+                    data: ventasMensuales.map(v => v.Total),
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    tension: 0.1,
+                    fill: false
+                }]
+            }
+        });
+
+        // Gráfico de Desempeño
+        const ctx2 = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: desempeñoMensual.map(v => ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][v.Mes - 1]),
+                datasets: [{
+                    label: 'Cantidad de Ventas',
+                    data: desempeñoMensual.map(v => v.Cantidad),
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Gráfico de Gastos vs Ingresos
+        const ctx3 = document.getElementById('expensesChart').getContext('2d');
+        const expensesChart = new Chart(ctx3, {
+            type: 'pie',
+            data: {
+                labels: ['Gastos', 'Ingresos'],
+                datasets: [{
+                    label: 'Gastos vs Ingresos',
+                    data: [totalGastos, totalIngresos],
+                    backgroundColor: ['#FF7043', '#1A73E8'],
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Gráfico de Ventas por Método de Pago
+        const ctxMetodo = document.getElementById('chartMetodoPago').getContext('2d');
+        new Chart(ctxMetodo, {
+            type: 'bar',
+            data: {
+                labels: ventasMetodoPago.map(v => v.Metodo),
+                datasets: [{
+                    label: 'Total por Método de Pago',
+                    data: ventasMetodoPago.map(v => v.Total),
+                    backgroundColor: '#00B5E2'
+                }]
+            }
+        });
+
+            // Gráfico de Productos más Vendidos
+            const ctxProductos = document.getElementById('chartProductos').getContext('2d');
+            new Chart(ctxProductos, {
+                type: 'bar',
+                data: {
+                    labels: productosMasVendidos.map(p => p.Producto),
+                    datasets: [{
+                        label: 'Cantidad Vendida',
+                        data: productosMasVendidos.map(p => p.Cantidad),
+                        backgroundColor: '#FF7043'
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        title: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        </script>
+    }

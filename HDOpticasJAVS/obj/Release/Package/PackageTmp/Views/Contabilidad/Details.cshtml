@@ -1,0 +1,43 @@
+﻿@model HDOpticasJAVS.Contabilidad
+
+@{
+    ViewBag.Title = "Detalles Contabilidad";
+}
+
+<h2>Detalles de Contabilidad</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>ID</dt>
+        <dd>@Model.Id_Contabilidad</dd>
+
+        <dt>Id Venta</dt>
+        <dd>@Model.Id_Venta</dd>
+
+        <dt>Id Producto</dt>
+        <dd>@Model.Id_Producto</dd>
+
+        <dt>Cantidad</dt>
+        <dd>@Model.Cantidad</dd>
+
+        <dt>Precio Unitario</dt>
+        <dd>@Model.PrecioUnitario</dd>
+
+        <dt>Subtotal</dt>
+        <dd>@Model.Subtotal</dd>
+
+        <dt>IVA</dt>
+        <dd>@Model.IVA</dd>
+
+        <dt>Total</dt>
+        <dd>@Model.Total</dd>
+
+        <dt>Fecha Registro</dt>
+        <dd>@Model.Fecha_Registro</dd>
+
+        <dt>Estado</dt>
+        <dd>@Model.Estado</dd>
+    </dl>
+</div>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>

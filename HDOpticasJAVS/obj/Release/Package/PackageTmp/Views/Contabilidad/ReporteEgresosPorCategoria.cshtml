@@ -1,0 +1,88 @@
+﻿@model HDOpticasJAVS.Models.ReporteEgresosPorCategoriaViewModel
+
+@{
+    ViewBag.Title = "Reporte de Egresos por Categoría";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("GenerarReporteEgresosPorCategoria", "Contabilidad", FormMethod.Post))
+{
+    <div class="mb-3">
+        <label>Categoría de Gasto</label>
+        @Html.DropDownList("Id_TipoMovimiento", (SelectList)ViewBag.CategoriasGastos, "Seleccione categoría", new { @class = "form-select", @value = Model?.Id_TipoMovimiento })
+    </div>
+    <div class="mb-3">
+        <label>Fecha inicio</label>
+        <input type="date" name="FechaInicio" value="@(Model?.FechaInicio?.ToString("yyyy-MM-dd") ?? "")" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Fecha fin</label>
+        <input type="date" name="FechaFin" value="@(Model?.FechaFin?.ToString("yyyy-MM-dd") ?? "")" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Generar Reporte</button>
+}
+
+@if (Model != null && Model.EgresosPorCategoria != null && Model.EgresosPorCategoria.Any())
+{
+    <h3>Resultados</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Categoría</th>
+                <th>Total Egresos</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.EgresosPorCategoria)
+            {
+                <tr>
+                    <td>@item.Categoria</td>
+                    <td>@item.Total.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <canvas id="graficoEgresos" width="400" height="200"></canvas>
+    </div>
+}
+else
+{
+    <p>No se encontraron registros para los filtros seleccionados.</p>
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    @if (Model != null && Model.EgresosPorCategoria != null && Model.EgresosPorCategoria.Any())
+    {
+        <script>
+            var ctx = document.getElementById('graficoEgresos').getContext('2d');
+
+            var categorias = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.EgresosPorCategoria.Select(x => x.Categoria)));
+            var totales = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.EgresosPorCategoria.Select(x => x.Total)));
+
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: categorias,
+                    datasets: [{
+                        label: 'Total Egresos',
+                        data: totales,
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    }
+}

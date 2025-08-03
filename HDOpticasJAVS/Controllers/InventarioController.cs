@@ -12,7 +12,7 @@ using HDOpticasJAVS.Models;
 
 namespace HDOpticasJAVS.Controllers
 {
-    public class InventarioController : Controller
+    public class InventarioController : BaseController
     {
         private HD_Opticas_JAVS_BDEntities db = new HD_Opticas_JAVS_BDEntities();
 

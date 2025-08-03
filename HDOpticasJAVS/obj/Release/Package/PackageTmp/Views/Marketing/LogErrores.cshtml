@@ -1,0 +1,37 @@
+﻿@model List<HDOpticasJAVS.LogSistema>
+
+@{
+    ViewBag.Title = "Registro de Errores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-primary">🧾 Registro de Errores del Sistema</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-success">No hay errores recientes registrados.</div>
+}
+else
+{
+    <table class="table table-bordered mt-3" style="background-color: #212529; color: white;">
+        <thead style="background-color: #343a40; color: white;">
+            <tr>
+                <th>Fecha</th>
+                <th>Módulo</th>
+                <th>Mensaje</th>
+                <th>Usuario</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var log in Model)
+            {
+                <tr style="color: white;">
+                    <td>@log.Fecha.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@log.Modulo</td>
+                    <td>@log.Mensaje</td>
+                    <td>@log.Usuario</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

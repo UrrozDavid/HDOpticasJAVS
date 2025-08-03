@@ -1,0 +1,39 @@
+﻿@model HDOpticasJAVS.Models.ViewModels.CampaniaSegmentadaViewModel
+@{
+    ViewBag.Title = "Enviar Campaña Segmentada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card bg-dark text-white p-4 shadow-lg border-light rounded-4">
+        <h2 class="text-info mb-3">📤 Enviar Campaña a Lista Segmentada</h2>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-warning">@Html.ValidationSummary()</div>
+        }
+
+        @using (Html.BeginForm("EnviarCampaniaSegmentada", "Marketing", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label class="form-label text-white">Lista Segmentada</label>
+                @Html.DropDownListFor(m => m.Id_Lista, Model.ListasDisponibles, "Seleccione una lista", new { @class = "form-select bg-dark text-white border-light" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-white">Asunto del Correo</label>
+                @Html.TextBoxFor(m => m.Asunto, new { @class = "form-control bg-dark text-white border-light", placeholder = "Asunto del correo" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-white">Mensaje HTML</label>
+                @Html.TextAreaFor(m => m.MensajeHtml, new { @class = "form-control bg-dark text-white border-light", rows = 8 })
+                <small class="text-muted">Puedes usar etiquetas como <code>{{Nombre}}</code> y <code>{{Edad}}</code> para personalizar el mensaje.</small>
+            </div>
+
+            <button type="submit" class="btn btn-success">📧 Enviar Campaña</button>
+        }
+    </div>
+</div>

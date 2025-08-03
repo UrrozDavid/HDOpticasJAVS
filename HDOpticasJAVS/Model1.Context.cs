@@ -53,7 +53,6 @@ namespace HDOpticasJAVS
         public virtual DbSet<Proveedor> Proveedor { get; set; }
         public virtual DbSet<PuntoVenta> PuntoVenta { get; set; }
         public virtual DbSet<RecuperacionPassword> RecuperacionPassword { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TarjetaSimulada> TarjetaSimulada { get; set; }
         public virtual DbSet<TipoParametro> TipoParametro { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }

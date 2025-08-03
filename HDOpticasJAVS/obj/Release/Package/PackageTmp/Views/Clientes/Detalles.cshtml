@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Detalles del Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
+    <div class="card-header bg-info text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0"><i class="bi bi-person-vcard"></i> Detalles del Cliente</h4>
+    </div>
+
+    <div class="card-body">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success d-flex align-items-center">
+                <i class="bi bi-check-circle-fill me-2 fs-4"></i>
+                <div>@TempData["SuccessMessage"]</div>
+            </div>
+        }
+        else if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+                <div>@TempData["ErrorMessage"]</div>
+            </div>
+        }
+
+        <dl class="row">
+            <dt class="col-sm-4">👤 Nombre Completo:</dt>
+            <dd class="col-sm-8">@ViewBag.ClienteNombre</dd>
+
+            <dt class="col-sm-4">🆔 Cédula:</dt>
+            <dd class="col-sm-8">@ViewBag.Cedula</dd>
+
+            <dt class="col-sm-4">📧 Correo:</dt>
+            <dd class="col-sm-8">@ViewBag.Correo</dd>
+
+            <dt class="col-sm-4">📞 Teléfono:</dt>
+            <dd class="col-sm-8">@ViewBag.Telefono</dd>
+
+            <dt class="col-sm-4">🎂 Fecha de Nacimiento:</dt>
+            <dd class="col-sm-8">@ViewBag.FechaNacimiento</dd>
+
+            <dt class="col-sm-4">📆 Edad:</dt>
+            <dd class="col-sm-8">@ViewBag.Edad</dd>
+
+            <dt class="col-sm-4">⚧️ Género:</dt>
+            <dd class="col-sm-8">@ViewBag.Genero</dd>
+
+            <dt class="col-sm-4">🩺 Padecimiento:</dt>
+            <dd class="col-sm-8">@(string.IsNullOrEmpty(ViewBag.Padecimiento) ? "Ninguno" : ViewBag.Padecimiento)</dd>
+        </dl>
+
+        <div class="text-center mt-4">
+            <a href="@Url.Action("Index", "Clientes")" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Volver al Inicio
+                <a href="@Url.Action("Historial", "Clientes", new { cedula = ViewBag.Cedula })" class="btn btn-outline-light mt-2">
+                    <i class="bi bi-folder2-open"></i> Ver Historial Clínico
+                </a>          
+        </div>
+    </div>
+</div>

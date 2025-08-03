@@ -49,6 +49,9 @@ namespace HDOpticasJAVS.Controllers
             ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 6),
                 "Id_Parametro", "Nombre_Parametro"
             );
+
+            ViewBag.Id_Proveedor = new SelectList(db.Proveedor, "Id_Proveedor", "Nombre_Proveedor");
+
             return View();
         }
 

@@ -1,0 +1,49 @@
+﻿@model List<HDOpticasJAVS.Models.ViewModels.IntentoAccesoHistorialViewModel>
+
+@{
+    ViewBag.Title = "Accesos No Autorizados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
+    <div class="card-header bg-danger text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0"><i class="bi bi-shield-exclamation"></i> Accesos No Autorizados al Historial</h4>
+    </div>
+
+    <div class="card-body">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-success text-center">No se han registrado intentos no autorizados.</div>
+        }
+        else
+        {
+            <table class="table table-bordered table-hover bg-dark text-white mt-4">
+                <thead class="bg-danger text-white">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Módulo</th>
+                        <th>Mensaje</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var intento in Model)
+                    {
+                        <tr>
+                            <td>@intento.Fecha.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>@intento.Modulo</td>
+                            <td>@intento.Mensaje</td>
+                            <td>@intento.Usuario</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <div class="text-center mt-4">
+            <a href="@Url.Action("Index", "Clientes")" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Volver a Clientes
+            </a>
+        </div>
+    </div>
+</div>

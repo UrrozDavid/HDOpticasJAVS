@@ -1,0 +1,1097 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mdlHDOpticasJavs" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AccesoHistorialLog">
+    <Key>
+      <PropertyRef Name="Id_Log" />
+    </Key>
+    <Property Name="Id_Log" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Rol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Cedula_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaIntento" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Resultado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="AlertaSeguimiento">
+    <Key>
+      <PropertyRef Name="Id_Alerta" />
+    </Key>
+    <Property Name="Id_Alerta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cedula_Cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaAlerta" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TipoAlerta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaEnvio" Type="DateTime" Precision="3" />
+    <Property Name="ConfiguradaPor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FechaConfiguracion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Mensaje" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+    <Property Name="MedioEnvio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Enviada" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="AlertaSeguimientoHistorial">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cedula_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaAlerta" Type="DateTime" Precision="3" />
+    <Property Name="Mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Enviada" Type="Boolean" />
+    <Property Name="MedioEnvio" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+    <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CampaniaCliente">
+    <Key>
+      <PropertyRef Name="Id_Campania" />
+      <PropertyRef Name="Cedula_Cliente" />
+    </Key>
+    <Property Name="Id_Campania" Type="Int32" Nullable="false" />
+    <Property Name="Cedula_Cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Correo_Cliente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK__CampaniaC__Cedul__70DDC3D8" FromRole="CampaniaCliente" ToRole="Cliente" />
+    <NavigationProperty Name="CampaniaMarketing" Relationship="Self.FK__CampaniaC__Id_Ca__6FE99F9F" FromRole="CampaniaCliente" ToRole="CampaniaMarketing" />
+  </EntityType>
+  <EntityType Name="CampaniaMarketing">
+    <Key>
+      <PropertyRef Name="Id_Campania" />
+    </Key>
+    <Property Name="Id_Campania" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_Campania" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_Inicio" Type="DateTime" Precision="0" />
+    <Property Name="Fecha_Fin" Type="DateTime" Precision="0" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_Programada" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="CampaniaCliente" Relationship="Self.FK__CampaniaC__Id_Ca__6FE99F9F" FromRole="CampaniaMarketing" ToRole="CampaniaCliente" />
+    <NavigationProperty Name="CampaniaMetrica" Relationship="Self.FK__CampaniaM__Id_Ca__3D2915A8" FromRole="CampaniaMarketing" ToRole="CampaniaMetrica" />
+  </EntityType>
+  <EntityType Name="CampaniaMetrica">
+    <Key>
+      <PropertyRef Name="Id_Campania" />
+      <PropertyRef Name="Cedula_Cliente" />
+    </Key>
+    <Property Name="Id_Campania" Type="Int32" Nullable="false" />
+    <Property Name="Cedula_Cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Abierto" Type="Boolean" />
+    <Property Name="Click" Type="Boolean" />
+    <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+    <Property Name="Automatica" Type="Boolean" />
+    <NavigationProperty Name="CampaniaMarketing" Relationship="Self.FK__CampaniaM__Id_Ca__3D2915A8" FromRole="CampaniaMetrica" ToRole="CampaniaMarketing" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK__CampaniaM__Cedul__3E1D39E1" FromRole="CampaniaMetrica" ToRole="Cliente" />
+  </EntityType>
+  <EntityType Name="Cita">
+    <Key>
+      <PropertyRef Name="Id_Cita" />
+    </Key>
+    <Property Name="Id_Cita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cedula_Usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fecha_Cita" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Hora_Cita" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Id_TipoEspecialista" Type="Int32" Nullable="false" />
+    <Property Name="Cedula_Especialista" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Id_EstadoCita" Type="Int32" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="TokenConfirmacion" Type="Guid" />
+    <NavigationProperty Name="Empleado" Relationship="Self.FK__Cita__Cedula_Esp__6A30C649" FromRole="Cita" ToRole="Empleado" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Cita__Cedula_Usu__68487DD7" FromRole="Cita" ToRole="Usuario" />
+    <NavigationProperty Name="Parametro" Relationship="Self.FK__Cita__Id_EstadoC__6B24EA82" FromRole="Cita" ToRole="Parametro" />
+    <NavigationProperty Name="Parametro1" Relationship="Self.FK__Cita__Id_TipoEsp__693CA210" FromRole="Cita" ToRole="Parametro" />
+  </EntityType>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Edad" Type="Int32" />
+    <Property Name="Id_Genero" Type="Int32" />
+    <Property Name="Padecimiento" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Numero_Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Apellido1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Apellido2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Correo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Fecha_Nacimiento" Type="DateTime" Precision="0" />
+    <Property Name="Genero" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="CedulaNormalizada" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CampaniaCliente" Relationship="Self.FK__CampaniaC__Cedul__70DDC3D8" FromRole="Cliente" ToRole="CampaniaCliente" />
+    <NavigationProperty Name="CampaniaMetrica" Relationship="Self.FK__CampaniaM__Cedul__3E1D39E1" FromRole="Cliente" ToRole="CampaniaMetrica" />
+    <NavigationProperty Name="Parametro" Relationship="Self.FK__Cliente__Id_Gene__52593CB8" FromRole="Cliente" ToRole="Parametro" />
+    <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__PuntoVent__Cedul__5DCAEF64" FromRole="Cliente" ToRole="PuntoVenta" />
+  </EntityType>
+  <EntityType Name="ConfiguracionRecurrencia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UmbralCompras" Type="Int32" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Contabilidad">
+    <Key>
+      <PropertyRef Name="Id_Contabilidad" />
+    </Key>
+    <Property Name="Id_Contabilidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Venta" Type="Int32" Nullable="false" />
+    <Property Name="Id_Producto" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="PrecioUnitario" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Descuento" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="IVA" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Fecha_Registro" Type="DateTime" Precision="3" />
+    <Property Name="Usuario_Registro" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Id_TipoMovimiento" Type="Int32" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Inventario" Relationship="Self.FK__Contabili__Id_Pr__6383C8BA" FromRole="Contabilidad" ToRole="Inventario" />
+    <NavigationProperty Name="Parametro" Relationship="Self.FK__Contabili__Id_Ti__656C112C" FromRole="Contabilidad" ToRole="Parametro" />
+    <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__Contabili__Id_Ve__628FA481" FromRole="Contabilidad" ToRole="PuntoVenta" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Contabili__Usuar__6477ECF3" FromRole="Contabilidad" ToRole="Usuario" />
+    <Property Name="TipoOperacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TipoServicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TipoMovimientoIngresoEgreso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CriteriosPromocionRecurrente">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MinimoCompras" Type="Int32" Nullable="false" />
+    <Property Name="DiasRango" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="DetalleVenta">
+    <Key>
+      <PropertyRef Name="Id_Detalle" />
+    </Key>
+    <Property Name="Id_Detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Venta" Type="Int32" />
+    <Property Name="Id_Producto" Type="Int32" />
+    <Property Name="Cantidad" Type="Int32" />
+    <Property Name="PrecioUnitario" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="Inventario" Relationship="Self.FK__DetalleVe__Id_Pr__0F2D40CE" FromRole="DetalleVenta" ToRole="Inventario" />
+    <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__DetalleVe__Id_Ve__0E391C95" FromRole="DetalleVenta" ToRole="PuntoVenta" />
+  </EntityType>
+  <EntityType Name="Empleado">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Placa_Vehiculo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Numero_Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Contacto_Emergencia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Id_Especialidad" Type="Int32" />
+    <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__Cedula_Esp__6A30C649" FromRole="Empleado" ToRole="Cita" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Empleado__Cedula__5535A963" FromRole="Empleado" ToRole="Usuario" />
+    <NavigationProperty Name="Parametro" Relationship="Self.FK_Empleado_Especialidad" FromRole="Empleado" ToRole="Parametro" />
+  </EntityType>
+  <EntityType Name="HistorialCambiosCliente">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cedula" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Apellido1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Apellido2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Correo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Fecha_Nacimiento" Type="DateTime" Precision="0" />
+    <Property Name="Edad" Type="Int32" />
+    <Property Name="Genero" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Padecimiento" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Numero_Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCambio" Type="DateTime" Precision="3" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="HistorialCliente">
+    <Key>
+      <PropertyRef Name="Id_Historial" />
+    </Key>
+    <Property Name="Id_Historial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cedula_Cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Antecedentes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Diagnostico" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Tratamiento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Usuario_Registro" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="IntentoAccesoHistorial">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CedulaCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaIntento" Type="DateTime" Precision="3" />
+    <Property Name="Usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RolUsuario" Type="Int32" />
+    <Property Name="Motivo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AccesoAutorizado" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="IntentoLogin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioIntentado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Exito" Type="Boolean" />
+    <Property Name="Mensaje" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="FechaIntento" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Inventario">
+    <Key>
+      <PropertyRef Name="Id_Producto" />
+    </Key>
+    <Property Name="Id_Producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_Producto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Codigo_Producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Stock" Type="Int32" />
+    <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Id_Proveedor" Type="Int32" />
+    <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Id_Pr__6383C8BA" FromRole="Inventario" ToRole="Contabilidad" />
+    <NavigationProperty Name="DetalleVenta" Relationship="Self.FK__DetalleVe__Id_Pr__0F2D40CE" FromRole="Inventario" ToRole="DetalleVenta" />
+    <NavigationProperty Name="Proveedor" Relationship="Self.FK__Inventari__Id_Pr__59FA5E80" FromRole="Inventario" ToRole="Proveedor" />
+  </EntityType>
+  <EntityType Name="ListaSegmentada">
+    <Key>
+      <PropertyRef Name="Id_Lista" />
+    </Key>
+    <Property Name="Id_Lista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreLista" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ListaSegmentadaCliente" Relationship="Self.FK__ListaSegm__Id_Li__7849DB76" FromRole="ListaSegmentada" ToRole="ListaSegmentadaCliente" />
+  </EntityType>
+  <EntityType Name="ListaSegmentadaCliente">
+    <Key>
+      <PropertyRef Name="Id_ListaCliente" />
+    </Key>
+    <Property Name="Id_ListaCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Lista" Type="Int32" />
+    <Property Name="Cedula_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ListaSegmentada" Relationship="Self.FK__ListaSegm__Id_Li__7849DB76" FromRole="ListaSegmentadaCliente" ToRole="ListaSegmentada" />
+  </EntityType>
+  <EntityType Name="LogSistema">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Modulo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Modulo">
+    <Key>
+      <PropertyRef Name="Id_Modulo" />
+    </Key>
+    <Property Name="Id_Modulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Controlador" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Accion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="PermisoRol" Relationship="Self.FK__PermisoRo__Id_Mo__30C33EC3" FromRole="Modulo" ToRole="PermisoRol" />
+  </EntityType>
+  <EntityType Name="PagoVenta">
+    <Key>
+      <PropertyRef Name="Id_Pago" />
+    </Key>
+    <Property Name="Id_Pago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Venta" Type="Int32" />
+    <Property Name="Metodo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Monto" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__PagoVenta__Id_Ve__0B5CAFEA" FromRole="PagoVenta" ToRole="PuntoVenta" />
+  </EntityType>
+  <EntityType Name="Parametro">
+    <Key>
+      <PropertyRef Name="Id_Parametro" />
+    </Key>
+    <Property Name="Id_Parametro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_TipoParametro" Type="Int32" Nullable="false" />
+    <Property Name="Nombre_Parametro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__Id_EstadoC__6B24EA82" FromRole="Parametro" ToRole="Cita" />
+    <NavigationProperty Name="Cita1" Relationship="Self.FK__Cita__Id_TipoEsp__693CA210" FromRole="Parametro" ToRole="Cita" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK__Cliente__Id_Gene__52593CB8" FromRole="Parametro" ToRole="Cliente" />
+    <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Id_Ti__656C112C" FromRole="Parametro" ToRole="Contabilidad" />
+    <NavigationProperty Name="Empleado" Relationship="Self.FK_Empleado_Especialidad" FromRole="Parametro" ToRole="Empleado" />
+    <NavigationProperty Name="TipoParametro" Relationship="Self.FK__Parametro__Id_Ti__4BAC3F29" FromRole="Parametro" ToRole="TipoParametro" />
+    <NavigationProperty Name="PermisoRol" Relationship="Self.FK__PermisoRo__Id_Ro__2FCF1A8A" FromRole="Parametro" ToRole="PermisoRol" />
+    <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__PuntoVent__Id_Me__5EBF139D" FromRole="Parametro" ToRole="PuntoVenta" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__Id_Rol__4E88ABD4" FromRole="Parametro" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="PermisoRol">
+    <Key>
+      <PropertyRef Name="Id_PermisoRol" />
+    </Key>
+    <Property Name="Id_PermisoRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Rol" Type="Int32" />
+    <Property Name="Id_Modulo" Type="Int32" />
+    <NavigationProperty Name="Modulo" Relationship="Self.FK__PermisoRo__Id_Mo__30C33EC3" FromRole="PermisoRol" ToRole="Modulo" />
+    <NavigationProperty Name="Parametro" Relationship="Self.FK__PermisoRo__Id_Ro__2FCF1A8A" FromRole="PermisoRol" ToRole="Parametro" />
+  </EntityType>
+  <EntityType Name="Proveedor">
+    <Key>
+      <PropertyRef Name="Id_Proveedor" />
+    </Key>
+    <Property Name="Id_Proveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_Proveedor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Inventario" Relationship="Self.FK__Inventari__Id_Pr__59FA5E80" FromRole="Proveedor" ToRole="Inventario" />
+  </EntityType>
+  <EntityType Name="PuntoVenta">
+    <Key>
+      <PropertyRef Name="Id_Venta" />
+    </Key>
+    <Property Name="Id_Venta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cedula_Cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="IVA" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Id_MetodoPago" Type="Int32" />
+    <Property Name="Fecha_Venta" Type="DateTime" Precision="0" />
+    <Property Name="Hora_Venta" Type="Time" Precision="7" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK__PuntoVent__Cedul__5DCAEF64" FromRole="PuntoVenta" ToRole="Cliente" />
+    <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Id_Ve__628FA481" FromRole="PuntoVenta" ToRole="Contabilidad" />
+    <NavigationProperty Name="DetalleVenta" Relationship="Self.FK__DetalleVe__Id_Ve__0E391C95" FromRole="PuntoVenta" ToRole="DetalleVenta" />
+    <NavigationProperty Name="PagoVenta" Relationship="Self.FK__PagoVenta__Id_Ve__0B5CAFEA" FromRole="PuntoVenta" ToRole="PagoVenta" />
+    <NavigationProperty Name="Parametro" Relationship="Self.FK__PuntoVent__Id_Me__5EBF139D" FromRole="PuntoVenta" ToRole="Parametro" />
+  </EntityType>
+  <EntityType Name="RecuperacionPassword">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Correo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Token" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="TarjetaSimulada">
+    <Key>
+      <PropertyRef Name="Id_Tarjeta" />
+    </Key>
+    <Property Name="Id_Tarjeta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NumeroTarjeta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="NombreTitular" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FechaVencimiento" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="CVV" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Saldo" Type="Decimal" Precision="10" Scale="2" />
+  </EntityType>
+  <EntityType Name="TipoParametro">
+    <Key>
+      <PropertyRef Name="Id_TipoParametro" />
+    </Key>
+    <Property Name="Id_TipoParametro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_TipoParametro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Parametro" Relationship="Self.FK__Parametro__Id_Ti__4BAC3F29" FromRole="TipoParametro" ToRole="Parametro" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Contrasenia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Id_Rol" Type="Int32" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaBloqueoHasta" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__Cedula_Usu__68487DD7" FromRole="Usuario" ToRole="Cita" />
+    <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Usuar__6477ECF3" FromRole="Usuario" ToRole="Contabilidad" />
+    <NavigationProperty Name="Empleado" Relationship="Self.FK__Empleado__Cedula__5535A963" FromRole="Usuario" ToRole="Empleado" />
+    <NavigationProperty Name="Parametro" Relationship="Self.FK__Usuario__Id_Rol__4E88ABD4" FromRole="Usuario" ToRole="Parametro" />
+  </EntityType>
+  <EntityType Name="Usuario_UltimoCambio">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cedula" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Contrasenia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Id_Rol" Type="Int32" />
+    <Property Name="FechaBloqueoHasta" Type="DateTime" Precision="3" />
+    <Property Name="FechaCambio" Type="DateTime" Precision="3" />
+    <Property Name="Revertido" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="AggregatedCounter">
+    <Key>
+      <PropertyRef Name="Key" />
+    </Key>
+    <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Value" Type="Int64" Nullable="false" />
+    <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Counter">
+    <Key>
+      <PropertyRef Name="Key" />
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Value" Type="Int32" Nullable="false" />
+    <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Hash">
+    <Key>
+      <PropertyRef Name="Key" />
+      <PropertyRef Name="Field" />
+    </Key>
+    <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Field" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ExpireAt" Type="DateTime" Precision="7" />
+  </EntityType>
+  <EntityType Name="Job">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateId" Type="Int64" />
+    <Property Name="StateName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="InvocationData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Arguments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="JobParameter" Relationship="Self.FK_HangFire_JobParameter_Job" FromRole="Job" ToRole="JobParameter" />
+    <NavigationProperty Name="State" Relationship="Self.FK_HangFire_State_Job" FromRole="Job" ToRole="State" />
+  </EntityType>
+  <EntityType Name="JobParameter">
+    <Key>
+      <PropertyRef Name="JobId" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="JobId" Type="Int64" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Job" Relationship="Self.FK_HangFire_JobParameter_Job" FromRole="JobParameter" ToRole="Job" />
+  </EntityType>
+  <EntityType Name="JobQueue">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Queue" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobId" Type="Int64" Nullable="false" />
+    <Property Name="Queue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FetchedAt" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="List">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Key" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Schema">
+    <Key>
+      <PropertyRef Name="Version" />
+    </Key>
+    <Property Name="Version" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Server">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastHeartbeat" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Set">
+    <Key>
+      <PropertyRef Name="Key" />
+      <PropertyRef Name="Value" />
+    </Key>
+    <Property Name="Key" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Score" Type="Double" Nullable="false" />
+    <Property Name="Value" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="JobId" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobId" Type="Int64" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Job" Relationship="Self.FK_HangFire_State_Job" FromRole="State" ToRole="Job" />
+  </EntityType>
+  <Association Name="FK__CampaniaC__Cedul__70DDC3D8">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="CampaniaCliente" Type="Self.CampaniaCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="CampaniaCliente">
+        <PropertyRef Name="Cedula_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CampaniaC__Id_Ca__6FE99F9F">
+    <End Role="CampaniaMarketing" Type="Self.CampaniaMarketing" Multiplicity="1" />
+    <End Role="CampaniaCliente" Type="Self.CampaniaCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CampaniaMarketing">
+        <PropertyRef Name="Id_Campania" />
+      </Principal>
+      <Dependent Role="CampaniaCliente">
+        <PropertyRef Name="Id_Campania" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CampaniaM__Id_Ca__3D2915A8">
+    <End Role="CampaniaMarketing" Type="Self.CampaniaMarketing" Multiplicity="1" />
+    <End Role="CampaniaMetrica" Type="Self.CampaniaMetrica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CampaniaMarketing">
+        <PropertyRef Name="Id_Campania" />
+      </Principal>
+      <Dependent Role="CampaniaMetrica">
+        <PropertyRef Name="Id_Campania" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CampaniaM__Cedul__3E1D39E1">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="CampaniaMetrica" Type="Self.CampaniaMetrica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="CampaniaMetrica">
+        <PropertyRef Name="Cedula_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cita__Cedula_Esp__6A30C649">
+    <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleado">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="Cedula_Especialista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cita__Cedula_Usu__68487DD7">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="Cedula_Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cita__Id_EstadoC__6B24EA82">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="Id_EstadoCita" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cita__Id_TipoEsp__693CA210">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="Id_TipoEspecialista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cliente__Id_Gene__52593CB8">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Cliente">
+        <PropertyRef Name="Id_Genero" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PuntoVent__Cedul__5DCAEF64">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="PuntoVenta">
+        <PropertyRef Name="Cedula_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Id_Pr__6383C8BA">
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="1" />
+    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="Id_Producto" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Id_Producto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Id_Ti__656C112C">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Id_TipoMovimiento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Id_Ve__628FA481">
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="1" />
+    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PuntoVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Id_Venta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Usuar__6477ECF3">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Usuario_Registro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetalleVe__Id_Pr__0F2D40CE">
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
+    <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="Id_Producto" />
+      </Principal>
+      <Dependent Role="DetalleVenta">
+        <PropertyRef Name="Id_Producto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetalleVe__Id_Ve__0E391C95">
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
+    <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PuntoVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Principal>
+      <Dependent Role="DetalleVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Empleado__Cedula__5535A963">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Empleado">
+        <PropertyRef Name="Cedula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Empleado_Especialidad">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Empleado">
+        <PropertyRef Name="Id_Especialidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Inventari__Id_Pr__59FA5E80">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="Id_Proveedor" />
+      </Principal>
+      <Dependent Role="Inventario">
+        <PropertyRef Name="Id_Proveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ListaSegm__Id_Li__7849DB76">
+    <End Role="ListaSegmentada" Type="Self.ListaSegmentada" Multiplicity="0..1" />
+    <End Role="ListaSegmentadaCliente" Type="Self.ListaSegmentadaCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListaSegmentada">
+        <PropertyRef Name="Id_Lista" />
+      </Principal>
+      <Dependent Role="ListaSegmentadaCliente">
+        <PropertyRef Name="Id_Lista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PermisoRo__Id_Mo__30C33EC3">
+    <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
+    <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modulo">
+        <PropertyRef Name="Id_Modulo" />
+      </Principal>
+      <Dependent Role="PermisoRol">
+        <PropertyRef Name="Id_Modulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PagoVenta__Id_Ve__0B5CAFEA">
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
+    <End Role="PagoVenta" Type="Self.PagoVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PuntoVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Principal>
+      <Dependent Role="PagoVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Parametro__Id_Ti__4BAC3F29">
+    <End Role="TipoParametro" Type="Self.TipoParametro" Multiplicity="1" />
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoParametro">
+        <PropertyRef Name="Id_TipoParametro" />
+      </Principal>
+      <Dependent Role="Parametro">
+        <PropertyRef Name="Id_TipoParametro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PermisoRo__Id_Ro__2FCF1A8A">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="PermisoRol" Type="Self.PermisoRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="PermisoRol">
+        <PropertyRef Name="Id_Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PuntoVent__Id_Me__5EBF139D">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="PuntoVenta">
+        <PropertyRef Name="Id_MetodoPago" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Usuario__Id_Rol__4E88ABD4">
+    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="Id_Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HangFire_JobParameter_Job">
+    <End Role="Job" Type="Self.Job" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="JobParameter" Type="Self.JobParameter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Job">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobParameter">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HangFire_State_Job">
+    <End Role="Job" Type="Self.Job" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Job">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HD_Opticas_JAVS_BDEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AccesoHistorialLog" EntityType="Self.AccesoHistorialLog" />
+    <EntitySet Name="AlertaSeguimiento" EntityType="Self.AlertaSeguimiento" />
+    <EntitySet Name="AlertaSeguimientoHistorial" EntityType="Self.AlertaSeguimientoHistorial" />
+    <EntitySet Name="CampaniaCliente" EntityType="Self.CampaniaCliente" />
+    <EntitySet Name="CampaniaMarketing" EntityType="Self.CampaniaMarketing" />
+    <EntitySet Name="CampaniaMetrica" EntityType="Self.CampaniaMetrica" />
+    <EntitySet Name="Cita" EntityType="Self.Cita" />
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+    <EntitySet Name="ConfiguracionRecurrencia" EntityType="Self.ConfiguracionRecurrencia" />
+    <EntitySet Name="Contabilidad" EntityType="Self.Contabilidad" />
+    <EntitySet Name="CriteriosPromocionRecurrente" EntityType="Self.CriteriosPromocionRecurrente" />
+    <EntitySet Name="DetalleVenta" EntityType="Self.DetalleVenta" />
+    <EntitySet Name="Empleado" EntityType="Self.Empleado" />
+    <EntitySet Name="HistorialCambiosCliente" EntityType="Self.HistorialCambiosCliente" />
+    <EntitySet Name="HistorialCliente" EntityType="Self.HistorialCliente" />
+    <EntitySet Name="IntentoAccesoHistorial" EntityType="Self.IntentoAccesoHistorial" />
+    <EntitySet Name="IntentoLogin" EntityType="Self.IntentoLogin" />
+    <EntitySet Name="Inventario" EntityType="Self.Inventario" />
+    <EntitySet Name="ListaSegmentada" EntityType="Self.ListaSegmentada" />
+    <EntitySet Name="ListaSegmentadaCliente" EntityType="Self.ListaSegmentadaCliente" />
+    <EntitySet Name="LogSistema" EntityType="Self.LogSistema" />
+    <EntitySet Name="Modulo" EntityType="Self.Modulo" />
+    <EntitySet Name="PagoVenta" EntityType="Self.PagoVenta" />
+    <EntitySet Name="Parametro" EntityType="Self.Parametro" />
+    <EntitySet Name="PermisoRol" EntityType="Self.PermisoRol" />
+    <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+    <EntitySet Name="PuntoVenta" EntityType="Self.PuntoVenta" />
+    <EntitySet Name="RecuperacionPassword" EntityType="Self.RecuperacionPassword" />
+    <EntitySet Name="TarjetaSimulada" EntityType="Self.TarjetaSimulada" />
+    <EntitySet Name="TipoParametro" EntityType="Self.TipoParametro" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <EntitySet Name="Usuario_UltimoCambio" EntityType="Self.Usuario_UltimoCambio" />
+    <EntitySet Name="AggregatedCounter" EntityType="Self.AggregatedCounter" />
+    <EntitySet Name="Counter" EntityType="Self.Counter" />
+    <EntitySet Name="Hash" EntityType="Self.Hash" />
+    <EntitySet Name="Job" EntityType="Self.Job" />
+    <EntitySet Name="JobParameter" EntityType="Self.JobParameter" />
+    <EntitySet Name="JobQueue" EntityType="Self.JobQueue" />
+    <EntitySet Name="List" EntityType="Self.List" />
+    <EntitySet Name="Schema" EntityType="Self.Schema" />
+    <EntitySet Name="Server" EntityType="Self.Server" />
+    <EntitySet Name="Set" EntityType="Self.Set" />
+    <EntitySet Name="State" EntityType="Self.State" />
+    <AssociationSet Name="FK__CampaniaC__Cedul__70DDC3D8" Association="Self.FK__CampaniaC__Cedul__70DDC3D8">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="CampaniaCliente" EntitySet="CampaniaCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CampaniaC__Id_Ca__6FE99F9F" Association="Self.FK__CampaniaC__Id_Ca__6FE99F9F">
+      <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
+      <End Role="CampaniaCliente" EntitySet="CampaniaCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CampaniaM__Id_Ca__3D2915A8" Association="Self.FK__CampaniaM__Id_Ca__3D2915A8">
+      <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
+      <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CampaniaM__Cedul__3E1D39E1" Association="Self.FK__CampaniaM__Cedul__3E1D39E1">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="CampaniaMetrica" EntitySet="CampaniaMetrica" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cita__Cedula_Esp__6A30C649" Association="Self.FK__Cita__Cedula_Esp__6A30C649">
+      <End Role="Empleado" EntitySet="Empleado" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cita__Cedula_Usu__68487DD7" Association="Self.FK__Cita__Cedula_Usu__68487DD7">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cita__Id_EstadoC__6B24EA82" Association="Self.FK__Cita__Id_EstadoC__6B24EA82">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cita__Id_TipoEsp__693CA210" Association="Self.FK__Cita__Id_TipoEsp__693CA210">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cliente__Id_Gene__52593CB8" Association="Self.FK__Cliente__Id_Gene__52593CB8">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Cliente" EntitySet="Cliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PuntoVent__Cedul__5DCAEF64" Association="Self.FK__PuntoVent__Cedul__5DCAEF64">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Id_Pr__6383C8BA" Association="Self.FK__Contabili__Id_Pr__6383C8BA">
+      <End Role="Inventario" EntitySet="Inventario" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Id_Ti__656C112C" Association="Self.FK__Contabili__Id_Ti__656C112C">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Id_Ve__628FA481" Association="Self.FK__Contabili__Id_Ve__628FA481">
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Usuar__6477ECF3" Association="Self.FK__Contabili__Usuar__6477ECF3">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetalleVe__Id_Pr__0F2D40CE" Association="Self.FK__DetalleVe__Id_Pr__0F2D40CE">
+      <End Role="Inventario" EntitySet="Inventario" />
+      <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetalleVe__Id_Ve__0E391C95" Association="Self.FK__DetalleVe__Id_Ve__0E391C95">
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+      <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Empleado__Cedula__5535A963" Association="Self.FK__Empleado__Cedula__5535A963">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Empleado" EntitySet="Empleado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Empleado_Especialidad" Association="Self.FK_Empleado_Especialidad">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Empleado" EntitySet="Empleado" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Inventari__Id_Pr__59FA5E80" Association="Self.FK__Inventari__Id_Pr__59FA5E80">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Inventario" EntitySet="Inventario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ListaSegm__Id_Li__7849DB76" Association="Self.FK__ListaSegm__Id_Li__7849DB76">
+      <End Role="ListaSegmentada" EntitySet="ListaSegmentada" />
+      <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PermisoRo__Id_Mo__30C33EC3" Association="Self.FK__PermisoRo__Id_Mo__30C33EC3">
+      <End Role="Modulo" EntitySet="Modulo" />
+      <End Role="PermisoRol" EntitySet="PermisoRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PagoVenta__Id_Ve__0B5CAFEA" Association="Self.FK__PagoVenta__Id_Ve__0B5CAFEA">
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+      <End Role="PagoVenta" EntitySet="PagoVenta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Parametro__Id_Ti__4BAC3F29" Association="Self.FK__Parametro__Id_Ti__4BAC3F29">
+      <End Role="TipoParametro" EntitySet="TipoParametro" />
+      <End Role="Parametro" EntitySet="Parametro" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PermisoRo__Id_Ro__2FCF1A8A" Association="Self.FK__PermisoRo__Id_Ro__2FCF1A8A">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="PermisoRol" EntitySet="PermisoRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PuntoVent__Id_Me__5EBF139D" Association="Self.FK__PuntoVent__Id_Me__5EBF139D">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuario__Id_Rol__4E88ABD4" Association="Self.FK__Usuario__Id_Rol__4E88ABD4">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HangFire_JobParameter_Job" Association="Self.FK_HangFire_JobParameter_Job">
+      <End Role="Job" EntitySet="Job" />
+      <End Role="JobParameter" EntitySet="JobParameter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HangFire_State_Job" Association="Self.FK_HangFire_State_Job">
+      <End Role="Job" EntitySet="Job" />
+      <End Role="State" EntitySet="State" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

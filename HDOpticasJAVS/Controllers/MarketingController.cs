@@ -26,22 +26,29 @@ namespace HDOpticasJAVS.Controllers
         {
             RevisarCampaniasProgramadas();
 
+            var clientesConNombres = (
+                from c in db.Cliente
+                join u in db.Usuario on c.Cedula equals u.Cedula
+                where c.Estado == "A" && u.Correo != null
+                select new ClienteSeleccionado
+                {
+                    Cedula = c.Cedula,
+                    NombreCompleto = u.Nombre + " " + u.Apellido1,
+                    Correo = u.Correo,
+                    Seleccionado = false
+                }
+            ).ToList();
+
             var model = new CampaniaMarketingViewModel
             {
                 Fecha_Inicio = DateTime.Today,
-                ClientesSeleccionados = db.Cliente
-                    .Where(c => c.Estado == "A" && c.Usuario.Correo != null)
-                    .Select(c => new ClienteSeleccionado
-                    {
-                        Cedula = c.Cedula,
-                        NombreCompleto = c.Usuario.Nombre + " " + c.Usuario.Apellido1,
-                        Correo = c.Usuario.Correo,
-                        Seleccionado = false
-                    }).ToList()
+                ClientesSeleccionados = clientesConNombres
             };
 
             return View(model);
         }
+
+
 
         [HttpPost]
         public ActionResult EnviarCampania(CampaniaMarketingViewModel model)

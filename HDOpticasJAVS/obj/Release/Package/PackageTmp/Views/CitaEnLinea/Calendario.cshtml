@@ -1,0 +1,177 @@
+﻿@{
+    ViewBag.Title = "Calendario de Citas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Flatpickr CSS -->
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- Flatpickr Español -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+@if (TempData["MensajeCitaError"] != null)
+{
+    <div class="alert alert-danger text-center">
+        <div class="card bg-danger text-light p-3 shadow-sm rounded">
+            <strong>@TempData["MensajeCitaError"]</strong>
+        </div>
+    </div>
+}
+@if (TempData["MensajeCitaExito"] != null)
+{
+    <div class="alert alert-success text-center">
+        <div class="card bg-success text-light p-3 shadow-sm rounded">
+            <strong>@TempData["MensajeCitaExito"]</strong>
+        </div>
+    </div>
+}
+
+<div class="container-fluid p-4" style="min-height: 100vh; background: rgba(0, 0, 0, 0.85); color: #F1E0C6;">
+    <div class="card shadow-lg mb-4" style="background: rgba(0,0,0,0.75); border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+
+            @{
+                int? rol = Session["Rol"] as int?;
+                bool estaLogueado = rol != null;
+                bool esCliente = rol == 2;
+                bool esEspecialista = rol == 3;
+            }
+
+            <ul class="nav nav-tabs mb-3" id="tabsCita" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tab-reservar" data-bs-toggle="tab" data-bs-target="#reservar" type="button" role="tab">Reservar Cita</button>
+                </li>
+                @if (estaLogueado && esCliente)
+                {
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-mis-citas" data-bs-toggle="tab" data-bs-target="#mis-citas" type="button" role="tab">Mis Citas</button>
+                    </li>
+                }
+                @if (estaLogueado && esEspecialista)
+                {
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-citas-especialista" data-bs-toggle="tab" data-bs-target="#citas-especialista" type="button" role="tab">Citas Asignadas</button>
+                    </li>
+                }
+            </ul>
+
+            <div class="tab-content" id="contenidoTabsCita">
+                <div class="tab-pane fade show active" id="reservar" role="tabpanel">
+                    @if (!estaLogueado)
+                    {
+                        <div class="alert alert-danger text-center">
+                            <div class="card bg-danger text-light p-3 shadow-sm rounded">
+                                <strong>Debe iniciar sesión para agendar una cita.</strong>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="card bg-dark text-light" style="border-radius: 10px;">
+                                    <div class="card-header bg-secondary">
+                                        <h5 class="mb-0">Reservar Cita</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        @using (Html.BeginForm("Crear", "CitaEnLinea", FormMethod.Post))
+                                        {
+                                            <div class="form-group">
+                                                <label>Especialidad:</label>
+                                                @Html.DropDownList("Id_TipoEspecialista", ViewBag.Especialidades as SelectList, "Seleccione una especialidad", new { @class = "form-control", @id = "ddlEspecialidad" })
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Especialista:</label>
+                                                <select id="ddlEspecialista" name="Cedula_Especialista" class="form-control" required>
+                                                    <option value="">Seleccione un especialista</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Fecha:</label>
+                                                <input type="date" name="Fecha" class="form-control" required />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Hora:</label>
+                                                <input type="time" name="Hora" class="form-control" required />
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary mt-3">Agendar cita</button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @if (estaLogueado && esCliente)
+                {
+                    <div class="tab-pane fade" id="mis-citas" role="tabpanel">
+                        @Html.Action("CitasDelCliente", "CitaEnLinea")
+                    </div>
+                }
+                else
+                {
+                    <div class="tab-pane fade" id="mis-citas" role="tabpanel">
+                        <div class="alert alert-warning text-center">
+                            <div class="card bg-warning text-dark p-3 shadow-sm rounded">
+                                <strong>Debe iniciar sesión como cliente para ver sus citas.</strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (estaLogueado && esEspecialista)
+                {
+                    <div class="tab-pane fade" id="citas-especialista" role="tabpanel">
+                        @Html.Action("CitasDelEspecialista", "CitaEnLinea")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        flatpickr("#Fecha", {
+            locale: "es",
+            dateFormat: "Y-m-d",
+            minDate: "today"
+        });
+
+        flatpickr("#Hora", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            locale: "es"
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        $('#ddlEspecialidad').change(function () {
+            var idEspecialidad = $(this).val();
+
+            if (idEspecialidad) {
+                $.getJSON('@Url.Action("ObtenerEspecialistas", "CitaEnLinea")', { idEspecialidad: idEspecialidad }, function (data) {
+                    var $especialista = $('#ddlEspecialista');
+                    $especialista.empty().append('<option value="">Seleccione un especialista</option>');
+
+                    $.each(data, function (i, item) {
+                        $especialista.append('<option value="' + item.Cedula + '">' + item.NombreCompleto + '</option>');
+                    });
+                });
+            } else {
+                $('#ddlEspecialista').empty().append('<option value="">Seleccione un especialista</option>');
+            }
+        });
+    });
+    </script>
+}
