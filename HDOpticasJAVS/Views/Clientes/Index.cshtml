@@ -89,38 +89,38 @@
                                     }
                                 </td>
                                 <td>
-                                    <div class="d-flex flex-wrap gap-1">
-                                        <a href="@Url.Action("Detalles", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-info btn-sm">
+                                    <div class="d-flex flex-wrap">
+                                        <a href="@Url.Action("Detalles", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-info btn-sm me-1 mb-1">
                                             <i class="bi bi-eye"></i> Ver
                                         </a>
 
                                         @if (Session["Rol"] != null && (int)Session["Rol"] == 1)
                                         {
-                                            <a href="@Url.Action("Editar", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-warning btn-sm">
+                                            <a href="@Url.Action("Editar", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-warning btn-sm me-1 mb-1">
                                                 <i class="bi bi-pencil"></i> Editar
                                             </a>
                                         }
 
-                                        <a href="@Url.Action("Historial", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-secondary btn-sm">
+                                        <a href="@Url.Action("Historial", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-secondary btn-sm me-1 mb-1">
                                             🩺 Historial
                                         </a>
 
                                         @if (Session["Rol"] != null && ((int)Session["Rol"] == 1 || (int)Session["Rol"] == 2))
                                         {
-                                            <a href="@Url.Action("RegistrarHistorial", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-success btn-sm">
+                                            <a href="@Url.Action("RegistrarHistorial", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-success btn-sm me-1 mb-1">
                                                 <i class="bi bi-journal-plus"></i> Historial +
                                             </a>
                                         }
 
                                         @if (Session["Rol"] != null && (int)Session["Rol"] == 1)
                                         {
-                                            <a href="@Url.Action("VerCambiosCliente", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-outline-info btn-sm">
+                                            <a href="@Url.Action("VerCambiosCliente", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-outline-info btn-sm me-1 mb-1">
                                                 <i class="bi bi-clock-history"></i> Ver Cambios
                                             </a>
 
                                             if (cliente.Activo)
                                             {
-                                                <form action="@Url.Action("DesactivarCliente", "Clientes")" method="post" class="d-inline">
+                                                <form action="@Url.Action("DesactivarCliente", "Clientes")" method="post" class="d-inline me-1 mb-1">
                                                     @Html.AntiForgeryToken()
                                                     <input type="hidden" name="cedula" value="@cliente.Cedula" />
                                                     <button type="submit" class="btn btn-danger btn-sm"
@@ -131,7 +131,7 @@
                                             }
                                             else
                                             {
-                                                <form action="@Url.Action("ReactivarCliente", "Clientes")" method="post" class="d-inline">
+                                                <form action="@Url.Action("ReactivarCliente", "Clientes")" method="post" class="d-inline me-1 mb-1">
                                                     @Html.AntiForgeryToken()
                                                     <input type="hidden" name="cedula" value="@cliente.Cedula" />
                                                     <button type="submit" class="btn btn-success btn-sm"
@@ -142,6 +142,7 @@
                                             }
                                         }
                                     </div>
+
                                 </td>
                             </tr>
                         }

@@ -27,12 +27,52 @@
                     <td>@cita.Parametro1.Nombre_Parametro</td>
                     <td>@cita.Parametro.Nombre_Parametro</td>
                     <td>
+                        <a href="@Url.Action("Editar", "CitaEnLinea", new { id = cita.Id_Cita })" class="btn btn-warning btn-sm">Editar</a>
+
                         @using (Html.BeginForm("CancelarCita", "CitaEnLinea", FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
                             @Html.Hidden("idCita", cita.Id_Cita)
-                            <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Deseas cancelar esta cita?');">Cancelar</button>
+
+                            <button class="btn btn-sm btn-danger"
+                                    type="submit"
+                                    data-fecha="@cita.Fecha_Cita.ToString("yyyy-MM-dd")"
+                                    data-hora="@cita.Hora_Cita.ToString(@"hh\:mm")"
+                                    onclick="return validarCancelar(this);">
+                                Cancelar
+                            </button>
                         }
+
+                        <script>
+                            function validarCancelar(btn) {
+                                if (!confirm('¿Deseas cancelar esta cita?')) {
+                                    return false;
+                                }
+
+                                const fechaStr = btn.getAttribute('data-fecha');
+                                const horaStr = btn.getAttribute('data-hora');
+
+                                if (!fechaStr || !horaStr) {
+                                    alert("No se pudo validar la fecha y hora de la cita.");
+                                    return false;
+                                }
+
+                                const citaDateTime = new Date(fechaStr + 'T' + horaStr + ':00'); 
+
+                                const ahora = new Date();
+
+                                const diffMs = citaDateTime - ahora;
+
+                                const horas24 = 24 * 60 * 60 * 1000;
+
+                                if (diffMs < horas24) {
+                                    alert("No se puede cancelar la cita con menos de 24 horas de anticipación.");
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        </script>
                     </td>
                 </tr>
             }

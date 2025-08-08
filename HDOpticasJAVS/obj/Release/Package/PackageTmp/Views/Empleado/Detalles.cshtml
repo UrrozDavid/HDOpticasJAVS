@@ -1,125 +1,49 @@
-﻿@{
-    ViewBag.Title = "Detalles Laborales";
+﻿@model HDOpticasJAVS.Usuario
+
+@{
+    ViewBag.Title = "Detalles de Empleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg w-100" style="max-width: 1000px; background: rgba(0, 0, 0, 0.85); color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Empleado.Cedula)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Cedula)</dd>
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Nombre)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Nombre)</dd>
 
-<div class="form-horizontal">
-    <div class="form-group">
-        <label class="control-label col-md-2">Nombre:</label>
-        <div class="col-md-10">@ViewBag.ClienteNombre</div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-2">Cédula:</label>
-        <div class="col-md-10">@ViewBag.Cedula</div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-2">Teléfono:</label>
-        <div class="col-md-10">@ViewBag.Telefono</div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-2">Correo:</label>
-        <div class="col-md-10">@ViewBag.Correo</div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-2">Direccion:</label>
-        <div class="col-md-10">@ViewBag.Direccion</div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-2">Contacto de emergencia:</label>
-        <div class="col-md-10">@ViewBag.ContactoEmergencia</div>
+                <dt class="col-sm-4">Correo</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Correo)</dd>
+
+                <dt class="col-sm-4">Direccion</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Empleado.Direccion)</dd>
+
+                <dt class="col-sm-4">Numero de telefono</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Empleado.Numero_Telefono)</dd>
+
+                <dt class="col-sm-4">Contacto de emergencia</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Empleado.Contacto_Emergencia)</dd>
+
+                <dt class="col-sm-4">Placa del vehiculo</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Empleado.Placa_Vehiculo)</dd>
+
+                <dt class="col-sm-4">Rol</dt>
+                <dd class="col-sm-8">@((Model.Parametro != null) ? Model.Parametro.Nombre_Parametro : "Sin rol")</dd>
+
+                <dt class="col-sm-4">Estado</dt>
+                <dd class="col-sm-8">@((Model.Estado == "A") ? "Activo" : "Inactivo")</dd>
+            </dl>
+
+            <div class="text-end mt-4">
+                <a href="@Url.Action("Index", "Empleado")" class="btn btn-secondary">Volver</a>
+            </div>
+        </div>
     </div>
 </div>
 
-<hr />
-
-<h3>Detalles laborales del empleado</h3>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Puesto</th>
-            <th>Departamento</th>
-            <th>Fecha de ingreso</th>
-            <th>Tipo de contrato</th>
-            <th>Horario laboral</th>
-            <th>Salario</th>
-            <th>Supervisor directo</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Optometrista</td>
-            <td>Óptica</td>
-            <td>2022-03-15</td>
-            <td>Indefinido</td>
-            <td>Lunes a Viernes, 8:00 a.m. - 5:00 p.m.</td>
-            <td>₡950,000</td>
-            <td>Dra. Laura Vargas</td>
-            <td>
-                <a href="@Url.Action("EditarDatos", "Empleado", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
-                <form method="post" action="@Url.Action("EliminarDatos", "Empleado", new { id = 1, datosId = 1 })" style="display:inline;">
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar estos datos?');">Eliminar</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>Asistente de Ventas</td>
-            <td>Ventas</td>
-            <td>2023-07-10</td>
-            <td>Plazo fijo</td>
-            <td>Lunes a Sábado, 9:00 a.m. - 6:00 p.m.</td>
-            <td>₡610,000</td>
-            <td>Mario Rodríguez</td>
-<td>
-                <a href="@Url.Action("EditarDatos", "Empleado", new { id = 1, datosId = 1 })" class="btn btn-warning btn-sm">Editar</a>
-                <form method="post" action="@Url.Action("EliminarDatos", "Empleado", new { id = 1, datosId = 1 })" style="display:inline;">
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Desea eliminar estos datos?');">Eliminar</button>
-                </form>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<hr />
-
-<h3>Agregar Nuevos detalles laborales</h3>
-<form method="post" action="@Url.Action("GuardarDatos", "Empleado")">
-    <div class="form-group">
-        <label>Puesto</label>
-        <input type="text" name="Puesto" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Departamento</label>
-        <input type="text" name="Departamento" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Fecha de ingreso</label>
-        <input type="date" name="Fecha de ingreso" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Tipo de contrato</label>
-        <input type="text" name="Tipo de contrato" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Horario laboral</label>
-        <input type="text" name="Horario laboral" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Salario</label>
-        <input type="number" name="Salario" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Supervisor directo</label>
-        <input type="text" name="Supervisor directo" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-success">Guardar Evaluación</button>
-</form>

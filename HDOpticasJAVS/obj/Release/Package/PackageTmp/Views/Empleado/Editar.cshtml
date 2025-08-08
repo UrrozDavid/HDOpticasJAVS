@@ -1,38 +1,71 @@
-﻿@{
+﻿@model HDOpticasJAVS.Empleado
+
+@{
     ViewBag.Title = "Editar Empleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool estaInactivo = Model.Estado == "I";
+    var atributos = new Dictionary<string, object> { { "class", "form-control" } };
+
+    if (estaInactivo)
+    {
+        atributos.Add("disabled", "disabled");
+    }
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header text-center bg-primary text-white">
+                    <h2 class="titulo">Editar Empleado</h2>
+                </div>
+                <div class="card-body bg-dark">
+                    @Html.AntiForgeryToken()
+                    @using (Html.BeginForm("Editar", "Empleado", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Cedula)
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
+                        <div class="form-group">
+                            <label>Nombre:</label>
+                            @Html.TextBoxFor(model => model.Usuario.Nombre, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Primer Apellido:</label>
+                            @Html.TextBoxFor(model => model.Usuario.Apellido1, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Segundo Apellido:</label>
+                            @Html.TextBoxFor(model => model.Usuario.Apellido2, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Correo:</label>
+                            @Html.TextBoxFor(model => model.Usuario.Correo, new { @class = "form-control", type = "email" })
+                        </div>
+                        <div class="form-group">
+                            <label>Direccion:</label>
+                            @Html.TextBoxFor(model => model.Direccion, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Numero de telefono:</label>
+                            @Html.TextBoxFor(model => model.Numero_Telefono, new { @class = "form-control", type = "num" })
+                        </div>
+                        <div class="form-group">
+                            <label>Contacto de emergencia:</label>
+                            @Html.TextBoxFor(model => model.Contacto_Emergencia, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Placa del vehiculo:</label>
+                            @Html.TextBoxFor(model => model.Placa_Vehiculo, new { @class = "form-control" })
+                        </div>
 
-<form method="post">
-    <div class="form-group">
-        <label>Nombre Completo</label>
-        <input type="text" name="Nombre" class="form-control" value="@ViewBag.EmpleadoNombre" />
+
+                        <a href="@Url.Action("Index", "Empleado")" class="btn btn-secondary mt-3">Volver</a>
+
+                        <button type="submit" class="btn btn-warning btn-block">Actualizar</button>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label>Cédula</label>
-        <input type="text" name="Cedula" class="form-control" value="@ViewBag.Cedula" />
-    </div>
-    <div class="form-group">
-        <label>Teléfono</label>
-        <input type="text" name="Telefono" class="form-control" value="@ViewBag.Telefono" />
-    </div>
-    <div class="form-group">
-        <label>Correo</label>
-        <input type="email" name="Correo" class="form-control" value="@ViewBag.Correo" />
-    </div>
-    <div class="form-group">
-        <label>Direccion</label>
-        <input type="text" name="Direccion" class="form-control" value="@ViewBag.Direccion" />
-    </div>
-    <div class="form-group">
-        <label>Contacto de Emergencia</label>
-        <input type="text" name="Contacto" class="form-control" value="@ViewBag.ContactoEmergencia" />
-    </div>
-    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-</form>
+</div>

@@ -1,0 +1,58 @@
+﻿@model HDOpticasJAVS.Models.EmpleadoViewModel
+@{
+    ViewBag.Title = "Perfil del Empleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg text-white" style="max-width: 800px; width: 100%; background: rgba(0, 0, 0, 0.7); border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+        </div>
+        <div class="container mt-5 text-white">
+            <div class="card bg-dark shadow-lg p-4">
+                <h2 class="text-center mb-4">Perfil del Empleado</h2>
+                <dl class="row">
+                    <dt class="col-sm-4">Nombre:</dt>
+                    <dd class="col-sm-8">@Model.Nombre @Model.Apellido1 @Model.Apellido2</dd>
+
+                    <dt class="col-sm-4">Cédula:</dt>
+                    <dd class="col-sm-8">@Model.Cedula</dd>
+
+                    <dt class="col-sm-4">Correo:</dt>
+                    <dd class="col-sm-8">@Model.Correo</dd>
+
+                    <dt class="col-sm-4">Teléfono:</dt>
+                    <dd class="col-sm-8">@Model.NumeroTelefono</dd>
+
+                    <dt class="col-sm-4">Dirección:</dt>
+                    <dd class="col-sm-8">@Model.Direccion</dd>
+
+                    <dt class="col-sm-4">Placa Vehículo:</dt>
+                    <dd class="col-sm-8">@Model.Placa_Vehiculo</dd>
+                </dl>
+
+                <hr />
+
+                <h4 class="mt-4">Solicitar Actualización de Datos</h4>
+
+                @using (Html.BeginForm("EnviarCorreo", "Empleado", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label>Mensaje adicional:</label>
+                        <textarea name="mensajeAdicional" class="form-control" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Enviar Solicitud</button>
+                }
+                @if (TempData["Mensaje"] != null)
+                {
+                    <div class="alert alert-info mt-3 alert-dismissible fade show" role="alert">
+                        @TempData["Mensaje"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -73,7 +73,7 @@ namespace HDOpticasJAVS.Controllers
                     Genero = model.Genero,
                     Numero_Telefono = model.Numero_Telefono,
                     Padecimiento = model.Padecimiento,
-                    Activo = true 
+                    Activo = true
                 };
 
                 db.Cliente.Add(nuevo);
@@ -396,7 +396,7 @@ namespace HDOpticasJAVS.Controllers
                     {
                         Cedula_Cliente = model.CedulaCliente,
                         FechaRegistro = nuevoHistorial.FechaRegistro,
-                        FechaAlerta = fechaSeguimiento.Value, 
+                        FechaAlerta = fechaSeguimiento.Value,
                         Mensaje = "Seguimiento clínico programado",
                         Enviada = false,
                         MedioEnvio = "Interno"
@@ -486,7 +486,7 @@ namespace HDOpticasJAVS.Controllers
                 Tratamiento = historial.Tratamiento,
                 Observaciones = historial.Observaciones,
                 UsuarioRegistro = historial.Usuario_Registro,
-                FechaProximoSeguimiento = alerta?.FechaAlerta 
+                FechaProximoSeguimiento = alerta?.FechaAlerta
             };
 
             return View(viewModel);
@@ -567,13 +567,13 @@ namespace HDOpticasJAVS.Controllers
 
                 TempData["SuccessMessage"] = "Historial actualizado correctamente.";
             }
-            catch (Exception ex) { 
-                                    
+            catch (Exception ex) {
+
                 TempData["ErrorMessage"] = "Error al guardar los cambios: " + ex.Message;
+            }
+            return RedirectToAction("Historial", "Clientes", new { cedula = model.CedulaCliente
+            });
         }
-           return RedirectToAction("Historial", "Clientes", new { cedula = model.CedulaCliente
-    });
-      }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -761,7 +761,7 @@ namespace HDOpticasJAVS.Controllers
             {
                 bool enviada = false;
                 string mensaje = "";
-              
+
                 try
                 {
                     var cliente = db.Cliente.FirstOrDefault(c => c.Cedula == alerta.Cedula_Cliente);
@@ -775,7 +775,7 @@ namespace HDOpticasJAVS.Controllers
 
                         enviada = true;
                         mensaje = "Recordatorio enviado exitosamente";
-                        
+
                     }
                     else
                     {
@@ -785,7 +785,7 @@ namespace HDOpticasJAVS.Controllers
 
                         enviada = false;
                         mensaje = "Correo no disponible para el cliente";
-                        
+
                     }
                 }
                 catch (Exception ex)
@@ -796,7 +796,7 @@ namespace HDOpticasJAVS.Controllers
 
                     enviada = false;
                     mensaje = $"Error: {ex.Message}";
-                    
+
                 }
 
                 // Guardar cambios de estado en AlertaSeguimiento
@@ -978,8 +978,53 @@ namespace HDOpticasJAVS.Controllers
                 return File(pdfBytes, "application/pdf", $"Historial_{cliente.Nombre}_{cliente.Apellido1}.pdf");
             }
         }
+        public ActionResult Perfil()
+        {
+            string cedula = Session["Cedula"]?.ToString();
+
+            if (string.IsNullOrEmpty(cedula))
+                return RedirectToAction("Login", "Cuenta");
+
+            var usuario = db.Usuario.FirstOrDefault(u => u.Cedula == cedula);
+            if (usuario == null)
+                return HttpNotFound();
+
+            var model = new PerfilClienteViewModel
+            {
+                NombreUsuario = usuario.Nombre,
+                HistorialCitas = db.Cita
+                    .Where(c => c.Cedula_Usuario == cedula)
+                    .OrderByDescending(c => c.Fecha_Cita)
+                    .Select(c => new CitaViewModel
+                    {
+                        Fecha = c.Fecha_Cita,
+                        Descripcion = c.Estado
+                    }).ToList(),
+
+                HistorialCompras = db.PuntoVenta
+                    .Where(v => v.Cedula_Cliente == cedula)
+                    .OrderByDescending(v => v.Fecha_Venta)
+                    .Select(v => new CompraViewModel
+                    {
+                        Producto = db.Inventario
+                                    .Where(i => i.Id_Producto == v.Id_Venta)
+                                    .Select(i => i.Nombre_Producto)
+                                    .FirstOrDefault(),
+
+                        Monto = v.Total ?? 0,
+                        Fecha = v.Fecha_Venta ?? DateTime.MinValue
+                    }).ToList(),
+
+                UltimaActualizacion = DateTime.Today
+            };
+
+            return View(model);
+        }
+
 
     }
 
 }
+
+
     

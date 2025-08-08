@@ -34,22 +34,22 @@
                 @Html.ValidationMessageFor(model => model.Hora_Cita, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-6">
-                <label>Tipo de Especialista</label>
-                @Html.DropDownList("Id_TipoEspecialista", null, "-- Seleccionar --", new { @class = "form-select" })
-                @Html.ValidationMessageFor(model => model.Id_TipoEspecialista, "", new { @class = "text-danger" })
+                <label>Estado de la Cita</label>
+                @Html.DropDownList("Id_EstadoCita", null, "-- Seleccionar --", new { @class = "form-select" })
+                @Html.ValidationMessageFor(model => model.Id_EstadoCita, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label>Especialista</label>
-                @Html.DropDownList("Cedula_Especialista", null, "-- Seleccionar --", new { @class = "form-select" })
-                @Html.ValidationMessageFor(model => model.Cedula_Especialista, "", new { @class = "text-danger" })
+                <label>Tipo de Especialista</label>
+                @Html.DropDownList("Id_TipoEspecialista", ViewBag.Especialidades as SelectList, "-- Seleccionar --", new { @class = "form-select", @id = "ddlEspecialidadAdmin" })
             </div>
             <div class="col-md-6">
-                <label>Estado de la Cita</label>
-                @Html.DropDownList("Id_EstadoCita", null, "-- Seleccionar --", new { @class = "form-select" })
-                @Html.ValidationMessageFor(model => model.Id_EstadoCita, "", new { @class = "text-danger" })
+                <label>Especialista</label>
+                <select id="ddlEspecialistaAdmin" name="Cedula_Especialista" class="form-select" required>
+                    <option value="">-- Seleccionar --</option>
+                </select>
             </div>
         </div>
 
@@ -92,9 +92,38 @@
             </div>
         </div>
 
-        <div class="text-end">
-            <input type="submit" value="Guardar Cambios" class="btn btn-success" />
-            <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
+        <div class="col-12 text-end mt-3">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a href="@Url.Action("Index", "CitaEnLinea")" class="btn btn-secondary me-2">Volver</a>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#ddlEspecialidadAdmin').change(function () {
+                var idEspecialidad = $(this).val();
+                console.log("Especialidad seleccionada:", idEspecialidad);
+
+                if (idEspecialidad) {
+                    $.getJSON('@Url.Action("ObtenerEspecialistas", "CitaEnLinea")',
+                        { idEspecialidad: idEspecialidad },
+                        function (data) {
+                            console.log("Especialistas recibidos:", data);
+                            var ddl = $('#ddlEspecialistaAdmin');
+                            ddl.empty();
+                            ddl.append($('<option>').text('-- Seleccione un especialista --').attr('value', ''));
+                            $.each(data, function (i, item) {
+                                ddl.append($('<option>').text(item.NombreCompleto).attr('value', item.Cedula));
+                            });
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            console.error("Error en la petición AJAX:", textStatus, errorThrown);
+                        });
+                } else {
+                    $('#ddlEspecialistaAdmin').empty().append($('<option>').text('-- Seleccione un especialista --').attr('value', ''));
+                }
+            });
+        });
+    </script>
+}

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -46,12 +48,9 @@ namespace HDOpticasJAVS.Controllers
             ViewBag.Id_EstadoCita = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 4),
                 "Id_Parametro", "Nombre_Parametro"
             );
-            ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 6),
-                "Id_Parametro", "Nombre_Parametro"
+
+            ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 6),"Id_Parametro", "Nombre_Parametro"
             );
-
-            ViewBag.Id_Proveedor = new SelectList(db.Proveedor, "Id_Proveedor", "Nombre_Proveedor");
-
             return View();
         }
 
@@ -60,19 +59,34 @@ namespace HDOpticasJAVS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id_Cita,Cedula_Usuario,Fecha_Cita,Hora_Cita,Id_TipoEspecialista,Cedula_Especialista,Id_EstadoCita,Estado,UsuarioCreador,FechaCreacion,UsuarioModificador,FechaModificacion,TokenConfirmacion")] Cita cita)
+        public ActionResult Create(Cita cita)
         {
             if (ModelState.IsValid)
             {
-                db.Cita.Add(cita);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Cita.Add(cita);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var validationErrors in ex.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            ModelState.AddModelError(validationError.PropertyName, validationError.ErrorMessage);
+                        }
+                    }
+                }
             }
 
+            // Reasignar los ViewBag necesarios para que los DropDown funcionen
             ViewBag.Cedula_Especialista = new SelectList(db.Empleado, "Cedula", "Direccion", cita.Cedula_Especialista);
             ViewBag.Cedula_Usuario = new SelectList(db.Usuario, "Cedula", "Nombre", cita.Cedula_Usuario);
-            ViewBag.Id_EstadoCita = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro", cita.Id_EstadoCita);
-            ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro", cita.Id_TipoEspecialista);
+            ViewBag.Id_EstadoCita = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 4), "Id_Parametro", "Nombre_Parametro", cita.Id_EstadoCita);
+            ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 6), "Id_Parametro", "Nombre_Parametro", cita.Id_TipoEspecialista);
+
             return View(cita);
         }
 
@@ -139,11 +153,15 @@ namespace HDOpticasJAVS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Cita cita = db.Cita.Find(id);
+            var cita = db.Cita.Find(id);
+            if (cita == null)
+                return HttpNotFound();
+
             db.Cita.Remove(cita);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         public ActionResult Calendario()
         {
@@ -262,6 +280,92 @@ namespace HDOpticasJAVS.Controllers
             }
         }
 
+        public ActionResult Editar(int id)
+        {
+            var cita = db.Cita.Find(id);
+            if (cita == null)
+                return HttpNotFound();
+
+            ViewBag.Id_TipoEspecialista = new SelectList(
+                db.Parametro.Where(p => p.Id_TipoParametro == 6).ToList(),
+                "Id_Parametro",
+                "Nombre_Parametro",
+                cita.Id_TipoEspecialista
+            );
+
+            ViewBag.Cedula_Especialista = new SelectList(
+                db.Empleado.ToList(),
+                "Cedula",
+                "Cedula",
+                cita.Cedula_Especialista
+            );
+
+            return View(cita);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Editar(Cita cita)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var citaExistente = db.Cita.Find(cita.Id_Cita);
+                    if (citaExistente == null)
+                    {
+                        TempData["MensajeCitaError"] = "La cita no fue encontrada.";
+                        return RedirectToAction("Calendario");
+                    }
+
+                    // Validación de rol (opcional)
+                    var rol = Session["Rol"] as int?;
+                    if (rol == 2) // Cliente
+                    {
+                        string cedulaSesion = Session["Cedula"]?.ToString();
+                        if (citaExistente.Cedula_Usuario != cedulaSesion)
+                        {
+                            TempData["MensajeCitaError"] = "No tiene permiso para editar esta cita.";
+                            return RedirectToAction("Calendario");
+                        }
+                    }
+
+                    // Actualizar campos válidos
+                    citaExistente.Fecha_Cita = cita.Fecha_Cita;
+                    citaExistente.Hora_Cita = cita.Hora_Cita;
+                    citaExistente.Id_TipoEspecialista = cita.Id_TipoEspecialista;
+                    citaExistente.Cedula_Especialista = cita.Cedula_Especialista;
+
+                    db.SaveChanges();
+                    TempData["MensajeCitaExito"] = "La cita se actualizó correctamente.";
+
+                    return RedirectToAction("Calendario");
+                }
+                catch (Exception ex)
+                {
+                    var detalle = ex.InnerException?.InnerException?.Message ?? ex.Message;
+                    ModelState.AddModelError("", "Error al guardar en la base de datos: " + detalle);
+                }
+            }
+
+            // Volver a cargar los dropdowns
+            ViewBag.Id_TipoEspecialista = new SelectList(
+                db.Parametro.Where(p => p.Id_TipoParametro == 6).ToList(),
+                "Id_Parametro",
+                "Nombre_Parametro",
+                cita.Id_TipoEspecialista
+            );
+
+            ViewBag.Cedula_Especialista = new SelectList(
+                db.Empleado.ToList(),
+                "Cedula",
+                "Cedula",
+                cita.Cedula_Especialista
+            );
+
+            return View(cita);
+        }
+
         public ActionResult CitasDelCliente()
         {
             string cedulaUsuario = Session["Cedula"] as string;
@@ -301,9 +405,10 @@ namespace HDOpticasJAVS.Controllers
             var cita = db.Cita.Find(idCita);
             string cedulaUsuario = Session["Cedula"] as string;
 
-            if (cita == null || cita.Cedula_Usuario != cedulaUsuario)
+            if ((cita == null || cita.Cedula_Usuario != cedulaUsuario) && cita.Fecha_Cita <= DateTime.Now.AddHours(24))
+
             {
-                TempData["MensajeCitaError"] = "No se pudo cancelar la cita.";
+                TempData["MensajeCitaError"] = "No es posible cancelar la cita con menos de 24 horas de anticipación.";
                 return RedirectToAction("Calendario");
             }
 
