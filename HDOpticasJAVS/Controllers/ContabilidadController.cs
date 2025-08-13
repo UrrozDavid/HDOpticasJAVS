@@ -1,52 +1,55 @@
-﻿using HDOpticasJAVS;
-using HDOpticasJAVS.Models;
-using Microsoft.Ajax.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Data;
 using System.Data.Entity;
-using System.Net;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using HDOpticasJAVS;
+//using HDOpticasJAVS.Models.ViewModels;
+using Microsoft.Ajax.Utilities;
+using HDOpticasJAVS.Models;
 
-namespace hdopticasjavs.controllers
+namespace HDOpticasJAVS.Controllers
 {
-    public class Contabilidadcontroller : BaseController
+    public class ContabilidadController : BaseController
     {
         private HD_Opticas_JAVS_BDEntities db = new HD_Opticas_JAVS_BDEntities();
 
-        // get: contabilidad
-        public ActionResult index(string usuariofiltro)
+        // GET: Contabilidad
+        public ActionResult Index(string usuarioFiltro)
         {
-            var listausuarios = db.Contabilidad
+            var listaUsuarios = db.Contabilidad
                                   .Select(c => c.Usuario_Registro)
                                   .Distinct()
                                   .OrderBy(u => u)
                                   .ToList();
 
-            ViewBag.usuariofiltro = new SelectList(listausuarios);
+            ViewBag.UsuarioFiltro = new SelectList(listaUsuarios);
 
             var contabilidad = db.Contabilidad.AsQueryable();
 
-            if (!string.IsNullOrEmpty(usuariofiltro))
+            if (!string.IsNullOrEmpty(usuarioFiltro))
             {
-                contabilidad = contabilidad.Where(c => c.Usuario_Registro == usuariofiltro);
+                contabilidad = contabilidad.Where(c => c.Usuario_Registro == usuarioFiltro);
             }
 
-            // diccionario id_tipomovimiento => nombre
+            // Diccionario Id_TipoMovimiento => Nombre
             var parametros = db.Parametro.ToDictionary(p => p.Id_Parametro, p => p.Nombre_Parametro);
-            ViewBag.parametros = parametros;
+            ViewBag.Parametros = parametros;
 
-            ViewBag.totalsubtotal = contabilidad.Sum(c => (decimal?)c.Subtotal) ?? 0;
-            ViewBag.totaltotal = contabilidad.Sum(c => (decimal?)c.Total) ?? 0;
+            ViewBag.TotalSubtotal = contabilidad.Sum(c => (decimal?)c.Subtotal) ?? 0;
+            ViewBag.TotalTotal = contabilidad.Sum(c => (decimal?)c.Total) ?? 0;
 
             return View(contabilidad.ToList());
         }
 
 
-        // get: contabilidad/details/5
-        public async Task<ActionResult> details(int? id)
+
+        // GET: Contabilidad/Details/5
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -62,51 +65,51 @@ namespace hdopticasjavs.controllers
 
 
 
-        // método para calcular saldo disponible real sumando los totales
-        private decimal obtenersaldodisponible()
+        // Método para calcular saldo disponible real sumando los totales
+        private decimal ObtenerSaldoDisponible()
         {
-            // suma todos los totales, que pueden ser positivos (ingresos) o negativos (egresos)
+            // Suma todos los Totales, que pueden ser positivos (ingresos) o negativos (egresos)
             return db.Contabilidad.Sum(c => (decimal?)c.Total) ?? 0m;
         }
 
 
-        // get: contabilidad/create
-        public ActionResult create()
+        // GET: Contabilidad/Create
+        public ActionResult Create()
         {
-            ViewBag.id_producto = new SelectList(db.Inventario, "id_producto", "nombre_producto");
-            ViewBag.id_tipomovimiento = new SelectList(db.Parametro, "id_parametro", "nombre_parametro");
-            ViewBag.usuario_registro = new SelectList(db.Usuario, "cedula", "nombre");
+            ViewBag.Id_Producto = new SelectList(db.Inventario, "Id_Producto", "Nombre_Producto");
+            ViewBag.Id_TipoMovimiento = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro");
+            ViewBag.Usuario_Registro = new SelectList(db.Usuario, "Cedula", "Nombre");
 
-            // obtener saldo real desde base de datos
-            ViewBag.saldodisponible = obtenersaldodisponible();
+            // Obtener saldo real desde base de datos
+            ViewBag.SaldoDisponible = ObtenerSaldoDisponible();
 
             return View();
         }
 
-        // id_venta dummy para contabilidad manual
-        const int idventadummy = 0;
+        // Id_Venta dummy para contabilidad manual
+        const int IdVentaDummy = 0;
 
-        // post: contabilidad/create
+        // POST: Contabilidad/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> create([Bind(Include = "id_contabilidad,id_producto,cantidad,preciounitario,subtotal,descuento,iva,total,fecha_registro,usuario_registro,id_tipomovimiento,estado,usuariocreador,fechacreacion,usuariomodificador,fechamodificacion,tipooperacion,tiposervicio,tipomovimientoingresoegreso,origenmovimiento")] Contabilidad contabilidad)
+        public async Task<ActionResult> Create([Bind(Include = "Id_Contabilidad,Id_Producto,Cantidad,PrecioUnitario,Subtotal,Descuento,IVA,Total,Fecha_Registro,Usuario_Registro,Id_TipoMovimiento,Estado,UsuarioCreador,FechaCreacion,UsuarioModificador,FechaModificacion,TipoOperacion,TipoServicio,TipoMovimientoIngresoEgreso,OrigenMovimiento")] Contabilidad contabilidad)
         {
-            // obtener saldo real antes de validar
-            decimal saldodisponible = obtenersaldodisponible();
+            // Obtener saldo real antes de validar
+            decimal saldoDisponible = ObtenerSaldoDisponible();
 
             if (contabilidad.TipoOperacion?.ToLower() != "venta")
             {
-                contabilidad.Id_Venta = idventadummy;
+                contabilidad.Id_Venta = IdVentaDummy;
             }
 
             if (string.IsNullOrEmpty(contabilidad.TipoOperacion))
             {
-                ModelState.AddModelError("tipooperacion", "debe seleccionar un tipo de operación.");
+                ModelState.AddModelError("TipoOperacion", "Debe seleccionar un tipo de operación.");
             }
 
             if (string.IsNullOrEmpty(contabilidad.TipoMovimientoIngresoEgreso))
             {
-                ModelState.AddModelError("tipomovimientoingresoegreso", "debe seleccionar si es ingreso o egreso.");
+                ModelState.AddModelError("TipoMovimientoIngresoEgreso", "Debe seleccionar si es ingreso o egreso.");
             }
 
             switch (contabilidad.TipoOperacion?.ToLower())
@@ -115,87 +118,88 @@ namespace hdopticasjavs.controllers
                     var producto = db.Inventario.Find(contabilidad.Id_Producto);
                     if (producto == null)
                     {
-                        ModelState.AddModelError("id_producto", "producto no encontrado.");
+                        ModelState.AddModelError("Id_Producto", "Producto no encontrado.");
                     }
                     else if (contabilidad.Cantidad > producto.Stock)
                     {
-                        ModelState.AddModelError("cantidad", $"la cantidad no puede ser mayor que el stock disponible ({producto.Stock}).");
+                        ModelState.AddModelError("Cantidad", $"La cantidad no puede ser mayor que el stock disponible ({producto.Stock}).");
                     }
                     break;
 
                 case "servicio":
                     if (string.IsNullOrEmpty(contabilidad.TipoServicio))
-                        ModelState.AddModelError("tiposervicio", "debe seleccionar un tipo de servicio.");
+                        ModelState.AddModelError("TipoServicio", "Debe seleccionar un tipo de servicio.");
                     break;
 
                 case "pago":
                     if (string.IsNullOrEmpty(contabilidad.Usuario_Registro))
-                        ModelState.AddModelError("usuario_registro", "debe seleccionar a quién se realiza el pago.");
+                        ModelState.AddModelError("Usuario_Registro", "Debe seleccionar a quién se realiza el pago.");
                     if (contabilidad.Total <= 0)
-                        ModelState.AddModelError("total", "el monto del pago debe ser mayor que cero.");
+                        ModelState.AddModelError("Total", "El monto del pago debe ser mayor que cero.");
                     break;
 
                 case "ingreso":
                     if (contabilidad.Total <= 0)
-                        ModelState.AddModelError("total", "el monto del ingreso debe ser mayor que cero.");
+                        ModelState.AddModelError("Total", "El monto del ingreso debe ser mayor que cero.");
                     break;
 
                 default:
-                    ModelState.AddModelError("tipooperacion", "tipo de operación no válido.");
+                    ModelState.AddModelError("TipoOperacion", "Tipo de operación no válido.");
                     break;
-                }
+            }
 
-                // ajustar signo del total según tipo y egreso/ingreso
-                var totalabs = Math.Abs(Convert.ToDecimal(contabilidad.Total));
+            // Ajustar signo del total según tipo y egreso/ingreso
+            var totalAbs = Math.Abs(Convert.ToDecimal(contabilidad.Total));
 
-                if (contabilidad.TipoMovimientoIngresoEgreso?.ToLower() == "egreso")
+            if (contabilidad.TipoMovimientoIngresoEgreso?.ToLower() == "egreso")
+            {
+                contabilidad.Total = -totalAbs;
+
+                // Validación: no permitir egresos que superen el saldo disponible
+                if (totalAbs > saldoDisponible)
                 {
-                    contabilidad.Total = -totalabs;
-
-                    // validación: no permitir egresos que superen el saldo disponible
-                    if (totalabs > saldodisponible)
-                    {
-                        ModelState.AddModelError("total", $"el monto del egreso excede el saldo disponible ({saldodisponible:c}).");
-                    }
+                    ModelState.AddModelError("Total", $"El monto del egreso excede el saldo disponible ({saldoDisponible:C}).");
                 }
-                else
+            }
+            else
+            {
+                contabilidad.Total = totalAbs;
+            }
+
+            // Validación final antes de guardar
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Id_Producto = new SelectList(db.Inventario, "Id_Producto", "Nombre_Producto", contabilidad.Id_Producto);
+                ViewBag.Id_TipoMovimiento = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro", contabilidad.Id_TipoMovimiento);
+                ViewBag.Usuario_Registro = new SelectList(db.Usuario, "Cedula", "Nombre", contabilidad.Usuario_Registro);
+                ViewBag.SaldoDisponible = saldoDisponible; // Para mostrar en vista
+                return View(contabilidad);
+            }
+
+            // Actualizar stock si es producto
+            if (contabilidad.TipoOperacion.ToLower() == "producto")
+            {
+                var producto = db.Inventario.Find(contabilidad.Id_Producto);
+                if (producto != null)
                 {
-                    contabilidad.Total = totalabs;
+                    producto.Stock -= contabilidad.Cantidad;
+                    db.Entry(producto).State = EntityState.Modified;
                 }
+            }
 
-                // validación final antes de guardar
-                if (!ModelState.IsValid)
-                {
-                    ViewBag.id_producto = new SelectList(db.Inventario, "id_producto", "nombre_producto", contabilidad.Id_Producto);
-                    ViewBag.id_tipomovimiento = new SelectList(db.Parametro, "id_parametro", "nombre_parametro", contabilidad.Id_TipoMovimiento);
-                    ViewBag.usuario_registro = new SelectList(db.Usuario, "cedula", "nombre", contabilidad.Usuario_Registro);
-                    ViewBag.saldodisponible = saldodisponible; // para mostrar en vista
-                    return View(contabilidad);
-                }
+            if (contabilidad.Fecha_Registro == default)
+                contabilidad.Fecha_Registro = DateTime.Now;
 
-                // actualizar stock si es producto
-                if (contabilidad.TipoOperacion.ToLower() == "producto")
-                {
-                    var producto = db.Inventario.Find(contabilidad.Id_Producto);
-                    if (producto != null)
-                    {
-                        producto.Stock -= contabilidad.Cantidad;
-                        db.Entry(producto).State = EntityState.Modified;
-                    }
-                }
+            db.Contabilidad.Add(contabilidad);
+            await db.SaveChangesAsync();
 
-                if (contabilidad.Fecha_Registro == default)
-                    contabilidad.Fecha_Registro = DateTime.Now;
+            TempData["SuccessMessage"] = "¡Registro contable creado exitosamente!";
+            return RedirectToAction("Index");
+        }
 
-                db.Contabilidad.Add(contabilidad);
-                await db.SaveChangesAsync();
 
-                TempData["successmessage"] = "¡registro contable creado exitosamente!";
-                return RedirectToAction("index");
-            } 
-
-            // get: contabilidad/edit/5
-            public async Task<ActionResult> edit(int? id)
+        // GET: Contabilidad/Edit/5
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -204,28 +208,28 @@ namespace hdopticasjavs.controllers
             if (contabilidad == null)
                 return HttpNotFound();
 
-            // aquí cargas las listas para dropdowns
-            ViewBag.id_producto = new SelectList(db.Inventario, "id_producto", "nombre_producto", contabilidad.Id_Producto);
-            ViewBag.id_venta = new SelectList(db.PuntoVenta, "id_venta", "id_venta", contabilidad.Id_Venta);
-            ViewBag.usuario_registro = new SelectList(db.Usuario, "cedula", "nombre", contabilidad.Usuario_Registro);
-            ViewBag.id_tipomovimiento = new SelectList(db.Parametro, "id_parametro", "nombre_parametro", contabilidad.Id_TipoMovimiento);
+            // Aquí cargas las listas para dropdowns
+            ViewBag.Id_Producto = new SelectList(db.Inventario, "Id_Producto", "Nombre_Producto", contabilidad.Id_Producto);
+            ViewBag.Id_Venta = new SelectList(db.PuntoVenta, "Id_Venta", "Id_Venta", contabilidad.Id_Venta);
+            ViewBag.Usuario_Registro = new SelectList(db.Usuario, "Cedula", "Nombre", contabilidad.Usuario_Registro);
+            ViewBag.Id_TipoMovimiento = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro", contabilidad.Id_TipoMovimiento);
 
             return View(contabilidad);
         }
 
-        // post: contabilidad/edit/5
+        // POST: Contabilidad/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> edit(Contabilidad contabilidad)
+        public async Task<ActionResult> Edit(Contabilidad contabilidad)
         {
             if (contabilidad.Id_Venta != 0)
             {
-                bool existeduplicado = db.Contabilidad.Any(c => c.Id_Venta == contabilidad.Id_Venta
-                          && c.Id_Contabilidad != contabilidad.Id_Contabilidad);
-                if (existeduplicado)
+                bool existeDuplicado = db.Contabilidad.Any(c => c.Id_Venta == contabilidad.Id_Venta
+                                                                && c.Id_Contabilidad != contabilidad.Id_Contabilidad);
+                if (existeDuplicado)
                 {
-                    ModelState.AddModelError("id_venta", "ya existe un registro con esta venta asignada.");
-                    cargarviewbags(contabilidad);
+                    ModelState.AddModelError("Id_Venta", "Ya existe un registro con esta venta asignada.");
+                    CargarViewBags(contabilidad);
                     return View(contabilidad);
                 }
             }
@@ -235,30 +239,30 @@ namespace hdopticasjavs.controllers
                 db.Entry(contabilidad).State = EntityState.Modified;
                 await db.SaveChangesAsync();
 
-                TempData["successmessage"] = "¡registro actualizado correctamente!";
-                return RedirectToAction("index");
+                TempData["SuccessMessage"] = "¡Registro actualizado correctamente!";
+                return RedirectToAction("Index");
             }
 
-            cargarviewbags(contabilidad);
+            CargarViewBags(contabilidad);
             return View(contabilidad);
         }
-        // método privado para evitar repetir viewbags
-        private void cargarviewbags(Contabilidad contabilidad)
+        // Método privado para evitar repetir ViewBags
+        private void CargarViewBags(Contabilidad contabilidad)
         {
-            ViewBag.id_producto = new SelectList(db.Inventario, "id_producto", "nombre_producto", contabilidad.Id_Producto);
-            ViewBag.id_tipomovimiento = new SelectList(db.Parametro, "id_parametro", "nombre_parametro", contabilidad.Id_TipoMovimiento);
-            ViewBag.id_venta = new SelectList(db.PuntoVenta, "id_venta", "id_venta", contabilidad.Id_Venta);
-            ViewBag.usuario_registro = new SelectList(db.Usuario, "cedula", "nombre", contabilidad.Usuario_Registro);
+            ViewBag.Id_Producto = new SelectList(db.Inventario, "Id_Producto", "Nombre_Producto", contabilidad.Id_Producto);
+            ViewBag.Id_TipoMovimiento = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro", contabilidad.Id_TipoMovimiento);
+            ViewBag.Id_Venta = new SelectList(db.PuntoVenta, "Id_Venta", "Id_Venta", contabilidad.Id_Venta);
+            ViewBag.Usuario_Registro = new SelectList(db.Usuario, "Cedula", "Nombre", contabilidad.Usuario_Registro);
         }
 
-        // get: contabilidad/delete/5
-        public async Task<ActionResult> delete(int? id)
+        // GET: Contabilidad/Delete/5
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-           Contabilidad contabilidad = await db.Contabilidad.FindAsync(id);
+            Contabilidad contabilidad = await db.Contabilidad.FindAsync(id);
             if (contabilidad == null)
             {
                 return HttpNotFound();
@@ -266,10 +270,10 @@ namespace hdopticasjavs.controllers
             return View(contabilidad);
         }
 
-        // post: contabilidad/delete/5
-        [HttpPost, ActionName("delete")]
+        // POST: Contabilidad/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> deleteconfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             var contabilidad = await db.Contabilidad.FindAsync(id);
             if (contabilidad == null)
@@ -280,43 +284,43 @@ namespace hdopticasjavs.controllers
             db.Contabilidad.Remove(contabilidad);
             await db.SaveChangesAsync();
 
-            TempData["mensajeexito"] = "eliminación realizada correctamente";
+            TempData["MensajeExito"] = "Eliminación realizada correctamente";
 
-            return RedirectToAction("index");
+            return RedirectToAction("Index");
         }
 
-        public ActionResult reporteegresosporcategoria()
+        public ActionResult ReporteEgresosPorCategoria()
         {
-            // obtener categorías de egreso desde parametro si existe una categoría para ello, o como en el ejemplo:
+            // Obtener categorías de egreso desde Parametro si existe una categoría para ello, o como en el ejemplo:
             var categorias = db.Parametro.ToList();
 
-            ViewBag.categoriasgastos = new SelectList(categorias, "id_parametro", "nombre_parametro");
+            ViewBag.CategoriasGastos = new SelectList(categorias, "Id_Parametro", "Nombre_Parametro");
 
             return View();
         }
 
         [HttpPost]
-        public ActionResult generarreporteegresosporcategoria(int? id_tipomovimiento, DateTime? fechainicio, DateTime? fechafin)
+        public ActionResult GenerarReporteEgresosPorCategoria(int? Id_TipoMovimiento, DateTime? FechaInicio, DateTime? FechaFin)
         {
-            if (fechainicio > fechafin)
+            if (FechaInicio > FechaFin)
             {
-                ModelState.AddModelError("", "la fecha inicio no puede ser mayor que la fecha fin.");
-                ViewBag.categoriasgastos = new SelectList(db.Parametro, "id_parametro", "nombre_parametro");
-                return View("reporteegresosporcategoria");
+                ModelState.AddModelError("", "La fecha inicio no puede ser mayor que la fecha fin.");
+                ViewBag.CategoriasGastos = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro");
+                return View("ReporteEgresosPorCategoria");
             }
 
             var query = db.Contabilidad.AsQueryable();
 
-            query = query.Where(c => c.TipoMovimientoIngresoEgreso == "egreso");
+            query = query.Where(c => c.TipoMovimientoIngresoEgreso == "Egreso");
 
-            if (id_tipomovimiento.HasValue)
-                query = query.Where(c => c.Id_TipoMovimiento == id_tipomovimiento);
+            if (Id_TipoMovimiento.HasValue)
+                query = query.Where(c => c.Id_TipoMovimiento == Id_TipoMovimiento);
 
-            if (fechainicio.HasValue)
-                query = query.Where(c => c.Fecha_Registro >= fechainicio.Value);
+            if (FechaInicio.HasValue)
+                query = query.Where(c => c.Fecha_Registro >= FechaInicio.Value);
 
-            if (fechafin.HasValue)
-                query = query.Where(c => c.Fecha_Registro <= fechafin.Value);
+            if (FechaFin.HasValue)
+                query = query.Where(c => c.Fecha_Registro <= FechaFin.Value);
 
             var egresos = query
                 .GroupBy(c => c.Id_TipoMovimiento)
@@ -325,22 +329,24 @@ namespace hdopticasjavs.controllers
                     Categoria = db.Parametro
                     .Where(p => p.Id_Parametro == g.Key)
                     .Select(p => p.Nombre_Parametro)
-                    .FirstOrDefault() ?? "sin categoría",
+                    .FirstOrDefault() ?? "Sin Categoría",
                     Total = (decimal)g.Sum(x => x.Total)
                 })
-               .ToList();
+                .ToList();
 
             var model = new ReporteEgresosPorCategoriaViewModel
             {
-                Id_TipoMovimiento = id_tipomovimiento,
-                FechaInicio = fechainicio,
-                FechaFin = fechafin,
+                Id_TipoMovimiento = Id_TipoMovimiento,
+                FechaInicio = FechaInicio,
+                FechaFin = FechaFin,
+                EgresosPorCategoria = egresos
             };
 
-            ViewBag.categoriasgastos = new SelectList(db.Parametro, "id_parametro", "nombre_parametro");
+            ViewBag.CategoriasGastos = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro");
 
-            return View("reporteegresosporcategoria", model);
+            return View("ReporteEgresosPorCategoria", model);
         }
+
 
     }
 }
