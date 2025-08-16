@@ -138,14 +138,14 @@
       <PropertyRef Name="Id_Contabilidad" />
     </Key>
     <Property Name="Id_Contabilidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Id_Venta" Type="int" Nullable="false" />
-    <Property Name="Id_Producto" Type="int" Nullable="false" />
-    <Property Name="Cantidad" Type="int" Nullable="false" />
-    <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Id_Venta" Type="int" />
+    <Property Name="Id_Producto" Type="int" />
+    <Property Name="Cantidad" Type="int" />
+    <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" />
     <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" />
     <Property Name="Descuento" Type="decimal" Precision="10" Scale="2" />
     <Property Name="IVA" Type="decimal" Precision="10" Scale="2" />
-    <Property Name="Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
     <Property Name="Fecha_Registro" Type="datetime" />
     <Property Name="Usuario_Registro" Type="varchar" MaxLength="20" />
     <Property Name="Id_TipoMovimiento" Type="int" />
@@ -650,7 +650,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Contabili__Id_Pr__45BE5BA9">
-    <End Role="Inventario" Type="Self.Inventario" Multiplicity="1" />
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
     <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Inventario">
@@ -674,7 +674,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Contabili__Id_Ve__44CA3770">
-    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="1" />
+    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
     <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PuntoVenta">

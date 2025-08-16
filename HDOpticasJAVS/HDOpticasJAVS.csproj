@@ -311,6 +311,7 @@
     <Compile Include="Models\CampaniaReporteViewModel.cs" />
     <Compile Include="Models\CampaniaSegmentadaViewModel.cs" />
     <Compile Include="Models\CampaniaTendenciaViewModel.cs" />
+    <Compile Include="Models\ContabilidadPuntoVentaViewModel.cs" />
     <Compile Include="Models\PerfilClienteViewModel.cs" />
     <Compile Include="Models\ClientePartial.cs" />
     <Compile Include="Models\ClienteViewModel.cs" />

@@ -19,33 +19,35 @@ namespace HDOpticasJAVS.Controllers
         private HD_Opticas_JAVS_BDEntities db = new HD_Opticas_JAVS_BDEntities();
 
         // GET: Contabilidad
+
         public ActionResult Index(string usuarioFiltro)
         {
-            var listaUsuarios = db.Contabilidad
+            var listausuarios = db.Contabilidad
                                   .Select(c => c.Usuario_Registro)
                                   .Distinct()
                                   .OrderBy(u => u)
                                   .ToList();
 
-            ViewBag.UsuarioFiltro = new SelectList(listaUsuarios);
+            ViewBag.usuariofiltro = new SelectList(listausuarios);
 
             var contabilidad = db.Contabilidad.AsQueryable();
 
-            if (!string.IsNullOrEmpty(usuarioFiltro))
-            {
+                if (!string.IsNullOrEmpty(usuarioFiltro))
+                {
                 contabilidad = contabilidad.Where(c => c.Usuario_Registro == usuarioFiltro);
-            }
-
+                }
             // Diccionario Id_TipoMovimiento => Nombre
             var parametros = db.Parametro.ToDictionary(p => p.Id_Parametro, p => p.Nombre_Parametro);
+            ViewBag.parametros = parametros;
             ViewBag.Parametros = parametros;
 
+            ViewBag.totalsubtotal = contabilidad.Sum(c => (decimal?)c.Subtotal) ?? 0;
+            ViewBag.totaltotal = contabilidad.Sum(c => (decimal?)c.Total) ?? 0;
             ViewBag.TotalSubtotal = contabilidad.Sum(c => (decimal?)c.Subtotal) ?? 0;
             ViewBag.TotalTotal = contabilidad.Sum(c => (decimal?)c.Total) ?? 0;
 
             return View(contabilidad.ToList());
         }
-
 
 
         // GET: Contabilidad/Details/5
@@ -87,7 +89,7 @@ namespace HDOpticasJAVS.Controllers
         }
 
         // Id_Venta dummy para contabilidad manual
-        const int IdVentaDummy = 0;
+        const int IdVentaDummy = 31;
 
         // POST: Contabilidad/Create
         [HttpPost]
@@ -99,7 +101,7 @@ namespace HDOpticasJAVS.Controllers
 
             if (contabilidad.TipoOperacion?.ToLower() != "venta")
             {
-                contabilidad.Id_Venta = IdVentaDummy;
+                contabilidad.Id_Venta = null; // ahora sí puede ser null
             }
 
             if (string.IsNullOrEmpty(contabilidad.TipoOperacion))
@@ -222,7 +224,7 @@ namespace HDOpticasJAVS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Contabilidad contabilidad)
         {
-            if (contabilidad.Id_Venta != 0)
+            if (contabilidad.Id_Venta.HasValue)
             {
                 bool existeDuplicado = db.Contabilidad.Any(c => c.Id_Venta == contabilidad.Id_Venta
                                                                 && c.Id_Contabilidad != contabilidad.Id_Contabilidad);

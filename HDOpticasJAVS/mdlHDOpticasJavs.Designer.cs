@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\mdlHDOpticasJavs.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Tamdav\Documents\Universidad\2025\II C\Diseño & Desarrollo\05\HDOpticasJAVS\HDOpticasJAVS\mdlHDOpticasJavs.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

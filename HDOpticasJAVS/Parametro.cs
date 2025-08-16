@@ -20,11 +20,11 @@ namespace HDOpticasJAVS
             this.Cita = new HashSet<Cita>();
             this.Cita1 = new HashSet<Cita>();
             this.Cliente = new HashSet<Cliente>();
-            this.Contabilidad = new HashSet<Contabilidad>();
             this.Empleado = new HashSet<Empleado>();
             this.PermisoRol = new HashSet<PermisoRol>();
             this.PuntoVenta = new HashSet<PuntoVenta>();
             this.Usuario = new HashSet<Usuario>();
+            this.Contabilidad = new HashSet<Contabilidad>();
         }
     
         public int Id_Parametro { get; set; }
@@ -43,8 +43,6 @@ namespace HDOpticasJAVS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cliente> Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contabilidad> Contabilidad { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Empleado> Empleado { get; set; }
         public virtual TipoParametro TipoParametro { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -53,5 +51,7 @@ namespace HDOpticasJAVS
         public virtual ICollection<PuntoVenta> PuntoVenta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contabilidad> Contabilidad { get; set; }
     }
 }

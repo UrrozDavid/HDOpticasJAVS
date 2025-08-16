@@ -11,6 +11,8 @@
         </div>
 
         <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+
+            @* Mensajes *@
             @if (TempData["SuccessMessage"] != null)
             {
                 <div class="alert alert-success">@TempData["SuccessMessage"]</div>
@@ -20,137 +22,181 @@
                 <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
             }
 
-            <!-- Botones de acción arriba -->
-            <div class="d-flex flex-wrap gap-2 mb-3">
-                <a href="@Url.Action("Crear", "Clientes")" class="btn btn-success">
-                    <i class="bi bi-plus-circle"></i> Registrar Nuevo Cliente
-                </a>
-
-                @if (Session["Rol"] != null && (int)Session["Rol"] == 1)
-                {
-                    <a href="@Url.Action("AccesosDenegados", "Clientes")" class="btn btn-outline-danger">
-                        <i class="bi bi-shield-lock"></i> Ver Intentos No Autorizados
-                    </a>
-                }
-
-                <form action="@Url.Action("EjecutarAlertas", "Clientes")" method="post" class="d-inline">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-warning">
-                        <i class="bi bi-bell-fill"></i> Revisar y Enviar Alertas
+            @* Dropdown de acciones superiores *@
+            <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-list"></i> Acciones
                     </button>
-                </form>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("Crear", "Clientes")">
+                                <i class="bi bi-plus-circle me-2"></i>Registrar Nuevo Cliente
+                            </a>
+                        </li>
 
-                <a href="@Url.Action("HistorialAlertas", "Clientes")" class="btn btn-outline-info">
-                    <i class="bi bi-clock-history"></i> Historial de Alertas
-                </a>
+                        @if (Session["Rol"] != null && (int)Session["Rol"] == 1)
+                        {
+                            <li><hr class="dropdown-divider" /></li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("AccesosDenegados", "Clientes")">
+                                    <i class="bi bi-shield-lock me-2"></i>Ver Intentos No Autorizados
+                                </a>
+                            </li>
+                        }
+
+                        <li><hr class="dropdown-divider" /></li>
+
+                        <li>
+                            <form action="@Url.Action("EjecutarAlertas", "Clientes")" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="dropdown-item">
+                                    <i class="bi bi-bell-fill me-2"></i>Revisar y Enviar Alertas
+                                </button>
+                            </form>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("HistorialAlertas", "Clientes")">
+                                <i class="bi bi-clock-history me-2"></i>Historial de Alertas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
+            @* Tabla *@
             @if (Model != null && Model.Count > 0)
             {
-                <table class="table table-dark table-hover table-bordered">
-                    <thead class="table-light text-dark">
-                        <tr>
-                            <th>Cédula</th>
-                            <th>Nombre</th>
-                            <th>Apellido 1</th>
-                            <th>Apellido 2</th>
-                            <th>Fecha Nac.</th>
-                            <th>Correo</th>
-                            <th>Edad</th>
-                            <th>Género</th>
-                            <th>Padecimiento</th>
-                            <th>Teléfono</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var cliente in Model)
-                        {
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover table-bordered align-middle">
+                        <thead class="table-light text-dark">
                             <tr>
-                                <td>@cliente.Cedula</td>
-                                <td>@cliente.Nombre</td>
-                                <td>@cliente.Apellido1</td>
-                                <td>@cliente.Apellido2</td>
-                                <td>@(cliente.Fecha_Nacimiento?.ToString("yyyy-MM-dd") ?? "N/D")</td>
-                                <td>@cliente.Correo</td>
-                                <td>@cliente.Edad</td>
-                                <td>@cliente.Genero</td>
-                                <td>@(string.IsNullOrEmpty(cliente.Padecimiento) ? "Ninguno" : cliente.Padecimiento)</td>
-                                <td>@cliente.Numero_Telefono</td>
-                                <td>
-                                    @if (cliente.Activo)
-                                    {
-                                        <span class="badge bg-success">Activo</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-secondary">Inactivo</span>
-                                    }
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-wrap gap-1">
-                                        <a href="@Url.Action("Detalles", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-info btn-sm">
-                                            <i class="bi bi-eye"></i> Ver
-                                        </a>
-
-                                        @if (Session["Rol"] != null && (int)Session["Rol"] == 1)
-                                        {
-                                            <a href="@Url.Action("Editar", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-warning btn-sm">
-                                                <i class="bi bi-pencil"></i> Editar
-                                            </a>
-                                        }
-
-                                        <a href="@Url.Action("Historial", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-secondary btn-sm">
-                                            🩺 Historial
-                                        </a>
-
-                                        @if (Session["Rol"] != null && ((int)Session["Rol"] == 1 || (int)Session["Rol"] == 2))
-                                        {
-                                            <a href="@Url.Action("RegistrarHistorial", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-success btn-sm">
-                                                <i class="bi bi-journal-plus"></i> Historial +
-                                            </a>
-                                        }
-
-                                        @if (Session["Rol"] != null && (int)Session["Rol"] == 1)
-                                        {
-                                            <a href="@Url.Action("VerCambiosCliente", "Clientes", new { cedula = cliente.Cedula })" class="btn btn-outline-info btn-sm">
-                                                <i class="bi bi-clock-history"></i> Ver Cambios
-                                            </a>
-
-                                            if (cliente.Activo)
-                                            {
-                                                <form action="@Url.Action("DesactivarCliente", "Clientes")" method="post" class="d-inline">
-                                                    @Html.AntiForgeryToken()
-                                                    <input type="hidden" name="cedula" value="@cliente.Cedula" />
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('¿Está seguro que desea desactivar este cliente?');">
-                                                        <i class="bi bi-person-x-fill"></i> Desactivar
-                                                    </button>
-                                                </form>
-                                            }
-                                            else
-                                            {
-                                                <form action="@Url.Action("ReactivarCliente", "Clientes")" method="post" class="d-inline">
-                                                    @Html.AntiForgeryToken()
-                                                    <input type="hidden" name="cedula" value="@cliente.Cedula" />
-                                                    <button type="submit" class="btn btn-success btn-sm"
-                                                            onclick="return confirm('¿Desea reactivar este cliente?');">
-                                                        <i class="bi bi-person-check-fill"></i> Reactivar
-                                                    </button>
-                                                </form>
-                                            }
-                                        }
-                                    </div>
-                                </td>
+                                <th>Cédula</th>
+                                <th>Nombre</th>
+                                <th>Apellido 1</th>
+                                <th>Apellido 2</th>
+                                <th>Fecha Nac.</th>
+                                <th>Correo</th>
+                                <th>Edad</th>
+                                <th>Género</th>
+                                <th>Padecimiento</th>
+                                <th>Teléfono</th>
+                                <th>Estado</th>
+                                <th class="text-center" style="min-width:140px;">Acciones</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var cliente in Model)
+                            {
+                                <tr>
+                                    <td>@cliente.Cedula</td>
+                                    <td>@cliente.Nombre</td>
+                                    <td>@cliente.Apellido1</td>
+                                    <td>@cliente.Apellido2</td>
+                                    <td>@(cliente.Fecha_Nacimiento?.ToString("yyyy-MM-dd") ?? "N/D")</td>
+                                    <td>@cliente.Correo</td>
+                                    <td>@cliente.Edad</td>
+                                    <td>@cliente.Genero</td>
+                                    <td>@(string.IsNullOrEmpty(cliente.Padecimiento) ? "Ninguno" : cliente.Padecimiento)</td>
+                                    <td>@cliente.Numero_Telefono</td>
+                                    <td>
+                                        @if (cliente.Activo)
+                                        {
+                                            <span class="badge bg-success">Activo</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Inactivo</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-outline-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bi bi-three-dots-vertical"></i> Opciones
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                                                <li>
+                                                    <a class="dropdown-item" href="@Url.Action("Detalles", "Clientes", new { cedula = cliente.Cedula })">
+                                                        <i class="bi bi-eye me-2"></i>Ver
+                                                    </a>
+                                                </li>
+
+                                                @if (Session["Rol"] != null && (int)Session["Rol"] == 1)
+                                                {
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("Editar", "Clientes", new { cedula = cliente.Cedula })">
+                                                            <i class="bi bi-pencil me-2"></i>Editar
+                                                        </a>
+                                                    </li>
+                                                }
+
+                                                <li><hr class="dropdown-divider" /></li>
+
+                                                <li>
+                                                    <a class="dropdown-item" href="@Url.Action("Historial", "Clientes", new { cedula = cliente.Cedula })">
+                                                        <i class="bi bi-heart-pulse me-2"></i>Historial
+                                                    </a>
+                                                </li>
+
+                                                @if (Session["Rol"] != null && ((int)Session["Rol"] == 1 || (int)Session["Rol"] == 2))
+                                                {
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("RegistrarHistorial", "Clientes", new { cedula = cliente.Cedula })">
+                                                            <i class="bi bi-journal-plus me-2"></i>Historial +
+                                                        </a>
+                                                    </li>
+                                                }
+
+                                                @if (Session["Rol"] != null && (int)Session["Rol"] == 1)
+                                                {
+                                                    <li><hr class="dropdown-divider" /></li>
+
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("VerCambiosCliente", "Clientes", new { cedula = cliente.Cedula })">
+                                                            <i class="bi bi-clock-history me-2"></i>Ver Cambios
+                                                        </a>
+                                                    </li>
+
+                                                    if (cliente.Activo)
+                                                    {
+                                                        <li>
+                                                            <form action="@Url.Action("DesactivarCliente", "Clientes")" method="post">
+                                                                @Html.AntiForgeryToken()
+                                                                <input type="hidden" name="cedula" value="@cliente.Cedula" />
+                                                                <button type="submit" class="dropdown-item text-danger"
+                                                                        onclick="return confirm('¿Está seguro que desea desactivar este cliente?');">
+                                                                    <i class="bi bi-person-x-fill me-2"></i>Desactivar
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+                                                            <form action="@Url.Action("ReactivarCliente", "Clientes")" method="post">
+                                                                @Html.AntiForgeryToken()
+                                                                <input type="hidden" name="cedula" value="@cliente.Cedula" />
+                                                                <button type="submit" class="dropdown-item text-success"
+                                                                        onclick="return confirm('¿Desea reactivar este cliente?');">
+                                                                    <i class="bi bi-person-check-fill me-2"></i>Reactivar
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             }
             else
             {
-                <div class="alert alert-warning text-center">
+                <div class="alert alert-warning text-center mb-0">
                     No hay clientes registrados aún.
                 </div>
             }

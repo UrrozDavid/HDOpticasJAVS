@@ -141,32 +141,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Contabilidad">
-      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Contabilidad">
-        <MappingFragment StoreEntitySet="Contabilidad">
-          <ScalarProperty Name="TipoMovimientoIngresoEgreso" ColumnName="TipoMovimientoIngresoEgreso" />
-          <ScalarProperty Name="TipoServicio" ColumnName="TipoServicio" />
-          <ScalarProperty Name="TipoOperacion" ColumnName="TipoOperacion" />
-          <ScalarProperty Name="Id_Contabilidad" ColumnName="Id_Contabilidad" />
-          <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
-          <ScalarProperty Name="Id_Producto" ColumnName="Id_Producto" />
-          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-          <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
-          <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
-          <ScalarProperty Name="Descuento" ColumnName="Descuento" />
-          <ScalarProperty Name="IVA" ColumnName="IVA" />
-          <ScalarProperty Name="Total" ColumnName="Total" />
-          <ScalarProperty Name="Fecha_Registro" ColumnName="Fecha_Registro" />
-          <ScalarProperty Name="Usuario_Registro" ColumnName="Usuario_Registro" />
-          <ScalarProperty Name="Id_TipoMovimiento" ColumnName="Id_TipoMovimiento" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
-          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
-          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CriteriosPromocionRecurrente">
       <EntityTypeMapping TypeName="mdlHDOpticasJavs.CriteriosPromocionRecurrente">
         <MappingFragment StoreEntitySet="CriteriosPromocionRecurrente">
@@ -573,6 +547,32 @@
           <ScalarProperty Name="Reason" ColumnName="Reason" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="Data" ColumnName="Data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contabilidad">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.Contabilidad">
+        <MappingFragment StoreEntitySet="Contabilidad">
+          <ScalarProperty Name="TipoMovimientoIngresoEgreso" ColumnName="TipoMovimientoIngresoEgreso" />
+          <ScalarProperty Name="TipoServicio" ColumnName="TipoServicio" />
+          <ScalarProperty Name="TipoOperacion" ColumnName="TipoOperacion" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Id_TipoMovimiento" ColumnName="Id_TipoMovimiento" />
+          <ScalarProperty Name="Usuario_Registro" ColumnName="Usuario_Registro" />
+          <ScalarProperty Name="Fecha_Registro" ColumnName="Fecha_Registro" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+          <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+          <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Id_Producto" ColumnName="Id_Producto" />
+          <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+          <ScalarProperty Name="Id_Contabilidad" ColumnName="Id_Contabilidad" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

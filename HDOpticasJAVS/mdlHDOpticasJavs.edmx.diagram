@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="mdlHDOpticasJavs.Cita" Width="1.5" PointX="7.5" PointY="25.875" IsExpanded="true" />
         <EntityTypeShape EntityType="mdlHDOpticasJavs.Cliente" Width="1.5" PointX="5.25" PointY="20.125" IsExpanded="true" />
         <EntityTypeShape EntityType="mdlHDOpticasJavs.ConfiguracionRecurrencia" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mdlHDOpticasJavs.Contabilidad" Width="1.5" PointX="12.75" PointY="23.25" IsExpanded="true" />
         <EntityTypeShape EntityType="mdlHDOpticasJavs.CriteriosPromocionRecurrente" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="mdlHDOpticasJavs.DetalleVenta" Width="1.5" PointX="9.75" PointY="16.5" IsExpanded="true" />
         <EntityTypeShape EntityType="mdlHDOpticasJavs.Empleado" Width="1.5" PointX="10.5" PointY="26.125" IsExpanded="true" />
@@ -58,10 +57,6 @@
         <AssociationConnector Association="mdlHDOpticasJavs.FK__Cita__Id_TipoEsp__693CA210" ManuallyRouted="false" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK__Cliente__Id_Gene__52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK__PuntoVent__Cedul__5DCAEF64" ManuallyRouted="false" />
-        <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Id_Pr__6383C8BA" ManuallyRouted="false" />
-        <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Id_Ti__656C112C" ManuallyRouted="false" />
-        <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Id_Ve__628FA481" ManuallyRouted="false" />
-        <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Usuar__6477ECF3" ManuallyRouted="false" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK__DetalleVe__Id_Pr__0F2D40CE" ManuallyRouted="false" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK__DetalleVe__Id_Ve__0E391C95" ManuallyRouted="false" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK__Empleado__Cedula__5535A963" ManuallyRouted="false" />
@@ -76,6 +71,11 @@
         <AssociationConnector Association="mdlHDOpticasJavs.FK__Usuario__Id_Rol__4E88ABD4" ManuallyRouted="false" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK_HangFire_JobParameter_Job" ManuallyRouted="false" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK_HangFire_State_Job" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="mdlHDOpticasJavs.Contabilidad" Width="1.5" PointX="12.75" PointY="19.5" />
+        <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Id_Pr__45BE5BA9" />
+        <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Id_Ti__47A6A41B" />
+        <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Id_Ve__44CA3770" />
+        <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Usuar__46B27FE2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
