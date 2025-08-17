@@ -1,14 +1,15 @@
-﻿using HDOpticasJAVS.Models;
+﻿using HDOpticasJAVS.Helpers;
+using HDOpticasJAVS.Models;
 using HDOpticasJAVS.Models.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using HDOpticasJAVS.Helpers;
-using System.Data.Entity;
+using HDOpticasJAVS.ViewModels;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using HDOpticasJAVS.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.SqlServer;
+using System.Linq;
+using System.Web.Mvc;
 
 
 namespace HDOpticasJAVS.Controllers
@@ -28,7 +29,7 @@ namespace HDOpticasJAVS.Controllers
 
             var clientesConNombres = db.Cliente
                 // usa el campo que tengas de estado/activo; dejo ambas opciones para que no pierdas a nadie
-                .Where(c => c.Activo|| c.Estado == "A" || c.Estado == null)
+                .Where(c => c.Activo || c.Estado == "A" || c.Estado == null)
                 .Select(c => new ClienteSeleccionado
                 {
                     Cedula = c.Cedula,
@@ -505,7 +506,7 @@ namespace HDOpticasJAVS.Controllers
         }
 
         [HttpPost]
-       public ActionResult SegmentarClientes(SegmentacionViewModel filtro)
+        public ActionResult SegmentarClientes(SegmentacionViewModel filtro)
         {
             bool sinFiltros = string.IsNullOrEmpty(filtro.Nombre)
                               && !filtro.EdadMinima.HasValue
@@ -518,33 +519,72 @@ namespace HDOpticasJAVS.Controllers
                 return View(filtro);
             }
 
-            var query = db.Cliente
-                          .Where(c => c.Activo|| c.Estado == "A" || c.Estado == null)
-                          .AsQueryable();
+
+            var q = from c in db.Cliente
+                    join u in db.Usuario on c.Cedula equals u.Cedula into gj
+                    from u in gj.DefaultIfEmpty()
+                    where (c.Activo || c.Estado == "A" || c.Estado == null)
+                    select new { c, u };
+
 
             if (!string.IsNullOrEmpty(filtro.Nombre))
             {
                 string nombre = filtro.Nombre;
-                query = query.Where(c =>
-                    ((c.Nombre ?? "").Contains(nombre) ||
-                     (c.Apellido1 ?? "").Contains(nombre) ||
-                     (c.Apellido2 ?? "").Contains(nombre) ||
-                     (c.Cedula ?? "").Contains(nombre)));
+                q = q.Where(x =>
+                       (x.u != null && (
+                            (x.u.Nombre ?? "").Contains(nombre) ||
+                            (x.u.Apellido1 ?? "").Contains(nombre) ||
+                            (x.u.Apellido2 ?? "").Contains(nombre)))
+                    || ((x.c.Nombre ?? "").Contains(nombre) ||
+                        (x.c.Apellido1 ?? "").Contains(nombre) ||
+                        (x.c.Apellido2 ?? "").Contains(nombre) ||
+                        (x.c.Cedula ?? "").Contains(nombre)));
             }
 
             if (filtro.EdadMinima.HasValue)
-                query = query.Where(c => c.Edad >= filtro.EdadMinima.Value);
+                q = q.Where(x => x.c.Edad >= filtro.EdadMinima.Value);
 
             if (filtro.EdadMaxima.HasValue)
-                query = query.Where(c => c.Edad <= filtro.EdadMaxima.Value);
+                q = q.Where(x => x.c.Edad <= filtro.EdadMaxima.Value);
+
 
             if (!string.IsNullOrEmpty(filtro.Tratamiento))
-                query = query.Where(c => c.Padecimiento == filtro.Tratamiento);
+            {
+                var patron = "%" + filtro.Tratamiento + "%";
+                q = q.Where(x => x.c.Padecimiento != null &&
+                                 DbFunctions.Like(x.c.Padecimiento, patron));
+            }
 
-            filtro.Resultados = query
-                .OrderBy(c => c.Nombre)
+
+            q = q.Where(x =>
+
+                (x.u != null &&
+                 x.u.Correo != null &&
+                 SqlFunctions.DataLength(x.u.Correo) > 0 &&
+                 !DbFunctions.Like(x.u.Correo, "%@example.com") &&
+                 !DbFunctions.Like(x.u.Correo, "%@dominio.com"))
+                ||
+
+                ((x.u == null || x.u.Correo == null || SqlFunctions.DataLength(x.u.Correo) == 0) &&
+                 x.c.Correo != null &&
+                 SqlFunctions.DataLength(x.c.Correo) > 0 &&
+                 !DbFunctions.Like(x.c.Correo, "%@example.com") &&
+                 !DbFunctions.Like(x.c.Correo, "%@dominio.com"))
+            );
+
+            var pares = q.ToList();
+
+
+            var lista = pares
+                .OrderBy(p =>
+                {
+                    var nombreEf = ((p.u?.Nombre ?? p.c.Nombre) + " " + (p.u?.Apellido1 ?? p.c.Apellido1)).Trim();
+                    return string.IsNullOrWhiteSpace(nombreEf) ? p.c.Cedula : nombreEf;
+                })
+                .Select(p => p.c)
                 .ToList();
 
+            filtro.Resultados = lista;
             return View(filtro);
         }
 
@@ -912,14 +952,14 @@ namespace HDOpticasJAVS.Controllers
             ViewBag.Campanias = new SelectList(db.CampaniaMarketing.ToList(), "Id_Campania", "Nombre_Campania");
 
             // Promos ya aplicadas a esta venta
-            ViewBag.PromosAplicadas = (from vp in db.Set<VentaPromocion>()         
+            ViewBag.PromosAplicadas = (from vp in db.Set<VentaPromocion>()
                                        join cm in db.CampaniaMarketing on vp.Id_Campania equals cm.Id_Campania
                                        where vp.Id_Venta == idVenta
                                        orderby vp.FechaAplicacion descending
                                        select new
                                        {
                                            vp.Id_VentaPromocion,
-                                           NombreCampania = cm.Nombre_Campania,     
+                                           NombreCampania = cm.Nombre_Campania,
                                            vp.MontoDescuento,
                                            vp.CodigoPromo,
                                            vp.FechaAplicacion
@@ -965,7 +1005,7 @@ namespace HDOpticasJAVS.Controllers
                     UsuarioAplicacion = (Session["Usuario"] ?? Session["Cedula"] ?? "Sistema").ToString()
                 };
 
-                
+
                 db.Set<VentaPromocion>().Add(promo);
                 db.SaveChanges(); // aquí se dispara el trigger que actualiza Contabilidad
 
@@ -978,8 +1018,63 @@ namespace HDOpticasJAVS.Controllers
                 return RedirectToAction("AplicarPromocion", new { idVenta });
             }
         }
+        public PartialViewResult HistorialPromociones(string cedula)
+        {
+            // 1) Si no viene la cédula, intenta sacarla de la sesión
+            if (string.IsNullOrWhiteSpace(cedula))
+            {
+                string usuarioSesion = (Session["Usuario"] ?? Session["Cedula"])?.ToString();
+                var usuario = db.Usuario.FirstOrDefault(u => u.Correo == usuarioSesion || u.Cedula == usuarioSesion);
+                cedula = usuario?.Cedula;
+            }
 
+            // Si aún no hay cédula, devuelve lista vacía para no romper la vista
+            if (string.IsNullOrWhiteSpace(cedula))
+                return PartialView("_HistorialPromociones", new List<PromocionHistorialItemViewModel>());
 
+            // 2) Promociones aplicadas en ventas (usa Set<VentaPromocion>() en vez de db.VentaPromocion)
+            var porVenta =
+                from vp in db.Set<VentaPromocion>()
+                join pv in db.PuntoVenta on vp.Id_Venta equals pv.Id_Venta
+                join cm in db.CampaniaMarketing on vp.Id_Campania equals cm.Id_Campania
+                where pv.Cedula_Cliente == cedula
+                select new PromocionHistorialItemViewModel
+                {
+                    Fecha = vp.FechaAplicacion,
+                    Tipo = "Aplicada en venta",
+                    Campania = cm.Nombre_Campania,
+                    CodigoPromo = vp.CodigoPromo,
+                    MontoDescuento = vp.MontoDescuento,
+                    IdVenta = vp.Id_Venta,
+                    TotalVenta = pv.Total
+                };
+
+            // 3) Interacciones de marketing (aperturas / clicks)
+            var interacciones =
+                from m in db.CampaniaMetrica
+                join cm in db.CampaniaMarketing on m.Id_Campania equals cm.Id_Campania
+                where m.Cedula_Cliente == cedula
+                select new PromocionHistorialItemViewModel
+                {
+                    Fecha = m.FechaRegistro,
+                    Tipo = (m.Click == true) ? "Click" : (m.Abierto == true ? "Apertura" : "Registro"),
+                    Campania = cm.Nombre_Campania,
+                    CodigoPromo = null,
+                    MontoDescuento = null,
+                    IdVenta = null,
+                    TotalVenta = null
+                };
+
+            var data = porVenta
+                .Concat(interacciones)
+                .OrderByDescending(x => x.Fecha)
+                .ToList();
+
+            return PartialView("_HistorialPromociones", data);
+        }
     }
 }
+
+    
+
 

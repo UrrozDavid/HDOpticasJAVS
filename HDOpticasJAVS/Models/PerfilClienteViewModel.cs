@@ -11,6 +11,8 @@ namespace HDOpticasJAVS.Models
         public List<CitaViewModel> HistorialCitas { get; set; }
         public List<CompraViewModel> HistorialCompras { get; set; }
         public DateTime UltimaActualizacion { get; set; }
+        public string CedulaCliente { get; set; }
+
     }
 
     public class CitaViewModel

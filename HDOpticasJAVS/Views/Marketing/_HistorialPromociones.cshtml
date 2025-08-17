@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HDOpticasJAVS.Models.ViewModels.PromocionHistorialItemViewModel>
+@using System.Globalization
+
+<div class="mt-4">
+    
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-muted">No hay registros.</div>
+    }
+    else
+    {
+        <ul class="list-group mb-4">
+            @foreach (var p in Model)
+            {
+                <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between">
+                    <div>
+                        <div class="fw-bold">@p.Campania</div>
+
+                        <div class="small text-muted">
+                            @((p.Fecha is DateTime d) ? d.ToString("dd/MM/yyyy HH:mm") : "")
+                        </div>
+
+                        <div>
+                            @p.Tipo
+                            @if (!string.IsNullOrWhiteSpace(p.CodigoPromo))
+                            {
+                                <span>(@p.CodigoPromo)</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        @if (p.MontoDescuento.HasValue)
+                        {
+                            <div>@p.MontoDescuento.Value.ToString("C0", new CultureInfo("es-CR"))</div>
+                        }
+
+                        @if (p.IdVenta.HasValue && p.TotalVenta.HasValue)
+                        {
+                            <div class="small">
+                                Venta #@p.IdVenta – Total @p.TotalVenta.Value.ToString("C0", new CultureInfo("es-CR"))
+                            </div>
+                        }
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+</div>

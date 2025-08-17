@@ -311,6 +311,7 @@
     <Compile Include="Models\CampaniaReporteViewModel.cs" />
     <Compile Include="Models\CampaniaSegmentadaViewModel.cs" />
     <Compile Include="Models\CampaniaTendenciaViewModel.cs" />
+    <Compile Include="Models\PromocionHistorialViewModel.cs" />
     <Compile Include="Models\ContabilidadPuntoVentaViewModel.cs" />
     <Compile Include="Models\PerfilClienteViewModel.cs" />
     <Compile Include="Models\ClientePartial.cs" />
@@ -557,6 +558,7 @@
     <Content Include="Views\Marketing\Tendencias.cshtml" />
     <Content Include="Views\Empleado\PerfilEmpleado.cshtml" />
     <Content Include="Views\Marketing\AplicarPromocion.cshtml" />
+    <Content Include="Views\Marketing\_HistorialPromociones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
