@@ -576,5 +576,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="VentaPromocion">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.VentaPromocion">
+        <MappingFragment StoreEntitySet="VentaPromocion">
+          <ScalarProperty Name="UsuarioAplicacion" ColumnName="UsuarioAplicacion" />
+          <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
+          <ScalarProperty Name="CodigoPromo" ColumnName="CodigoPromo" />
+          <ScalarProperty Name="MontoDescuento" ColumnName="MontoDescuento" />
+          <ScalarProperty Name="Id_Campania" ColumnName="Id_Campania" />
+          <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+          <ScalarProperty Name="Id_VentaPromocion" ColumnName="Id_VentaPromocion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -90,6 +90,8 @@
             </div>
         </div>
 
+
+
         <!-- Montos -->
         <div class="row mb-3" id="pagoIngresoContainer" style="display:none;">
             <div class="col-md-6">
@@ -136,7 +138,7 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 @Html.LabelFor(m => m.Fecha_Registro, new { @class = "form-label fw-bold text-primary" })
-                @Html.EditorFor(m => m.Fecha_Registro, new { htmlAttributes = new { @class = "form-control", type = "date", id = "Fecha_Registro" } })
+                @Html.TextBoxFor(m => m.Fecha_Registro, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", id = "Fecha_Registro" })
                 @Html.ValidationMessageFor(m => m.Fecha_Registro, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-6">

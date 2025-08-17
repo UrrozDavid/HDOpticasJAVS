@@ -39,8 +39,6 @@
                 @Html.ValidationMessageFor(m => m.Fecha_Fin, "", new { @class = "text-danger" })
             </div>
 
-
-
             <div class="form-group mb-4">
                 @Html.LabelFor(m => m.Fecha_Programada, "Fecha Programada (opcional)")
                 @Html.TextBoxFor(m => m.Fecha_Programada, "{0:yyyy-MM-dd}", new { @class = "form-control bg-light text-dark", type = "date" })
@@ -57,17 +55,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 0; i < Model.ClientesSeleccionados.Count; i++)
+                        @{
+                            var total = (Model?.ClientesSeleccionados != null) ? Model.ClientesSeleccionados.Count : 0;
+                        }
+                        @if (total == 0)
                         {
-                            <tr class="text-center">
-                                <td>
-                                    @Html.HiddenFor(m => m.ClientesSeleccionados[i].Cedula)
-                                    @Html.HiddenFor(m => m.ClientesSeleccionados[i].Correo)
-                                    @Html.CheckBoxFor(m => m.ClientesSeleccionados[i].Seleccionado)
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    No hay clientes para mostrar.
                                 </td>
-                                <td>@Model.ClientesSeleccionados[i].NombreCompleto</td>
-                                <td>@Model.ClientesSeleccionados[i].Correo</td>
                             </tr>
+                        }
+                        else
+                        {
+                            for (int i = 0; i < total; i++)
+                            {
+                                var correo = Model.ClientesSeleccionados[i].Correo;
+
+                                <tr class="text-center">
+                                    <td>
+                                        @Html.HiddenFor(m => m.ClientesSeleccionados[i].Cedula)
+                                        @Html.HiddenFor(m => m.ClientesSeleccionados[i].Correo)
+
+                                        @* IMPORTANTE: sin disabled y sin hidden manual extra;
+                                            Html.CheckBoxFor ya envía true/false correctamente *@
+                                        @Html.CheckBoxFor(m => m.ClientesSeleccionados[i].Seleccionado)
+                                    </td>
+                                    <td>@Model.ClientesSeleccionados[i].NombreCompleto</td>
+                                    <td>@(string.IsNullOrWhiteSpace(correo) ? "—" : correo)</td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>

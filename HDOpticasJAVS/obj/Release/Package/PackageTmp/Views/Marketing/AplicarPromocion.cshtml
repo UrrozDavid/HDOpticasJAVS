@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Aplicar Promoción a Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var idVenta = (int)ViewBag.IdVenta;
+    var promosAplicadas = ViewBag.PromosAplicadas as System.Collections.IEnumerable;
+}
+
+<div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
+    <div class="card-header bg-primary text-white text-center rounded-top-4">
+        <h4 class="fw-bold mb-0"><i class="bi bi-ticket-perforated"></i> Aplicar Promoción a la Venta #@idVenta</h4>
+    </div>
+
+    <div class="card-body">
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-success">@TempData["Mensaje"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+
+        <div class="row mb-3">
+            <div class="col-md-4"><strong>Subtotal:</strong> @String.Format("{0:N2}", ViewBag.SubtotalVenta)</div>
+            <div class="col-md-4"><strong>IVA:</strong> @String.Format("{0:N2}", ViewBag.IVAVenta)</div>
+            <div class="col-md-4"><strong>Total (antes de descuento):</strong> @String.Format("{0:N2}", ViewBag.TotalVenta)</div>
+        </div>
+
+        @using (Html.BeginForm("AplicarPromocion", "Marketing", FormMethod.Post, new { @class = "row g-3" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("idVenta", idVenta)
+
+            <div class="col-md-6">
+                <label class="form-label">Campaña</label>
+                @Html.DropDownList("idCampania", (SelectList)ViewBag.Campanias, "Seleccione...", new { @class = "form-select bg-dark text-white" })
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Monto Descuento</label>
+                <input type="number" step="0.01" name="montoDescuento" class="form-control bg-dark text-white" required />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Código (opcional)</label>
+                <input type="text" name="codigoPromo" class="form-control bg-dark text-white" />
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-check2-circle"></i> Aplicar Promoción
+                </button>
+                <a href="@Url.Action("Details","PuntoVenta", new { id = idVenta })" class="btn btn-secondary ms-2">
+                    <i class="bi bi-arrow-left"></i> Volver a la venta
+                </a>
+            </div>
+        }
+
+        <hr class="border-secondary my-4" />
+
+        <h5 class="mb-3">Promociones ya aplicadas</h5>
+        <table class="table table-bordered table-hover mt-2">
+            <thead class="bg-danger text-white">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Campaña</th>
+                    <th>Descuento</th>
+                    <th>Código</th>
+                </tr>
+            </thead>
+            <tbody class="bg-dark text-white">
+                @if (promosAplicadas == null)
+                {
+                    <tr><td colspan="4" class="text-center">Sin promociones.</td></tr>
+                }
+                else
+                {
+                    foreach (dynamic p in promosAplicadas)
+                    {
+                        <tr>
+                            <td>@(((DateTime)p.FechaAplicacion).ToString("yyyy-MM-dd HH:mm"))</td>
+                            <td>@p.NombreCampania</td>
+                            <td>@String.Format("{0:N2}", p.MontoDescuento)</td>
+                            <td>@(p.CodigoPromo ?? "-")</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #495057 !important;
+        color: #fff !important;
+    }
+</style>

@@ -441,6 +441,18 @@
           <Property Name="FechaCambio" Type="datetime" />
           <Property Name="Revertido" Type="bit" />
         </EntityType>
+        <EntityType Name="VentaPromocion">
+          <Key>
+            <PropertyRef Name="Id_VentaPromocion" />
+          </Key>
+          <Property Name="Id_VentaPromocion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Venta" Type="int" Nullable="false" />
+          <Property Name="Id_Campania" Type="int" Nullable="false" />
+          <Property Name="MontoDescuento" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CodigoPromo" Type="nvarchar" MaxLength="50" />
+          <Property Name="FechaAplicacion" Type="datetime" Nullable="false" />
+          <Property Name="UsuarioAplicacion" Type="nvarchar" MaxLength="128" />
+        </EntityType>
         <EntityType Name="AggregatedCounter">
           <Key>
             <PropertyRef Name="Key" />
@@ -886,6 +898,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VentaPromocion_Campania">
+          <End Role="CampaniaMarketing" Type="Self.CampaniaMarketing" Multiplicity="1" />
+          <End Role="VentaPromocion" Type="Self.VentaPromocion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaniaMarketing">
+              <PropertyRef Name="Id_Campania" />
+            </Principal>
+            <Dependent Role="VentaPromocion">
+              <PropertyRef Name="Id_Campania" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentaPromocion_PuntoVenta">
+          <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="1" />
+          <End Role="VentaPromocion" Type="Self.VentaPromocion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuntoVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Principal>
+            <Dependent Role="VentaPromocion">
+              <PropertyRef Name="Id_Venta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="mdlHDOpticasJavsStoreContainer">
           <EntitySet Name="AccesoHistorialLog" EntityType="Self.AccesoHistorialLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlertaSeguimiento" EntityType="Self.AlertaSeguimiento" Schema="dbo" store:Type="Tables" />
@@ -919,6 +955,7 @@
           <EntitySet Name="TipoParametro" EntityType="Self.TipoParametro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario_UltimoCambio" EntityType="Self.Usuario_UltimoCambio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VentaPromocion" EntityType="Self.VentaPromocion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AggregatedCounter" EntityType="Self.AggregatedCounter" Schema="HangFire" store:Type="Tables" />
           <EntitySet Name="Counter" EntityType="Self.Counter" Schema="HangFire" store:Type="Tables" />
           <EntitySet Name="Hash" EntityType="Self.Hash" Schema="HangFire" store:Type="Tables" />
@@ -1042,6 +1079,14 @@
             <End Role="Job" EntitySet="Job" />
             <End Role="State" EntitySet="State" />
           </AssociationSet>
+          <AssociationSet Name="FK_VentaPromocion_Campania" Association="Self.FK_VentaPromocion_Campania">
+            <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
+            <End Role="VentaPromocion" EntitySet="VentaPromocion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentaPromocion_PuntoVenta" Association="Self.FK_VentaPromocion_PuntoVenta">
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+            <End Role="VentaPromocion" EntitySet="VentaPromocion" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -1122,6 +1167,7 @@
           <Property Name="Fecha_Programada" Type="DateTime" Precision="0" />
           <NavigationProperty Name="CampaniaCliente" Relationship="Self.FK__CampaniaC__Id_Ca__6FE99F9F" FromRole="CampaniaMarketing" ToRole="CampaniaCliente" />
           <NavigationProperty Name="CampaniaMetrica" Relationship="Self.FK__CampaniaM__Id_Ca__3D2915A8" FromRole="CampaniaMarketing" ToRole="CampaniaMetrica" />
+          <NavigationProperty Name="VentaPromocion" Relationship="mdlHDOpticasJavs.FK_VentaPromocion_Campania" FromRole="CampaniaMarketing" ToRole="VentaPromocion" />
         </EntityType>
         <EntityType Name="CampaniaMetrica">
           <Key>
@@ -1432,6 +1478,7 @@
           <NavigationProperty Name="PagoVenta" Relationship="Self.FK__PagoVenta__Id_Ve__0B5CAFEA" FromRole="PuntoVenta" ToRole="PagoVenta" />
           <NavigationProperty Name="Parametro" Relationship="Self.FK__PuntoVent__Id_Me__5EBF139D" FromRole="PuntoVenta" ToRole="Parametro" />
           <NavigationProperty Name="Contabilidad" Relationship="mdlHDOpticasJavs.FK__Contabili__Id_Ve__44CA3770" FromRole="PuntoVenta" ToRole="Contabilidad" />
+          <NavigationProperty Name="VentaPromocion" Relationship="mdlHDOpticasJavs.FK_VentaPromocion_PuntoVenta" FromRole="PuntoVenta" ToRole="VentaPromocion" />
         </EntityType>
         <EntityType Name="RecuperacionPassword">
           <Key>
@@ -2063,6 +2110,15 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Contabilidad" EntitySet="Contabilidad" />
           </AssociationSet>
+          <EntitySet Name="VentaPromocion" EntityType="mdlHDOpticasJavs.VentaPromocion" />
+          <AssociationSet Name="FK_VentaPromocion_Campania" Association="mdlHDOpticasJavs.FK_VentaPromocion_Campania">
+            <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
+            <End Role="VentaPromocion" EntitySet="VentaPromocion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentaPromocion_PuntoVenta" Association="mdlHDOpticasJavs.FK_VentaPromocion_PuntoVenta">
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+            <End Role="VentaPromocion" EntitySet="VentaPromocion" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Contabilidad">
           <Key>
@@ -2138,6 +2194,44 @@
             </Principal>
             <Dependent Role="Contabilidad">
               <PropertyRef Name="Usuario_Registro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VentaPromocion">
+          <Key>
+            <PropertyRef Name="Id_VentaPromocion" />
+          </Key>
+          <Property Name="Id_VentaPromocion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Venta" Type="Int32" Nullable="false" />
+          <Property Name="Id_Campania" Type="Int32" Nullable="false" />
+          <Property Name="MontoDescuento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CodigoPromo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaAplicacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UsuarioAplicacion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CampaniaMarketing" Relationship="mdlHDOpticasJavs.FK_VentaPromocion_Campania" FromRole="VentaPromocion" ToRole="CampaniaMarketing" />
+          <NavigationProperty Name="PuntoVenta" Relationship="mdlHDOpticasJavs.FK_VentaPromocion_PuntoVenta" FromRole="VentaPromocion" ToRole="PuntoVenta" />
+        </EntityType>
+        <Association Name="FK_VentaPromocion_Campania">
+          <End Type="mdlHDOpticasJavs.CampaniaMarketing" Role="CampaniaMarketing" Multiplicity="1" />
+          <End Type="mdlHDOpticasJavs.VentaPromocion" Role="VentaPromocion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaniaMarketing">
+              <PropertyRef Name="Id_Campania" />
+            </Principal>
+            <Dependent Role="VentaPromocion">
+              <PropertyRef Name="Id_Campania" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentaPromocion_PuntoVenta">
+          <End Type="mdlHDOpticasJavs.PuntoVenta" Role="PuntoVenta" Multiplicity="1" />
+          <End Type="mdlHDOpticasJavs.VentaPromocion" Role="VentaPromocion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuntoVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Principal>
+            <Dependent Role="VentaPromocion">
+              <PropertyRef Name="Id_Venta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2719,6 +2813,19 @@
                 <ScalarProperty Name="Id_Producto" ColumnName="Id_Producto" />
                 <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
                 <ScalarProperty Name="Id_Contabilidad" ColumnName="Id_Contabilidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VentaPromocion">
+            <EntityTypeMapping TypeName="mdlHDOpticasJavs.VentaPromocion">
+              <MappingFragment StoreEntitySet="VentaPromocion">
+                <ScalarProperty Name="UsuarioAplicacion" ColumnName="UsuarioAplicacion" />
+                <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
+                <ScalarProperty Name="CodigoPromo" ColumnName="CodigoPromo" />
+                <ScalarProperty Name="MontoDescuento" ColumnName="MontoDescuento" />
+                <ScalarProperty Name="Id_Campania" ColumnName="Id_Campania" />
+                <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+                <ScalarProperty Name="Id_VentaPromocion" ColumnName="Id_VentaPromocion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

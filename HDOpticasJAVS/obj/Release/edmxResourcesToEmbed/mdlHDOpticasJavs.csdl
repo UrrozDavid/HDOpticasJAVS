@@ -75,6 +75,7 @@
     <Property Name="Fecha_Programada" Type="DateTime" Precision="0" />
     <NavigationProperty Name="CampaniaCliente" Relationship="Self.FK__CampaniaC__Id_Ca__6FE99F9F" FromRole="CampaniaMarketing" ToRole="CampaniaCliente" />
     <NavigationProperty Name="CampaniaMetrica" Relationship="Self.FK__CampaniaM__Id_Ca__3D2915A8" FromRole="CampaniaMarketing" ToRole="CampaniaMetrica" />
+    <NavigationProperty Name="VentaPromocion" Relationship="mdlHDOpticasJavs.FK_VentaPromocion_Campania" FromRole="CampaniaMarketing" ToRole="VentaPromocion" />
   </EntityType>
   <EntityType Name="CampaniaMetrica">
     <Key>
@@ -146,35 +147,6 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UmbralCompras" Type="Int32" Nullable="false" />
     <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
-  </EntityType>
-  <EntityType Name="Contabilidad">
-    <Key>
-      <PropertyRef Name="Id_Contabilidad" />
-    </Key>
-    <Property Name="Id_Contabilidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Id_Venta" Type="Int32" Nullable="false" />
-    <Property Name="Id_Producto" Type="Int32" Nullable="false" />
-    <Property Name="Cantidad" Type="Int32" Nullable="false" />
-    <Property Name="PrecioUnitario" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-    <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="Descuento" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="IVA" Type="Decimal" Precision="10" Scale="2" />
-    <Property Name="Total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-    <Property Name="Fecha_Registro" Type="DateTime" Precision="3" />
-    <Property Name="Usuario_Registro" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="Id_TipoMovimiento" Type="Int32" />
-    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Inventario" Relationship="Self.FK__Contabili__Id_Pr__6383C8BA" FromRole="Contabilidad" ToRole="Inventario" />
-    <NavigationProperty Name="Parametro" Relationship="Self.FK__Contabili__Id_Ti__656C112C" FromRole="Contabilidad" ToRole="Parametro" />
-    <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__Contabili__Id_Ve__628FA481" FromRole="Contabilidad" ToRole="PuntoVenta" />
-    <NavigationProperty Name="Usuario" Relationship="Self.FK__Contabili__Usuar__6477ECF3" FromRole="Contabilidad" ToRole="Usuario" />
-    <Property Name="TipoOperacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="TipoServicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="TipoMovimientoIngresoEgreso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="CriteriosPromocionRecurrente">
     <Key>
@@ -289,9 +261,9 @@
     <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
     <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Id_Pr__6383C8BA" FromRole="Inventario" ToRole="Contabilidad" />
     <NavigationProperty Name="DetalleVenta" Relationship="Self.FK__DetalleVe__Id_Pr__0F2D40CE" FromRole="Inventario" ToRole="DetalleVenta" />
     <NavigationProperty Name="Proveedor" Relationship="Self.FK__Inventari__Id_Pr__59FA5E80" FromRole="Inventario" ToRole="Proveedor" />
+    <NavigationProperty Name="Contabilidad" Relationship="mdlHDOpticasJavs.FK__Contabili__Id_Pr__45BE5BA9" FromRole="Inventario" ToRole="Contabilidad" />
   </EntityType>
   <EntityType Name="ListaSegmentada">
     <Key>
@@ -359,12 +331,12 @@
     <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__Id_EstadoC__6B24EA82" FromRole="Parametro" ToRole="Cita" />
     <NavigationProperty Name="Cita1" Relationship="Self.FK__Cita__Id_TipoEsp__693CA210" FromRole="Parametro" ToRole="Cita" />
     <NavigationProperty Name="Cliente" Relationship="Self.FK__Cliente__Id_Gene__52593CB8" FromRole="Parametro" ToRole="Cliente" />
-    <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Id_Ti__656C112C" FromRole="Parametro" ToRole="Contabilidad" />
     <NavigationProperty Name="Empleado" Relationship="Self.FK_Empleado_Especialidad" FromRole="Parametro" ToRole="Empleado" />
     <NavigationProperty Name="TipoParametro" Relationship="Self.FK__Parametro__Id_Ti__4BAC3F29" FromRole="Parametro" ToRole="TipoParametro" />
     <NavigationProperty Name="PermisoRol" Relationship="Self.FK__PermisoRo__Id_Ro__2FCF1A8A" FromRole="Parametro" ToRole="PermisoRol" />
     <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__PuntoVent__Id_Me__5EBF139D" FromRole="Parametro" ToRole="PuntoVenta" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__Id_Rol__4E88ABD4" FromRole="Parametro" ToRole="Usuario" />
+    <NavigationProperty Name="Contabilidad" Relationship="mdlHDOpticasJavs.FK__Contabili__Id_Ti__47A6A41B" FromRole="Parametro" ToRole="Contabilidad" />
   </EntityType>
   <EntityType Name="PermisoRol">
     <Key>
@@ -410,10 +382,11 @@
     <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Cliente" Relationship="Self.FK__PuntoVent__Cedul__5DCAEF64" FromRole="PuntoVenta" ToRole="Cliente" />
-    <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Id_Ve__628FA481" FromRole="PuntoVenta" ToRole="Contabilidad" />
     <NavigationProperty Name="DetalleVenta" Relationship="Self.FK__DetalleVe__Id_Ve__0E391C95" FromRole="PuntoVenta" ToRole="DetalleVenta" />
     <NavigationProperty Name="PagoVenta" Relationship="Self.FK__PagoVenta__Id_Ve__0B5CAFEA" FromRole="PuntoVenta" ToRole="PagoVenta" />
     <NavigationProperty Name="Parametro" Relationship="Self.FK__PuntoVent__Id_Me__5EBF139D" FromRole="PuntoVenta" ToRole="Parametro" />
+    <NavigationProperty Name="Contabilidad" Relationship="mdlHDOpticasJavs.FK__Contabili__Id_Ve__44CA3770" FromRole="PuntoVenta" ToRole="Contabilidad" />
+    <NavigationProperty Name="VentaPromocion" Relationship="mdlHDOpticasJavs.FK_VentaPromocion_PuntoVenta" FromRole="PuntoVenta" ToRole="VentaPromocion" />
   </EntityType>
   <EntityType Name="RecuperacionPassword">
     <Key>
@@ -467,9 +440,9 @@
     <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
     <Property Name="FechaBloqueoHasta" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__Cedula_Usu__68487DD7" FromRole="Usuario" ToRole="Cita" />
-    <NavigationProperty Name="Contabilidad" Relationship="Self.FK__Contabili__Usuar__6477ECF3" FromRole="Usuario" ToRole="Contabilidad" />
     <NavigationProperty Name="Empleado" Relationship="Self.FK__Empleado__Cedula__5535A963" FromRole="Usuario" ToRole="Empleado" />
     <NavigationProperty Name="Parametro" Relationship="Self.FK__Usuario__Id_Rol__4E88ABD4" FromRole="Usuario" ToRole="Parametro" />
+    <NavigationProperty Name="Contabilidad" Relationship="mdlHDOpticasJavs.FK__Contabili__Usuar__46B27FE2" FromRole="Usuario" ToRole="Contabilidad" />
   </EntityType>
   <EntityType Name="Usuario_UltimoCambio">
     <Key>
@@ -717,54 +690,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Contabili__Id_Pr__6383C8BA">
-    <End Role="Inventario" Type="Self.Inventario" Multiplicity="1" />
-    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Inventario">
-        <PropertyRef Name="Id_Producto" />
-      </Principal>
-      <Dependent Role="Contabilidad">
-        <PropertyRef Name="Id_Producto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Contabili__Id_Ti__656C112C">
-    <End Role="Parametro" Type="Self.Parametro" Multiplicity="0..1" />
-    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Parametro">
-        <PropertyRef Name="Id_Parametro" />
-      </Principal>
-      <Dependent Role="Contabilidad">
-        <PropertyRef Name="Id_TipoMovimiento" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Contabili__Id_Ve__628FA481">
-    <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="1" />
-    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PuntoVenta">
-        <PropertyRef Name="Id_Venta" />
-      </Principal>
-      <Dependent Role="Contabilidad">
-        <PropertyRef Name="Id_Venta" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Contabili__Usuar__6477ECF3">
-    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-    <End Role="Contabilidad" Type="Self.Contabilidad" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Usuario">
-        <PropertyRef Name="Cedula" />
-      </Principal>
-      <Dependent Role="Contabilidad">
-        <PropertyRef Name="Usuario_Registro" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__DetalleVe__Id_Pr__0F2D40CE">
     <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
     <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
@@ -947,7 +872,6 @@
     <EntitySet Name="Cita" EntityType="Self.Cita" />
     <EntitySet Name="Cliente" EntityType="Self.Cliente" />
     <EntitySet Name="ConfiguracionRecurrencia" EntityType="Self.ConfiguracionRecurrencia" />
-    <EntitySet Name="Contabilidad" EntityType="Self.Contabilidad" />
     <EntitySet Name="CriteriosPromocionRecurrente" EntityType="Self.CriteriosPromocionRecurrente" />
     <EntitySet Name="DetalleVenta" EntityType="Self.DetalleVenta" />
     <EntitySet Name="Empleado" EntityType="Self.Empleado" />
@@ -1021,22 +945,6 @@
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="PuntoVenta" EntitySet="PuntoVenta" />
     </AssociationSet>
-    <AssociationSet Name="FK__Contabili__Id_Pr__6383C8BA" Association="Self.FK__Contabili__Id_Pr__6383C8BA">
-      <End Role="Inventario" EntitySet="Inventario" />
-      <End Role="Contabilidad" EntitySet="Contabilidad" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Contabili__Id_Ti__656C112C" Association="Self.FK__Contabili__Id_Ti__656C112C">
-      <End Role="Parametro" EntitySet="Parametro" />
-      <End Role="Contabilidad" EntitySet="Contabilidad" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Contabili__Id_Ve__628FA481" Association="Self.FK__Contabili__Id_Ve__628FA481">
-      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
-      <End Role="Contabilidad" EntitySet="Contabilidad" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Contabili__Usuar__6477ECF3" Association="Self.FK__Contabili__Usuar__6477ECF3">
-      <End Role="Usuario" EntitySet="Usuario" />
-      <End Role="Contabilidad" EntitySet="Contabilidad" />
-    </AssociationSet>
     <AssociationSet Name="FK__DetalleVe__Id_Pr__0F2D40CE" Association="Self.FK__DetalleVe__Id_Pr__0F2D40CE">
       <End Role="Inventario" EntitySet="Inventario" />
       <End Role="DetalleVenta" EntitySet="DetalleVenta" />
@@ -1093,5 +1001,146 @@
       <End Role="Job" EntitySet="Job" />
       <End Role="State" EntitySet="State" />
     </AssociationSet>
+    <EntitySet Name="Contabilidad" EntityType="mdlHDOpticasJavs.Contabilidad" />
+    <AssociationSet Name="FK__Contabili__Id_Pr__45BE5BA9" Association="mdlHDOpticasJavs.FK__Contabili__Id_Pr__45BE5BA9">
+      <End Role="Inventario" EntitySet="Inventario" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Id_Ti__47A6A41B" Association="mdlHDOpticasJavs.FK__Contabili__Id_Ti__47A6A41B">
+      <End Role="Parametro" EntitySet="Parametro" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Id_Ve__44CA3770" Association="mdlHDOpticasJavs.FK__Contabili__Id_Ve__44CA3770">
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contabili__Usuar__46B27FE2" Association="mdlHDOpticasJavs.FK__Contabili__Usuar__46B27FE2">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Contabilidad" EntitySet="Contabilidad" />
+    </AssociationSet>
+    <EntitySet Name="VentaPromocion" EntityType="mdlHDOpticasJavs.VentaPromocion" />
+    <AssociationSet Name="FK_VentaPromocion_Campania" Association="mdlHDOpticasJavs.FK_VentaPromocion_Campania">
+      <End Role="CampaniaMarketing" EntitySet="CampaniaMarketing" />
+      <End Role="VentaPromocion" EntitySet="VentaPromocion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VentaPromocion_PuntoVenta" Association="mdlHDOpticasJavs.FK_VentaPromocion_PuntoVenta">
+      <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+      <End Role="VentaPromocion" EntitySet="VentaPromocion" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Contabilidad">
+    <Key>
+      <PropertyRef Name="Id_Contabilidad" />
+    </Key>
+    <Property Name="Id_Contabilidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Venta" Type="Int32" />
+    <Property Name="Id_Producto" Type="Int32" />
+    <Property Name="Cantidad" Type="Int32" />
+    <Property Name="PrecioUnitario" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Descuento" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="IVA" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Fecha_Registro" Type="DateTime" Precision="3" />
+    <Property Name="Usuario_Registro" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Id_TipoMovimiento" Type="Int32" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="UsuarioModificador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="TipoOperacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TipoServicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TipoMovimientoIngresoEgreso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Inventario" Relationship="mdlHDOpticasJavs.FK__Contabili__Id_Pr__45BE5BA9" FromRole="Contabilidad" ToRole="Inventario" />
+    <NavigationProperty Name="Parametro" Relationship="mdlHDOpticasJavs.FK__Contabili__Id_Ti__47A6A41B" FromRole="Contabilidad" ToRole="Parametro" />
+    <NavigationProperty Name="PuntoVenta" Relationship="mdlHDOpticasJavs.FK__Contabili__Id_Ve__44CA3770" FromRole="Contabilidad" ToRole="PuntoVenta" />
+    <NavigationProperty Name="Usuario" Relationship="mdlHDOpticasJavs.FK__Contabili__Usuar__46B27FE2" FromRole="Contabilidad" ToRole="Usuario" />
+  </EntityType>
+  <Association Name="FK__Contabili__Id_Pr__45BE5BA9">
+    <End Type="mdlHDOpticasJavs.Inventario" Role="Inventario" Multiplicity="0..1" />
+    <End Type="mdlHDOpticasJavs.Contabilidad" Role="Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="Id_Producto" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Id_Producto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Id_Ti__47A6A41B">
+    <End Type="mdlHDOpticasJavs.Parametro" Role="Parametro" Multiplicity="0..1" />
+    <End Type="mdlHDOpticasJavs.Contabilidad" Role="Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parametro">
+        <PropertyRef Name="Id_Parametro" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Id_TipoMovimiento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Id_Ve__44CA3770">
+    <End Type="mdlHDOpticasJavs.PuntoVenta" Role="PuntoVenta" Multiplicity="0..1" />
+    <End Type="mdlHDOpticasJavs.Contabilidad" Role="Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PuntoVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Id_Venta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contabili__Usuar__46B27FE2">
+    <End Type="mdlHDOpticasJavs.Usuario" Role="Usuario" Multiplicity="0..1" />
+    <End Type="mdlHDOpticasJavs.Contabilidad" Role="Contabilidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Contabilidad">
+        <PropertyRef Name="Usuario_Registro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="VentaPromocion">
+    <Key>
+      <PropertyRef Name="Id_VentaPromocion" />
+    </Key>
+    <Property Name="Id_VentaPromocion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Venta" Type="Int32" Nullable="false" />
+    <Property Name="Id_Campania" Type="Int32" Nullable="false" />
+    <Property Name="MontoDescuento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="CodigoPromo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaAplicacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioAplicacion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CampaniaMarketing" Relationship="mdlHDOpticasJavs.FK_VentaPromocion_Campania" FromRole="VentaPromocion" ToRole="CampaniaMarketing" />
+    <NavigationProperty Name="PuntoVenta" Relationship="mdlHDOpticasJavs.FK_VentaPromocion_PuntoVenta" FromRole="VentaPromocion" ToRole="PuntoVenta" />
+  </EntityType>
+  <Association Name="FK_VentaPromocion_Campania">
+    <End Type="mdlHDOpticasJavs.CampaniaMarketing" Role="CampaniaMarketing" Multiplicity="1" />
+    <End Type="mdlHDOpticasJavs.VentaPromocion" Role="VentaPromocion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CampaniaMarketing">
+        <PropertyRef Name="Id_Campania" />
+      </Principal>
+      <Dependent Role="VentaPromocion">
+        <PropertyRef Name="Id_Campania" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VentaPromocion_PuntoVenta">
+    <End Type="mdlHDOpticasJavs.PuntoVenta" Role="PuntoVenta" Multiplicity="1" />
+    <End Type="mdlHDOpticasJavs.VentaPromocion" Role="VentaPromocion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PuntoVenta">
+        <PropertyRef Name="Id_Venta" />
+      </Principal>
+      <Dependent Role="VentaPromocion">
+        <PropertyRef Name="Id_Venta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

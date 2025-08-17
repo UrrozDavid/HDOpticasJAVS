@@ -34,10 +34,11 @@ namespace HDOpticasJAVS.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
+            // Quita el Include anidado y carga lo demás
             var venta = db.PuntoVenta
-                .Include(p => p.Cliente.Usuario)
+                .Include(p => p.Cliente)                                    
                 .Include(p => p.Parametro)
                 .Include(p => p.DetalleVenta.Select(d => d.Inventario))
                 .FirstOrDefault(p => p.Id_Venta == id);
@@ -45,8 +46,21 @@ namespace HDOpticasJAVS.Controllers
             if (venta == null)
                 return HttpNotFound();
 
+            // Cargar explícitamente la navegación del Cliente hacia Usuario
+            // (sin asignar a la propiedad)
+            try
+            {
+                db.Entry(venta.Cliente).Reference("Usuario").Load();   // nombre típico
+            }
+            catch
+            {
+                try { db.Entry(venta.Cliente).Reference("Usuario1").Load(); } catch { /* ignore */ }
+            }
+
             return View(venta);
         }
+
+
 
         // GET: PuntoVenta/Create
         public ActionResult Create()

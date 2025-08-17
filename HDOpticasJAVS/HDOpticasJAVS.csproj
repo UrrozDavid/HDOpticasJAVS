@@ -375,6 +375,9 @@
     <Compile Include="Usuario_UltimoCambio.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="VentaPromocion.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -553,6 +556,7 @@
     <Content Include="Views\Marketing\SegmentarClientes.cshtml" />
     <Content Include="Views\Marketing\Tendencias.cshtml" />
     <Content Include="Views\Empleado\PerfilEmpleado.cshtml" />
+    <Content Include="Views\Marketing\AplicarPromocion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -59,9 +59,15 @@
                     <p><strong>Total:</strong> ₡@(Model.Total?.ToString("N2") ?? "0.00")</p>
                 </div>
 
-            <div class="text-end">
-                <a href="@Url.Action("Edit", new { id = Model.Id_Venta })" class="btn btn-warning">Editar</a>
-                <a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>
+                <div class="text-end">
+                    <a href="@Url.Action("AplicarPromocion", "Marketing", new { idVenta = Model.Id_Venta })"
+                       class="btn btn-outline-warning me-2">
+                        <i class="bi bi-ticket-perforated"></i> Aplicar Promoción
+                    </a>
+                    <a href="@Url.Action("Edit", new { id = Model.Id_Venta })" class="btn btn-warning">Editar</a>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>
+                </div>
+
             </div>
         </div>
     </div>

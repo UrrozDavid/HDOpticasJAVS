@@ -26,18 +26,18 @@ namespace HDOpticasJAVS.Controllers
         {
             RevisarCampaniasProgramadas();
 
-            var clientesConNombres = (
-                from c in db.Cliente
-                join u in db.Usuario on c.Cedula equals u.Cedula
-                where c.Estado == "A" && u.Correo != null
-                select new ClienteSeleccionado
+            var clientesConNombres = db.Cliente
+                // usa el campo que tengas de estado/activo; dejo ambas opciones para que no pierdas a nadie
+                .Where(c => c.Activo|| c.Estado == "A" || c.Estado == null)
+                .Select(c => new ClienteSeleccionado
                 {
                     Cedula = c.Cedula,
-                    NombreCompleto = u.Nombre + " " + u.Apellido1,
-                    Correo = u.Correo,
+                    NombreCompleto = ((c.Nombre ?? "") + " " + (c.Apellido1 ?? "")).Trim(),
+                    Correo = (c.Correo != null && c.Correo != "") ? c.Correo : null,
                     Seleccionado = false
-                }
-            ).ToList();
+                })
+                .OrderBy(x => x.NombreCompleto)
+                .ToList();
 
             var model = new CampaniaMarketingViewModel
             {
@@ -47,7 +47,6 @@ namespace HDOpticasJAVS.Controllers
 
             return View(model);
         }
-
 
 
         [HttpPost]
@@ -66,7 +65,7 @@ namespace HDOpticasJAVS.Controllers
                 Tipo = model.Tipo,
                 Fecha_Inicio = model.Fecha_Inicio,
                 Fecha_Programada = model.Fecha_Programada,
-                Fecha_Fin = model.Fecha_Fin, 
+                Fecha_Fin = model.Fecha_Fin,
                 Estado = model.Fecha_Programada.HasValue ? "P" : "A",
                 UsuarioCreador = User.Identity.Name,
                 FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
@@ -75,7 +74,17 @@ namespace HDOpticasJAVS.Controllers
             db.CampaniaMarketing.Add(campania);
             db.SaveChanges();
 
-            foreach (var cliente in model.ClientesSeleccionados.Where(c => c.Seleccionado))
+            // >>> ÚNICO CAMBIO: solo con correo y sin duplicados por cédula
+            var todos = model.ClientesSeleccionados ?? new List<ClienteSeleccionado>();
+            var seleccionadosValidos = todos
+                .Where(c => c.Seleccionado && !string.IsNullOrWhiteSpace(c.Correo))
+                .GroupBy(c => c.Cedula)           // evita duplicados
+                .Select(g => g.First())
+                .ToList();
+
+            var omitidosSinCorreo = todos.Count(c => c.Seleccionado && string.IsNullOrWhiteSpace(c.Correo));
+
+            foreach (var cliente in seleccionadosValidos)
             {
                 db.CampaniaCliente.Add(new CampaniaCliente
                 {
@@ -95,9 +104,12 @@ namespace HDOpticasJAVS.Controllers
                 CampaniaHelper.ProcesarCampaniaPorId(campania.Id_Campania);
             }
 
-            TempData["Mensaje"] = "✅ Campaña creada correctamente.";
+            TempData["Mensaje"] = omitidosSinCorreo > 0
+                ? $"✅ Campaña creada. {omitidosSinCorreo} cliente(s) seleccionados no tenían correo y fueron omitidos."
+                : "✅ Campaña creada correctamente.";
             return RedirectToAction("Historial");
         }
+
         private void RevisarCampaniasProgramadas()
         {
             var hoy = DateTime.Today;
@@ -493,7 +505,7 @@ namespace HDOpticasJAVS.Controllers
         }
 
         [HttpPost]
-        public ActionResult SegmentarClientes(SegmentacionViewModel filtro)
+       public ActionResult SegmentarClientes(SegmentacionViewModel filtro)
         {
             bool sinFiltros = string.IsNullOrEmpty(filtro.Nombre)
                               && !filtro.EdadMinima.HasValue
@@ -506,10 +518,19 @@ namespace HDOpticasJAVS.Controllers
                 return View(filtro);
             }
 
-            var query = db.Cliente.Include(c => c.Usuario).AsQueryable();
+            var query = db.Cliente
+                          .Where(c => c.Activo|| c.Estado == "A" || c.Estado == null)
+                          .AsQueryable();
 
             if (!string.IsNullOrEmpty(filtro.Nombre))
-                query = query.Where(c => c.Usuario.Nombre.Contains(filtro.Nombre));
+            {
+                string nombre = filtro.Nombre;
+                query = query.Where(c =>
+                    ((c.Nombre ?? "").Contains(nombre) ||
+                     (c.Apellido1 ?? "").Contains(nombre) ||
+                     (c.Apellido2 ?? "").Contains(nombre) ||
+                     (c.Cedula ?? "").Contains(nombre)));
+            }
 
             if (filtro.EdadMinima.HasValue)
                 query = query.Where(c => c.Edad >= filtro.EdadMinima.Value);
@@ -520,9 +541,14 @@ namespace HDOpticasJAVS.Controllers
             if (!string.IsNullOrEmpty(filtro.Tratamiento))
                 query = query.Where(c => c.Padecimiento == filtro.Tratamiento);
 
-            filtro.Resultados = query.ToList();
+            filtro.Resultados = query
+                .OrderBy(c => c.Nombre)
+                .ToList();
+
             return View(filtro);
         }
+
+
 
         [HttpPost]
         public ActionResult GuardarLista(string nombreLista, List<string> cedulasClientes)
@@ -683,7 +709,7 @@ namespace HDOpticasJAVS.Controllers
 
             if (!clientesFrecuentes.Any())
             {
-                // Escenario 4: No hay reglas o clientes calificados
+
                 return;
             }
 
@@ -721,7 +747,7 @@ namespace HDOpticasJAVS.Controllers
 
             db.SaveChanges();
 
-            // Escenario 1: Procesar envío automáticamente usando lógica ya existente
+
             CampaniaHelper.ProcesarCampaniaPorId(campania.Id_Campania);
         }
         [HttpGet]
@@ -871,6 +897,89 @@ namespace HDOpticasJAVS.Controllers
                 "TendenciasMarketing.csv"
             );
         }
+        [HttpGet]
+        public ActionResult AplicarPromocion(int idVenta)
+        {
+            // Venta para validar existencia y mostrar info básica
+            var venta = db.PuntoVenta.FirstOrDefault(v => v.Id_Venta == idVenta);
+            if (venta == null)
+            {
+                TempData["Error"] = "La venta no existe.";
+                return RedirectToAction("Index", "PuntoVenta");
+            }
+
+            // Campañas disponibles  (usa el nombre real de la columna)
+            ViewBag.Campanias = new SelectList(db.CampaniaMarketing.ToList(), "Id_Campania", "Nombre_Campania");
+
+            // Promos ya aplicadas a esta venta
+            ViewBag.PromosAplicadas = (from vp in db.Set<VentaPromocion>()         
+                                       join cm in db.CampaniaMarketing on vp.Id_Campania equals cm.Id_Campania
+                                       where vp.Id_Venta == idVenta
+                                       orderby vp.FechaAplicacion descending
+                                       select new
+                                       {
+                                           vp.Id_VentaPromocion,
+                                           NombreCampania = cm.Nombre_Campania,     
+                                           vp.MontoDescuento,
+                                           vp.CodigoPromo,
+                                           vp.FechaAplicacion
+                                       }).ToList();
+
+            ViewBag.IdVenta = idVenta;
+            ViewBag.TotalVenta = venta.Total;
+            ViewBag.SubtotalVenta = venta.Subtotal;
+            ViewBag.IVAVenta = venta.IVA;
+
+            return View();
+        }
+
+
+        // POST: Marketing/AplicarPromocion
+        // POST: Marketing/AplicarPromocion
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AplicarPromocion(int idVenta, int idCampania, decimal montoDescuento, string codigoPromo)
+        {
+            // Validaciones básicas
+            var venta = db.PuntoVenta.FirstOrDefault(v => v.Id_Venta == idVenta);
+            if (venta == null)
+            {
+                TempData["Error"] = "No se encontró la venta.";
+                return RedirectToAction("Index", "PuntoVenta");
+            }
+            if (montoDescuento <= 0)
+            {
+                TempData["Error"] = "El monto de descuento debe ser mayor a 0.";
+                return RedirectToAction("AplicarPromocion", new { idVenta });
+            }
+
+            try
+            {
+                var promo = new VentaPromocion
+                {
+                    Id_Venta = idVenta,
+                    Id_Campania = idCampania,
+                    MontoDescuento = montoDescuento,
+                    CodigoPromo = string.IsNullOrWhiteSpace(codigoPromo) ? null : codigoPromo,
+                    FechaAplicacion = DateTime.Now,
+                    UsuarioAplicacion = (Session["Usuario"] ?? Session["Cedula"] ?? "Sistema").ToString()
+                };
+
+                
+                db.Set<VentaPromocion>().Add(promo);
+                db.SaveChanges(); // aquí se dispara el trigger que actualiza Contabilidad
+
+                TempData["Mensaje"] = "Promoción aplicada correctamente. Contabilidad actualizada.";
+                return RedirectToAction("AplicarPromocion", new { idVenta });
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Error al aplicar la promoción: " + ex.Message;
+                return RedirectToAction("AplicarPromocion", new { idVenta });
+            }
+        }
+
 
     }
 }
+

@@ -76,6 +76,9 @@
         <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Id_Ti__47A6A41B" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Id_Ve__44CA3770" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK__Contabili__Usuar__46B27FE2" />
+        <EntityTypeShape EntityType="mdlHDOpticasJavs.VentaPromocion" Width="1.5" PointX="12.75" PointY="25.875" IsExpanded="true" />
+        <AssociationConnector Association="mdlHDOpticasJavs.FK_VentaPromocion_Campania" />
+        <AssociationConnector Association="mdlHDOpticasJavs.FK_VentaPromocion_PuntoVenta" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

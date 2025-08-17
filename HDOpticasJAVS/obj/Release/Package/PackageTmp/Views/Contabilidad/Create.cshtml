@@ -245,11 +245,8 @@
             var tipo = $('#TipoOperacion').val();
 
             // Pago siempre total negativo (egreso)
-            if (tipo === 'pago') {
-                total = -Math.abs(total);
-            } else if (tipo === 'ingreso' || tipo === 'servicio' || tipo === 'producto') {
-                total = Math.abs(total);
-            }
+            // Siempre positivo en el frontend
+            total = Math.abs(total);
 
             $('#IVA').val(iva.toFixed(2));
             $('#Total').val(total.toFixed(2));
