@@ -11,6 +11,7 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-6">
+
                     <h4><i class="fa fa-calendar-alt"></i> Historial de Citas</h4>
                     <ul class="list-group mb-4">
                         @foreach (var cita in Model.HistorialCitas)
@@ -22,15 +23,25 @@
                     </ul>
 
                     <h4><i class="fa fa-shopping-cart"></i> Historial de Compras</h4>
-                    <ul class="list-group">
+                    <ul class="list-group mb-4">
                         @foreach (var compra in Model.HistorialCompras)
                         {
                             <li class="list-group-item bg-dark text-white border-secondary">
-                                <i class="fa fa-glasses"></i> @compra.Producto - @compra.Monto.ToString("C0", new System.Globalization.CultureInfo("es-CR"))
+                                <i class="fa fa-glasses"></i> @compra.Producto -
+                                @compra.Monto.ToString("C0", new System.Globalization.CultureInfo("es-CR"))
                                 - @compra.Fecha.ToString("dd/MM/yyyy")
                             </li>
                         }
                     </ul>
+
+                    <h4><i class="fa fa-gift"></i> Historial de Promociones</h4>
+                    <ul class="list-group mb-4">
+                        @{
+
+                            Html.RenderAction("HistorialPromociones", "Marketing", new { cedula = Model.CedulaCliente });
+                        }
+                    </ul>
+
                 </div>
             </div>
 

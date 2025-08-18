@@ -34,7 +34,8 @@
                             <td>@usuario.Cedula</td>
                             <td>@usuario.Nombre @usuario.Apellido1 @usuario.Apellido2</td>
                             <td>@usuario.Correo</td>
-                            <td>@usuario.Parametro.Nombre_Parametro</td>
+                            <td>@(usuario.Parametro != null ? usuario.Parametro.Nombre_Parametro : "—")</td>
+
                             <td>
                                 @if (usuario.Estado == "A")
                                 {
