@@ -442,7 +442,8 @@ namespace HDOpticasJAVS.Controllers
                     .Where(d => d.Id_Venta == venta.Id_Venta)
                     .ToList();
 
-                var usuarioCliente = cliente.Usuario;
+                //MODIFICANDO
+                var usuarioCliente = db.Usuario.FirstOrDefault(u => u.Cedula == cliente.Cedula);
 
                 // Generar PDF
                 var pdfBytes = GenerarFacturaPDF(venta, detallesVenta, usuarioCliente);

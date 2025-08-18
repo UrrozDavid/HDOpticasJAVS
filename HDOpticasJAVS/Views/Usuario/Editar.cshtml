@@ -96,7 +96,7 @@
                     }
                     @using (Html.BeginForm("RevertirUltimoCambio", "Usuario", FormMethod.Post))
                     {
-
+                        @Html.AntiForgeryToken()
                         @Html.Hidden("cedula", Model.Cedula)
                         <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
                             Revertir Último Cambio
