@@ -335,8 +335,8 @@ namespace HDOpticasJAVS.Controllers
                         tarjeta.Saldo -= model.MontoTarjeta;
                     }
                 }
-
-                var cliente = db.Cliente.Include("Usuario").FirstOrDefault(c => c.Cedula == model.CedulaCliente);
+                /*var cliente = db.Cliente.Include("Usuario").FirstOrDefault(c => c.Cedula == model.CedulaCliente);*/
+                var cliente = db.Cliente.FirstOrDefault(c => c.Cedula == model.CedulaCliente);
                 if (cliente == null)
                 {
                     ModelState.AddModelError("CedulaCliente", "La cédula ingresada no está registrada como cliente.");
