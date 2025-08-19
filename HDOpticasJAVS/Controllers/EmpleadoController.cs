@@ -266,6 +266,15 @@ Fecha: {DateTime.Now:dd/MM/yyyy HH:mm:ss}
             return RedirectToAction("PerfilEmpleado");
         }
 
+        public ActionResult Crear()
+        {
+            ViewBag.Roles = new SelectList(
+                db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A" && p.Nombre_Parametro.ToLower() != "cliente"),
+                "Id_Parametro",
+                "Nombre_Parametro"
+            );
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
