@@ -20,6 +20,7 @@ namespace HDOpticasJAVS
             this.CampaniaCliente = new HashSet<CampaniaCliente>();
             this.CampaniaMetrica = new HashSet<CampaniaMetrica>();
             this.PuntoVenta = new HashSet<PuntoVenta>();
+            this.NotaCredito = new HashSet<NotaCredito>();
         }
     
         public string Cedula { get; set; }
@@ -48,5 +49,7 @@ namespace HDOpticasJAVS
         public virtual Parametro Parametro { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PuntoVenta> PuntoVenta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NotaCredito> NotaCredito { get; set; }
     }
 }

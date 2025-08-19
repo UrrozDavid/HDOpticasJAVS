@@ -138,9 +138,16 @@
                                 @Html.TextBoxFor(m => m.MontoTarjeta, new { @class = "form-control mt-2", type = "number", step = "0.01", placeholder = "Monto con tarjeta" })
                             </div>
 
+                            <div class="mb-2">
+                                <label>
+                                    <input type="checkbox" id="usarCredito" name="UsarCredito" value="true" />
+                                    Pago a Crédito
+                                </label>
+                            </div>
+
                             <!-- <div class="alert alert-info mt-3">
-                                <strong>Saldo Restante:</strong> $@(Model.TotalCompra - (Model.Efectivo + Model.MontoTarjeta)).ToString("F2")
-                            </div> -->
+        <strong>Saldo Restante:</strong> $@(Model.TotalCompra - (Model.Efectivo + Model.MontoTarjeta)).ToString("F2")
+    </div> -->
                         </div>
 
                         <!-- Confirmación -->
@@ -160,6 +167,9 @@
     @section Scripts {
         <script>
             document.addEventListener("DOMContentLoaded", function () {
+                // ----------------------------
+                // 1. Cálculo de totales
+                // ----------------------------
                 const cantidadInputs = document.querySelectorAll("input[name*='Carrito'][name*='Cantidad']");
                 const precios = document.querySelectorAll("input[name*='Carrito'][name*='Precio']");
                 const subtotalSpan = document.getElementById("subtotal");
@@ -185,8 +195,35 @@
                 cantidadInputs.forEach(input => {
                     input.addEventListener("input", actualizarTotales);
                 });
-
                 actualizarTotales();
+
+                // ----------------------------
+                // 2. Activar/desactivar campos según crédito
+                // ----------------------------
+                const checkCredito = document.getElementById("usarCredito");
+                const efectivoInput = document.getElementById("Efectivo");
+                const tarjetaInputs = [
+                    document.getElementById("NumeroTarjeta"),
+                    document.getElementById("NombreTitular"),
+                    document.getElementById("FechaVencimiento"),
+                    document.getElementById("CVV"),
+                    document.getElementById("MontoTarjeta")
+                ];
+
+                function toggleCampos() {
+                    if (checkCredito && checkCredito.checked) {
+                        efectivoInput.disabled = true;
+                        tarjetaInputs.forEach(i => i.disabled = true);
+                    } else {
+                        efectivoInput.disabled = false;
+                        tarjetaInputs.forEach(i => i.disabled = false);
+                    }
+                }
+
+                if (checkCredito) {
+                    checkCredito.addEventListener("change", toggleCampos);
+                    toggleCampos();
+                }
             });
         </script>
     }

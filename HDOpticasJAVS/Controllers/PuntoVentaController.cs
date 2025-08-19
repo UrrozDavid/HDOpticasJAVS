@@ -301,7 +301,7 @@ namespace HDOpticasJAVS.Controllers
         {
             using (var db = new HD_Opticas_JAVS_BDEntities())
             {
-                // Recalcular total desde carrito
+                // Recalcular totales
                 decimal subtotal = model.Carrito
                     .Where(p => p.Cantidad > 0)
                     .Sum(p => p.Cantidad * p.Precio);
@@ -309,14 +309,18 @@ namespace HDOpticasJAVS.Controllers
                 decimal iva = subtotal * 0.13m;
                 decimal total = subtotal + iva;
 
-                model.TotalCompra = subtotal;
+                model.TotalCompra = total;
 
-                // Validaciones
-                if (total != (model.Efectivo + model.MontoTarjeta))
+                // Calcular cuánto cubre el cliente en efectivo/tarjeta
+                decimal montoPagado = model.Efectivo + model.MontoTarjeta;
+                model.MontoCredito = total - montoPagado;
+
+                if (model.MontoCredito < 0)
                 {
-                    ModelState.AddModelError("", "El total no coincide con la suma de métodos de pago.");
+                    ModelState.AddModelError("", "El monto pagado no puede ser mayor al total de la compra.");
                 }
 
+                // Validaciones de tarjeta
                 if (model.MontoTarjeta > 0)
                 {
                     var tarjeta = db.TarjetaSimulada.FirstOrDefault(t =>
@@ -335,7 +339,7 @@ namespace HDOpticasJAVS.Controllers
                         tarjeta.Saldo -= model.MontoTarjeta;
                     }
                 }
-                /*var cliente = db.Cliente.Include("Usuario").FirstOrDefault(c => c.Cedula == model.CedulaCliente);*/
+
                 var cliente = db.Cliente.FirstOrDefault(c => c.Cedula == model.CedulaCliente);
                 if (cliente == null)
                 {
@@ -346,16 +350,14 @@ namespace HDOpticasJAVS.Controllers
                     ModelState.AddModelError("CedulaCliente", "El cliente no tiene un correo asociado.");
                 }
 
-                // Validar que haya productos
                 if (model.Carrito == null || !model.Carrito.Any(p => p.Cantidad > 0))
                 {
                     ModelState.AddModelError("", "Debe seleccionar al menos un producto con cantidad mayor a cero.");
                 }
 
-                // Validar método de pago
-                if (model.Efectivo <= 0 && model.MontoTarjeta <= 0)
+                if (montoPagado <= 0 && model.MontoCredito <= 0)
                 {
-                    ModelState.AddModelError("", "Debe ingresar al menos un método de pago.");
+                    ModelState.AddModelError("", "Debe ingresar al menos un método de pago o crédito.");
                 }
 
                 if (!ModelState.IsValid)
@@ -374,12 +376,16 @@ namespace HDOpticasJAVS.Controllers
 
                 // Determinar método de pago
                 int metodoPago;
-                if (model.Efectivo > 0 && model.MontoTarjeta > 0)
-                    metodoPago = 19; // Múltiple
+                if (model.MontoCredito > 0 && montoPagado > 0)
+                    metodoPago = 20; // Mixto con crédito
+                else if (model.MontoCredito > 0)
+                    metodoPago = 20; // Solo crédito
+                else if (model.Efectivo > 0 && model.MontoTarjeta > 0)
+                    metodoPago = 19; // Efectivo + tarjeta
                 else if (model.Efectivo > 0)
-                    metodoPago = 6; // Efectivo
+                    metodoPago = 6; // Solo efectivo
                 else
-                    metodoPago = 7; // Tarjeta
+                    metodoPago = 7; // Solo tarjeta
 
                 // Crear venta
                 var venta = new PuntoVenta
@@ -399,7 +405,7 @@ namespace HDOpticasJAVS.Controllers
                 db.PuntoVenta.Add(venta);
                 db.SaveChanges();
 
-                // Agregar productos seleccionados como detalles
+                // Detalles
                 foreach (var item in model.Carrito.Where(p => p.Cantidad > 0))
                 {
                     db.DetalleVenta.Add(new DetalleVenta
@@ -412,7 +418,7 @@ namespace HDOpticasJAVS.Controllers
                     });
                 }
 
-                // Guardar métodos de pago
+                // Pagos realizados
                 if (model.Efectivo > 0)
                 {
                     db.PagoVenta.Add(new PagoVenta
@@ -433,22 +439,34 @@ namespace HDOpticasJAVS.Controllers
                     });
                 }
 
+                // Si quedó crédito pendiente → crear NotaCredito
+                if (model.MontoCredito > 0)
+                {
+                    var credito = new HDOpticasJAVS.NotaCredito
+                    {
+                        Cedula_Cliente = model.CedulaCliente,
+                        Id_Venta = venta.Id_Venta,
+                        MontoOtorgado = model.MontoCredito,
+                        SaldoPendiente = model.MontoCredito,
+                        FechaOtorgado = DateTime.Now,
+                        Estado = "A"
+                    };
+                    db.NotaCredito.Add(credito);
+                }
+
                 db.SaveChanges();
+
                 TempData["MensajeExito"] = "¡Venta realizada exitosamente!";
 
-                // Obtener detalles de la venta y datos del usuario
+                // Generar PDF y enviar correo
                 var detallesVenta = db.DetalleVenta
                     .Include("Inventario")
                     .Where(d => d.Id_Venta == venta.Id_Venta)
                     .ToList();
 
-                //MODIFICANDO
                 var usuarioCliente = db.Usuario.FirstOrDefault(u => u.Cedula == cliente.Cedula);
 
-                // Generar PDF
                 var pdfBytes = GenerarFacturaPDF(venta, detallesVenta, usuarioCliente);
-
-                // Enviar correo
                 EnviarFacturaPorCorreo(usuarioCliente.Correo, pdfBytes);
 
                 return RedirectToAction("IndexCajero");

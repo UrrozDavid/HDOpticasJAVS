@@ -589,5 +589,34 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="NotaCredito">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.NotaCredito">
+        <MappingFragment StoreEntitySet="NotaCredito">
+          <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaUltimoPago" ColumnName="FechaUltimoPago" />
+          <ScalarProperty Name="FechaOtorgado" ColumnName="FechaOtorgado" />
+          <ScalarProperty Name="SaldoPendiente" ColumnName="SaldoPendiente" />
+          <ScalarProperty Name="MontoOtorgado" ColumnName="MontoOtorgado" />
+          <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+          <ScalarProperty Name="Id_NotaCredito" ColumnName="Id_NotaCredito" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PagoCredito">
+      <EntityTypeMapping TypeName="mdlHDOpticasJavs.PagoCredito">
+        <MappingFragment StoreEntitySet="PagoCredito">
+          <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+          <ScalarProperty Name="Metodo" ColumnName="Metodo" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+          <ScalarProperty Name="Id_NotaCredito" ColumnName="Id_NotaCredito" />
+          <ScalarProperty Name="Id_PagoCredito" ColumnName="Id_PagoCredito" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

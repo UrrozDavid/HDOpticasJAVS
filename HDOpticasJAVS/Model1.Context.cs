@@ -48,6 +48,8 @@ namespace HDOpticasJAVS
         public virtual DbSet<LogSistema> LogSistema { get; set; }
         public virtual DbSet<Modulo> Modulo { get; set; }
         public virtual DbSet<PagoVenta> PagoVenta { get; set; }
+        public virtual DbSet<NotaCredito> NotaCredito { get; set; }
+        public virtual DbSet<PagoCredito> PagoCredito { get; set; }
         public virtual DbSet<Parametro> Parametro { get; set; }
         public virtual DbSet<PermisoRol> PermisoRol { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }

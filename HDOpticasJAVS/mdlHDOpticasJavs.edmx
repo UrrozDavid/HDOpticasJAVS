@@ -310,6 +310,33 @@
           <Property Name="Accion" Type="nvarchar" MaxLength="100" />
           <Property Name="Estado" Type="char" MaxLength="1" />
         </EntityType>
+        <EntityType Name="NotaCredito">
+          <Key>
+            <PropertyRef Name="Id_NotaCredito" />
+          </Key>
+          <Property Name="Id_NotaCredito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cedula_Cliente" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MontoOtorgado" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SaldoPendiente" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FechaOtorgado" Type="datetime" Nullable="false" />
+          <Property Name="FechaUltimoPago" Type="datetime" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="UsuarioCreador" Type="varchar" MaxLength="25" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="UsuarioModificador" Type="varchar" MaxLength="25" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="Id_Venta" Type="int" />
+        </EntityType>
+        <EntityType Name="PagoCredito">
+          <Key>
+            <PropertyRef Name="Id_PagoCredito" />
+          </Key>
+          <Property Name="Id_PagoCredito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_NotaCredito" Type="int" Nullable="false" />
+          <Property Name="Monto" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Metodo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="FechaPago" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="PagoVenta">
           <Key>
             <PropertyRef Name="Id_Pago" />
@@ -774,6 +801,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__NotaCredi__Cedul__73852659">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="NotaCredito" Type="Self.NotaCredito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="NotaCredito">
+              <PropertyRef Name="Cedula_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NotaCredi__Id_Ve__7849DB76">
+          <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
+          <End Role="NotaCredito" Type="Self.NotaCredito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuntoVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Principal>
+            <Dependent Role="NotaCredito">
+              <PropertyRef Name="Id_Venta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PagoCredi__Id_No__7755B73D">
+          <End Role="NotaCredito" Type="Self.NotaCredito" Multiplicity="1" />
+          <End Role="PagoCredito" Type="Self.PagoCredito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotaCredito">
+              <PropertyRef Name="Id_NotaCredito" />
+            </Principal>
+            <Dependent Role="PagoCredito">
+              <PropertyRef Name="Id_NotaCredito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PagoVenta__Id_Ve__4E53A1AA">
           <End Role="PuntoVenta" Type="Self.PuntoVenta" Multiplicity="0..1" />
           <End Role="PagoVenta" Type="Self.PagoVenta" Multiplicity="*" />
@@ -945,6 +1008,8 @@
           <EntitySet Name="ListaSegmentadaCliente" EntityType="Self.ListaSegmentadaCliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogSistema" EntityType="Self.LogSistema" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotaCredito" EntityType="Self.NotaCredito" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PagoCredito" EntityType="Self.PagoCredito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PagoVenta" EntityType="Self.PagoVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parametro" EntityType="Self.Parametro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PermisoRol" EntityType="Self.PermisoRol" Schema="dbo" store:Type="Tables" />
@@ -1038,6 +1103,18 @@
           <AssociationSet Name="FK__ListaSegm__Id_Li__4D5F7D71" Association="Self.FK__ListaSegm__Id_Li__4D5F7D71">
             <End Role="ListaSegmentada" EntitySet="ListaSegmentada" />
             <End Role="ListaSegmentadaCliente" EntitySet="ListaSegmentadaCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NotaCredi__Cedul__73852659" Association="Self.FK__NotaCredi__Cedul__73852659">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="NotaCredito" EntitySet="NotaCredito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NotaCredi__Id_Ve__7849DB76" Association="Self.FK__NotaCredi__Id_Ve__7849DB76">
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+            <End Role="NotaCredito" EntitySet="NotaCredito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PagoCredi__Id_No__7755B73D" Association="Self.FK__PagoCredi__Id_No__7755B73D">
+            <End Role="NotaCredito" EntitySet="NotaCredito" />
+            <End Role="PagoCredito" EntitySet="PagoCredito" />
           </AssociationSet>
           <AssociationSet Name="FK__PagoVenta__Id_Ve__4E53A1AA" Association="Self.FK__PagoVenta__Id_Ve__4E53A1AA">
             <End Role="PuntoVenta" EntitySet="PuntoVenta" />
@@ -1231,6 +1308,7 @@
           <NavigationProperty Name="CampaniaMetrica" Relationship="Self.FK__CampaniaM__Cedul__3E1D39E1" FromRole="Cliente" ToRole="CampaniaMetrica" />
           <NavigationProperty Name="Parametro" Relationship="Self.FK__Cliente__Id_Gene__52593CB8" FromRole="Cliente" ToRole="Parametro" />
           <NavigationProperty Name="PuntoVenta" Relationship="Self.FK__PuntoVent__Cedul__5DCAEF64" FromRole="Cliente" ToRole="PuntoVenta" />
+          <NavigationProperty Name="NotaCredito" Relationship="mdlHDOpticasJavs.FK__NotaCredi__Cedul__73852659" FromRole="Cliente" ToRole="NotaCredito" />
         </EntityType>
         <EntityType Name="ConfiguracionRecurrencia">
           <Key>
@@ -1479,6 +1557,7 @@
           <NavigationProperty Name="Parametro" Relationship="Self.FK__PuntoVent__Id_Me__5EBF139D" FromRole="PuntoVenta" ToRole="Parametro" />
           <NavigationProperty Name="Contabilidad" Relationship="mdlHDOpticasJavs.FK__Contabili__Id_Ve__44CA3770" FromRole="PuntoVenta" ToRole="Contabilidad" />
           <NavigationProperty Name="VentaPromocion" Relationship="mdlHDOpticasJavs.FK_VentaPromocion_PuntoVenta" FromRole="PuntoVenta" ToRole="VentaPromocion" />
+          <NavigationProperty Name="NotaCredito" Relationship="mdlHDOpticasJavs.FK__NotaCredi__Id_Ve__7849DB76" FromRole="PuntoVenta" ToRole="NotaCredito" />
         </EntityType>
         <EntityType Name="RecuperacionPassword">
           <Key>
@@ -2119,6 +2198,20 @@
             <End Role="PuntoVenta" EntitySet="PuntoVenta" />
             <End Role="VentaPromocion" EntitySet="VentaPromocion" />
           </AssociationSet>
+          <EntitySet Name="NotaCredito" EntityType="mdlHDOpticasJavs.NotaCredito" />
+          <EntitySet Name="PagoCredito" EntityType="mdlHDOpticasJavs.PagoCredito" />
+          <AssociationSet Name="FK__NotaCredi__Cedul__73852659" Association="mdlHDOpticasJavs.FK__NotaCredi__Cedul__73852659">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="NotaCredito" EntitySet="NotaCredito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NotaCredi__Id_Ve__7849DB76" Association="mdlHDOpticasJavs.FK__NotaCredi__Id_Ve__7849DB76">
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+            <End Role="NotaCredito" EntitySet="NotaCredito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PagoCredi__Id_No__7755B73D" Association="mdlHDOpticasJavs.FK__PagoCredi__Id_No__7755B73D">
+            <End Role="NotaCredito" EntitySet="NotaCredito" />
+            <End Role="PagoCredito" EntitySet="PagoCredito" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Contabilidad">
           <Key>
@@ -2232,6 +2325,73 @@
             </Principal>
             <Dependent Role="VentaPromocion">
               <PropertyRef Name="Id_Venta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NotaCredito">
+          <Key>
+            <PropertyRef Name="Id_NotaCredito" />
+          </Key>
+          <Property Name="Id_NotaCredito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cedula_Cliente" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MontoOtorgado" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SaldoPendiente" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FechaOtorgado" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaUltimoPago" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="UsuarioCreador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificador" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="Id_Venta" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="mdlHDOpticasJavs.FK__NotaCredi__Cedul__73852659" FromRole="NotaCredito" ToRole="Cliente" />
+          <NavigationProperty Name="PuntoVenta" Relationship="mdlHDOpticasJavs.FK__NotaCredi__Id_Ve__7849DB76" FromRole="NotaCredito" ToRole="PuntoVenta" />
+          <NavigationProperty Name="PagoCredito" Relationship="mdlHDOpticasJavs.FK__PagoCredi__Id_No__7755B73D" FromRole="NotaCredito" ToRole="PagoCredito" />
+        </EntityType>
+        <EntityType Name="PagoCredito">
+          <Key>
+            <PropertyRef Name="Id_PagoCredito" />
+          </Key>
+          <Property Name="Id_PagoCredito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_NotaCredito" Type="Int32" Nullable="false" />
+          <Property Name="Monto" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Metodo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaPago" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="NotaCredito" Relationship="mdlHDOpticasJavs.FK__PagoCredi__Id_No__7755B73D" FromRole="PagoCredito" ToRole="NotaCredito" />
+        </EntityType>
+        <Association Name="FK__NotaCredi__Cedul__73852659">
+          <End Type="mdlHDOpticasJavs.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="mdlHDOpticasJavs.NotaCredito" Role="NotaCredito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="NotaCredito">
+              <PropertyRef Name="Cedula_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NotaCredi__Id_Ve__7849DB76">
+          <End Type="mdlHDOpticasJavs.PuntoVenta" Role="PuntoVenta" Multiplicity="0..1" />
+          <End Type="mdlHDOpticasJavs.NotaCredito" Role="NotaCredito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuntoVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Principal>
+            <Dependent Role="NotaCredito">
+              <PropertyRef Name="Id_Venta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PagoCredi__Id_No__7755B73D">
+          <End Type="mdlHDOpticasJavs.NotaCredito" Role="NotaCredito" Multiplicity="1" />
+          <End Type="mdlHDOpticasJavs.PagoCredito" Role="PagoCredito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotaCredito">
+              <PropertyRef Name="Id_NotaCredito" />
+            </Principal>
+            <Dependent Role="PagoCredito">
+              <PropertyRef Name="Id_NotaCredito" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2826,6 +2986,35 @@
                 <ScalarProperty Name="Id_Campania" ColumnName="Id_Campania" />
                 <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
                 <ScalarProperty Name="Id_VentaPromocion" ColumnName="Id_VentaPromocion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotaCredito">
+            <EntityTypeMapping TypeName="mdlHDOpticasJavs.NotaCredito">
+              <MappingFragment StoreEntitySet="NotaCredito">
+                <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="UsuarioModificador" ColumnName="UsuarioModificador" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="UsuarioCreador" ColumnName="UsuarioCreador" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaUltimoPago" ColumnName="FechaUltimoPago" />
+                <ScalarProperty Name="FechaOtorgado" ColumnName="FechaOtorgado" />
+                <ScalarProperty Name="SaldoPendiente" ColumnName="SaldoPendiente" />
+                <ScalarProperty Name="MontoOtorgado" ColumnName="MontoOtorgado" />
+                <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+                <ScalarProperty Name="Id_NotaCredito" ColumnName="Id_NotaCredito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PagoCredito">
+            <EntityTypeMapping TypeName="mdlHDOpticasJavs.PagoCredito">
+              <MappingFragment StoreEntitySet="PagoCredito">
+                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+                <ScalarProperty Name="Metodo" ColumnName="Metodo" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Id_NotaCredito" ColumnName="Id_NotaCredito" />
+                <ScalarProperty Name="Id_PagoCredito" ColumnName="Id_PagoCredito" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

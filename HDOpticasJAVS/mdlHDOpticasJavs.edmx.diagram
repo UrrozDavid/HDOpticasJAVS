@@ -79,6 +79,11 @@
         <EntityTypeShape EntityType="mdlHDOpticasJavs.VentaPromocion" Width="1.5" PointX="12.75" PointY="25.875" IsExpanded="true" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK_VentaPromocion_Campania" />
         <AssociationConnector Association="mdlHDOpticasJavs.FK_VentaPromocion_PuntoVenta" />
+        <EntityTypeShape EntityType="mdlHDOpticasJavs.NotaCredito" Width="1.5" PointX="15.75" PointY="18.625" />
+        <EntityTypeShape EntityType="mdlHDOpticasJavs.PagoCredito" Width="1.5" PointX="18" PointY="19.5" />
+        <AssociationConnector Association="mdlHDOpticasJavs.FK__NotaCredi__Cedul__73852659" />
+        <AssociationConnector Association="mdlHDOpticasJavs.FK__NotaCredi__Id_Ve__7849DB76" />
+        <AssociationConnector Association="mdlHDOpticasJavs.FK__PagoCredi__Id_No__7755B73D" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
