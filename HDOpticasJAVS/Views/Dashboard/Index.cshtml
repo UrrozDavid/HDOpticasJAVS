@@ -30,21 +30,39 @@
 
         <!-- Notificaciones -->
         <div class="col-md-4">
-            <div class="card shadow-lg p-4 mb-4 rounded" style="background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+            <div class="card shadow-lg p-4 mb-4 rounded" style="background: rgba(0, 0, 0, 0.75); color: #F1E0C6;">
                 <h5 style="font-family: Raleway; color: #FF7043;">Notificaciones</h5>
                 <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Cita pendiente con el cliente Juan Pérez
-                        <span class="badge bg-warning text-dark">Hoy</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Pedido #1243 en espera de confirmación
-                        <span class="badge bg-info text-dark">2 días</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Tarea urgente para el equipo de ventas
-                        <span class="badge bg-danger text-white">Urgente</span>
-                    </li>
+
+                    <!-- Citas de hoy -->
+                    @foreach (var cita in (IEnumerable<HDOpticasJAVS.Cita>)ViewBag.CitasHoy)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Cita hoy con @cita.Usuario.Nombre @cita.Usuario.Apellido1
+                            (Esp.: @cita.NombreEspecialista)
+                            <span class="badge bg-warning text-dark">Hoy</span>
+                        </li>
+                    }
+
+                    <!-- Citas próximas -->
+                    @foreach (var cita in (IEnumerable<HDOpticasJAVS.Cita>)ViewBag.CitasProximas)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Cita próxima con @cita.Usuario.Nombre @cita.Usuario.Apellido1
+                            (Esp.: @cita.NombreEspecialista)
+                            <span class="badge bg-info text-dark">@cita.Fecha_Cita.ToString("dd/MM")</span>
+                        </li>
+                    }
+
+                    <!-- Citas atrasadas -->
+                    @foreach (var cita in (IEnumerable<HDOpticasJAVS.Cita>)ViewBag.CitasAtrasadas)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            ⚠️ Cita atrasada con @cita.Usuario.Nombre @cita.Usuario.Apellido1
+                            (Esp.: @cita.NombreEspecialista)
+                            <span class="badge bg-danger text-white">Vencida</span>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

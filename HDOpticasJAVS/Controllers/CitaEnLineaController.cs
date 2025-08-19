@@ -20,9 +20,24 @@ namespace HDOpticasJAVS.Controllers
         // GET: CitaEnLinea
         public ActionResult Index()
         {
-            var cita = db.Cita.Include(c => c.Empleado).Include(c => c.Usuario).Include(c => c.Parametro).Include(c => c.Parametro1).Where(u => u.Estado == "A")
-                             .ToList();
-            return View(cita.ToList());
+            var citas = db.Cita
+                .Include(c => c.Empleado)
+                .Include(c => c.Usuario)        // Cliente
+                .Include(c => c.Parametro)      // Estado
+                .Include(c => c.Parametro1)     // Especialidad
+                .Where(c => c.Estado == "A")
+                .ToList();
+
+            // Proyectar el nombre del especialista desde Usuario
+            foreach (var c in citas)
+            {
+                var especialista = db.Usuario.FirstOrDefault(u => u.Cedula == c.Cedula_Especialista);
+                c.NombreEspecialista = especialista != null
+                    ? (especialista.Nombre + " " + especialista.Apellido1 + " " + especialista.Apellido2)
+                    : "";
+            }
+
+            return View(citas);
         }
 
         // GET: CitaEnLinea/Details/5
@@ -65,6 +80,9 @@ namespace HDOpticasJAVS.Controllers
             {
                 try
                 {
+                    cita.UsuarioCreador = Session["Cedula"]?.ToString() ?? "Sistema";
+                    cita.FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
                     db.Cita.Add(cita);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -93,43 +111,130 @@ namespace HDOpticasJAVS.Controllers
         // GET: CitaEnLinea/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cita cita = db.Cita.Find(id);
-            if (cita == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Cedula_Especialista = new SelectList(db.Empleado, "Cedula", "Direccion", cita.Cedula_Especialista);
-            ViewBag.Cedula_Usuario = new SelectList(db.Usuario, "Cedula", "Nombre", cita.Cedula_Usuario);
-            ViewBag.Id_EstadoCita = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 4),
-                "Id_Parametro", "Nombre_Parametro"
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var cita = db.Cita.Find(id);
+            if (cita == null) return HttpNotFound();
+
+            // Usuarios (clientes) activos
+            var usuarios = db.Usuario
+                .Where(u => u.Id_Rol == 2 && u.Estado == "A")
+                .Select(u => new
+                {
+                    u.Cedula,
+                    NombreCompleto = (u.Nombre ?? "") + " " + (u.Apellido1 ?? "") + " " + (u.Apellido2 ?? "")
+                })
+                .ToList();
+
+            ViewBag.Cedula_Usuario = new SelectList(usuarios, "Cedula", "NombreCompleto", cita.Cedula_Usuario);
+
+            // Estados de cita (catálogo)
+            ViewBag.Id_EstadoCita = new SelectList(
+                db.Parametro.Where(p => p.Id_TipoParametro == 4 && p.Estado == "A"),
+                "Id_Parametro", "Nombre_Parametro", cita.Id_EstadoCita
             );
-            ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 6),
-                "Id_Parametro", "Nombre_Parametro"
+
+            // Tipos de especialista
+            ViewBag.Id_TipoEspecialista = new SelectList(
+                db.Parametro.Where(p => p.Id_TipoParametro == 6 && p.Estado == "A"),
+                "Id_Parametro", "Nombre_Parametro", cita.Id_TipoEspecialista
             );
+
+            var especialistas = (from e in db.Empleado
+                                 join u in db.Usuario on e.Cedula equals u.Cedula
+                                 where e.Estado == "A"
+                                       && u.Estado == "A"
+                                       && e.Id_Especialidad == cita.Id_TipoEspecialista
+                                 select new
+                                 {
+                                     e.Cedula,
+                                     NombreCompleto = (u.Nombre ?? "") + " " + (u.Apellido1 ?? "") + " " + (u.Apellido2 ?? "")
+                                 })
+                    .ToList();
+
+            ViewBag.Especialistas = new SelectList(especialistas, "Cedula", "NombreCompleto", cita.Cedula_Especialista);
+
+            // Estado A/I
+            ViewBag.EstadosAI = new SelectList(new[]
+            {
+        new { Value = "A", Text = "Activo" },
+        new { Value = "I", Text = "Inactivo" }
+    }, "Value", "Text", cita.Estado);
+
             return View(cita);
         }
 
         // POST: CitaEnLinea/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id_Cita,Cedula_Usuario,Fecha_Cita,Hora_Cita,Id_TipoEspecialista,Cedula_Especialista,Id_EstadoCita,Estado,UsuarioCreador,FechaCreacion,UsuarioModificador,FechaModificacion,TokenConfirmacion")] Cita cita)
+        public ActionResult Edit([Bind(Include = "Id_Cita,Cedula_Usuario,Fecha_Cita,Hora_Cita,Id_TipoEspecialista,Cedula_Especialista,Id_EstadoCita,Estado")] Cita cita)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cita).State = EntityState.Modified;
+                var citaDb = db.Cita.Find(cita.Id_Cita);
+                if (citaDb == null) return HttpNotFound();
+
+                // Actualizar solo campos editables
+                citaDb.Cedula_Usuario = cita.Cedula_Usuario;
+                citaDb.Fecha_Cita = cita.Fecha_Cita;
+                citaDb.Hora_Cita = cita.Hora_Cita;
+                citaDb.Id_TipoEspecialista = cita.Id_TipoEspecialista;
+                citaDb.Cedula_Especialista = cita.Cedula_Especialista;
+                citaDb.Id_EstadoCita = cita.Id_EstadoCita;
+                citaDb.Estado = cita.Estado;
+
+                // Auditoría de edición
+                citaDb.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                citaDb.UsuarioModificador = Session["Cedula"]?.ToString() ?? "Sistema";
+
+                db.Entry(citaDb).State = EntityState.Modified;
                 db.SaveChanges();
+
+                TempData["Exito"] = "La cita fue actualizada correctamente.";
                 return RedirectToAction("Index");
             }
-            ViewBag.Cedula_Especialista = new SelectList(db.Empleado, "Cedula", "Direccion", cita.Cedula_Especialista);
-            ViewBag.Cedula_Usuario = new SelectList(db.Usuario, "Cedula", "Nombre", cita.Cedula_Usuario);
-            ViewBag.Id_EstadoCita = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro", cita.Id_EstadoCita);
-            ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro, "Id_Parametro", "Nombre_Parametro", cita.Id_TipoEspecialista);
+
+            // Si algo falla, recargamos combos con lo que vino del form
+            var usuarios = db.Usuario
+                .Where(u => u.Id_Rol == 2 && u.Estado == "A")
+                .Select(u => new
+                {
+                    u.Cedula,
+                    NombreCompleto = (u.Nombre ?? "") + " " + (u.Apellido1 ?? "") + " " + (u.Apellido2 ?? "")
+                })
+                .ToList();
+            ViewBag.Cedula_Usuario = new SelectList(usuarios, "Cedula", "NombreCompleto", cita.Cedula_Usuario);
+
+            ViewBag.Id_EstadoCita = new SelectList(
+                db.Parametro.Where(p => p.Id_TipoParametro == 4 && p.Estado == "A"),
+                "Id_Parametro", "Nombre_Parametro", cita.Id_EstadoCita
+            );
+
+            ViewBag.Id_TipoEspecialista = new SelectList(
+                db.Parametro.Where(p => p.Id_TipoParametro == 6 && p.Estado == "A"),
+                "Id_Parametro", "Nombre_Parametro", cita.Id_TipoEspecialista
+            );
+
+            var especialistas = (from e in db.Empleado
+                                 join u in db.Usuario on e.Cedula equals u.Cedula
+                                 where e.Estado == "A"
+                                       && u.Estado == "A"
+                                       && e.Id_Especialidad == cita.Id_TipoEspecialista
+                                 select new
+                                 {
+                                     e.Cedula,
+                                     NombreCompleto = (u.Nombre ?? "") + " " + (u.Apellido1 ?? "") + " " + (u.Apellido2 ?? "")
+                                 })
+                    .ToList();
+
+            ViewBag.Especialistas = new SelectList(especialistas, "Cedula", "NombreCompleto", cita.Cedula_Especialista);
+
+            ViewBag.EstadosAI = new SelectList(new[]
+            {
+        new { Value = "A", Text = "Activo" },
+        new { Value = "I", Text = "Inactivo" }
+    }, "Value", "Text", cita.Estado);
+
             return View(cita);
         }
 

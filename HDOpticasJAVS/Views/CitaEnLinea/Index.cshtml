@@ -26,10 +26,10 @@
                 <table id="tablaCitas" class="table table-dark table-hover table-bordered">
                     <thead class="table-light text-dark" style="font-family: Raleway;">
                         <tr>
-                            <th>@Html.DisplayNameFor(model => model.Fecha_Cita)</th>
-                            <th>@Html.DisplayNameFor(model => model.Hora_Cita)</th>
-                            <th>@Html.DisplayNameFor(model => model.Empleado.Direccion)</th>
-                            <th>Nombre cliente</th>
+                            <th>Fecha de la Cita</th>
+                            <th>Hora de la Cita</th>
+                            <th>Especialista</th>
+                            <th>Nombre Cliente</th>
                             <th>Estado de la Cita</th>
                             <th>Especialidad</th>
                             <th>Acciones</th>
@@ -39,9 +39,9 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@Html.DisplayFor(modelItem => item.Fecha_Cita)</td>
+                                <td>@item.Fecha_Cita.ToString("dd/MM/yyyy")</td>
                                 <td>@Html.DisplayFor(modelItem => item.Hora_Cita)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Empleado.Direccion)</td>
+                                <td>@item.NombreEspecialista</td>
                                 <td>@Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Parametro.Nombre_Parametro)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Parametro1.Nombre_Parametro)</td>

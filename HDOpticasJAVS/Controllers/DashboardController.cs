@@ -79,6 +79,55 @@ namespace HDOpticasJAVS.Controllers
             ViewBag.TotalIngresos = totalIngresos;
             ViewBag.TotalGastos = totalGastos;
 
+            // Notificaciones de Citas
+            var hoy = DateTime.Today;
+            var fechaLimite = hoy.AddDays(2);
+
+            // Citas de hoy
+            var citasHoy = db.Cita
+                .Where(c => DbFunctions.TruncateTime(c.Fecha_Cita) == hoy && c.Estado == "A")
+                .ToList();
+
+            foreach (var cita in citasHoy)
+            {
+                cita.NombreEspecialista = db.Usuario
+                    .Where(u => u.Cedula == cita.Cedula_Especialista)
+                    .Select(u => u.Nombre + " " + u.Apellido1)
+                    .FirstOrDefault();
+            }
+
+            // Citas próximas
+            var citasProximas = db.Cita
+                .Where(c => DbFunctions.TruncateTime(c.Fecha_Cita) > hoy &&
+                            DbFunctions.TruncateTime(c.Fecha_Cita) <= fechaLimite &&
+                            c.Estado == "A")
+                .ToList();
+
+            foreach (var cita in citasProximas)
+            {
+                cita.NombreEspecialista = db.Usuario
+                    .Where(u => u.Cedula == cita.Cedula_Especialista)
+                    .Select(u => u.Nombre + " " + u.Apellido1)
+                    .FirstOrDefault();
+            }
+
+            // Citas atrasadas
+            var citasAtrasadas = db.Cita
+                .Where(c => DbFunctions.TruncateTime(c.Fecha_Cita) < hoy && c.Estado == "A")
+                .ToList();
+
+            foreach (var cita in citasAtrasadas)
+            {
+                cita.NombreEspecialista = db.Usuario
+                    .Where(u => u.Cedula == cita.Cedula_Especialista)
+                    .Select(u => u.Nombre + " " + u.Apellido1)
+                    .FirstOrDefault();
+            }
+
+            ViewBag.CitasHoy = citasHoy;
+            ViewBag.CitasProximas = citasProximas;
+            ViewBag.CitasAtrasadas = citasAtrasadas;
+
             return View();
         }
 

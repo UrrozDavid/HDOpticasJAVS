@@ -5,123 +5,96 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <h2 class="text-white">@ViewBag.Title</h2>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.Id_Cita)
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Cédula Usuario</label>
-                @Html.DropDownList("Cedula_Usuario", null, "-- Seleccionar --", new { @class = "form-select" })
-                @Html.ValidationMessageFor(model => model.Cedula_Usuario, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-6">
-                <label>Fecha de Cita</label>
-                @Html.TextBoxFor(model => model.Fecha_Cita, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
-                @Html.ValidationMessageFor(model => model.Fecha_Cita, "", new { @class = "text-danger" })
-            </div>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg" style="max-width: 900px; width: 100%; background: rgba(0, 0, 0, 0.7); color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
         </div>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Hora de Cita</label>
-                @Html.TextBoxFor(model => model.Hora_Cita, "{0:hh\\:mm}", new { @class = "form-control", @type = "time" })
-                @Html.ValidationMessageFor(model => model.Hora_Cita, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-6">
-                <label>Estado de la Cita</label>
-                @Html.DropDownList("Id_EstadoCita", null, "-- Seleccionar --", new { @class = "form-select" })
-                @Html.ValidationMessageFor(model => model.Id_EstadoCita, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id_Cita)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Tipo de Especialista</label>
-                @Html.DropDownList("Id_TipoEspecialista", ViewBag.Especialidades as SelectList, "-- Seleccionar --", new { @class = "form-select", @id = "ddlEspecialidadAdmin" })
-            </div>
-            <div class="col-md-6">
-                <label>Especialista</label>
-                <select id="ddlEspecialistaAdmin" name="Cedula_Especialista" class="form-select" required>
-                    <option value="">-- Seleccionar --</option>
-                </select>
-            </div>
-        </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Usuario (Cliente)</label>
+                        @Html.DropDownListFor(m => m.Cedula_Usuario, (SelectList)ViewBag.Cedula_Usuario, "-- Seleccionar --", new { @class = "form-select" })
+                        @Html.ValidationMessageFor(m => m.Cedula_Usuario, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Fecha de Cita</label>
+                        @Html.TextBoxFor(m => m.Fecha_Cita, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                        @Html.ValidationMessageFor(m => m.Fecha_Cita, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Hora de Cita</label>
+                        @Html.TextBoxFor(m => m.Hora_Cita, "{0:hh\\:mm}", new { @class = "form-control", type = "time" })
+                        @Html.ValidationMessageFor(m => m.Hora_Cita, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Estado</label>
-                @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-6">
-                <label>Usuario Creador</label>
-                @Html.EditorFor(model => model.UsuarioCreador, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UsuarioCreador, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Tipo de Especialista</label>
+                        @Html.DropDownListFor(m => m.Id_TipoEspecialista, (SelectList)ViewBag.Id_TipoEspecialista, "-- Seleccionar --", new { @class = "form-select", id = "ddlEspecialidadAdmin" })
+                        @Html.ValidationMessageFor(m => m.Id_TipoEspecialista, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Especialista</label>
+                        @Html.DropDownListFor(
+                            m => m.Cedula_Especialista,
+                            (SelectList)(ViewBag.Especialistas ?? new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text")),
+                            "-- Seleccionar --",
+                            new { @class = "form-select", id = "ddlEspecialistaAdmin" }
+                        )
+                        @Html.ValidationMessageFor(m => m.Cedula_Especialista, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Fecha de Creación</label>
-                @Html.TextBoxFor(model => model.FechaCreacion, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
-                @Html.ValidationMessageFor(model => model.FechaCreacion, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-6">
-                <label>Usuario Modificador</label>
-                @Html.EditorFor(model => model.UsuarioModificador, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UsuarioModificador, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Estado de la Cita</label>
+                        @Html.DropDownListFor(m => m.Id_EstadoCita, (SelectList)ViewBag.Id_EstadoCita, "-- Seleccionar --", new { @class = "form-select" })
+                        @Html.ValidationMessageFor(m => m.Id_EstadoCita, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Estado</label>
+                        @Html.DropDownListFor(m => m.Estado, (SelectList)ViewBag.EstadosAI, "-- Seleccionar --", new { @class = "form-select" })
+                        @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <label>Fecha de Modificación</label>
-                @Html.TextBoxFor(model => model.FechaModificacion, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
-                @Html.ValidationMessageFor(model => model.FechaModificacion, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-6">
-                <label>Token Confirmación</label>
-                @Html.EditorFor(model => model.TokenConfirmacion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TokenConfirmacion, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="text-end">
+                    <a href="@Url.Action("Index", "CitaEnLinea")" class="btn btn-secondary me-2">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            }
 
-        <div class="col-12 text-end mt-3">
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-            <a href="@Url.Action("Index", "CitaEnLinea")" class="btn btn-secondary me-2">Volver</a>
         </div>
-    }
+    </div>
 </div>
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            $('#ddlEspecialidadAdmin').change(function () {
+        $(function () {
+            // Cargar especialistas al cambiar especialidad
+            $('#ddlEspecialidadAdmin').on('change', function () {
                 var idEspecialidad = $(this).val();
-                console.log("Especialidad seleccionada:", idEspecialidad);
+                var ddl = $('#ddlEspecialistaAdmin');
+
+                ddl.empty().append($('<option>').text('-- Seleccionar --').attr('value', ''));
 
                 if (idEspecialidad) {
                     $.getJSON('@Url.Action("ObtenerEspecialistas", "CitaEnLinea")',
                         { idEspecialidad: idEspecialidad },
                         function (data) {
-                            console.log("Especialistas recibidos:", data);
-                            var ddl = $('#ddlEspecialistaAdmin');
-                            ddl.empty();
-                            ddl.append($('<option>').text('-- Seleccione un especialista --').attr('value', ''));
                             $.each(data, function (i, item) {
                                 ddl.append($('<option>').text(item.NombreCompleto).attr('value', item.Cedula));
                             });
-                        }).fail(function (jqXHR, textStatus, errorThrown) {
-                            console.error("Error en la petición AJAX:", textStatus, errorThrown);
                         });
-                } else {
-                    $('#ddlEspecialistaAdmin').empty().append($('<option>').text('-- Seleccione un especialista --').attr('value', ''));
                 }
             });
         });

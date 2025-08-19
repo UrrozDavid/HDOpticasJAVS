@@ -11,7 +11,8 @@ namespace HDOpticasJAVS
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class Cita
     {
         public int Id_Cita { get; set; }
@@ -32,5 +33,8 @@ namespace HDOpticasJAVS
         public virtual Usuario Usuario { get; set; }
         public virtual Parametro Parametro { get; set; }
         public virtual Parametro Parametro1 { get; set; }
+
+        [NotMapped]
+        public string NombreEspecialista { get; set; }
     }
 }
