@@ -144,17 +144,29 @@ namespace HDOpticasJAVS.Controllers
                 };
 
                 db.Usuario.Add(nuevoUsuario);
+                db.SaveChanges();
+
+                int idGenero = int.Parse(form["Id_Genero"]);
 
                 Cliente nuevoCliente = new Cliente
                 {
                     Cedula = cedula,
                     Edad = int.Parse(form["Edad"]),
-                    Id_Genero = int.Parse(form["Id_Genero"]),
+                    Id_Genero = idGenero,
                     Padecimiento = form["Padecimiento"],
                     Numero_Telefono = form["Numero_Telefono"],
                     Estado = "A",
                     UsuarioCreador = "Sistema",
-                    FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Activo = true,
+
+                    // Redundancia
+                    Nombre = form["Nombre"],
+                    Apellido1 = form["Apellido1"],
+                    Apellido2 = form["Apellido2"],
+                    Correo = correo,
+                    Fecha_Nacimiento = Convert.ToDateTime(form["Fecha_Nacimiento"]),
+                    Genero = db.Parametro.FirstOrDefault(p => p.Id_Parametro == idGenero)?.Nombre_Parametro
                 };
 
                 db.Cliente.Add(nuevoCliente);
@@ -165,7 +177,8 @@ namespace HDOpticasJAVS.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensaje = "Error al registrar: " + ex.Message;
+                var inner = ex.InnerException?.InnerException?.Message ?? ex.InnerException?.Message ?? ex.Message;
+                ViewBag.Mensaje = "Error al registrar: " + inner;
                 ViewBag.Generos = db.Parametro.Where(p => p.Id_TipoParametro == 2 && p.Estado == "A").ToList();
                 return View("RegistroCliente");
             }

@@ -46,12 +46,12 @@
 
                 <div class="col-md-6">
                     <label>Fecha de Nacimiento</label>
-                    <input type="date" name="FechaNacimiento" class="form-control" required />
+                    <input type="date" name="FechaNacimiento" class="form-control" id="fechaNacimiento" required />
                 </div>
 
                 <div class="col-md-6">
                     <label>Edad</label>
-                    <input type="number" name="Edad" class="form-control" required />
+                    <input type="number" name="Edad" class="form-control" id="edad" readonly />
                 </div>
 
                 <div class="col-md-6">
@@ -77,3 +77,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("fechaNacimiento").addEventListener("change", function() {
+        let fechaNacimiento = new Date(this.value);
+        let hoy = new Date();
+        let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+        let mes = hoy.getMonth() - fechaNacimiento.getMonth();
+        let dia = hoy.getDate() - fechaNacimiento.getDate();
+
+        if (mes < 0 || (mes === 0 && dia < 0)) {
+            edad--;
+        }
+
+        document.getElementById("edad").value = edad;
+    });
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <text>alert("@TempData["Mensaje"]");</text>
+    }
+</script>

@@ -61,6 +61,9 @@ namespace HDOpticasJAVS.Controllers
                 };
 
                 db.Usuario.Add(nuevoUsuario);
+                db.SaveChanges();
+
+                int idGenero = int.Parse(form["Id_Genero"]);
 
                 Cliente nuevoCliente = new Cliente
                 {
@@ -71,7 +74,16 @@ namespace HDOpticasJAVS.Controllers
                     Numero_Telefono = form["Numero_Telefono"],
                     Estado = "A",
                     UsuarioCreador = Session["Cedula"]?.ToString() ?? "Sistema",
-                    FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Activo = true,
+
+                    // Redundancia
+                    Nombre = form["Nombre"],
+                    Apellido1 = form["Apellido1"],
+                    Apellido2 = form["Apellido2"],
+                    Correo = correo,
+                    Fecha_Nacimiento = Convert.ToDateTime(form["Fecha_Nacimiento"]),
+                    Genero = db.Parametro.FirstOrDefault(p => p.Id_Parametro == idGenero)?.Nombre_Parametro
                 };
 
                 db.Cliente.Add(nuevoCliente);
@@ -128,6 +140,7 @@ namespace HDOpticasJAVS.Controllers
                 };
 
                 db.Usuario.Add(nuevoUsuario);
+                db.SaveChanges();
 
                 Empleado nuevoEmpleado = new Empleado
                 {
