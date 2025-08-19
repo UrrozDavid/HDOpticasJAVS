@@ -571,6 +571,8 @@
     <Content Include="Views\Credito\PagarCredito.cshtml" />
     <Content Include="Views\Credito\AdminCreditos.cshtml" />
     <Content Include="Views\Credito\EditarCredito.cshtml" />
+    <Content Include="Views\Empleado\Informe.cshtml" />
+    <Content Include="Views\Empleado\InformePDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

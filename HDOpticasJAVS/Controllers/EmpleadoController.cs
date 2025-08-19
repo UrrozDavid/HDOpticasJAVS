@@ -232,20 +232,20 @@ namespace HDOpticasJAVS.Controllers
                 mensaje.To.Add(correoDestinatario);
                 mensaje.ReplyToList.Add(new MailAddress(empleado.Correo)); // permite responder al correo real del empleado
                 mensaje.Subject = "Solicitud desde perfil de empleado";
-                mensaje.Body = $@"
-Hola, el siguiente empleado ha enviado una solicitud desde su perfil:
+                                mensaje.Body = $@"
+                Hola, el siguiente empleado ha enviado una solicitud desde su perfil:
 
-Nombre: {empleado.Nombre} {empleado.Apellido1} {empleado.Apellido2}
-Cédula: {cedula}
-Correo: {empleado.Correo}
-Teléfono: {empleado.Telefono}
-Dirección: {empleado.Direccion}
+                Nombre: {empleado.Nombre} {empleado.Apellido1} {empleado.Apellido2}
+                Cédula: {cedula}
+                Correo: {empleado.Correo}
+                Teléfono: {empleado.Telefono}
+                Dirección: {empleado.Direccion}
 
-Mensaje adicional del empleado:
-{mensajeAdicional}
+                Mensaje adicional del empleado:
+                {mensajeAdicional}
 
-Fecha: {DateTime.Now:dd/MM/yyyy HH:mm:ss}
-";
+                Fecha: {DateTime.Now:dd/MM/yyyy HH:mm:ss}
+                ";
                 mensaje.IsBodyHtml = false;
 
                 using (var smtp = new SmtpClient("smtp.gmail.com", 587))
