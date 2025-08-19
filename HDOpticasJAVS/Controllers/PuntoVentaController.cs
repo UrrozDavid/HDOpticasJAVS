@@ -151,14 +151,15 @@ namespace HDOpticasJAVS.Controllers
                 return HttpNotFound();
 
             ViewBag.Cedula_Cliente = new SelectList(
-                db.Cliente.Include(c => c.Usuario).ToList()
-                    .Select(c => new
-                    {
-                        Cedula = c.Cedula,
-                        NombreCompleto = c.Usuario.Nombre + " " + c.Usuario.Apellido1 + " " + c.Usuario.Apellido2
-                    }),
-                "Cedula", "NombreCompleto", puntoVenta?.Cedula_Cliente
-            );
+    (from cli in db.Cliente
+     join usu in db.Usuario on cli.Cedula equals usu.Cedula
+     select new
+     {
+         Cedula = cli.Cedula,
+         NombreCompleto = usu.Nombre + " " + usu.Apellido1 + " " + usu.Apellido2
+     }).ToList(),
+    "Cedula", "NombreCompleto", puntoVenta?.Cedula_Cliente
+);
             ViewBag.Id_MetodoPago = new SelectList(
                 db.Parametro.Where(p => p.Id_TipoParametro == 3),
                 "Id_Parametro", "Nombre_Parametro", puntoVenta?.Id_MetodoPago
