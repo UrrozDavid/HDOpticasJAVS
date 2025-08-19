@@ -12,18 +12,15 @@
         </div>
         <div class="card-body" style="font-family: 'Roboto', sans-serif;">
 
-
             <div class="d-flex justify-content-between mb-3">
                 <div>
                     @Html.ActionLink("Crear Nueva Cita", "Create", null, new { @class = "btn btn-success" })
-
                 </div>
                 <div>
                     <button class="btn btn-success me-2" onclick="exportarTablaExcel()">Exportar a Excel</button>
                     <button class="btn btn-outline-light" onclick="exportarTablaPDF()">Exportar a PDF</button>
                 </div>
             </div>
-
 
             <div class="table-responsive">
                 <table id="tablaCitas" class="table table-dark table-hover table-bordered">
@@ -48,15 +45,35 @@
                                 <td>@Html.DisplayFor(modelItem => item.Usuario.Nombre)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Parametro.Nombre_Parametro)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Parametro1.Nombre_Parametro)</td>
-                                <td>
-                                    <a href="@Url.Action("Edit", new { id = item.Id_Cita })" class="btn btn-warning btn-sm">Editar</a>
-                                    <a href="@Url.Action("Details", new { id = item.Id_Cita })" class="btn btn-info btn-sm">Ver</a>
-                                    @using (Html.BeginForm("Delete", "CitaEnLinea", FormMethod.Post, new { onsubmit = "return confirm('¿Desea eliminar esta cita?');", style = "display:inline;" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        @Html.Hidden("id", item.Id_Cita)
-                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                    }
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-outline-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-three-dots-vertical"></i> Opciones
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("Details", "CitaEnLinea", new { id = item.Id_Cita })">
+                                                    <i class="bi bi-eye me-2"></i>Ver
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("Edit", "CitaEnLinea", new { id = item.Id_Cita })">
+                                                    <i class="bi bi-pencil me-2"></i>Editar
+                                                </a>
+                                            </li>
+                                            <li><hr class="dropdown-divider" /></li>
+                                            <li>
+                                                @using (Html.BeginForm("Delete", "CitaEnLinea", FormMethod.Post, new { onsubmit = "return confirm('¿Desea eliminar esta cita?');" }))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    @Html.Hidden("id", item.Id_Cita)
+                                                    <button type="submit" class="dropdown-item text-danger">
+                                                        <i class="bi bi-trash me-2"></i>Eliminar
+                                                    </button>
+                                                }
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -69,6 +86,7 @@
 
 <!-- Scripts de exportación -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
 <script>
@@ -98,14 +116,20 @@
         tablaClonada.querySelector("thead tr").lastElementChild.remove();
         tablaClonada.querySelectorAll("tbody tr").forEach(row => row.lastElementChild.remove());
 
-        doc.text("Listado de Citas", 14, 10);
+        doc.setFontSize(14);
+        doc.text("Listado de Citas", 14, 15);
+
         doc.autoTable({
             html: tablaClonada,
-            startY: 20,
+            startY: 25,
             styles: { fontSize: 10 },
-            headStyles: { fillColor: [26, 115, 232] }
+            headStyles: { fillColor: [26, 115, 232], textColor: [255, 255, 255] },
+            alternateRowStyles: { fillColor: [240, 240, 240] }
         });
 
         doc.save("Citas.pdf");
     }
 </script>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
