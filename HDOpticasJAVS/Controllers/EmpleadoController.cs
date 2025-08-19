@@ -96,7 +96,7 @@ namespace HDOpticasJAVS.Controllers
             ViewBag.Rol = rol;
             ViewBag.Departamento = departamento;
 
-            return View(empleados);
+            return View("~/Views/Empleado/Informe.cshtml", empleados);
         }
 
         public ActionResult ExportarExcel(string estado, string rol, string departamento)
