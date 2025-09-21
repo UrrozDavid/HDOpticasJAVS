@@ -10,12 +10,10 @@ namespace HDOpticasJAVS.Helpers
         {
             using (var db = new HD_Opticas_JAVS_BDEntities())
             {
-                // 🔍 Obtener criterios configurados
                 var criterios = db.CriteriosPromocionRecurrente.FirstOrDefault();
 
                 if (criterios == null)
                 {
-                    // ⛔ No se han configurado criterios, registrar el error
                     db.LogSistema.Add(new LogSistema
                     {
                         Fecha = DateTime.Now,
@@ -23,7 +21,6 @@ namespace HDOpticasJAVS.Helpers
                         Mensaje = "No se encontraron criterios configurados para promociones automáticas.",
                         Usuario = "Sistema"
                     });
-
                     db.SaveChanges();
                     return;
                 }
@@ -31,6 +28,7 @@ namespace HDOpticasJAVS.Helpers
                 int minimoCompras = criterios.MinimoCompras;
                 int diasRango = criterios.DiasRango;
                 DateTime fechaLimite = DateTime.Today.AddDays(-diasRango);
+                DateTime fechaCorte = DateTime.Today.AddDays(-30); // CORRECCIÓN
 
                 var clientesFrecuentes = db.PuntoVenta
                     .Where(v => v.Fecha_Venta >= fechaLimite)
@@ -41,86 +39,110 @@ namespace HDOpticasJAVS.Helpers
 
                 foreach (var cedula in clientesFrecuentes)
                 {
-                    var cliente = db.Cliente.FirstOrDefault(c => c.Cedula == cedula && c.Usuario.Correo != null);
-                    if (cliente == null)
+                    var cliente = (from c in db.Cliente
+                                   join u in db.Usuario on c.Cedula equals u.Cedula
+                                   where c.Cedula == cedula && u.Correo != null
+                                   select new
+                                   {
+                                       Cliente = c,
+                                       Usuario = u
+                                   }).FirstOrDefault();
+
+                    if (cliente == null || cliente.Usuario == null || string.IsNullOrWhiteSpace(cliente.Usuario.Correo))
                         continue;
 
-                    // Verifica si ya se envió recientemente
+                    // Validar si ya tiene campaña hoy
+                    bool yaTieneCampaniaHoy = db.CampaniaMarketing.Any(c =>
+                        c.UsuarioCreador == "Sistema" &&
+                        c.Fecha_Inicio == DateTime.Today &&
+                        db.CampaniaCliente.Any(cc => cc.Id_Campania == c.Id_Campania && cc.Cedula_Cliente == cliente.Cliente.Cedula));
+
+                    if (yaTieneCampaniaHoy)
+                        continue;
+
+                    // Verificar si recibió una automática en los últimos 30 días (CORREGIDO)
                     bool yaEnviado = db.CampaniaMetrica.Any(m =>
                         m.Cedula_Cliente == cedula &&
-                        m.FechaRegistro >= DateTime.Today.AddDays(-30) &&
+                        m.FechaRegistro >= fechaCorte &&
                         m.Automatica == true);
 
                     if (yaEnviado)
                         continue;
 
-                    // Crear campaña automática
-                    var nueva = new CampaniaMarketing
+                    try
                     {
-                        Nombre_Campania = "🎁 Promoción exclusiva para nuestros mejores clientes",
-                        Descripcion = "Gracias por tu preferencia. Disfruta un 10% de descuento en tu próxima compra.",
-                        Tipo = "Automática",
-                        Estado = "A",
-                        Fecha_Inicio = DateTime.Today,
-                        UsuarioCreador = "Sistema",
-                        FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                    };
+                        var nueva = new CampaniaMarketing
+                        {
+                            Nombre_Campania = "🎁 Promoción exclusiva para nuestros mejores clientes",
+                            Descripcion = "Gracias por tu preferencia. Disfruta un 10% de descuento en tu próxima compra.",
+                            Tipo = "Automática",
+                            Estado = "A",
+                            Fecha_Inicio = DateTime.Today,
+                            UsuarioCreador = "Sistema",
+                            FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                        };
 
-                    db.CampaniaMarketing.Add(nueva);
-                    db.SaveChanges();
+                        db.CampaniaMarketing.Add(nueva);
+                        db.SaveChanges();
 
-                    // Relacionar cliente con la campaña
-                    db.CampaniaCliente.Add(new CampaniaCliente
-                    {
-                        Id_Campania = nueva.Id_Campania,
-                        Cedula_Cliente = cliente.Cedula,
-                        Correo_Cliente = cliente.Usuario.Correo,
-                        Estado = "A",
-                        UsuarioCreador = "Sistema",
-                        FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                    });
+                        db.CampaniaCliente.Add(new CampaniaCliente
+                        {
+                            Id_Campania = nueva.Id_Campania,
+                            Cedula_Cliente = cliente.Cliente.Cedula,
+                            Correo_Cliente = cliente.Usuario.Correo,
+                            Estado = "A",
+                            UsuarioCreador = "Sistema",
+                            FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                        });
 
-                    // Registrar métrica
-                    db.CampaniaMetrica.Add(new CampaniaMetrica
-                    {
-                        Id_Campania = nueva.Id_Campania,
-                        Cedula_Cliente = cliente.Cedula,
-                        Click = false,
-                        Abierto = false,
-                        FechaRegistro = DateTime.Now,
-                        Automatica = true
-                    });
+                        db.CampaniaMetrica.Add(new CampaniaMetrica
+                        {
+                            Id_Campania = nueva.Id_Campania,
+                            Cedula_Cliente = cliente.Cliente.Cedula,
+                            Click = false,
+                            Abierto = false,
+                            FechaRegistro = DateTime.Now,
+                            Automatica = true
+                        });
 
-                    db.SaveChanges();
+                        db.SaveChanges();
 
-                    string asunto = "🎁 ¡Gracias por ser parte de nuestra familia!";
-                    string cuerpo = $@"
-    <h2>Hola {{Nombre}}</h2>
-    <p>Queremos agradecer tu lealtad con una promoción exclusiva.</p>
-    <p><strong>10% de descuento en tu próxima compra</strong>.</p>
-    <p><a href='https://www.hdopticas.com'>Haz clic aquí para redimirla</a></p>";
+                        string asunto = "🎁 ¡Gracias por ser parte de nuestra familia!";
+                        string cuerpo = $@"
+                            <h2>Hola {{Nombre}}</h2>
+                            <p>Queremos agradecer tu lealtad con una promoción exclusiva.</p>
+                            <p><strong>10% de descuento en tu próxima compra</strong>.</p>
+                            <p><a href='https://www.hdopticas.com'>Haz clic aquí para redimirla</a></p>";
 
-                    // 🔄 Reemplazo dinámico
-                    cuerpo = cuerpo.Replace("{{Nombre}}", cliente.Usuario.Nombre ?? "")
-                                   .Replace("{{Edad}}", cliente.Edad.ToString());
+                        cuerpo = cuerpo.Replace("{{Nombre}}", cliente.Usuario.Nombre ?? "")
+                                       .Replace("{{Edad}}", cliente.Cliente.Edad.ToString());
 
-                    // 🛑 Validación: Si quedó alguna variable sin reemplazar
-                    if (cuerpo.Contains("{{") || string.IsNullOrWhiteSpace(asunto))
+                        if (string.IsNullOrWhiteSpace(cliente.Usuario.Nombre) || cuerpo.Contains("{{"))
+                        {
+                            db.LogSistema.Add(new LogSistema
+                            {
+                                Fecha = DateTime.Now,
+                                Modulo = "Promociones Recurrentes",
+                                Mensaje = $"Correo no enviado a {cliente.Usuario.Correo ?? "sin correo"}. Error en plantilla personalizada.",
+                                Usuario = "Sistema"
+                            });
+                            db.SaveChanges();
+                            continue;
+                        }
+
+                        CorreoHelper.EnviarCorreo(cliente.Usuario.Correo, asunto, cuerpo);
+                    }
+                    catch (Exception ex)
                     {
                         db.LogSistema.Add(new LogSistema
                         {
                             Fecha = DateTime.Now,
                             Modulo = "Promociones Recurrentes",
-                            Mensaje = $"Correo no enviado a {cliente.Usuario.Correo}. Error en plantilla de personalización.",
+                            Mensaje = $"Error al procesar cliente {cliente.Cliente.Cedula}: {ex.Message}",
                             Usuario = "Sistema"
                         });
                         db.SaveChanges();
-                        continue; // ❌ No se envía este correo
                     }
-
-                    // ✅ Enviar correo si está bien
-                    CorreoHelper.EnviarCorreo(cliente.Usuario.Correo, asunto, cuerpo);
-
                 }
             }
         }

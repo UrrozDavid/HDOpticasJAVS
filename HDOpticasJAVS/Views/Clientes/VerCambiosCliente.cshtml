@@ -5,64 +5,81 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
-    <div class="card-header bg-info text-dark text-center rounded-top-4">
-        <h4 class="fw-bold mb-0"><i class="bi bi-clock-history"></i> Historial de Cambios</h4>
-    </div>
+<style>
+    .btn-verde {
+        background-color: #A8E063;
+        color: black !important;
+        border: none;
+        font-weight: bold;
+    }
 
-    <div class="card-body">
-        <p><strong>Cliente:</strong> @ViewBag.NombreCliente</p>
-        <p><strong>Cédula:</strong> @ViewBag.Cedula</p>
+        .btn-verde:hover {
+            background-color: #8DC44B;
+            color: black !important;
+        }
+</style>
 
-        <table class="table table-bordered table-hover table-dark">
-            <thead class="table-light text-dark">
-                <tr>
-                    <th>Fecha del Cambio</th>
-                    <th>Modificado por</th>
-                    <th>Nombre</th>
-                    <th>Apellido1</th>
-                    <th>Apellido2</th>
-                    <th>Correo</th>
-                    <th>Teléfono</th>
-                    <th>Fecha Nac.</th>
-                    <th>Edad</th>
-                    <th>Género</th>
-                    <th>Padecimiento</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var cambio in Model)
-                {
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 bg-dark text-white">
+        <div class="card-header text-center rounded-top-4" style="background-color: #A8E063; color: black;">
+            <h4 class="fw-bold mb-0">
+                <i class="bi bi-clock-history"></i> Historial de Cambios
+            </h4>
+        </div>
+
+        <div class="card-body">
+            <p><strong>Cliente:</strong> @ViewBag.NombreCliente</p>
+            <p><strong>Cédula:</strong> @ViewBag.Cedula</p>
+
+            <table class="table table-bordered table-hover table-dark mt-3">
+                <thead style="background-color: #000000; color: white;">
                     <tr>
-                        <td>
-                            @{
-                                DateTime fecha;
-                                var textoFecha = DateTime.TryParse(cambio.FechaCambio?.ToString(), out fecha)
-                                    ? fecha.ToString("yyyy-MM-dd HH:mm:ss")
-                                    : "N/D";
-                            }
-                            @textoFecha
-                        </td>
-
-                        <td>@cambio.UsuarioModificador</td>
-                        <td>@cambio.Nombre</td>
-                        <td>@cambio.Apellido1</td>
-                        <td>@cambio.Apellido2</td>
-                        <td>@cambio.Correo</td>
-                        <td>@cambio.Numero_Telefono</td>
-                        <td>@(cambio.Fecha_Nacimiento?.ToString("yyyy-MM-dd") ?? "N/D")</td>
-                        <td>@cambio.Edad</td>
-                        <td>@cambio.Genero</td>
-                        <td>@(string.IsNullOrEmpty(cambio.Padecimiento) ? "Ninguno" : cambio.Padecimiento)</td>
+                        <th>Fecha del Cambio</th>
+                        <th>Modificado por</th>
+                        <th>Nombre</th>
+                        <th>Apellido1</th>
+                        <th>Apellido2</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Fecha Nac.</th>
+                        <th>Edad</th>
+                        <th>Género</th>
+                        <th>Padecimiento</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var cambio in Model)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    DateTime fecha;
+                                    var textoFecha = DateTime.TryParse(cambio.FechaCambio?.ToString(), out fecha)
+                                        ? fecha.ToString("yyyy-MM-dd HH:mm:ss")
+                                        : "N/D";
+                                }
+                                @textoFecha
+                            </td>
+                            <td>@cambio.UsuarioModificador</td>
+                            <td>@cambio.Nombre</td>
+                            <td>@cambio.Apellido1</td>
+                            <td>@cambio.Apellido2</td>
+                            <td>@cambio.Correo</td>
+                            <td>@cambio.Numero_Telefono</td>
+                            <td>@(cambio.Fecha_Nacimiento?.ToString("yyyy-MM-dd") ?? "N/D")</td>
+                            <td>@cambio.Edad</td>
+                            <td>@cambio.Genero</td>
+                            <td>@(string.IsNullOrEmpty(cambio.Padecimiento) ? "Ninguno" : cambio.Padecimiento)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-        <div class="text-center mt-4">
-            <a href="@Url.Action("Index", "Clientes")" class="btn btn-secondary">
-                <i class="bi bi-arrow-left-circle"></i> Volver
-            </a>
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index", "Clientes")" class="btn btn-verde">
+                    <i class="bi bi-arrow-left-circle"></i> Volver
+                </a>
+            </div>
         </div>
     </div>
 </div>

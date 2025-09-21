@@ -5,7 +5,7 @@
 }
 
 <div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
-    <div class="card-header bg-primary text-white text-center rounded-top-4">
+    <div class="card-header bg-verde-personalizado text-center rounded-top-4" style="color: black;">
         <h4 class="fw-bold mb-0">Registro de Cliente</h4>
     </div>
 
@@ -23,7 +23,7 @@
             {
                 <div class="text-center mt-3">
                     <a href="@Url.Action("Detalles", "Clientes", new { id = TempData["CedulaClienteRegistrado"] })"
-                       class="btn btn-outline-light">
+                       class="btn text-white" style="background-color: #A8E063;">
                         <i class="bi bi-person-lines-fill"></i> Ver cliente registrado
                     </a>
                 </div>
@@ -48,7 +48,7 @@
         {
             @Html.AntiForgeryToken()
 
-            <h5>Datos Personales</h5>
+            <h5 class="text-white">Datos Personales</h5>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.Cedula)
@@ -89,7 +89,7 @@
                 @Html.ValidationMessageFor(m => m.Fecha_Nacimiento, "", new { @class = "text-danger" })
             </div>
 
-            <h5 class="mt-4">Datos Clínicos</h5>
+            <h5 class="text-white mt-4">Datos Clínicos</h5>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.Edad)
@@ -114,7 +114,7 @@
                 @Html.TextBoxFor(m => m.Padecimiento, new { @class = "form-control" })
             </div>
 
-            <button type="submit" class="btn btn-success mt-3">
+            <button type="submit" class="btn text-black mt-3" style="background-color: #A8E063;">
                 <i class="bi bi-save"></i> Registrar Cliente
             </button>
         }

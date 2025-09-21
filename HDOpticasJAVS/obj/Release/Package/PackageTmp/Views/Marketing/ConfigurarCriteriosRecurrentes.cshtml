@@ -1,36 +1,48 @@
 ﻿@model HDOpticasJAVS.CriteriosPromocionRecurrente
 
-
 @{
     ViewBag.Title = "Configurar Criterios de Clientes Recurrentes";
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Ajusta según tu layout principal
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5 bg-dark text-white p-4 rounded shadow-lg">
-    <h2 class="text-primary mb-4">⚙️ Configurar criterios de promociones automáticas</h2>
-
-    @if (TempData["Exito"] != null)
-    {
-        <div class="alert alert-success">@TempData["Exito"]</div>
-    }
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-group">
-            <label>Mínimo de Compras</label>
-            @Html.TextBoxFor(m => m.MinimoCompras, new { @class = "form-control", type = "number", min = "1" })
-            @Html.ValidationMessageFor(m => m.MinimoCompras, "", new { @class = "text-danger" })
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg p-4" style="max-width: 600px; width: 100%; background-color: #1f1f1f; border-radius: 15px; color: #F1E0C6;">
+        <!-- Encabezado -->
+        <div class="card-header text-center" style="background-color: #A8E063; color: black; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h3 class="fw-bold" style="font-family: 'Poppins', sans-serif;">⚙️ Configurar Criterios de Promociones Automáticas</h3>
         </div>
 
-        <div class="form-group mt-3">
-            <label>Días del Rango</label>
-            @Html.TextBoxFor(m => m.DiasRango, new { @class = "form-control", type = "number", min = "1" })
-            @Html.ValidationMessageFor(m => m.DiasRango, "", new { @class = "text-danger" })
-        </div>
+        <div class="card-body">
+            @if (TempData["Exito"] != null)
+            {
+                <div class="alert alert-success text-center">@TempData["Exito"]</div>
+            }
 
-        <button type="submit" class="btn btn-primary mt-3">💾 Guardar Criterios</button>
-    }
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group mb-3">
+                    <label for="MinimoCompras" class="form-label">Mínimo de Compras</label>
+                    @Html.TextBoxFor(m => m.MinimoCompras, new { @class = "form-control", type = "number", min = "1" })
+                    @Html.ValidationMessageFor(m => m.MinimoCompras, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="DiasRango" class="form-label">Días del Rango</label>
+                    @Html.TextBoxFor(m => m.DiasRango, new { @class = "form-control", type = "number", min = "1" })
+                    @Html.ValidationMessageFor(m => m.DiasRango, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success fw-bold" style="color: black;">
+                        💾 Guardar Criterios
+                    </button>
+                    <a href="@Url.Action("Index", "Marketing")" class="btn btn-success fw-bold ms-2" style="color: black;">
+                        ↩ Volver
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
 </div>
-``

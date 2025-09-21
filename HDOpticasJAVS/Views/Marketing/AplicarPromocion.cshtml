@@ -1,98 +1,144 @@
 ﻿@{
-    ViewBag.Title = "Aplicar Promoción a Venta";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    var idVenta = (int)ViewBag.IdVenta;
-    var promosAplicadas = ViewBag.PromosAplicadas as System.Collections.IEnumerable;
+    ViewBag.Title = "Aplicar Promoción";
+
+    // Valores seguros (si vienen nulos)
+    decimal sub = Convert.ToDecimal(ViewBag.Subtotal ?? 0m);
+    decimal iva = Convert.ToDecimal(ViewBag.IVA ?? 0m);
+    decimal desc = Convert.ToDecimal(ViewBag.DescAcum ?? 0m);
+    decimal brut = Convert.ToDecimal(ViewBag.TotalBruto ?? 0m);
+    decimal neto = Convert.ToDecimal(ViewBag.TotalNeto ?? (brut - desc));
 }
 
-<div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
-    <div class="card-header bg-primary text-white text-center rounded-top-4">
-        <h4 class="fw-bold mb-0"><i class="bi bi-ticket-perforated"></i> Aplicar Promoción a la Venta #@idVenta</h4>
+<style>
+    .pv-card {
+        background: #1f1f1f;
+        color: #fff;
+        border-radius: 15px;
+    }
+
+    .pv-header {
+        background: #A8E063;
+        color: #000;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .pv-pill {
+        background: #A8E063;
+        color: #000;
+        border-radius: 12px;
+    }
+
+    .pv-pill-dark {
+        background: #2f8f57;
+        color: #000;
+        border-radius: 12px;
+    }
+
+    .pv-label-sm {
+        font-size: .85rem;
+        opacity: .9;
+    }
+
+    .pv-value {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .pv-btn-green {
+        background: #A8E063;
+        color: #000;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+        .pv-btn-green:hover {
+            filter: brightness(.95);
+            color: #000;
+        }
+
+    .pv-form .form-label {
+        color: #dcdcdc;
+    }
+</style>
+
+<div class="card shadow-lg pv-card p-0">
+    <div class="card-header pv-header">
+        <h4 class="fw-bold m-0" style="font-family:'Poppins',sans-serif;">
+            Aplicar Promoción a la venta #@ViewBag.IdVenta
+        </h4>
     </div>
 
-    <div class="card-body">
-        @if (TempData["Mensaje"] != null)
-        {
-            <div class="alert alert-success">@TempData["Mensaje"]</div>
-        }
-        @if (TempData["Error"] != null)
-        {
-            <div class="alert alert-danger">@TempData["Error"]</div>
-        }
+    <div class="card-body pv-form" style="font-family:'Roboto',sans-serif;">
 
-        <div class="row mb-3">
-            <div class="col-md-4"><strong>Subtotal:</strong> @String.Format("{0:N2}", ViewBag.SubtotalVenta)</div>
-            <div class="col-md-4"><strong>IVA:</strong> @String.Format("{0:N2}", ViewBag.IVAVenta)</div>
-            <div class="col-md-4"><strong>Total (antes de descuento):</strong> @String.Format("{0:N2}", ViewBag.TotalVenta)</div>
+        <!-- Métricas -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="pv-pill p-3">
+                    <div class="pv-label-sm">Subtotal</div>
+                    <p class="pv-value">₡@sub.ToString("N2")</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="pv-pill p-3">
+                    <div class="pv-label-sm">IVA</div>
+                    <p class="pv-value">₡@iva.ToString("N2")</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="pv-pill p-3">
+                    <div class="pv-label-sm">Descuento acumulado</div>
+                    <p class="pv-value">-₡@desc.ToString("N2")</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="pv-pill-dark p-3">
+                    <div class="pv-label-sm">Total neto</div>
+                    <p class="pv-value">₡@neto.ToString("N2")</p>
+                </div>
+            </div>
         </div>
 
-        @using (Html.BeginForm("AplicarPromocion", "Marketing", FormMethod.Post, new { @class = "row g-3" }))
+        <!-- Mensajes -->
+        @if (TempData["Error"] != null)
+        {<div class="alert alert-danger">@TempData["Error"]</div>}
+        @if (TempData["Mensaje"] != null)
+        {<div class="alert alert-success">@TempData["Mensaje"]</div>}
+
+        <!-- Formulario -->
+        @using (Html.BeginForm("AplicarPromocion", "Marketing", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-            @Html.Hidden("idVenta", idVenta)
+            <input type="hidden" name="idVenta" value="@ViewBag.IdVenta" />
 
-            <div class="col-md-6">
+            <div class="mb-3">
                 <label class="form-label">Campaña</label>
-                @Html.DropDownList("idCampania", (SelectList)ViewBag.Campanias, "Seleccione...", new { @class = "form-select bg-dark text-white" })
+                @Html.DropDownList(
+                    "idCampania",
+                    (SelectList)ViewBag.Campanias,
+                    "-- Seleccione --",
+                    new { @class = "form-select" })
             </div>
 
-            <div class="col-md-3">
-                <label class="form-label">Monto Descuento</label>
-                <input type="number" step="0.01" name="montoDescuento" class="form-control bg-dark text-white" required />
+            <div class="mb-3">
+                <label class="form-label">Monto descuento</label>
+                <input type="number" step="0.01" min="0.01" name="montoDescuento" class="form-control" required />
             </div>
 
-            <div class="col-md-3">
-                <label class="form-label">Código (opcional)</label>
-                <input type="text" name="codigoPromo" class="form-control bg-dark text-white" />
+            <div class="mb-4">
+                <label class="form-label">Código promo (opcional)</label>
+                <input type="text" name="codigoPromo" class="form-control" />
             </div>
 
-            <div class="col-12">
-                <button type="submit" class="btn btn-success">
-                    <i class="bi bi-check2-circle"></i> Aplicar Promoción
+            <div class="d-flex">
+                <button type="submit" class="btn pv-btn-green">
+                    <i class="fa fa-check"></i> Aplicar
                 </button>
-                <a href="@Url.Action("Details","PuntoVenta", new { id = idVenta })" class="btn btn-secondary ms-2">
-                    <i class="bi bi-arrow-left"></i> Volver a la venta
+                <a href="@Url.Action("Index","PuntoVenta")" class="btn pv-btn-green">
+                    <i class="fa fa-arrow-left"></i> Volver
                 </a>
             </div>
         }
-
-        <hr class="border-secondary my-4" />
-
-        <h5 class="mb-3">Promociones ya aplicadas</h5>
-        <table class="table table-bordered table-hover mt-2">
-            <thead class="bg-danger text-white">
-                <tr>
-                    <th>Fecha</th>
-                    <th>Campaña</th>
-                    <th>Descuento</th>
-                    <th>Código</th>
-                </tr>
-            </thead>
-            <tbody class="bg-dark text-white">
-                @if (promosAplicadas == null)
-                {
-                    <tr><td colspan="4" class="text-center">Sin promociones.</td></tr>
-                }
-                else
-                {
-                    foreach (dynamic p in promosAplicadas)
-                    {
-                        <tr>
-                            <td>@(((DateTime)p.FechaAplicacion).ToString("yyyy-MM-dd HH:mm"))</td>
-                            <td>@p.NombreCampania</td>
-                            <td>@String.Format("{0:N2}", p.MontoDescuento)</td>
-                            <td>@(p.CodigoPromo ?? "-")</td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
     </div>
 </div>
-
-<style>
-    .table-hover tbody tr:hover {
-        background-color: #495057 !important;
-        color: #fff !important;
-    }
-</style>

@@ -1,81 +1,149 @@
 ﻿@model List<HDOpticasJAVS.Cita>
 
-<table class="table table-bordered table-dark table-hover mt-3">
-    <thead class="table-light text-dark">
-        <tr>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Especialidad</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (!Model.Any())
-        {
-            <tr>
-                <td colspan="5" class="text-center">No tienes citas agendadas.</td>
-            </tr>
+<style>
+    .pv-card {
+        background: #1f1f1f;
+        color: #fff;
+        border-radius: 15px;
+    }
+
+    .pv-header {
+        background: #A8E063;
+        color: #000;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .pv-table {
+        background: #222;
+        color: #fff;
+    }
+
+        .pv-table thead {
+            background: #333;
+            color: #fff;
         }
-        else
-        {
-            foreach (var cita in Model)
-            {
+
+        .pv-table th, .pv-table td {
+            vertical-align: middle;
+            padding: .55rem .7rem;
+        }
+
+        .pv-table tbody tr:nth-child(odd) {
+            background: #1e1e1e;
+        }
+
+        .pv-table tbody tr:nth-child(even) {
+            background: #202020;
+        }
+
+    .pv-btn-green {
+        background: #A8E063;
+        color: #000;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+        .pv-btn-green:hover {
+            filter: brightness(.95);
+            color: #000;
+        }
+
+    .pv-btn-red {
+        background: #e55353;
+        color: #fff;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+        .pv-btn-red:hover {
+            filter: brightness(.95);
+            color: #fff;
+        }
+</style>
+
+<div class="card shadow-lg pv-card">
+    <div class="card-header pv-header">
+        <h4 class="fw-bold m-0" style="font-family:'Poppins',sans-serif;">Mis Citas</h4>
+    </div>
+
+    <div class="card-body" style="font-family:'Roboto',sans-serif;">
+        <table class="table table-bordered table-hover pv-table mt-0">
+            <thead>
                 <tr>
-                    <td>@cita.Fecha_Cita.ToString("yyyy-MM-dd")</td>
-                    <td>@cita.Hora_Cita</td>
-                    <td>@cita.Parametro1.Nombre_Parametro</td>
-                    <td>@cita.Parametro.Nombre_Parametro</td>
-                    <td>
-                        <a href="@Url.Action("Editar", "CitaEnLinea", new { id = cita.Id_Cita })" class="btn btn-warning btn-sm">Editar</a>
-
-                        @using (Html.BeginForm("CancelarCita", "CitaEnLinea", FormMethod.Post))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.Hidden("idCita", cita.Id_Cita)
-
-                            <button class="btn btn-sm btn-danger"
-                                    type="submit"
-                                    data-fecha="@cita.Fecha_Cita.ToString("yyyy-MM-dd")"
-                                    data-hora="@cita.Hora_Cita.ToString(@"hh\:mm")"
-                                    onclick="return validarCancelar(this);">
-                                Cancelar
-                            </button>
-                        }
-
-                        <script>
-                            function validarCancelar(btn) {
-                                if (!confirm('¿Deseas cancelar esta cita?')) {
-                                    return false;
-                                }
-
-                                const fechaStr = btn.getAttribute('data-fecha');
-                                const horaStr = btn.getAttribute('data-hora');
-
-                                if (!fechaStr || !horaStr) {
-                                    alert("No se pudo validar la fecha y hora de la cita.");
-                                    return false;
-                                }
-
-                                const citaDateTime = new Date(fechaStr + 'T' + horaStr + ':00'); 
-
-                                const ahora = new Date();
-
-                                const diffMs = citaDateTime - ahora;
-
-                                const horas24 = 24 * 60 * 60 * 1000;
-
-                                if (diffMs < horas24) {
-                                    alert("No se puede cancelar la cita con menos de 24 horas de anticipación.");
-                                    return false;
-                                }
-
-                                return true;
-                            }
-                        </script>
-                    </td>
+                    <th style="width:18%;">Fecha</th>
+                    <th style="width:16%;">Hora</th>
+                    <th>Especialidad</th>
+                    <th style="width:22%;">Estado</th>
+                    <th style="width:22%;">Acciones</th>
                 </tr>
-            }
-        }
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">No tienes citas agendadas.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var cita in Model)
+                    {
+                        <tr>
+                            <td>@cita.Fecha_Cita.ToString("yyyy-MM-dd")</td>
+                            <td>@cita.Hora_Cita</td>
+                            <td>@cita.Parametro1.Nombre_Parametro</td>
+                            <td>@cita.Parametro.Nombre_Parametro</td>
+                            <td class="d-flex gap-2">
+                                <a href="@Url.Action("Editar", "CitaEnLinea", new { id = cita.Id_Cita })"
+                                   class="btn btn-sm pv-btn-green">Editar</a>
+
+                                @using (Html.BeginForm("CancelarCita", "CitaEnLinea", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("idCita", cita.Id_Cita)
+
+                                    <button class="btn btn-sm pv-btn-red"
+                                            type="submit"
+                                            data-fecha="@cita.Fecha_Cita.ToString("yyyy-MM-dd")"
+                                            data-hora="@cita.Hora_Cita.ToString(@"hh\:mm")"
+                                            onclick="return validarCancelar(this);">
+                                        Cancelar
+                                    </button>
+                                }
+
+                                <script>
+                                    function validarCancelar(btn) {
+                                        if (!confirm('¿Deseas cancelar esta cita?')) {
+                                            return false;
+                                        }
+
+                                        const fechaStr = btn.getAttribute('data-fecha');
+                                        const horaStr = btn.getAttribute('data-hora');
+
+                                        if (!fechaStr || !horaStr) {
+                                            alert("No se pudo validar la fecha y hora de la cita.");
+                                            return false;
+                                        }
+
+                                        const citaDateTime = new Date(fechaStr + 'T' + horaStr + ':00');
+                                        const ahora = new Date();
+                                        const diffMs = citaDateTime - ahora;
+                                        const horas24 = 24 * 60 * 60 * 1000;
+
+                                        if (diffMs < horas24) {
+                                            alert("No se puede cancelar la cita con menos de 24 horas de anticipación.");
+                                            return false;
+                                        }
+
+                                        return true;
+                                    }
+                                </script>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

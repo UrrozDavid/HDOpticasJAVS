@@ -5,44 +5,128 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg w-100" style="max-width: 800px; border-radius: 15px;">
+<style>
+    .k-header {
+        max-width: 1100px;
+        margin: 20px auto 0;
+        background: #A8E063;
+        color: #000;
+        border-radius: 15px 15px 0 0;
+        padding: 14px 20px;
+        font-weight: 800;
+        text-align: center;
+    }
 
-        <div class="card-header text-center bg-primary text-white" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
-        </div>
+        .k-header h2 {
+            margin: 0;
+            font-weight: 800;
+            color: #000 !important; 
+        }
 
-        <div class="card-body bg-dark text-light" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; font-family: 'Roboto', sans-serif;">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-                @Html.HiddenFor(m => m.Id_NotaCredito)
+    .k-card {
+        max-width: 1100px;
+        margin: 0 auto 24px;
+        background: #1f1f1f;
+        color: #F1E0C6;
+        border: 1px solid #2c2c2c;
+        border-top: 0;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 12px 24px rgba(0,0,0,.25);
+        padding: 20px;
+        font-family: 'Roboto',sans-serif;
+    }
 
-                <div class="form-group mb-3">
-                    <label class="fw-bold">Monto Otorgado</label>
-                    <input type="text" class="form-control" value="@Model.MontoOtorgado.ToString("C")" readonly />
-                </div>
+        .k-card .form-label {
+            color: #cfcfcf;
+            font-weight: 700;
+        }
 
-                <div class="form-group mb-3">
-                    <label class="fw-bold">Saldo Pendiente</label>
-                    @Html.TextBoxFor(m => m.SaldoPendiente, new { @class = "form-control" })
-                </div>
+        .k-card .form-control, .k-card .form-select {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #3b3b3b !important;
+        }
 
-                <div class="form-group mb-3">
-                    <label class="fw-bold">Estado</label>
-                    @Html.DropDownListFor(m => m.Estado,
-                        new SelectList(new[] {
-                            new { Value = "A", Text = "Activo" },
-                            new { Value = "C", Text = "Cancelado" }
-                        }, "Value", "Text", Model.Estado),
-                        new { @class = "form-select" })
-                </div>
-
-                <div class="d-flex justify-content-between mt-4">
-                    <button type="submit" class="btn btn-success fw-bold px-4">Guardar Cambios</button>
-                    <a href="@Url.Action("AdminCreditos")" class="btn btn-secondary fw-bold px-4">Volver</a>
-                </div>
+            .k-card .form-control:focus, .k-card .form-select:focus {
+                background: #2f2f2f !important;
+                color: #fff !important;
+                border-color: #5b5b5b !important;
+                box-shadow: none !important;
             }
+
+    .btn-success {
+        background: #A8E063 !important;
+        color: #000 !important;
+        border: none !important;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+        .btn-success:hover {
+            filter: brightness(.95);
+        }
+
+    .btn-secondary {
+        background: transparent !important;
+        border: 1px solid #6c757d !important;
+        color: #e6e6e6 !important;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+        .btn-secondary:hover {
+            background: #2a2a2a !important;
+            color: #fff !important;
+        }
+    
+    .k-card .btn-secondary {
+        background: #A8E063 !important;
+        color: #000 !important;
+        border: none !important;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+        .k-card .btn-secondary:hover {
+            filter: brightness(.95);
+            color: #000 !important;
+        }
+
+</style>
+
+<div class="k-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<div class="k-card">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id_NotaCredito)
+
+        <div class="mb-3">
+            <label class="form-label">Monto Otorgado</label>
+            <input type="text" class="form-control" value="@Model.MontoOtorgado.ToString("C")" readonly />
         </div>
-    </div>
+
+        <div class="mb-3">
+            <label class="form-label">Saldo Pendiente</label>
+            @Html.TextBoxFor(m => m.SaldoPendiente, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Estado</label>
+            @Html.DropDownListFor(m => m.Estado,
+                new SelectList(new[] {
+                    new { Value = "A", Text = "Activo" },
+                    new { Value = "C", Text = "Cancelado" }
+                }, "Value", "Text", Model.Estado),
+                new { @class = "form-select" })
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-success px-4">Guardar Cambios</button>
+            <a href="@Url.Action("AdminCreditos")" class="btn btn-secondary px-4">Volver</a>
+        </div>
+    }
 </div>

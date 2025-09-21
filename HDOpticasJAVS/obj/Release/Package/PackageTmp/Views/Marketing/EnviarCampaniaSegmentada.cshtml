@@ -4,36 +4,108 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .card-dark {
+        background-color: #1f1f1f;
+        color: #F1E0C6;
+        border-radius: 12px;
+    }
+
+    /* Header verde con título centrado y contraste forzado */
+    .header-verde {
+        background-color: #A8E063;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        text-align: center;
+        padding: 10px;
+    }
+
+        .header-verde h2 {
+            color: #000 !important; 
+            font-weight: 800;
+            text-shadow: 0 0 2px rgba(255,255,255,0.6); 
+            margin: 0;
+        }
+
+    .form-control, .form-select {
+        background-color: #f8f9fa;
+        color: #000;
+        border: 1px solid #ccc;
+    }
+
+    .btn-verde {
+        background-color: #A8E063;
+        border-color: #A8E063;
+        color: #000 !important;
+        font-weight: 700;
+        border: none;
+        min-width: 150px;
+    }
+
+        .btn-verde:hover {
+            background-color: #8DC44B;
+            border-color: #8DC44B;
+            color: #000 !important;
+        }
+
+    .helper-note {
+        display: block;
+        margin-top: 6px;
+        color: #d6d6d6;
+    }
+
+    /* Contenedor de botones finales */
+    .acciones-finales {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 20px;
+    }
+</style>
+
 <div class="container mt-4">
-    <div class="card bg-dark text-white p-4 shadow-lg border-light rounded-4">
-        <h2 class="text-info mb-3">📤 Enviar Campaña a Lista Segmentada</h2>
+    <div class="card card-dark shadow-lg p-4">
+        <div class="header-verde">
+            <h2 class="fw-bold mb-0">📤 Enviar Campaña a Lista Segmentada</h2>
+        </div>
 
         @if (!ViewData.ModelState.IsValid)
         {
-            <div class="alert alert-warning">@Html.ValidationSummary()</div>
+            <div class="alert alert-warning mt-3">@Html.ValidationSummary()</div>
         }
 
         @using (Html.BeginForm("EnviarCampaniaSegmentada", "Marketing", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
         {
             @Html.AntiForgeryToken()
 
-            <div class="mb-3">
-                <label class="form-label text-white">Lista Segmentada</label>
-                @Html.DropDownListFor(m => m.Id_Lista, Model.ListasDisponibles, "Seleccione una lista", new { @class = "form-select bg-dark text-white border-light" })
+            <div class="mb-3 mt-3">
+                <label class="form-label fw-semibold">Lista Segmentada</label>
+                @Html.DropDownListFor(m => m.Id_Lista, Model.ListasDisponibles, "Seleccione una lista", new { @class = "form-select" })
             </div>
 
             <div class="mb-3">
-                <label class="form-label text-white">Asunto del Correo</label>
-                @Html.TextBoxFor(m => m.Asunto, new { @class = "form-control bg-dark text-white border-light", placeholder = "Asunto del correo" })
+                <label class="form-label fw-semibold">Asunto del Correo</label>
+                @Html.TextBoxFor(m => m.Asunto, new { @class = "form-control", placeholder = "Asunto del correo" })
             </div>
 
             <div class="mb-3">
-                <label class="form-label text-white">Mensaje HTML</label>
-                @Html.TextAreaFor(m => m.MensajeHtml, new { @class = "form-control bg-dark text-white border-light", rows = 8 })
-                <small class="text-muted">Puedes usar etiquetas como <code>{{Nombre}}</code> y <code>{{Edad}}</code> para personalizar el mensaje.</small>
+                <label class="form-label fw-semibold">Mensaje HTML</label>
+                @Html.TextAreaFor(m => m.MensajeHtml, new { @class = "form-control", rows = 8 })
+                <small class="helper-note">
+                    Puedes usar etiquetas como <code>{{Nombre}}</code> y <code>{{Edad}}</code> para personalizar el mensaje.
+                </small>
             </div>
 
-            <button type="submit" class="btn btn-success">📧 Enviar Campaña</button>
+            
+            <div class="acciones-finales">
+                <button type="submit" class="btn btn-verde">
+                    📧 Enviar Campaña
+                </button>
+
+                <a href="@Url.Action("Historial", "Marketing")" class="btn btn-verde">
+                    ⬅️ Volver al Historial
+                </a>
+            </div>
         }
     </div>
 </div>

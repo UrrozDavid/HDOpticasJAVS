@@ -2,42 +2,104 @@
 
 @{
     ViewBag.Title = "Detalles Contabilidad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Detalles de Contabilidad</h2>
+<div class="card pv-card shadow-lg">
+    <div class="pv-header">
+        <h4 class="fw-bold mb-0">@ViewBag.Title</h4>
+    </div>
 
-<div>
-    <dl class="dl-horizontal">
-        <dt>ID</dt>
-        <dd>@Model.Id_Contabilidad</dd>
+    <div class="card-body pv-body">
+        <dl class="row pv-dl">
+            <dt class="col-sm-4">ID</dt>
+            <dd class="col-sm-8">@Model.Id_Contabilidad</dd>
 
-        <dt>Id Venta</dt>
-        <dd>@Model.Id_Venta</dd>
+            <dt class="col-sm-4">Id Venta</dt>
+            <dd class="col-sm-8">@Model.Id_Venta</dd>
 
-        <dt>Id Producto</dt>
-        <dd>@Model.Id_Producto</dd>
+            <dt class="col-sm-4">Id Producto</dt>
+            <dd class="col-sm-8">@Model.Id_Producto</dd>
 
-        <dt>Cantidad</dt>
-        <dd>@Model.Cantidad</dd>
+            <dt class="col-sm-4">Cantidad</dt>
+            <dd class="col-sm-8">@Model.Cantidad</dd>
 
-        <dt>Precio Unitario</dt>
-        <dd>@Model.PrecioUnitario</dd>
+            <dt class="col-sm-4">Precio Unitario</dt>
+            <dd class="col-sm-8">@Model.PrecioUnitario</dd>
 
-        <dt>Subtotal</dt>
-        <dd>@Model.Subtotal</dd>
+            <dt class="col-sm-4">Subtotal</dt>
+            <dd class="col-sm-8">@Model.Subtotal</dd>
 
-        <dt>IVA</dt>
-        <dd>@Model.IVA</dd>
+            <dt class="col-sm-4">IVA</dt>
+            <dd class="col-sm-8">@Model.IVA</dd>
 
-        <dt>Total</dt>
-        <dd>@Model.Total</dd>
+            <dt class="col-sm-4">Total</dt>
+            <dd class="col-sm-8">@Model.Total</dd>
 
-        <dt>Fecha Registro</dt>
-        <dd>@Model.Fecha_Registro</dd>
+            <dt class="col-sm-4">Fecha Registro</dt>
+            <dd class="col-sm-8">@Model.Fecha_Registro</dd>
 
-        <dt>Estado</dt>
-        <dd>@Model.Estado</dd>
-    </dl>
+            <dt class="col-sm-4">Estado</dt>
+            <dd class="col-sm-8">@Model.Estado</dd>
+        </dl>
+
+        <div class="text-end mt-3">
+            <a href="@Url.Action("Index")" class="btn pv-btn-green">Volver</a>
+        </div>
+    </div>
 </div>
 
-<a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>
+<style>
+    .pv-card {
+        max-width: 900px;
+        margin: 24px auto;
+        background: #1f1f1f;
+        color: #F1E0C6;
+        border: 1px solid #2c2c2c;
+        border-radius: 15px;
+        box-shadow: 0 12px 24px rgba(0,0,0,.25);
+    }
+
+    .pv-header {
+        background: #A8E063;
+        color: #000;
+        padding: 14px 16px;
+        border-radius: 15px 15px 0 0;
+        text-align: center;
+    }
+
+    .pv-body {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .pv-dl dt {
+        color: #cfcfcf;
+        font-weight: 600;
+        padding: .6rem .4rem;
+        border-bottom: 1px solid #2b2b2b;
+    }
+
+    .pv-dl dd {
+        padding: .6rem .4rem;
+        margin: 0;
+        border-bottom: 1px solid #2b2b2b;
+    }
+
+        .pv-dl dt:last-of-type,
+        .pv-dl dd:last-of-type {
+            border-bottom: none;
+        }
+
+    .pv-btn-green {
+        background: #A8E063 !important;
+        color: #000 !important;
+        border: none !important;
+        font-weight: 700;
+        border-radius: 8px;
+        padding: .5rem 1.1rem;
+    }
+
+        .pv-btn-green:hover {
+            filter: brightness(.95);
+        }
+</style>

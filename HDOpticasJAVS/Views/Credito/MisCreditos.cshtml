@@ -5,6 +5,68 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    /* Header verde, centrado y en negrita */
+    .container-fluid.p-4 > .card > .card-header {
+        background: #A8E063 !important;
+        color: #000 !important;
+        border-top-left-radius: 15px !important;
+        border-top-right-radius: 15px !important;
+        text-align: center;
+    }
+
+        .container-fluid.p-4 > .card > .card-header h2 {
+            margin: 0;
+            font-weight: 800;
+        }
+
+    /* Card oscuro, centrado y pegado al header */
+    .container-fluid.p-4 > .card {
+        max-width: 1100px;
+        margin: 20px auto;
+        background: #1f1f1f !important;
+        color: #F1E0C6 !important;
+        border: 1px solid #2c2c2c;
+        border-top: 0;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 12px 24px rgba(0,0,0,.25);
+    }
+
+    /* Tabla: encabezado claro, filas hover sutil */
+    .container-fluid.p-4 .table thead {
+        background: #f8f9fa;
+        color: #111;
+    }
+
+    .container-fluid.p-4 .table tbody tr:hover {
+        background: rgba(255,255,255,.03);
+    }
+
+    /* Botón "Pagar" (btn-primary) → verde con letras negras */
+    .container-fluid.p-4 .btn-primary {
+        background: #A8E063 !important;
+        color: #000 !important;
+        border: none !important;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+        .container-fluid.p-4 .btn-primary:hover {
+            filter: brightness(.95);
+            color: #000 !important;
+        }
+
+    /* Badges (opcional, para coherencia de tonos) */
+    .container-fluid.p-4 .badge.bg-success {
+        background: #43A047 !important;
+    }
+
+    .container-fluid.p-4 .badge.bg-secondary {
+        background: #6c757d !important;
+    }
+</style>
+
+
 <div class="container-fluid p-4" style="min-height: 100vh; background: rgba(0, 0, 0, 0.85); color: #F1E0C6;">
     <div class="card shadow-lg mb-4" style="background: rgba(0,0,0,0.75); border-radius: 15px;">
 

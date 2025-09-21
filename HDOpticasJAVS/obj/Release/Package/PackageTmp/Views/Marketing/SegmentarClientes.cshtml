@@ -5,94 +5,130 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-4 text-white">
-    <h2 class="text-info mb-4">📌 Segmentar Clientes</h2>
-
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="alert alert-warning">@Html.ValidationSummary()</div>
+<style>
+    .btn-verde {
+        background-color: #A8E063;
+        color: black !important;
+        border: none;
+        font-weight: bold;
     }
 
-    <div class="card bg-dark border-light shadow-lg p-4">
-        @using (Html.BeginForm())
-        {
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Nombre</label>
-                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control bg-dark text-white border-light" })
-                </div>
-                <div class="col-md-4">
-                    <label>Edad mínima</label>
-                    @Html.TextBoxFor(m => m.EdadMinima, new { @class = "form-control bg-dark text-white border-light", type = "number" })
-                </div>
-                <div class="col-md-4">
-                    <label>Edad máxima</label>
-                    @Html.TextBoxFor(m => m.EdadMaxima, new { @class = "form-control bg-dark text-white border-light", type = "number" })
-                </div>
-                <div class="col-md-12 mt-3">
-                    <label>Tratamiento</label>
-                    @Html.TextBoxFor(m => m.Tratamiento, new { @class = "form-control bg-dark text-white border-light" })
-                </div>
-                <div class="col-md-12 mt-4">
-                    <button type="submit" class="btn btn-primary">🎯 Filtrar</button>
-                </div>
-            </div>
+        .btn-verde:hover {
+            background-color: #8DC44B;
+            color: black !important;
         }
-    </div>
+</style>
 
-    @if (Model.Resultados != null && Model.Resultados.Any())
-    {
-        <div class="card bg-dark border-light shadow-lg mt-4 p-4">
-            <h4 class="text-info">👥 Resultados</h4>
-
-            <form method="post" action="@Url.Action("GuardarLista", "Marketing")">
-                <table class="table table-dark table-bordered mt-3">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="selectAll" /></th>
-                            <th>Nombre</th>
-                            <th>Edad</th>
-                            <th>Tratamiento</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.Resultados.Count; i++)
-                        {
-                            var c = Model.Resultados[i];
-
-                            // Construir nombre de forma null-safe: primero Usuario.*, si no existe usa campos de Cliente
-                            var nombre = ((c.Usuario?.Nombre ?? "") + " " + (c.Usuario?.Apellido1 ?? "")).Trim();
-                            if (string.IsNullOrEmpty(nombre))
-                            {
-                                nombre = ((c.Nombre ?? "") + " " + (c.Apellido1 ?? "")).Trim();
-                            }
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox"
-                                           name="clientesSeleccionados"
-                                           value="@c.Cedula"
-                                           class="cliente-checkbox" />
-                                </td>
-                                <td>@(string.IsNullOrEmpty(nombre) ? c.Cedula : nombre)</td>
-                                <td>@(c.Edad.HasValue ? c.Edad.Value.ToString() : "—")</td>
-                                <td>@(c.Padecimiento ?? "—")</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-
-                <div class="mt-4">
-                    <h5 class="text-info">💾 Guardar esta lista</h5>
-                    <div class="form-group">
-                        <label>Nombre de la lista</label>
-                        <input type="text" name="nombreLista" class="form-control bg-dark text-white border-light" required />
-                    </div>
-                    <button type="submit" class="btn btn-success mt-3">✅ Guardar Lista</button>
-                </div>
-            </form>
+<div class="container mt-4 text-white">
+    <div class="card shadow-lg border-0">
+        <!-- Título -->
+        <div class="card-header text-center" style="background-color:#A8E063; color:black;">
+            <h2 class="fw-bold m-0" style="font-family:'Poppins',sans-serif;">📌 Segmentar Clientes</h2>
         </div>
-    }
+
+        <div class="card-body bg-dark text-white">
+            <!-- Botón Volver -->
+            <div class="text-end mb-3">
+                <a href="@Url.Action("Historial", "Marketing")" class="btn btn-verde">
+                    ⬅️ Volver al Historial
+                </a>
+            </div>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-warning">@Html.ValidationSummary()</div>
+            }
+
+            <!-- Filtros -->
+            <div class="card bg-dark border-light shadow-sm p-4 mb-3">
+                @using (Html.BeginForm())
+                {
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Nombre</label>
+                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control bg-dark text-white border-light" })
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Edad mínima</label>
+                            @Html.TextBoxFor(m => m.EdadMinima, new { @class = "form-control bg-dark text-white border-light", type = "number" })
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Edad máxima</label>
+                            @Html.TextBoxFor(m => m.EdadMaxima, new { @class = "form-control bg-dark text-white border-light", type = "number" })
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label mt-2">Tratamiento</label>
+                            @Html.TextBoxFor(m => m.Tratamiento, new { @class = "form-control bg-dark text-white border-light" })
+                        </div>
+                        <div class="col-12 mt-3">
+                            <button type="submit" class="btn btn-verde">🎯 Filtrar</button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Resultados -->
+            @if (Model.Resultados != null && Model.Resultados.Any())
+            {
+                <div class="card bg-dark border-light shadow-sm mt-4">
+                    <div class="card-header text-center" style="background-color:#A8E063; color:black;">
+                        <h4 class="fw-bold m-0">👥 Resultados</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" action="@Url.Action("GuardarLista", "Marketing")">
+                            <div class="table-responsive">
+                                <table class="table table-dark table-bordered align-middle">
+                                    <thead class="text-center" style="background-color:#A8E063; color:black;">
+                                        <tr>
+                                            <th style="width:48px;">
+                                                <input type="checkbox" id="selectAll" />
+                                            </th>
+                                            <th>Nombre</th>
+                                            <th>Edad</th>
+                                            <th>Tratamiento</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.Resultados.Count; i++)
+                                        {
+                                            var c = Model.Resultados[i];
+                                            var nombre = ((c.Usuario?.Nombre ?? "") + " " + (c.Usuario?.Apellido1 ?? "")).Trim();
+                                            if (string.IsNullOrEmpty(nombre))
+                                            {
+                                                nombre = ((c.Nombre ?? "") + " " + (c.Apellido1 ?? "")).Trim();
+                                            }
+
+                                            <tr>
+                                                <td class="text-center">
+                                                    <input type="checkbox"
+                                                           name="clientesSeleccionados"
+                                                           value="@c.Cedula"
+                                                           class="cliente-checkbox" />
+                                                </td>
+                                                <td>@(string.IsNullOrEmpty(nombre) ? c.Cedula : nombre)</td>
+                                                <td>@(c.Edad.HasValue ? c.Edad.Value.ToString() : "—")</td>
+                                                <td>@(c.Padecimiento ?? "—")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="mt-4">
+                                <h5 class="mb-2" style="color:#A8E063;">💾 Guardar esta lista</h5>
+                                <div class="form-group">
+                                    <label class="form-label">Nombre de la lista</label>
+                                    <input type="text" name="nombreLista" class="form-control bg-dark text-white border-light" required />
+                                </div>
+                                <button type="submit" class="btn btn-verde mt-3">✅ Guardar Lista</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
 
 @section Scripts {

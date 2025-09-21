@@ -5,13 +5,28 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+  .pv-card{ background:#1f1f1f; color:#fff; border-radius:15px; }
+  .pv-header{ background:#A8E063; color:#000; border-top-left-radius:15px; border-top-right-radius:15px; }
+  .pv-btn-green{ background:#A8E063; color:#000; border-radius:8px; font-weight:600; }
+  .pv-btn-green:hover{ filter:brightness(.95); color:#000; }
+
+  /* dl estilizado para legibilidad en oscuro */
+  .pv-dl dt{ color:#dcdcdc; font-weight:600; padding:.6rem .4rem; border-bottom:1px solid #2b2b2b; }
+  .pv-dl dd{ padding:.6rem .4rem; margin-bottom:0; border-bottom:1px solid #2b2b2b; }
+  @@media (min-width:576px){
+    .pv-dl dt{ text-align:right; }
+  }
+</style>
+
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
-    <div class="card shadow-lg w-100" style="max-width: 1000px; background: rgba(0, 0, 0, 0.85); color: #F1E0C6; border-radius: 15px;">
-        <div class="card-header text-center" style="background-color: #1A73E8; color: white;">
-            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+    <div class="card shadow-lg w-100 pv-card" style="max-width: 1000px;">
+        <div class="card-header text-center pv-header">
+            <h2 class="fw-bold m-0" style="font-family:'Poppins',sans-serif;">@ViewBag.Title</h2>
         </div>
-        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
-            <dl class="row">
+        <div class="card-body" style="font-family:'Roboto',sans-serif;">
+
+            <dl class="row pv-dl">
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Fecha_Cita)</dt>
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.Fecha_Cita)</dd>
 
@@ -32,8 +47,11 @@
             </dl>
 
             <div class="text-end mt-4">
-                <a href="@Url.Action("Index", "CitaEnLinea")" class="btn btn-secondary">Volver</a>
+                <a href="@Url.Action("Index","CitaEnLinea")" class="btn pv-btn-green">
+                    <i class="fa fa-arrow-left"></i> Volver
+                </a>
             </div>
+
         </div>
     </div>
 </div>

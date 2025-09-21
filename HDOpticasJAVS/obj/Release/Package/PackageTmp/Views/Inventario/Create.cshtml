@@ -2,86 +2,95 @@
 
 @{
     ViewBag.Title = "Crear Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh;">
+    <div class="card shadow-lg w-100" style="max-width: 700px; background-color: #1f1f1f; border-radius: 15px; color: #F1E0C6;">
+        <!-- ENCABEZADO VERDE CON LETRAS NEGRAS -->
+        <div class="card-header text-center" style="background-color: #A8E063; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h3 class="fw-bold mb-0" style="color: black;">Crear Producto</h3>
+        </div>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Nombre_Producto)
-        @Html.EditorFor(m => m.Nombre_Producto, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(m => m.Nombre_Producto, "", new { @class = "text-danger" })
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Nombre_Producto, new { @class = "form-label" })
+                    @Html.EditorFor(m => m.Nombre_Producto, new { htmlAttributes = new { @class = "form-control bg-dark text-white border-secondary" } })
+                    @Html.ValidationMessageFor(m => m.Nombre_Producto, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Codigo_Producto, new { @class = "form-label" })
+                    @Html.EditorFor(m => m.Codigo_Producto, new { htmlAttributes = new { @class = "form-control bg-dark text-white border-secondary" } })
+                    @Html.ValidationMessageFor(m => m.Codigo_Producto, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Stock, new { @class = "form-label" })
+                    @Html.EditorFor(m => m.Stock, new { htmlAttributes = new { @class = "form-control bg-dark text-white border-secondary", type = "number", min = "0" } })
+                    @Html.ValidationMessageFor(m => m.Stock, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Precio, new { @class = "form-label" })
+                    @Html.EditorFor(m => m.Precio, new { htmlAttributes = new { @class = "form-control bg-dark text-white border-secondary", step = "0.01", min = "0.01" } })
+                    @Html.ValidationMessageFor(m => m.Precio, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Id_Proveedor, new { @class = "form-label" })
+                    @Html.DropDownListFor(m => m.Id_Proveedor, (SelectList)ViewBag.Id_Proveedor, "Seleccione un proveedor", new { @class = "form-select bg-dark text-white border-secondary" })
+                    @Html.ValidationMessageFor(m => m.Id_Proveedor, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Descripcion, new { @class = "form-label" })
+                    @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control bg-dark text-white border-secondary", rows = 3 })
+                    @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Estado, new { @class = "form-label" })
+                    @Html.EditorFor(m => m.Estado, new { htmlAttributes = new { @class = "form-control bg-dark text-white border-secondary" } })
+                    @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.UsuarioCreador, new { @class = "form-label" })
+                    @Html.EditorFor(m => m.UsuarioCreador, new { htmlAttributes = new { @class = "form-control bg-dark text-white border-secondary" } })
+                    @Html.ValidationMessageFor(m => m.UsuarioCreador, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.FechaCreacion, new { @class = "form-label" })
+                    @Html.EditorFor(m => m.FechaCreacion, new { htmlAttributes = new { @class = "form-control bg-dark text-white border-secondary", type = "datetime-local" } })
+                    @Html.ValidationMessageFor(m => m.FechaCreacion, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.UsuarioModificador, new { @class = "form-label" })
+                    @Html.EditorFor(m => m.UsuarioModificador, new { htmlAttributes = new { @class = "form-control bg-dark text-white border-secondary" } })
+                    @Html.ValidationMessageFor(m => m.UsuarioModificador, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.FechaModificacion, new { @class = "form-label" })
+                    @Html.EditorFor(m => m.FechaModificacion, new { htmlAttributes = new { @class = "form-control bg-dark text-white border-secondary", type = "datetime-local" } })
+                    @Html.ValidationMessageFor(m => m.FechaModificacion, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="d-flex flex-column flex-md-row justify-content-between gap-2 mt-4">
+                    <button type="submit" class="btn" style="background-color: #A8E063; color: black; font-weight: bold;">Crear Producto</button>
+                    <a href="@Url.Action("Index")" class="btn" style="background-color: #A8E063; color: black; font-weight: bold;">Volver a la lista</a>
+                </div>
+            }
+        </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Codigo_Producto)
-        @Html.EditorFor(m => m.Codigo_Producto, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(m => m.Codigo_Producto, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Stock)
-        @Html.EditorFor(m => m.Stock, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0" } })
-        @Html.ValidationMessageFor(m => m.Stock, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Precio)
-        @Html.EditorFor(m => m.Precio, new { htmlAttributes = new { @class = "form-control", step = "0.01", min = "0.01" } })
-        @Html.ValidationMessageFor(m => m.Precio, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Id_Proveedor)
-        @Html.DropDownListFor(m => m.Id_Proveedor, (SelectList)ViewBag.Id_Proveedor, "Seleccione un proveedor", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Id_Proveedor, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Descripcion)
-        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control", rows = 3 })
-        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Estado)
-        @Html.EditorFor(m => m.Estado, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.UsuarioCreador)
-        @Html.EditorFor(m => m.UsuarioCreador, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(m => m.UsuarioCreador, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.FechaCreacion)
-        @Html.EditorFor(m => m.FechaCreacion, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
-        @Html.ValidationMessageFor(m => m.FechaCreacion, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.UsuarioModificador)
-        @Html.EditorFor(m => m.UsuarioModificador, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(m => m.UsuarioModificador, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.FechaModificacion)
-        @Html.EditorFor(m => m.FechaModificacion, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
-        @Html.ValidationMessageFor(m => m.FechaModificacion, "", new { @class = "text-danger" })
-    </div>
-
-    <button type="submit" class="btn btn-primary">Crear Producto</button>
-}
-
-<div class="mt-3">
-    <a href="@Url.Action("Index")" class="btn btn-secondary">Volver a la lista</a>
 </div>
 
 @section Scripts {

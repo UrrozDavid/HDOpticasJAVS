@@ -20,6 +20,7 @@ namespace HDOpticasJAVS.Controllers
         private HD_Opticas_JAVS_BDEntities db = new HD_Opticas_JAVS_BDEntities();
 
         // GET: PuntoVenta
+        // GET: PuntoVenta
         public ActionResult Index()
         {
             var puntoVenta = db.PuntoVenta
@@ -38,7 +39,7 @@ namespace HDOpticasJAVS.Controllers
 
             // Quita el Include anidado y carga lo demás
             var venta = db.PuntoVenta
-                .Include(p => p.Cliente)                                    
+                .Include(p => p.Cliente)
                 .Include(p => p.Parametro)
                 .Include(p => p.DetalleVenta.Select(d => d.Inventario))
                 .FirstOrDefault(p => p.Id_Venta == id);
@@ -235,6 +236,7 @@ namespace HDOpticasJAVS.Controllers
             TempData["ErrorMessage"] = "Ocurrió un error al guardar la venta.";
             return View(puntoVenta);
         }
+
 
         // GET: PuntoVenta/Delete/5
         public ActionResult Delete(int? id)

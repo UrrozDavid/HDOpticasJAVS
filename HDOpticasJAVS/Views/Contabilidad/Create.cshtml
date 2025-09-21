@@ -5,6 +5,107 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    /* ancho común (rail) para header, pastilla y card */
+    :root {
+        --rail: 1100px;
+    }
+
+    /* ===== Barra verde (título) ===== */
+    h2.text-primary.fw-bold.mb-4 {
+        max-width: var(--rail);
+        margin: 20px auto 0 !important;
+        background: #A8E063;
+        color: #000 !important;
+        padding: 14px 20px;
+        padding-right: 240px; /* espacio visual del lado derecho */
+        border-radius: 15px 15px 0 0;
+        font-weight: 800;
+    }
+
+        /* ===== Pastilla “Saldo disponible” (alineada al borde derecho del rail) ===== */
+        /* OJO: este <p> debe ir antes del <form>, tal como lo tienes */
+        /* Pastilla de “Saldo disponible” pegada al borde derecho del rail (1100px) */
+        h2.text-primary.fw-bold.mb-4 ~ p {
+            float: right;
+            /* top | right | bottom | left */
+            margin: -44px calc((100% - 1100px)/2 + 12px) 0 0;
+            padding: .35rem .6rem;
+            background: rgba(255,255,255,.30);
+            color: #000;
+            border: 1px solid #86c36b;
+            border-radius: 10px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+            h2.text-primary.fw-bold.mb-4 ~ p strong {
+                font-weight: 600;
+                margin-right: .25rem;
+            }
+
+        /* ===== Card pegado al header y centrado ===== */
+        h2.text-primary.fw-bold.mb-4 ~ form > .card {
+            max-width: var(--rail);
+            margin: 0 auto 24px !important;
+            background: #1f1f1f !important;
+            color: #fff !important;
+            border: 1px solid #2c2c2c !important;
+            border-top: 0 !important; /* sin borde entre header y card */
+            border-radius: 0 0 15px 15px !important;
+            box-shadow: 0 12px 24px rgba(0,0,0,.25);
+            clear: both;
+        }
+
+        /* alerts (si aparecen) alineados al mismo rail */
+        h2.text-primary.fw-bold.mb-4 ~ .alert {
+            max-width: var(--rail);
+            margin: 10px auto;
+        }
+
+    /* ===== Estilo de campos en modo oscuro ===== */
+    .form-label.fw-bold.text-primary {
+        color: #cfcfcf !important;
+    }
+
+    .form-control,
+    .form-select,
+    textarea.form-control {
+        background: #2a2a2a !important;
+        color: #fff !important;
+        border: 1px solid #3b3b3b !important;
+    }
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea.form-control:focus {
+            background: #2f2f2f !important;
+            color: #fff !important;
+            border-color: #5b5b5b !important;
+            box-shadow: none !important;
+        }
+
+    hr {
+        border-color: #2c2c2c;
+    }
+
+    /* ===== Botones verdes con texto negro (como pediste) ===== */
+    h2.text-primary.fw-bold.mb-4 ~ form > .card .btn-success,
+    h2.text-primary.fw-bold.mb-4 ~ form > .card .btn-secondary {
+        background: #A8E063 !important;
+        color: #000 !important;
+        border: none !important;
+        font-weight: 700;
+        border-radius: 8px;
+    }
+
+        h2.text-primary.fw-bold.mb-4 ~ form > .card .btn-success:hover,
+        h2.text-primary.fw-bold.mb-4 ~ form > .card .btn-secondary:hover {
+            filter: brightness(.95);
+        }
+</style>
+
+
 <h2 class="text-primary fw-bold mb-4">Registrar Movimiento Contable</h2>
 
 <!-- Mensajes de éxito -->
@@ -343,3 +444,4 @@
         });
     });
 </script>
+

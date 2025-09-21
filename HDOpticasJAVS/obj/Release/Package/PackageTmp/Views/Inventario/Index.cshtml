@@ -12,14 +12,6 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
     </div>
 }
-
-@if (TempData["Mensaje"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>¡Éxito!</strong> @TempData["Mensaje"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-    </div>
-}
 @if (TempData["MensajeError"] != null)
 {
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -28,71 +20,75 @@
     </div>
 }
 
-<div class="container">
-    <h2 class="mb-4">Inventario</h2>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg w-100" style="max-width: 1200px; background: #1a1a1a; color: #F1E0C6; border-radius: 15px;">
+        <!-- Encabezado -->
+        <div class="card-header text-center" style="background-color: #A8E063; color: black; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
 
-    <!-- 🔍 Formulario de búsqueda -->
-    <form method="get" class="mb-4 d-flex">
-        <input type="text" name="filtro" class="form-control me-2" placeholder="Buscar por ID o nombre..." value="@Request["filtro"]" />
-        <button type="submit" class="btn btn-primary">Buscar</button>
-    </form>
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+            <!-- 🔍 Formulario de búsqueda -->
+            <form method="get" class="mb-4 d-flex">
+                <input type="text" name="filtro" class="form-control me-2" placeholder="Buscar por ID o nombre..." value="@Request["filtro"]" />
+                <button type="submit" class="btn fw-bold" style="background-color:#A8E063; color:black; border:none;">Buscar</button>
+            </form>
 
-
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
-        <div class="card shadow-lg w-100" style="max-width: 1200px; background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
-            <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+            <!-- Botón agregar -->
+            <div class="mb-3 text-end">
+                @Html.ActionLink(
+                    "Agregar nuevo producto",
+                    "Create",
+                    null,
+                    new { @class = "btn fw-bold", style = "background-color:#A8E063; color:black; border:none;" }
+                )
             </div>
-            <div class="card-body" style="font-family: 'Roboto', sans-serif;">
-                <div class="mb-3 text-end">
-                    @Html.ActionLink("Agregar nuevo producto", "Create", null, new { @class = "btn btn-success" })
-                </div>
 
-                <div class="table-responsive">
-                    <table class="table table-dark table-hover table-bordered align-middle">
-                        <thead class="table-light text-dark" style="font-family: Raleway;">
+            <!-- Tabla -->
+            <div class="table-responsive">
+                <table class="table table-dark table-hover table-bordered align-middle">
+                    <thead class="table-light text-dark" style="font-family: Raleway;">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Nombre_Producto)</th>
+                            <th>@Html.DisplayNameFor(model => model.Codigo_Producto)</th>
+                            <th>@Html.DisplayNameFor(model => model.Stock)</th>
+                            <th>@Html.DisplayNameFor(model => model.Precio)</th>
+                            <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+                            <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                            <th>@Html.DisplayNameFor(model => model.UsuarioCreador)</th>
+                            <th>@Html.DisplayNameFor(model => model.FechaCreacion)</th>
+                            <th>@Html.DisplayNameFor(model => model.UsuarioModificador)</th>
+                            <th>@Html.DisplayNameFor(model => model.FechaModificacion)</th>
+                            <th>@Html.DisplayNameFor(model => model.Proveedor.Nombre_Proveedor)</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
                             <tr>
-                                <th>@Html.DisplayNameFor(model => model.Nombre_Producto)</th>
-                                <th>@Html.DisplayNameFor(model => model.Codigo_Producto)</th>
-                                <th>@Html.DisplayNameFor(model => model.Stock)</th>
-                                <th>@Html.DisplayNameFor(model => model.Precio)</th>
-                                <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
-                                <th>@Html.DisplayNameFor(model => model.Estado)</th>
-                                <th>@Html.DisplayNameFor(model => model.UsuarioCreador)</th>
-                                <th>@Html.DisplayNameFor(model => model.FechaCreacion)</th>
-                                <th>@Html.DisplayNameFor(model => model.UsuarioModificador)</th>
-                                <th>@Html.DisplayNameFor(model => model.FechaModificacion)</th>
-                                <th>@Html.DisplayNameFor(model => model.Proveedor.Nombre_Proveedor)</th>
-                                <th>Acciones</th>
+                                <td>@Html.DisplayFor(modelItem => item.Nombre_Producto)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Codigo_Producto)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Stock)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Precio)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Estado)</td>
+                                <td>@Html.DisplayFor(modelItem => item.UsuarioCreador)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FechaCreacion)</td>
+                                <td>@Html.DisplayFor(modelItem => item.UsuarioModificador)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FechaModificacion)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Proveedor.Nombre_Proveedor)</td>
+                                <td class="text-nowrap">
+                                    @Html.ActionLink("✏️", "Edit", new { id = item.Id_Producto }, new { @class = "btn btn-sm fw-bold me-1", style = "background-color:#A8E063; color:black; border:none;" })
+                                    @Html.ActionLink("👁️", "Details", new { id = item.Id_Producto }, new { @class = "btn btn-sm fw-bold me-1", style = "background-color:#A8E063; color:black; border:none;" })
+                                    @Html.ActionLink("⚙️", "AjustarStock", "Inventario", new { id = item.Id_Producto }, new { @class = "btn btn-sm fw-bold me-1", style = "background-color:#A8E063; color:black; border:none;" })
+                                    @Html.ActionLink("🗑️", "Delete", new { id = item.Id_Producto }, new { @class = "btn btn-sm btn-danger" })
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.Nombre_Producto)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Codigo_Producto)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Stock)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Precio)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Estado)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.UsuarioCreador)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.FechaCreacion)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.UsuarioModificador)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.FechaModificacion)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Proveedor.Nombre_Proveedor)</td>
-                                    <td>
-                                        @Html.ActionLink("✏️", "Edit", new { id = item.Id_Producto }, new { @class = "btn btn-sm btn-warning me-1" })
-                                        @Html.ActionLink("👁️", "Details", new { id = item.Id_Producto }, new { @class = "btn btn-sm btn-info me-1" })
-                                        @Html.ActionLink("🗑️", "Delete", new { id = item.Id_Producto }, new { @class = "btn btn-sm btn-danger" })
-                                        @Html.ActionLink("⚙️", "AjustarStock", "Inventario", new { id = item.Id_Producto }, new { @class = "btn btn-sm btn-light me-1" })
-
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>

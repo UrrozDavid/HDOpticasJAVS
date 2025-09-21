@@ -193,6 +193,8 @@ namespace HDOpticasJAVS.Controllers
                 campania.Fecha_Programada = model.Fecha_Programada;
                 campania.UsuarioModificador = User.Identity.Name;
                 campania.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                campania.Fecha_Fin = model.Fecha_Fin;
+
 
                 db.Entry(campania).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
@@ -230,16 +232,32 @@ namespace HDOpticasJAVS.Controllers
 
         public ActionResult ExportarExcel(int id)
         {
-            var data = db.CampaniaMetrica
-                .Where(m => m.Id_Campania == id)
-                .Select(m => new
+            var datos = (
+                from m in db.CampaniaMetrica.AsNoTracking()
+                where m.Id_Campania == id
+                join c in db.Cliente on m.Cedula_Cliente equals c.Cedula into jc
+                from c in jc.DefaultIfEmpty()
+                join u in db.Usuario on c.Cedula equals u.Cedula into ju
+                from u in ju.DefaultIfEmpty()
+                select new
                 {
                     m.Cedula_Cliente,
-                    Cliente = m.Cliente.Usuario.Nombre + " " + m.Cliente.Usuario.Apellido1,
-                    Abierto = m.Abierto == true ? "Sí" : "No",
-                    Click = m.Click == true ? "Sí" : "No",
+                    Nombre = u.Nombre,
+                    Apellido1 = u.Apellido1,
+                    m.Abierto,
+                    m.Click,
                     m.FechaRegistro
-                }).ToList();
+                }
+            ).ToList();
+
+            var data = datos.Select(x => new
+            {
+                Cedula = x.Cedula_Cliente,
+                Cliente = ((x.Nombre ?? "") + " " + (x.Apellido1 ?? "")).Trim(),
+                Abierto = x.Abierto == true ? "Sí" : "No",
+                Click = x.Click == true ? "Sí" : "No",
+                FechaRegistro = x.FechaRegistro?.ToString("yyyy-MM-dd HH:mm") ?? ""
+            }).ToList();
 
             var grid = new System.Web.UI.WebControls.GridView();
             grid.DataSource = data;
@@ -248,27 +266,45 @@ namespace HDOpticasJAVS.Controllers
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment; filename=ReporteCampania_" + id + ".xls");
             Response.ContentType = "application/excel";
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
-            grid.RenderControl(htw);
-            Response.Write(sw.ToString());
+            using (var sw = new System.IO.StringWriter())
+            using (var htw = new System.Web.UI.HtmlTextWriter(sw))
+            {
+                grid.RenderControl(htw);
+                Response.Write(sw.ToString());
+            }
             Response.End();
-
             return new EmptyResult();
         }
         public ActionResult ExportarPdf(int id)
         {
             var campania = db.CampaniaMarketing.Find(id);
-            var data = db.CampaniaMetrica
-                .Where(m => m.Id_Campania == id)
-                .Select(m => new
+
+            var datos = (
+                from m in db.CampaniaMetrica.AsNoTracking()
+                where m.Id_Campania == id
+                join c in db.Cliente on m.Cedula_Cliente equals c.Cedula into jc
+                from c in jc.DefaultIfEmpty()
+                join u in db.Usuario on c.Cedula equals u.Cedula into ju
+                from u in ju.DefaultIfEmpty()
+                select new
                 {
                     m.Cedula_Cliente,
-                    Cliente = m.Cliente.Usuario.Nombre + " " + m.Cliente.Usuario.Apellido1,
-                    Abierto = m.Abierto == true ? "Sí" : "No",
-                    Click = m.Click == true ? "Sí" : "No",
+                    Nombre = u.Nombre,
+                    Apellido1 = u.Apellido1,
+                    m.Abierto,
+                    m.Click,
                     m.FechaRegistro
-                }).ToList();
+                }
+            ).ToList();
+
+            var data = datos.Select(x => new
+            {
+                Cedula = x.Cedula_Cliente,
+                Cliente = ((x.Nombre ?? "") + " " + (x.Apellido1 ?? "")).Trim(),
+                Abierto = x.Abierto == true ? "Sí" : "No",
+                Click = x.Click == true ? "Sí" : "No",
+                FechaRegistro = x.FechaRegistro?.ToString("yyyy-MM-dd HH:mm") ?? ""
+            }).ToList();
 
             using (var ms = new System.IO.MemoryStream())
             {
@@ -280,12 +316,11 @@ namespace HDOpticasJAVS.Controllers
                 var tableFont = iTextSharp.text.FontFactory.GetFont("Arial", 10);
 
                 doc.Add(new iTextSharp.text.Paragraph("Reporte de campaña", titleFont));
-                doc.Add(new iTextSharp.text.Paragraph("Nombre: " + campania.Nombre_Campania));
-                doc.Add(new iTextSharp.text.Paragraph("Descripción: " + campania.Descripcion));
+                doc.Add(new iTextSharp.text.Paragraph("Nombre: " + campania?.Nombre_Campania));
+                doc.Add(new iTextSharp.text.Paragraph("Descripción: " + campania?.Descripcion));
                 doc.Add(new iTextSharp.text.Paragraph(" "));
 
-                var table = new iTextSharp.text.pdf.PdfPTable(5);
-                table.WidthPercentage = 100;
+                var table = new iTextSharp.text.pdf.PdfPTable(5) { WidthPercentage = 100 };
                 table.AddCell("Cédula");
                 table.AddCell("Cliente");
                 table.AddCell("Abierto");
@@ -294,18 +329,17 @@ namespace HDOpticasJAVS.Controllers
 
                 foreach (var item in data)
                 {
-                    table.AddCell(item.Cedula_Cliente);
+                    table.AddCell(item.Cedula);
                     table.AddCell(item.Cliente);
                     table.AddCell(item.Abierto);
                     table.AddCell(item.Click);
-                    table.AddCell(item.FechaRegistro?.ToString("yyyy-MM-dd HH:mm") ?? "");
+                    table.AddCell(item.FechaRegistro);
                 }
 
                 doc.Add(table);
                 doc.Close();
 
-                byte[] pdfBytes = ms.ToArray();
-                return File(pdfBytes, "application/pdf", "ReporteCampania_" + id + ".pdf");
+                return File(ms.ToArray(), "application/pdf", "ReporteCampania_" + id + ".pdf");
             }
         }
 
@@ -347,27 +381,25 @@ namespace HDOpticasJAVS.Controllers
             TempData["Mensaje"] = "✅ Campaña eliminada correctamente.";
             return RedirectToAction("Historial");
         }
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EnviarCampaniaManual(int id)
         {
             try
             {
                 var campania = db.CampaniaMarketing.Find(id);
-                if (campania == null)
-                    return HttpNotFound();
+                if (campania == null) return HttpNotFound();
 
                 CampaniaHelper.ProcesarCampaniaPorId(id);
-
                 TempData["Mensaje"] = "✅ Correos enviados manualmente para la campaña.";
             }
             catch (Exception ex)
             {
                 TempData["Mensaje"] = $"⚠️ Error al enviar la campaña manualmente: {ex.Message}";
             }
-
             return RedirectToAction("Historial");
         }
+
         [HttpGet]
         public ActionResult ContarApertura(int idCampania, string cedulaCliente)
         {
@@ -450,7 +482,7 @@ namespace HDOpticasJAVS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AplicarPromocion(int idCampania, string cedulaCliente)
+        public ActionResult AplicarPromocionCliente(int idCampania, string cedulaCliente)
         {
             if (string.IsNullOrEmpty(cedulaCliente))
             {
@@ -938,86 +970,113 @@ namespace HDOpticasJAVS.Controllers
             );
         }
         [HttpGet]
-        public ActionResult AplicarPromocion(int idVenta)
+        public ActionResult AplicarPromocion(int? idVenta, [Bind(Prefix = "id")] int? id)
         {
-            // Venta para validar existencia y mostrar info básica
-            var venta = db.PuntoVenta.FirstOrDefault(v => v.Id_Venta == idVenta);
+            var ventaId = idVenta ?? id;
+            if (!ventaId.HasValue)
+            {
+                TempData["Error"] = "No se recibió la venta a aplicar.";
+                return RedirectToAction("Index", "PuntoVenta");
+            }
+
+            var venta = db.PuntoVenta.AsNoTracking().FirstOrDefault(v => v.Id_Venta == ventaId.Value);
             if (venta == null)
             {
                 TempData["Error"] = "La venta no existe.";
                 return RedirectToAction("Index", "PuntoVenta");
             }
 
-            // Campañas disponibles  (usa el nombre real de la columna)
-            ViewBag.Campanias = new SelectList(db.CampaniaMarketing.ToList(), "Id_Campania", "Nombre_Campania");
+            var descAcum = db.Set<VentaPromocion>()
+                             .Where(x => x.Id_Venta == ventaId.Value)
+                             .Select(x => (decimal?)x.MontoDescuento)
+                             .Sum() ?? 0m;
 
-            // Promos ya aplicadas a esta venta
-            ViewBag.PromosAplicadas = (from vp in db.Set<VentaPromocion>()
-                                       join cm in db.CampaniaMarketing on vp.Id_Campania equals cm.Id_Campania
-                                       where vp.Id_Venta == idVenta
+            ViewBag.Campanias = new SelectList(db.CampaniaMarketing.AsNoTracking().ToList(), "Id_Campania", "Nombre_Campania");
+            ViewBag.PromosAplicadas = (from vp in db.Set<VentaPromocion>().AsNoTracking()
+                                       join cm in db.CampaniaMarketing.AsNoTracking() on vp.Id_Campania equals cm.Id_Campania
+                                       where vp.Id_Venta == ventaId.Value
                                        orderby vp.FechaAplicacion descending
-                                       select new
-                                       {
-                                           vp.Id_VentaPromocion,
-                                           NombreCampania = cm.Nombre_Campania,
-                                           vp.MontoDescuento,
-                                           vp.CodigoPromo,
-                                           vp.FechaAplicacion
-                                       }).ToList();
+                                       select new { vp.Id_VentaPromocion, NombreCampania = cm.Nombre_Campania, vp.MontoDescuento, vp.CodigoPromo, vp.FechaAplicacion }
+                                      ).ToList();
 
-            ViewBag.IdVenta = idVenta;
-            ViewBag.TotalVenta = venta.Total;
-            ViewBag.SubtotalVenta = venta.Subtotal;
-            ViewBag.IVAVenta = venta.IVA;
+            ViewBag.IdVenta = ventaId.Value;
+            ViewBag.Subtotal = venta.Subtotal ?? 0m;
+            ViewBag.IVA = venta.IVA ?? 0m;
+            ViewBag.TotalBruto = venta.Total ?? 0m;
+            ViewBag.DescAcum = descAcum;
+            ViewBag.TotalNeto = (venta.Total ?? 0m) - descAcum;
 
             return View();
         }
 
 
-        // POST: Marketing/AplicarPromocion
-        // POST: Marketing/AplicarPromocion
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AplicarPromocion(int idVenta, int idCampania, decimal montoDescuento, string codigoPromo)
+        public ActionResult AplicarPromocion([Bind(Prefix = "id")] int? idVenta, int idCampania, decimal montoDescuento, string codigoPromo)
         {
-            // Validaciones básicas
-            var venta = db.PuntoVenta.FirstOrDefault(v => v.Id_Venta == idVenta);
+            if (!idVenta.HasValue)
+            {
+                TempData["Error"] = "No se recibió la venta a aplicar.";
+                return RedirectToAction("Index", "PuntoVenta");
+            }
+
+            // Normaliza el número por si viene con coma/punto
+            var raw = Request.Form["montoDescuento"];
+            if (!string.IsNullOrWhiteSpace(raw))
+            {
+                decimal parsed;
+                if (decimal.TryParse(raw, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out parsed))
+                    montoDescuento = parsed;
+                else if (decimal.TryParse(raw.Replace(',', '.'),
+                    System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.InvariantCulture, out parsed))
+                    montoDescuento = parsed;
+            }
+            montoDescuento = Math.Abs(montoDescuento);
+
+            var venta = db.PuntoVenta.FirstOrDefault(v => v.Id_Venta == idVenta.Value);
             if (venta == null)
             {
                 TempData["Error"] = "No se encontró la venta.";
                 return RedirectToAction("Index", "PuntoVenta");
             }
-            if (montoDescuento <= 0)
+
+            var totalBruto = venta.Total ?? 0m;
+            var descAcum = db.Set<VentaPromocion>()
+                             .Where(x => x.Id_Venta == idVenta.Value)
+                             .Select(x => (decimal?)x.MontoDescuento)
+                             .Sum() ?? 0m;
+
+            var disponible = totalBruto - descAcum;
+            if (montoDescuento <= 0m)
             {
                 TempData["Error"] = "El monto de descuento debe ser mayor a 0.";
-                return RedirectToAction("AplicarPromocion", new { idVenta });
+                return RedirectToAction("AplicarPromocion", new { idVenta = idVenta.Value });
             }
-
-            try
+            if (montoDescuento > disponible)
             {
-                var promo = new VentaPromocion
-                {
-                    Id_Venta = idVenta,
-                    Id_Campania = idCampania,
-                    MontoDescuento = montoDescuento,
-                    CodigoPromo = string.IsNullOrWhiteSpace(codigoPromo) ? null : codigoPromo,
-                    FechaAplicacion = DateTime.Now,
-                    UsuarioAplicacion = (Session["Usuario"] ?? Session["Cedula"] ?? "Sistema").ToString()
-                };
-
-
-                db.Set<VentaPromocion>().Add(promo);
-                db.SaveChanges(); // aquí se dispara el trigger que actualiza Contabilidad
-
-                TempData["Mensaje"] = "Promoción aplicada correctamente. Contabilidad actualizada.";
-                return RedirectToAction("AplicarPromocion", new { idVenta });
+                TempData["Error"] = $"El descuento ({montoDescuento:C}) supera el disponible ({disponible:C}).";
+                return RedirectToAction("AplicarPromocion", new { idVenta = idVenta.Value });
             }
-            catch (Exception ex)
+
+            var promo = new VentaPromocion
             {
-                TempData["Error"] = "Error al aplicar la promoción: " + ex.Message;
-                return RedirectToAction("AplicarPromocion", new { idVenta });
-            }
+                Id_Venta = idVenta.Value,
+                Id_Campania = idCampania,
+                MontoDescuento = montoDescuento,
+                CodigoPromo = string.IsNullOrWhiteSpace(codigoPromo) ? null : codigoPromo,
+                FechaAplicacion = DateTime.Now,
+                UsuarioAplicacion = (Session["Usuario"] ?? Session["Cedula"] ?? "Sistema").ToString()
+            };
+            db.Set<VentaPromocion>().Add(promo);
+            db.SaveChanges();
+
+            TempData["Mensaje"] = "✅ Promoción aplicada.";
+            return RedirectToAction("AplicarPromocion", new { idVenta = idVenta.Value });
         }
+
+
         public PartialViewResult HistorialPromociones(string cedula)
         {
             // 1) Si no viene la cédula, intenta sacarla de la sesión

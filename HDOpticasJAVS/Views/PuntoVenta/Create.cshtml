@@ -2,132 +2,196 @@
 @{
     ViewBag.Title = "Registrar Venta";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var productos = ViewBag.Productos as List<HDOpticasJAVS.Inventario>;
+    var productos = ViewBag.Productos as List<HDOpticasJAVS.Inventario> ?? new List<HDOpticasJAVS.Inventario>();
 }
 
-<div class="container">
-    <h2 class="text-white">@ViewBag.Title</h2>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Cliente</label>
-                @Html.DropDownList("Cedula_Cliente", null, "-- Seleccionar --", new { @class = "form-select" })
-            </div>
-            <div class="col-md-6">
-                <label>Método de Pago</label>
-                @Html.DropDownList("Id_MetodoPago", null, "-- Seleccionar --", new { @class = "form-select" })
-            </div>
-        </div>
-
-        <h4 class="text-white">Productos</h4>
-        <table class="table table-dark table-bordered" id="detalleTable">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-
-        <button type="button" class="btn btn-primary mb-3" id="agregarFila">Agregar Producto</button>
-
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <label>Fecha de Venta</label>
-                @Html.TextBoxFor(m => m.Fecha_Venta, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
-            </div>
-            <div class="col-md-4">
-                <label>Hora de Venta</label>
-                @Html.TextBoxFor(m => m.Hora_Venta, "{0:hh\\:mm}", new { @class = "form-control", @type = "time" })
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <label>Subtotal</label>
-                <input class="form-control" id="subtotalFinal" readonly name="Subtotal" />
-            </div>
-            <div class="col-md-4">
-                <label>IVA (13%)</label>
-                <input class="form-control" id="ivaFinal" readonly name="IVA" />
-            </div>
-            <div class="col-md-4">
-                <label>Total</label>
-                <input class="form-control" id="totalFinal" readonly name="Total" />
-            </div>
-        </div>
-
-        <div class="text-end">
-            <input type="submit" class="btn btn-success" value="Registrar" />
-            <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
-        </div>
+<style>
+    .pv-card {
+        background: #1f1f1f;
+        color: #fff;
+        border-radius: 15px;
     }
 
+    .pv-header {
+        background: #A8E063;
+        color: #000;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .pv-btn-green {
+        background: #A8E063;
+        color: #000;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+        .pv-btn-green:hover {
+            filter: brightness(.95);
+            color: #000;
+        }
+
+    .pv-table {
+        background: #222;
+        color: #fff;
+    }
+
+        .pv-table thead {
+            background: #333;
+            color: #fff;
+        }
+
+        .pv-table th, .pv-table td {
+            vertical-align: middle;
+        }
+
+    label {
+        color: #dcdcdc;
+        font-weight: 500;
+    }
+</style>
+
+<div class="container py-3">
+    <div class="card shadow-lg w-100 pv-card">
+        <div class="card-header pv-header text-center">
+            <h2 class="fw-bold m-0" style="font-family:'Poppins',sans-serif;">@ViewBag.Title</h2>
+        </div>
+
+        <div class="card-body" style="font-family:'Roboto',sans-serif;">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label">Cliente</label>
+                        @Html.DropDownList("Cedula_Cliente", null, "-- Seleccionar --", new { @class = "form-select" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Método de Pago</label>
+                        @Html.DropDownList("Id_MetodoPago", null, "-- Seleccionar --", new { @class = "form-select" })
+                    </div>
+                </div>
+
+                <h4 class="mb-3" style="color:#A8E063;">Productos</h4>
+                <table class="table table-bordered table-hover pv-table" id="detalleTable">
+                    <thead>
+                        <tr>
+                            <th style="width:42%;">Producto</th>
+                            <th style="width:15%;">Precio</th>
+                            <th style="width:15%;">Cantidad</th>
+                            <th style="width:15%;">Subtotal</th>
+                            <th style="width:13%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <button type="button" class="btn pv-btn-green mb-4" id="agregarFila">
+                    <i class="fa fa-plus"></i> Agregar Producto
+                </button>
+
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <label class="form-label">Fecha de Venta</label>
+                        @Html.TextBoxFor(m => m.Fecha_Venta, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Hora de Venta</label>
+                        @Html.TextBoxFor(m => m.Hora_Venta, "{0:hh\\:mm}", new { @class = "form-control", @type = "time" })
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <label class="form-label">Subtotal</label>
+                        <input class="form-control" id="subtotalFinal" readonly name="Subtotal" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">IVA (13%)</label>
+                        <input class="form-control" id="ivaFinal" readonly name="IVA" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Total</label>
+                        <input class="form-control" id="totalFinal" readonly name="Total" />
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <input type="submit" class="btn pv-btn-green me-2" value="Registrar" />
+                    <a href="@Url.Action("Index")" class="btn pv-btn-green">Cancelar</a>
+                </div>
+            }
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     <script>
-        function recalcularTotales() {
-            let subtotal = 0;
+  function recalcularTotales() {
+    let subtotal = 0;
 
-            $('#detalleTable tbody tr').each(function () {
-                const precio = parseFloat($(this).find('.precio').val()) || 0;
-                const cantidad = parseFloat($(this).find('.cantidad').val()) || 0;
-                const subtotalFila = precio * cantidad;
-                $(this).find('.subtotal').val(subtotalFila.toFixed(2));
-                subtotal += subtotalFila;
-            });
+    $('#detalleTable tbody tr').each(function () {
+      const precio = parseFloat($(this).find('.precio').val()) || 0;
+      const cantidad = parseFloat($(this).find('.cantidad').val()) || 0;
+      const subtotalFila = precio * cantidad;
+      $(this).find('.subtotal').val(subtotalFila.toFixed(2));
+      subtotal += subtotalFila;
+    });
 
-            const iva = subtotal * 0.13;
-            const total = subtotal + iva;
+    const iva = subtotal * 0.13;
+    const total = subtotal + iva;
 
-            $('#subtotalFinal').val(subtotal.toFixed(2));
-            $('#ivaFinal').val(iva.toFixed(2));
-            $('#totalFinal').val(total.toFixed(2));
-        }
+    $('#subtotalFinal').val(subtotal.toFixed(2));
+    $('#ivaFinal').val(iva.toFixed(2));
+    $('#totalFinal').val(total.toFixed(2));
+  }
 
-        $(document).on('change', '.producto', function () {
-            const precio = $('option:selected', this).data('precio');
-            const row = $(this).closest('tr');
-            row.find('.precio').val(precio);
-            recalcularTotales();
-        });
+  $(document).on('change', '.producto', function () {
+    const precio = $('option:selected', this).data('precio');
+    const row = $(this).closest('tr');
+    row.find('.precio').val(parseFloat(precio || 0).toFixed(2));
+    recalcularTotales();
+  });
 
-        $(document).on('input', '.cantidad', function () {
-            recalcularTotales();
-        });
+  $(document).on('input', '.cantidad', function () {
+    recalcularTotales();
+  });
 
-        $('#agregarFila').click(function () {
-            const index = $('#detalleTable tbody tr').length;
-            const filaNueva = `
-                <tr>
-                    <td>
-                        <select name="detalles[${index}].Id_Producto" class="form-select producto" data-index="${index}">
-                            @foreach (var p in productos)
-                            {
-                                <option value="@p.Id_Producto" data-precio="@p.Precio">@p.Nombre_Producto</option>
-                            }
-                        </select>
-                    </td>
-                    <td><input name="detalles[${index}].PrecioUnitario" class="form-control precio" readonly value="0" /></td>
-                    <td><input name="detalles[${index}].Cantidad" class="form-control cantidad" type="number" min="1" value="1" /></td>
-                    <td><input name="detalles[${index}].Subtotal" class="form-control subtotal" readonly value="0" /></td>
-                    <td><button type="button" class="btn btn-danger eliminar-fila">×</button></td>
-                </tr>`;
-            $('#detalleTable tbody').append(filaNueva);
-        });
+  $('#agregarFila').click(function () {
+    const index = $('#detalleTable tbody tr').length;
+    const filaNueva = `
+      <tr>
+        <td>
+          <select name="detalles[${index}].Id_Producto" class="form-select producto" data-index="${index}">
+            <option value="">-- Selecciona --</option>
+            @foreach (var p in productos)
+            {
+              <text>
+                <option value="@p.Id_Producto" data-precio="@p.Precio">@p.Nombre_Producto</option>
+              </text>
+            }
+          </select>
+        </td>
+        <td><input name="detalles[${index}].PrecioUnitario" class="form-control precio" readonly value="0.00" /></td>
+        <td><input name="detalles[${index}].Cantidad" class="form-control cantidad" type="number" min="1" value="1" /></td>
+        <td><input name="detalles[${index}].Subtotal" class="form-control subtotal" readonly value="0.00" /></td>
+        <td class="text-center"><button type="button" class="btn btn-danger eliminar-fila">&times;</button></td>
+      </tr>`;
+    $('#detalleTable tbody').append(filaNueva);
+  });
 
-        $(document).on('click', '.eliminar-fila', function () {
-            $(this).closest('tr').remove();
-            recalcularTotales();
-        });
+  $(document).on('click', '.eliminar-fila', function () {
+    $(this).closest('tr').remove();
+    recalcularTotales();
+  });
+
+  // Opcional: agrega una primera fila al abrir y recalcula
+  $(function(){
+    if ($('#detalleTable tbody tr').length === 0) {
+      $('#agregarFila').trigger('click');
+    }
+    recalcularTotales();
+  });
     </script>
 }

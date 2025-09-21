@@ -5,67 +5,69 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card mt-4 shadow-lg bg-dark text-white">
-    <div class="card-header bg-primary text-white text-center">
-        <h4 class="fw-bold">¡Hola @ViewBag.NombreCliente! Estas son tus promociones</h4>
-    </div>
+<div class="container mt-4 d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg w-100" style="max-width: 1100px; background: rgba(0, 0, 0, 0.85); color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #A8E063; color: black; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">¡Hola @ViewBag.NombreCliente! Estas son tus promociones</h2>
+        </div>
 
-    <div class="card-body">
-        @if (TempData["Mensaje"] != null)
-        {
-            <div class="alert alert-success text-center">
-                @TempData["Mensaje"]
-            </div>
-        }
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success text-center fw-semibold">
+                    @TempData["Mensaje"]
+                </div>
+            }
 
-        @if (!Model.Any())
-        {
-            <p class="text-center text-white">No hay promociones activas en este momento.</p>
-        }
-        else
-        {
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                @foreach (var promo in Model)
-                {
-                    <div class="col">
-                        <div class="card h-100 bg-secondary text-white shadow border-0">
-                            @if (!string.IsNullOrEmpty(promo.ImagenUrl))
-                            {
-                                <img src="@promo.ImagenUrl" class="card-img-top rounded-top" alt="Promo">
-                            }
-
-                            <div class="card-body">
-                                <h5 class="card-title fw-bold">@promo.Titulo</h5>
-                                <p class="card-text">@promo.Descripcion</p>
-                            </div>
-
-                            <div class="card-footer bg-dark text-center">
-                                @if (Session["Usuario"] == null)
+            @if (!Model.Any())
+            {
+                <p class="text-center text-white">No hay promociones activas en este momento.</p>
+            }
+            else
+            {
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @foreach (var promo in Model)
+                    {
+                        <div class="col">
+                            <div class="card h-100 shadow border-0" style="background-color:#2C2C2C; color:white; border-radius:12px;">
+                                @if (!string.IsNullOrEmpty(promo.ImagenUrl))
                                 {
-                                    <a href="@Url.Action("Login", "Account", new { returnUrl = Request.RawUrl })"
-                                       class="btn btn-light btn-sm fw-bold">
-                                        Iniciar sesión para aplicar
-                                    </a>
+                                    <img src="@promo.ImagenUrl" class="card-img-top rounded-top" alt="Promo">
                                 }
-                                else if (promo.YaAplicada)
-                                {
-                                    <span class="text-success fw-bold">✔ Promoción aplicada</span>
-                                }
-                                else
-                                {
-                                    using (Html.BeginForm("AplicarPromocion", "Marketing", FormMethod.Post))
+
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold text-center" style="color:#A8E063;">@promo.Titulo</h5>
+                                    <p class="card-text">@promo.Descripcion</p>
+                                </div>
+
+                                <div class="card-footer text-center" style="background-color:#1A1A1A; border-top: 1px solid #444;">
+                                    @if (Session["Usuario"] == null)
                                     {
-                                        @Html.AntiForgeryToken()
-                                        @Html.Hidden("idCampania", promo.IdCampania)
-                                        @Html.Hidden("cedulaCliente", promo.CedulaCliente)
-                                        <button type="submit" class="btn btn-light btn-sm fw-bold">Aplicar promoción</button>
+                                        <a href="@Url.Action("Login", "Account", new { returnUrl = Request.RawUrl })"
+                                           class="btn btn-success btn-sm fw-bold">
+                                            Iniciar sesión para aplicar
+                                        </a>
                                     }
-                                }
+                                    else if (promo.YaAplicada)
+                                    {
+                                        <span class="text-success fw-bold">✔ Promoción aplicada</span>
+                                    }
+                                    else
+                                    {
+                                        using (Html.BeginForm("AplicarPromocion", "Marketing", FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.Hidden("idCampania", promo.IdCampania)
+                                            @Html.Hidden("cedulaCliente", promo.CedulaCliente)
+                                            <button type="submit" class="btn btn-success btn-sm fw-bold">Aplicar promoción</button>
+                                        }
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </div>
-        }
+                    }
+                </div>
+            }
+        </div>
     </div>
 </div>

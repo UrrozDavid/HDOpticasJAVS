@@ -325,4 +325,129 @@
         });
     });
     </script>
+    <style>
+        /* ===== Header verde centrado ===== */
+        h2.text-primary.fw-bold.mb-4 {
+            max-width: 1100px;
+            margin: 20px auto 0 !important;
+            background: #A8E063;
+            color: #000 !important;
+            padding: 14px 20px;
+            border-radius: 15px 15px 0 0;
+            font-weight: 800;
+        }
+
+            /* ===== Ancho/centrado para alerts (si aparecen) ===== */
+            h2.text-primary.fw-bold.mb-4 ~ .alert {
+                max-width: 1100px;
+                margin: 10px auto;
+            }
+
+            /* ===== Card oscuro pegado al header ===== */
+            h2.text-primary.fw-bold.mb-4 ~ .card {
+                max-width: 1100px;
+                margin: 0 auto 24px !important;
+                background: #1f1f1f !important;
+                color: #F1E0C6 !important;
+                border: 1px solid #2c2c2c !important;
+                border-top: 0 !important;
+                border-radius: 0 0 15px 15px !important;
+                box-shadow: 0 12px 24px rgba(0,0,0,.25);
+            }
+
+        /* ===== Labels e inputs en modo oscuro ===== */
+        .form-label.fw-bold.text-primary {
+            color: #cfcfcf !important;
+        }
+
+        .form-control,
+        .form-select,
+        textarea.form-control {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #3b3b3b !important;
+        }
+
+            .form-control:focus,
+            .form-select:focus,
+            textarea.form-control:focus {
+                background: #2f2f2f !important;
+                color: #fff !important;
+                border-color: #5b5b5b !important;
+                box-shadow: none !important;
+            }
+
+        hr {
+            border-color: #2c2c2c;
+        }
+
+        /* ===== Botones: verde con letras negras ===== */
+        .btn-success {
+            background: #A8E063 !important;
+            color: #000 !important;
+            border: none !important;
+            font-weight: 700;
+            border-radius: 8px;
+        }
+
+            .btn-success:hover {
+                filter: brightness(.95);
+            }
+
+        .btn-secondary {
+            background: transparent !important;
+            color: #e6e6e6 !important;
+            border: 1px solid #6c757d !important;
+            border-radius: 8px;
+        }
+
+            .btn-secondary:hover {
+                background: #2a2a2a !important;
+                color: #fff !important;
+            }
+        .btn-secondary {
+            background: #A8E063 !important;
+            color: #000 !important;
+            border: none !important;
+            font-weight: 700;
+            border-radius: 8px;
+        }
+
+            .btn-secondary:hover {
+                filter: brightness(.95);
+            }
+
+            .btn-secondary:focus,
+            .btn-secondary:active {
+                box-shadow: none !important;
+                outline: none !important;
+            }
+        /* Card oscuro pegado al header cuando el card está dentro del <form> */
+        h2.text-primary.fw-bold.mb-4 ~ form > .card,
+        h2.text-primary.fw-bold.mb-4 + form > .card,
+        h2.text-primary.fw-bold.mb-4 ~ form .card:first-of-type {
+            max-width: 1100px;
+            margin: 0 auto 24px !important;
+            background: #1f1f1f !important;
+            color: #F1E0C6 !important;
+            border: 1px solid #2c2c2c !important;
+            border-top: 0 !important;
+            border-radius: 0 0 15px 15px !important;
+            box-shadow: 0 12px 24px rgba(0,0,0,.25);
+        }
+
+            /* Por si Bootstrap mete .bg-light en el card */
+            h2.text-primary.fw-bold.mb-4 ~ form > .card.bg-light,
+            h2.text-primary.fw-bold.mb-4 ~ form .card.bg-light {
+                background: #1f1f1f !important;
+            }
+        h2.text-primary.fw-bold.mb-4 {
+            text-align: center; /* centra el texto */
+            display: flex; /* asegura centrado perfecto */
+            justify-content: center; /* horizontal */
+            align-items: center; /* vertical */
+        }
+
+    </style>
+
 }

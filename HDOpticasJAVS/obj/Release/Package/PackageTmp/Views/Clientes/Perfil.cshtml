@@ -5,49 +5,65 @@
 }
 
 <div class="container mt-5">
-    <div class="card shadow-lg text-white" style="background: linear-gradient(to right, #2193b0, #6dd5ed);">
-        <div class="card-body text-center">
-            <h2 class="mb-4">Bienvenido/a, @Model.NombreUsuario</h2>
+    <div class="card shadow-lg text-white" style="background-color: #1e1e1e; border-radius: 15px;">
+        <div class="card-header text-center" style="background-color: #A8E063; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h3 class="fw-bold text-white m-0">
+                <i class="fa fa-user-circle"></i> Perfil del Cliente
+            </h3>
+        </div>
 
-            <div class="row justify-content-center">
-                <div class="col-md-6">
+        <div class="card-body text-white">
 
-                    <h4><i class="fa fa-calendar-alt"></i> Historial de Citas</h4>
-                    <ul class="list-group mb-4">
-                        @foreach (var cita in Model.HistorialCitas)
-                        {
-                            <li class="list-group-item bg-dark text-white border-secondary">
-                                @cita.Fecha.ToString("dd/MM/yyyy") - @cita.Descripcion
-                            </li>
-                        }
-                    </ul>
+            <h4 style="color: #A8E063;"><i class="fa fa-calendar-alt"></i> Historial de Citas</h4>
+            <ul class="list-group mb-4">
+                @foreach (var cita in Model.HistorialCitas)
+                {
+                    <li class="list-group-item text-white border" style="background-color: #2b2b2b; border-color: #444;">
+                        <i class="fa fa-calendar-check"></i> @cita.Fecha.ToString("dd/MM/yyyy") - @cita.Descripcion
+                    </li>
+                }
+            </ul>
 
-                    <h4><i class="fa fa-shopping-cart"></i> Historial de Compras</h4>
-                    <ul class="list-group mb-4">
-                        @foreach (var compra in Model.HistorialCompras)
-                        {
-                            <li class="list-group-item bg-dark text-white border-secondary">
-                                <i class="fa fa-glasses"></i> @compra.Producto -
-                                @compra.Monto.ToString("C0", new System.Globalization.CultureInfo("es-CR"))
-                                - @compra.Fecha.ToString("dd/MM/yyyy")
-                            </li>
-                        }
-                    </ul>
+            <h4 style="color: #A8E063;"><i class="fa fa-shopping-cart"></i> Historial de Compras</h4>
+            <ul class="list-group mb-4">
+                @foreach (var compra in Model.HistorialCompras)
+                {
+                    <li class="list-group-item text-white border" style="background-color: #2b2b2b; border-color: #444;">
+                        <i class="fa fa-glasses"></i> @compra.Producto -
+                        @compra.Monto.ToString("C0", new System.Globalization.CultureInfo("es-CR")) -
+                        @compra.Fecha.ToString("dd/MM/yyyy")
+                    </li>
+                }
+            </ul>
 
-                    <h4><i class="fa fa-gift"></i> Historial de Promociones</h4>
-                    <ul class="list-group mb-4">
-                        @{
+            <h4 style="color: #A8E063;"><i class="fa fa-gift"></i> Historial de Promociones</h4>
+            <ul class="list-group mb-4">
+                @{
+                    Html.RenderAction("HistorialPromociones", "Marketing", new { cedula = Model.CedulaCliente });
+                }
+            </ul>
 
-                            Html.RenderAction("HistorialPromociones", "Marketing", new { cedula = Model.CedulaCliente });
-                        }
-                    </ul>
-
-                </div>
+            <div class="text-end mt-4 text-light">
+                <small><i class="fa fa-clock"></i> Última actualización: @Model.UltimaActualizacion.ToString("dd 'de' MMMM yyyy")</small>
             </div>
 
-            <div class="mt-4 text-light">
-                <small>Última actualización: @Model.UltimaActualizacion.ToString("dd 'de' MMMM yyyy")</small>
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index", "Home")" class="btn" style="background-color: #A8E063; color: black; border-radius: 8px; margin-right: 10px;">
+                    <i class="fa fa-home"></i> Volver al Inicio
+                </a>
+
+                <a href="@Url.Action("EditarPerfil", "Clientes", new { cedula = Model.CedulaCliente })" class="btn" style="background-color: #A8E063; color: black; border-radius: 8px;">
+                    <i class="fa fa-edit"></i> Editar Perfil
+                </a>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .list-group-item:hover {
+        background-color: #444 !important;
+        transition: background-color 0.2s ease;
+        cursor: pointer;
+    }
+</style>

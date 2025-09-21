@@ -1,79 +1,107 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Inicio";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <style>
-    body {
-        background: linear-gradient(135deg, #00B5E2, #1A73E8, #FF7043);
-        color: #FFFFFF;
-        font-family: 'Roboto', sans-serif;
+    .welcome-section {
+        background-image: url('@Url.Content("~/Content/img/optica-bg.jpg")');
+        background-size: cover;
+        background-position: center;
+        min-height: 65vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+        padding: 20px;
     }
 
-    h1, h2, h3 {
-        font-family: 'Montserrat', sans-serif;
-        color: #F1E0C6;
+    .welcome-overlay {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 700px;
+        width: 100%;
     }
 
-    h2 {
-        font-family: 'Raleway', sans-serif;
+    .welcome-overlay h1 {
+        font-size: 2.8rem;
+        font-weight: bold;
+        margin-bottom: 10px;
     }
 
-    p {
-        font-family: 'Nunito', sans-serif;
-    }
-
-    a, .btn {
-        font-family: 'Poppins', sans-serif;
-        text-decoration: none;
-    }
-
-    .btn-custom {
-        background-color: #D32F2F;
-        color: #FFFFFF;
-        padding: 12px 24px;
-        border-radius: 8px;
+    .welcome-overlay p {
         font-size: 1.2rem;
+        margin-bottom: 20px;
     }
 
-        .btn-custom:hover {
-            background-color: #C62828;
-        }
+    .btn-verde {
+        background-color: #A8E063;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 6px;
+    }
+
+    .btn-verde:hover {
+        background-color: #8cd74a;
+        color: white;
+    }
+
+    .section-divider {
+        border-top: 5px solid #A8E063;
+        width: 80%;
+        margin: 40px auto;
+    }
 </style>
 
-<section class="position-relative text-white d-flex align-items-center text-center" style="background: url('Content/img/fondo2.jpg') center/cover no-repeat; height: 70vh;">
-    <div class="container">
-        <div class="p-4" style="background: rgba(0, 0, 0, 0.6); border-radius: 10px; display: inline-block; max-width: 600px;">
-            <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Bienvenido/a a HD Ópticas</h1>
-            <p class="lead animate__animated animate__fadeIn">Cuidamos tu visión con la mejor tecnología y especialistas.</p>
-            <a href="#servicios" class="btn btn-custom animate__animated animate__zoomIn">Ver Servicios</a>
-        </div>
+<section class="welcome-section">
+    <div class="welcome-overlay">
+        <h1 class="animate__animated animate__fadeInDown">Bienvenido/a a HD Ópticas</h1>
+        <p class="animate__animated animate__fadeInUp">Cuidamos tu visión con la mejor tecnología y especialistas.</p>
+        <a href="#servicios" class="btn btn-verde btn-lg animate__animated animate__fadeInUp">Ver Servicios</a>
     </div>
 </section>
 
+<div class="section-divider"></div>
+
 <section id="servicios" class="container my-5">
     <h2 class="text-center mb-4">Nuestros Servicios</h2>
+
+    
     <div class="row align-items-center mb-5 animate__animated animate__fadeInLeft">
         <div class="col-md-6 text-center">
-            <img src="Content/img/examen-visual.jpg" class="img-fluid rounded shadow-lg" alt="Servicio 1">
+            <img src="~/Content/Img/examen-visual.jpg" class="img-fluid rounded shadow-lg" alt="Servicio 1">
         </div>
         <div class="col-md-6">
             <h3 class="fw-bold">Exámenes Visuales</h3>
             <p>Realizamos evaluaciones detalladas para diagnosticar y corregir problemas visuales.</p>
         </div>
     </div>
+
+    <div class="section-divider"></div>
+
+    
     <div class="row align-items-center mb-5 animate__animated animate__fadeInRight">
         <div class="col-md-6 order-md-2 text-center">
-            <img src="Content/img/lentes.jpg" class="img-fluid rounded shadow-lg" alt="Servicio 2">
+            <img src="~/Content/Img/lentes.jpg" class="img-fluid rounded shadow-lg" alt="Servicio 2">
         </div>
         <div class="col-md-6 order-md-1">
             <h3 class="fw-bold">Lentes</h3>
             <p>Contamos con una amplia variedad de lentes de alta calidad.</p>
         </div>
     </div>
+
+   
+    <div class="section-divider"></div>
+
     <div class="row align-items-center mb-5 animate__animated animate__fadeInLeft">
         <div class="col-md-6 text-center">
-            <img src="Content/img/especialista.jpg" class="img-fluid rounded shadow-lg" alt="Servicio 3">
+            <img src="~/Content/Img/especialista.jpg" class="img-fluid rounded shadow-lg" alt="Servicio 3">
         </div>
         <div class="col-md-6">
             <h3 class="fw-bold">Cuidado y Salud Visual</h3>
@@ -81,5 +109,3 @@
         </div>
     </div>
 </section>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">

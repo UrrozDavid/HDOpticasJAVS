@@ -5,41 +5,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card mt-4 bg-dark text-white shadow-lg rounded-4" style="max-width: 700px; margin: auto;">
-    <div class="card-header bg-danger text-white text-center rounded-top-4">
-        <h4 class="fw-bold mb-0">@ViewBag.Title</h4>
-    </div>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg w-100" style="max-width: 700px; background-color: #1f1f1f; border-radius: 15px; color: #F1E0C6;">
+        <!-- Encabezado verde con letras negras -->
+        <div class="card-header text-center" style="background-color: #A8E063; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h3 class="fw-bold mb-0" style="color: black;">@ViewBag.Title</h3>
+        </div>
 
-    <div class="card-body rounded-bottom-4">
-        <h5 class="mb-4 text-center text-warning">¿Está seguro que desea eliminar este producto?</h5>
+        <div class="card-body rounded-bottom-4">
+            <h5 class="mb-4 text-center" style="color: #FFCC00;">¿Está seguro que desea eliminar este producto?</h5>
 
-        <dl class="row">
-            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Nombre_Producto)</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.Nombre_Producto)</dd>
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Nombre_Producto)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Nombre_Producto)</dd>
 
-            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Codigo_Producto)</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.Codigo_Producto)</dd>
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Codigo_Producto)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Codigo_Producto)</dd>
 
-            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Stock)</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.Stock)</dd>
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Stock)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Stock)</dd>
 
-            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Precio)</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.Precio)</dd>
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Precio)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Precio)</dd>
 
-            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Descripcion)</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.Descripcion)</dd>
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Descripcion)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Descripcion)</dd>
 
-            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Proveedor.Nombre_Proveedor)</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.Proveedor.Nombre_Proveedor)</dd>
-        </dl>
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Proveedor.Nombre_Proveedor)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Proveedor.Nombre_Proveedor)</dd>
+            </dl>
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            <div class="d-flex justify-content-center gap-3 mt-4">
-                <input type="submit" value="Eliminar" class="btn btn-danger btn-lg" />
-                <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg">Cancelar</a>
-            </div>
-        }
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <!-- Botón Eliminar en rojo -->
+                    <input type="submit" value="Eliminar" class="btn btn-danger px-4 py-2 fw-bold" />
+                    <!-- Botón Cancelar en verde con letras negras -->
+                    <a href="@Url.Action("Index")" class="btn px-4 py-2 fw-bold" style="background-color: #A8E063; color: black;">
+                        Cancelar
+                    </a>
+                </div>
+            }
+        </div>
     </div>
 </div>

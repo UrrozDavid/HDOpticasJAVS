@@ -5,10 +5,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
-    <div class="card shadow-lg w-100" style="max-width: 2400px; background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
+<style>
+    .pv-card {
+        background: #1f1f1f;
+        color: #fff;
+        border-radius: 15px;
+    }
 
-        <div class="card-header text-center" style="background-color: #1A73E8; color: white;">
+    .pv-header {
+        background: #A8E063;
+        color: #000;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .pv-btn-green {
+        background: #A8E063;
+        color: #000;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+        .pv-btn-green:hover {
+            filter: brightness(.95);
+            color: #000;
+        }
+
+    .pv-table {
+        background: #222;
+        color: #fff;
+    }
+
+        .pv-table thead {
+            background: #333;
+            color: #fff;
+        }
+
+        .pv-table th, .pv-table td {
+            vertical-align: top;
+        }
+
+    .dropdown-menu-dark {
+        background: #1f1f1f;
+        color: #fff;
+        border: 1px solid #333;
+    }
+
+        .dropdown-menu-dark .dropdown-item {
+            color: #fff;
+        }
+
+            .dropdown-menu-dark .dropdown-item:hover {
+                background: #333;
+                color: #fff;
+            }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg w-100 pv-card" style="max-width: 2400px;">
+
+        <div class="card-header text-center pv-header">
             <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
         </div>
 
@@ -23,11 +79,13 @@
             }
 
             <div class="text-end mb-3">
-                <a href="@Url.Action("Create")" class="btn btn-success">Registrar Venta</a>
+                <a href="@Url.Action("Create")" class="btn pv-btn-green">
+                    <i class="fa fa-plus"></i> Registrar Venta
+                </a>
             </div>
 
-            <table class="table table-dark table-hover table-bordered">
-                <thead class="table-light text-dark" style="font-family: Raleway;">
+            <table class="table table-dark table-hover table-bordered pv-table">
+                <thead style="font-family: Raleway;">
                     <tr>
                         <th>Producto</th>
                         <th>Cliente</th>
@@ -39,7 +97,7 @@
                         <th>Método de Pago</th>
                         <th>Fecha</th>
                         <th>Hora</th>
-                        <th>Acciones</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody style="font-family: Roboto;">
@@ -67,7 +125,7 @@
                                 <ul class="list-unstyled mb-0">
                                     @foreach (var detalle in item.DetalleVenta)
                                     {
-                                        <li>- @detalle.Inventario.Nombre_Producto (x @detalle.Cantidad) -> ₡@detalle.Subtotal</li>
+                                        <li>- @detalle.Inventario.Nombre_Producto (x @detalle.Cantidad) → ₡@detalle.Subtotal</li>
                                     }
                                 </ul>
                             </td>
@@ -77,15 +135,40 @@
                             <td>@item.Parametro.Nombre_Parametro</td>
                             <td>@($"{item.Fecha_Venta:dd/MM/yyyy}")</td>
                             <td>@($"{item.Hora_Venta:hh\\:mm\\:ss}")</td>
-                            <td>
-                                <a href="@Url.Action("Edit", new { id = item.Id_Venta })" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></a>
-                                <a href="@Url.Action("Details", new { id = item.Id_Venta })" class="btn btn-info btn-sm" title="Ver Detalles"><i class="fas fa-eye"></i></a>
-                                @using (Html.BeginForm("DeleteConfirmed", "PuntoVenta", FormMethod.Post, new { onsubmit = "return confirm('¿Desea eliminar esta venta?');", style = "display:inline;" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.Hidden("id", item.Id_Venta)
-                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
-                                }
+                            <td class="text-center">
+                                <div class="dropdown d-inline-block">
+                                    <button class="btn btn-sm pv-btn-green dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i> Acciones
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="@Url.Action("Edit", new { id = item.Id_Venta })">
+                                                <i class="fa fa-pen"></i> Editar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="@Url.Action("Details", new { id = item.Id_Venta })">
+                                                <i class="fa fa-eye"></i> Ver Detalles
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="@Url.Action("AplicarPromocion", "Marketing", new { idVenta = item.Id_Venta })">
+                                                <i class="fa fa-tags"></i> Promoción
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider" /></li>
+                                        <li>
+                                            @using (Html.BeginForm("DeleteConfirmed", "PuntoVenta", FormMethod.Post, new { onsubmit = "return confirm('¿Desea eliminar esta venta?');" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@item.Id_Venta" />
+                                                <button type="submit" class="dropdown-item text-danger">
+                                                    <i class="fa fa-trash"></i> Eliminar
+                                                </button>
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     }

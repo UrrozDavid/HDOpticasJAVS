@@ -5,70 +5,82 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card mt-4 bg-dark text-white shadow-lg rounded-4" style="max-width: 1000px; margin: auto;">
-    <div class="card-header bg-primary text-white text-center rounded-top-4">
-        <h4 class="fw-bold mb-0">@ViewBag.Title</h4>
-    </div>
-
-    <div class="card-body rounded-bottom-4">
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.Nombre_Producto):</strong>
-            <p>@Html.DisplayFor(model => model.Nombre_Producto)</p>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg w-100" style="max-width: 1000px; background-color: #1f1f1f; border-radius: 15px; color: #F1E0C6;">
+        <!-- Encabezado verde con texto negro -->
+        <div class="card-header text-center" style="background-color: #A8E063; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h3 class="fw-bold mb-0" style="color: black;">@ViewBag.Title</h3>
         </div>
 
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.Codigo_Producto):</strong>
-            <p>@Html.DisplayFor(model => model.Codigo_Producto)</p>
-        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.Nombre_Producto):</strong>
+                <p>@Html.DisplayFor(model => model.Nombre_Producto)</p>
+            </div>
 
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.Stock):</strong>
-            <p>@Html.DisplayFor(model => model.Stock)</p>
-        </div>
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.Codigo_Producto):</strong>
+                <p>@Html.DisplayFor(model => model.Codigo_Producto)</p>
+            </div>
 
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.Precio):</strong>
-            <p>@Html.DisplayFor(model => model.Precio)</p>
-        </div>
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.Stock):</strong>
+                <p>@Html.DisplayFor(model => model.Stock)</p>
+            </div>
 
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.Descripcion):</strong>
-            <p>@Html.DisplayFor(model => model.Descripcion)</p>
-        </div>
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.Precio):</strong>
+                <p>@Html.DisplayFor(model => model.Precio)</p>
+            </div>
 
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.Estado):</strong>
-            <p>@Html.DisplayFor(model => model.Estado)</p>
-        </div>
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.Descripcion):</strong>
+                <p>@Html.DisplayFor(model => model.Descripcion)</p>
+            </div>
 
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.UsuarioCreador):</strong>
-            <p>@Html.DisplayFor(model => model.UsuarioCreador)</p>
-        </div>
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.Estado):</strong>
+                <p>@Html.DisplayFor(model => model.Estado)</p>
+            </div>
 
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.FechaCreacion):</strong>
-            <p>@Html.DisplayFor(model => model.FechaCreacion)</p>
-        </div>
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.UsuarioCreador):</strong>
+                <p>@Html.DisplayFor(model => model.UsuarioCreador)</p>
+            </div>
 
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.UsuarioModificador):</strong>
-            <p>@Html.DisplayFor(model => model.UsuarioModificador)</p>
-        </div>
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.FechaCreacion):</strong>
+                <p>@Html.DisplayFor(model => model.FechaCreacion)</p>
+            </div>
 
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.FechaModificacion):</strong>
-            <p>@Html.DisplayFor(model => model.FechaModificacion)</p>
-        </div>
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.UsuarioModificador):</strong>
+                <p>@Html.DisplayFor(model => model.UsuarioModificador)</p>
+            </div>
 
-        <div class="mb-3">
-            <strong>@Html.DisplayNameFor(model => model.Proveedor.Nombre_Proveedor):</strong>
-            <p>@Html.DisplayFor(model => model.Proveedor.Nombre_Proveedor)</p>
-        </div>
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.FechaModificacion):</strong>
+                <p>@Html.DisplayFor(model => model.FechaModificacion)</p>
+            </div>
 
-        <div class="text-end mt-4">
-            <a href="@Url.Action("Edit", new { id = Model.Id_Producto })" class="btn btn-warning me-2">Editar</a>
-            <a href="@Url.Action("Index")" class="btn btn-secondary">Volver</a>
+            <div class="mb-3">
+                <strong>@Html.DisplayNameFor(model => model.Proveedor.Nombre_Proveedor):</strong>
+                <p>@Html.DisplayFor(model => model.Proveedor.Nombre_Proveedor)</p>
+            </div>
+
+            <!-- Botones alineados a la derecha -->
+            <div class="text-end mt-4">
+                <a href="@Url.Action("Edit", new { id = Model.Id_Producto })"
+                   class="btn px-4 fw-bold"
+                   style="background-color: #A8E063; color: black; border: none;">
+                    <i class="bi bi-pencil-square"></i> Editar
+                </a>
+                <a href="@Url.Action("Index")"
+                   class="btn px-4 fw-bold ms-2"
+                   style="background-color: #A8E063; color: black; border: none;">
+                    <i class="bi bi-arrow-left-circle"></i> Volver
+                </a>
+            </div>
         </div>
     </div>
 </div>

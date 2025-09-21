@@ -5,6 +5,78 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    /* Header verde centrado con título negro en negrita */
+    .container-fluid.p-4 > .card > .card-header {
+        background: #A8E063 !important;
+        color: #000 !important;
+        border-top-left-radius: 15px !important;
+        border-top-right-radius: 15px !important;
+        text-align: center;
+    }
+
+        .container-fluid.p-4 > .card > .card-header h2 {
+            margin: 0;
+            font-weight: 800 !important;
+        }
+
+    /* Card oscuro, centrado y pegado al header */
+    .container-fluid.p-4 > .card {
+        max-width: 1100px;
+        margin: 20px auto;
+        background: #1f1f1f !important;
+        color: #F1E0C6 !important;
+        border: 1px solid #2c2c2c;
+        border-top: 0;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 12px 24px rgba(0,0,0,.25);
+    }
+
+    /* Labels y campos en modo oscuro */
+    .container-fluid.p-4 .card-body label {
+        color: #cfcfcf !important;
+        font-weight: 700;
+    }
+
+    .container-fluid.p-4 .form-control,
+    .container-fluid.p-4 .form-select {
+        background: #2a2a2a !important;
+        color: #fff !important;
+        border: 1px solid #3b3b3b !important;
+    }
+
+        .container-fluid.p-4 .form-control:focus,
+        .container-fluid.p-4 .form-select:focus {
+            background: #2f2f2f !important;
+            color: #fff !important;
+            border-color: #5b5b5b !important;
+            box-shadow: none !important;
+        }
+
+    /* Panel de datos de tarjeta */
+    #tarjeta-info {
+        background: rgba(255,255,255,.03) !important;
+        border: 1px solid rgba(255,255,255,.12) !important;
+    }
+
+    /* Botones: todos verdes con letras negras */
+    .container-fluid.p-4 .btn-success,
+    .container-fluid.p-4 .btn-secondary {
+        background: #A8E063 !important;
+        color: #000 !important;
+        border: none !important;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+        .container-fluid.p-4 .btn-success:hover,
+        .container-fluid.p-4 .btn-secondary:hover {
+            filter: brightness(.95);
+            color: #000 !important;
+        }
+</style>
+
+
 <div class="container-fluid p-4" style="min-height: 100vh; background: rgba(0, 0, 0, 0.85); color: #F1E0C6;">
     <div class="card shadow-lg mb-4" style="background: rgba(0,0,0,0.75); border-radius: 15px;">
 

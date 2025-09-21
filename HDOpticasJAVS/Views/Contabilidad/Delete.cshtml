@@ -5,15 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card mt-4 bg-dark text-white shadow-lg rounded-4" style="max-width: 800px; margin: auto;">
-    <div class="card-header bg-danger text-white text-center rounded-top-4">
+<div class="card pv-card shadow-lg">
+    <div class="pv-header">
         <h4 class="fw-bold mb-0">@ViewBag.Title</h4>
     </div>
 
-    <div class="card-body rounded-bottom-4">
-        <h5 class="mb-4 text-center text-warning">¿Está seguro que desea eliminar este movimiento contable?</h5>
+    <div class="card-body pv-body">
+        <h5 class="mb-4 text-center pv-warning">¿Está seguro que desea eliminar este movimiento contable?</h5>
 
-        <dl class="row">
+        <dl class="row pv-dl">
             <dt class="col-sm-4">@Html.DisplayNameFor(m => m.TipoOperacion)</dt>
             <dd class="col-sm-8">@Html.DisplayFor(m => m.TipoOperacion)</dd>
 
@@ -62,9 +62,73 @@
             @Html.HiddenFor(m => m.Id_Contabilidad)
 
             <div class="d-flex justify-content-center gap-3 mt-4">
-                <input type="submit" value="Eliminar" class="btn btn-danger btn-lg" />
-                <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg">Cancelar</a>
+                <input type="submit" value="Eliminar" class="btn pv-btn-green btn-lg" />
+                <a href="@Url.Action("Index")" class="btn pv-btn-green btn-lg">Cancelar</a>
             </div>
         }
     </div>
 </div>
+
+<style>
+    /* Card y header en el mismo estilo del sitio */
+    .pv-card {
+        max-width: 900px;
+        margin: 24px auto;
+        background: #1f1f1f;
+        color: #F1E0C6;
+        border: 1px solid #2c2c2c;
+        border-radius: 15px;
+        box-shadow: 0 12px 24px rgba(0,0,0,.25);
+    }
+
+    .pv-header {
+        background: #A8E063;
+        color: #000;
+        padding: 14px 16px;
+        border-radius: 15px 15px 0 0;
+        text-align: center;
+    }
+
+    .pv-body {
+        padding: 1.25rem 1.5rem;
+    }
+
+    /* Tono de advertencia suave */
+    .pv-warning {
+        color: #f6d365; /* ámbar */
+        font-weight: 600;
+    }
+
+    /* Tabla de definiciones prolija en oscuro */
+    .pv-dl dt {
+        color: #cfcfcf;
+        font-weight: 600;
+        padding: .6rem .4rem;
+        border-bottom: 1px solid #2b2b2b;
+    }
+
+    .pv-dl dd {
+        padding: .6rem .4rem;
+        margin: 0;
+        border-bottom: 1px solid #2b2b2b;
+    }
+
+        .pv-dl dt:last-of-type,
+        .pv-dl dd:last-of-type {
+            border-bottom: none;
+        }
+
+    /* Botones verdes con texto negro */
+    .pv-btn-green {
+        background: #A8E063 !important;
+        color: #000 !important;
+        border: none !important;
+        font-weight: 700;
+        border-radius: 8px;
+        padding: .6rem 1.2rem;
+    }
+
+        .pv-btn-green:hover {
+            filter: brightness(.95);
+        }
+</style>

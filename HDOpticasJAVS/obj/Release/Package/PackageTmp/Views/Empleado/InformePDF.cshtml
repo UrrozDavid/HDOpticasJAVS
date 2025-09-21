@@ -1,0 +1,71 @@
+﻿@model List<HDOpticasJAVS.Models.EmpleadoViewModel>
+
+@{
+    Layout = null;
+}
+
+<style>
+    body {
+        font-family: "Segoe UI", sans-serif;
+        font-size: 12px;
+        color: #333;
+    }
+
+    h2 {
+        font-family: "Georgia", serif;
+        font-size: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    th, td {
+        font-family: "Segoe UI", sans-serif;
+        padding: 8px;
+        border: 1px solid #ccc;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+</style>
+
+<h2>Informe de Empleados</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Primer Apellido</th>
+            <th>Segundo Apellido</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Cedula</td>
+                <td>@item.Nombre</td>
+                <td>@item.Apellido1</td>
+                <td>@item.Apellido2</td>
+                <td>@item.Correo</td>
+                <td>@item.Rol</td>
+                <td>@item.Estado</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

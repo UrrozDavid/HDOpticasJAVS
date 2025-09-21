@@ -5,16 +5,67 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    /* Card + header */
+    .pv-card {
+        background: #1f1f1f;
+        color: #fff;
+        border-radius: 15px;
+    }
+
+    .pv-header {
+        background: #A8E063;
+        color: #000;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    /* Botones */
+    .pv-btn-green {
+        background: #A8E063;
+        color: #000;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+        .pv-btn-green:hover {
+            filter: brightness(.95);
+            color: #000;
+        }
+    /* Inputs oscuros */
+    .form-control, .form-select {
+        background: #2a2a2a;
+        color: #fff;
+        border: 1px solid #444;
+    }
+
+        .form-control:focus, .form-select:focus {
+            background: #2d2d2d;
+            color: #fff;
+            border-color: #A8E063;
+            box-shadow: 0 0 0 .2rem rgba(168,224,99,.15);
+        }
+    /* Labels legibles en oscuro */
+    label {
+        color: #dcdcdc;
+        font-weight: 500;
+    }
+    /* Validaciones más visibles en oscuro */
+    .text-danger {
+        color: #ff7575 !important;
+    }
+</style>
+
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg" style="max-width: 900px; width: 100%; background: rgba(0, 0, 0, 0.7); color: #F1E0C6; border-radius: 15px;">
-        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+    <div class="card shadow-lg pv-card" style="max-width: 900px; width: 100%;">
+        <div class="card-header text-center pv-header">
+            <h2 class="fw-bold m-0" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
         </div>
+
         <div class="card-body" style="font-family: 'Roboto', sans-serif;">
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
 
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -45,7 +96,11 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label>Especialidad</label>
-                        @Html.DropDownList("Id_TipoEspecialista", ViewBag.Id_TipoEspecialista as SelectList, "-- Seleccionar --", new { @class = "form-select", @id = "ddlEspecialidadAdmin" })
+                        @Html.DropDownList(
+                          "Id_TipoEspecialista",
+                          ViewBag.Id_TipoEspecialista as SelectList,
+                          "-- Seleccionar --",
+                          new { @class = "form-select", @id = "ddlEspecialidadAdmin" })
                         @Html.ValidationMessageFor(model => model.Id_TipoEspecialista, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-6">
@@ -57,23 +112,24 @@
                     </div>
                 </div>
 
-                <div class="row mb-3">
+                <div class="row mb-4">
                     <div class="col-md-6">
                         <label>Estado</label>
                         @Html.DropDownListFor(model => model.Estado,
-                            new List<SelectListItem>
-                            {
-                                new SelectListItem { Text = "Activo", Value = "A" },
-                                new SelectListItem { Text = "Inactivo", Value = "I" }
-                            },
-                            "-- Seleccionar --", new { @class = "form-select" })
+                          new List<SelectListItem>
+                          {
+                            new SelectListItem { Text = "Activo", Value = "A" },
+                            new SelectListItem { Text = "Inactivo", Value = "I" }
+                          },
+                          "-- Seleccionar --",
+                          new { @class = "form-select" })
                         @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="text-end mb-2">
-                    <input type="submit" value="Registrar Cita" class="btn btn-success" />
-                    <a href="@Url.Action("Index", "CitaEnLinea")" class="btn btn-secondary">Cancelar</a>
+                <div class="text-end">
+                    <input type="submit" value="Registrar Cita" class="btn pv-btn-green me-2" />
+                    <a href="@Url.Action("Index", "CitaEnLinea")" class="btn pv-btn-green">Cancelar</a>
                 </div>
             }
         </div>
@@ -82,29 +138,28 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            $('#ddlEspecialidadAdmin').change(function () {
-                var idEspecialidad = $(this).val();
-                console.log("Especialidad seleccionada:", idEspecialidad);
-
-                if (idEspecialidad) {
-                    $.getJSON('@Url.Action("ObtenerEspecialistas", "CitaEnLinea")',
-                        { idEspecialidad: idEspecialidad },
-                        function (data) {
-                            console.log("Especialistas recibidos:", data);
-                            var ddl = $('#ddlEspecialistaAdmin');
-                            ddl.empty();
-                            ddl.append($('<option>').text('-- Seleccione un especialista --').attr('value', ''));
-                            $.each(data, function (i, item) {
-                                ddl.append($('<option>').text(item.NombreCompleto).attr('value', item.Cedula));
-                            });
-                        }).fail(function (jqXHR, textStatus, errorThrown) {
-                            console.error("Error en la petición AJAX:", textStatus, errorThrown);
-                        });
-                } else {
-                    $('#ddlEspecialistaAdmin').empty().append($('<option>').text('-- Seleccione un especialista --').attr('value', ''));
-                }
+    $(document).ready(function () {
+      $('#ddlEspecialidadAdmin').change(function () {
+        var idEspecialidad = $(this).val();
+        if (idEspecialidad) {
+          $.getJSON('@Url.Action("ObtenerEspecialistas", "CitaEnLinea")',
+            { idEspecialidad: idEspecialidad },
+            function (data) {
+              var ddl = $('#ddlEspecialistaAdmin');
+              ddl.empty();
+              ddl.append($('<option>').text('-- Seleccione un especialista --').attr('value', ''));
+              $.each(data, function (i, item) {
+                ddl.append($('<option>').text(item.NombreCompleto).attr('value', item.Cedula));
+              });
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+              console.error("Error en la petición AJAX:", textStatus, errorThrown);
             });
-        });
+        } else {
+          $('#ddlEspecialistaAdmin').empty().append(
+            $('<option>').text('-- Seleccione un especialista --').attr('value', '')
+          );
+        }
+      });
+    });
     </script>
 }

@@ -51,10 +51,45 @@
                                 }
                             </td>
                             <td class="text-center">
-                                <a href="@Url.Action("Detalles", new { cedula = usuario.Cedula })" class="btn btn-info btn-sm me-1">Ver</a>
-                                <a href="@Url.Action("Editar", "Usuario", new { cedula = usuario.Cedula })" class="btn btn-warning btn-sm me-1">Editar</a>
-                                <a href="@Url.Action("Eliminar", new { cedula = usuario.Cedula })" class="btn btn-danger btn-sm"
-                                   onclick="return confirm('¿Estás seguro que deseas eliminar este usuario?')">Eliminar</a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical"></i> Opciones
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                                        <li>
+                                            <a class="dropdown-item" href="@Url.Action("Detalles", new { cedula = usuario.Cedula })">
+                                                <i class="bi bi-eye me-2"></i>Ver
+                                            </a>
+                                        </li>
+
+                                        @if (Session["Rol"] != null && (int)Session["Rol"] == 1)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("Editar", "Usuario", new { cedula = usuario.Cedula })">
+                                                    <i class="bi bi-pencil me-2"></i>Editar
+                                                </a>
+                                            </li>
+                                        }
+
+                                        <li><hr class="dropdown-divider" /></li>
+
+                                        @if (Session["Rol"] != null && (int)Session["Rol"] == 1)
+                                        {
+                                            <li><hr class="dropdown-divider" /></li>
+
+                                            <li>
+                                                @using (Html.BeginForm("Eliminar", "Usuario", new { cedula = usuario.Cedula }, FormMethod.Post))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="dropdown-item text-danger"
+                                                            onclick="return confirm('¿Está seguro que desea desactivar este usuario?');">
+                                                        <i class="bi bi-person-x-fill me-2"></i>Desactivar
+                                                    </button>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     }

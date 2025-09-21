@@ -5,8 +5,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .btn-verde {
+        background-color: #A8E063;
+        color: black !important;
+        border: none;
+        font-weight: bold;
+    }
+
+        .btn-verde:hover {
+            background-color: #8DC44B;
+            color: black !important;
+        }
+
+    .form-control-dark {
+        background-color: #2c2c2c;
+        color: white;
+        border: 1px solid #555;
+    }
+
+        .form-control-dark::placeholder {
+            color: #aaa;
+        }
+</style>
+
 <div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
-    <div class="card-header bg-success text-white text-center rounded-top-4">
+    <div class="card-header text-center rounded-top-4" style="background-color: #A8E063; color: black;">
         <h4 class="fw-bold mb-0"><i class="bi bi-journal-plus"></i> Registrar Historial de @ViewBag.NombreCliente</h4>
     </div>
 
@@ -18,35 +42,39 @@
 
             <div class="mb-3">
                 @Html.LabelFor(m => m.Antecedentes)
-                @Html.TextAreaFor(m => m.Antecedentes, new { @class = "form-control", rows = 3 })
+                @Html.TextAreaFor(m => m.Antecedentes, new { @class = "form-control form-control-dark", rows = 3 })
+                @Html.ValidationMessageFor(m => m.Antecedentes, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
                 @Html.LabelFor(m => m.Diagnostico)
-                @Html.TextAreaFor(m => m.Diagnostico, new { @class = "form-control", rows = 3 })
+                @Html.TextAreaFor(m => m.Diagnostico, new { @class = "form-control form-control-dark", rows = 3 })
+                @Html.ValidationMessageFor(m => m.Diagnostico, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
                 @Html.LabelFor(m => m.Tratamiento)
-                @Html.TextAreaFor(m => m.Tratamiento, new { @class = "form-control", rows = 3 })
+                @Html.TextAreaFor(m => m.Tratamiento, new { @class = "form-control form-control-dark", rows = 3 })
+                @Html.ValidationMessageFor(m => m.Tratamiento, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
                 @Html.LabelFor(m => m.Observaciones)
-                @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control", rows = 3 })
+                @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control form-control-dark", rows = 3 })
+                @Html.ValidationMessageFor(m => m.Observaciones, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
-                <label for="fechaSeguimiento" class="form-label">Fecha de próximo seguimiento (opcional)</label>
-                <input type="date" class="form-control" name="fechaSeguimiento" id="fechaSeguimiento" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                @Html.Label("Fecha de Próximo Seguimiento (opcional)")
+                <input type="date" class="form-control form-control-dark" name="fechaSeguimiento" id="fechaSeguimiento" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 <span class="text-danger">@ViewBag.FechaInvalida</span>
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-success">
+                <button type="submit" class="btn btn-verde">
                     <i class="bi bi-save2"></i> Guardar
                 </button>
-                <a href="@Url.Action("Historial", "Clientes", new { cedula = Model.CedulaCliente })" class="btn btn-secondary">
+                <a href="@Url.Action("Historial", "Clientes", new { cedula = Model.CedulaCliente })" class="btn btn-verde ms-2">
                     <i class="bi bi-arrow-left-circle"></i> Cancelar
                 </a>
             </div>

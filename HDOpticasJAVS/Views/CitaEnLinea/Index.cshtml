@@ -5,26 +5,97 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    /* Card + header */
+    .pv-card {
+        background: #1f1f1f;
+        color: #fff;
+        border-radius: 15px;
+    }
+
+    .pv-header {
+        background: #A8E063;
+        color: #000;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    /* Botones verdes */
+    .pv-btn-green {
+        background: #A8E063;
+        color: #000 !important;
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+        .pv-btn-green:hover {
+            filter: brightness(.95);
+            color: #000 !important;
+        }
+
+    /* Tabla oscura */
+    .pv-table {
+        background: #222;
+        color: #fff;
+    }
+
+        .pv-table thead {
+            background: #333;
+            color: #fff;
+        }
+
+        .pv-table th, .pv-table td {
+            padding: .6rem .7rem;
+            vertical-align: middle;
+        }
+
+        .pv-table tbody tr:nth-child(odd) {
+            background: #1e1e1e;
+        }
+
+        .pv-table tbody tr:nth-child(even) {
+            background: #202020;
+        }
+
+    /* Dropdown oscuro */
+    .dropdown-menu-dark {
+        background: #1f1f1f;
+        color: #fff;
+        border: 1px solid #333;
+    }
+
+        .dropdown-menu-dark .dropdown-item {
+            color: #fff;
+        }
+
+            .dropdown-menu-dark .dropdown-item:hover {
+                background: #333;
+                color: #fff;
+            }
+</style>
+
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
-    <div class="card shadow-lg w-100" style="max-width: 1100px; background: rgba(0, 0, 0, 0.75); color: #F1E0C6; border-radius: 15px;">
-        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+    <div class="card shadow-lg w-100 pv-card" style="max-width: 1100px;">
+        <div class="card-header text-center pv-header">
+            <h2 class="fw-bold m-0" style="font-family:'Poppins',sans-serif;">@ViewBag.Title</h2>
         </div>
-        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+
+        <div class="card-body" style="font-family:'Roboto',sans-serif;">
 
             <div class="d-flex justify-content-between mb-3">
                 <div>
-                    @Html.ActionLink("Crear Nueva Cita", "Create", null, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Crear Nueva Cita", "Create", null, new { @class = "btn pv-btn-green" })
                 </div>
-                <div>
-                    <button class="btn btn-success me-2" onclick="exportarTablaExcel()">Exportar a Excel</button>
-                    <button class="btn btn-outline-light" onclick="exportarTablaPDF()">Exportar a PDF</button>
+                <div class="d-flex gap-2">
+                    <button class="btn pv-btn-green" onclick="exportarTablaExcel()">Exportar a Excel</button>
+                    <button class="btn pv-btn-green" onclick="exportarTablaPDF()">Exportar a PDF</button>
                 </div>
             </div>
 
             <div class="table-responsive">
-                <table id="tablaCitas" class="table table-dark table-hover table-bordered">
-                    <thead class="table-light text-dark" style="font-family: Raleway;">
+                <table id="tablaCitas" class="table table-hover table-bordered pv-table mb-0">
+                    <thead>
                         <tr>
                             <th>Fecha de la Cita</th>
                             <th>Hora de la Cita</th>
@@ -32,7 +103,7 @@
                             <th>Nombre Cliente</th>
                             <th>Estado de la Cita</th>
                             <th>Especialidad</th>
-                            <th>Acciones</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +118,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.Parametro1.Nombre_Parametro)</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-outline-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button type="button" class="btn btn-sm pv-btn-green dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="bi bi-three-dots-vertical"></i> Opciones
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">

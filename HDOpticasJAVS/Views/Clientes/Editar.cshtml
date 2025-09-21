@@ -5,81 +5,87 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
-    <div class="card-header bg-warning text-dark text-center rounded-top-4">
-        <h4 class="fw-bold mb-0"><i class="bi bi-pencil-square"></i> Editar Cliente</h4>
-    </div>
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 bg-dark text-white">
+        <div class="card-header text-center" style="background-color: #A8E063;">
+            <h4 class="fw-bold mb-0 text-black">
+                <i class="bi bi-pencil-square"></i> Editar Cliente
+            </h4>
+        </div>
 
-    <div class="card-body">
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <div class="alert alert-danger d-flex align-items-center">
-                <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
-                <div>@TempData["ErrorMessage"]</div>
-            </div>
-        }
+        <div class="card-body px-4">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger d-flex align-items-center">
+                    <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+                    <div>@TempData["ErrorMessage"]</div>
+                </div>
+            }
 
-        @using (Html.BeginForm("Editar", "Clientes", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.Cedula)
+            @using (Html.BeginForm("Editar", "Clientes", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Cedula)
 
-            <div class="mb-3">
-                @Html.LabelFor(m => m.Nombre)
-                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
-            </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Nombre)
+                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="mb-3">
-                @Html.LabelFor(m => m.Apellido1, "Primer Apellido")
-                @Html.TextBoxFor(m => m.Apellido1, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "text-danger" })
-            </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Apellido1, "Primer Apellido")
+                    @Html.TextBoxFor(m => m.Apellido1, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="mb-3">
-                @Html.LabelFor(m => m.Apellido2, "Segundo Apellido")
-                @Html.TextBoxFor(m => m.Apellido2, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Apellido2, "", new { @class = "text-danger" })
-            </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Apellido2, "Segundo Apellido")
+                    @Html.TextBoxFor(m => m.Apellido2, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Apellido2, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="mb-3">
-                @Html.LabelFor(m => m.Numero_Telefono, "Teléfono")
-                @Html.TextBoxFor(m => m.Numero_Telefono, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Numero_Telefono, "", new { @class = "text-danger" })
-            </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Numero_Telefono, "Teléfono")
+                    @Html.TextBoxFor(m => m.Numero_Telefono, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Numero_Telefono, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="mb-3">
-                @Html.LabelFor(m => m.Correo, "Correo Electrónico")
-                @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", type = "email" })
-                @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
-            </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Correo, "Correo Electrónico")
+                    @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", type = "email" })
+                    @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="mb-3">
-                @Html.LabelFor(m => m.Fecha_Nacimiento, "Fecha de Nacimiento")
-                @Html.TextBoxFor(m => m.Fecha_Nacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-                @Html.ValidationMessageFor(m => m.Fecha_Nacimiento, "", new { @class = "text-danger" })
-            </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Fecha_Nacimiento, "Fecha de Nacimiento")
+                    @Html.TextBoxFor(m => m.Fecha_Nacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.Fecha_Nacimiento, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="mb-3">
-                @Html.LabelFor(m => m.Genero)
-                @Html.DropDownListFor(m => m.Genero, (SelectList)ViewBag.Generos, "Seleccione un género", new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Genero, "", new { @class = "text-danger" })
-            </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Genero)
+                    @Html.DropDownListFor(m => m.Genero, (SelectList)ViewBag.Generos, "Seleccione un género", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Genero, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="mb-3">
-                @Html.LabelFor(m => m.Padecimiento)
-                @Html.TextBoxFor(m => m.Padecimiento, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Padecimiento, "", new { @class = "text-danger" })
-            </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Padecimiento)
+                    @Html.TextBoxFor(m => m.Padecimiento, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Padecimiento, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-success me-2">
-                    <i class="bi bi-save2"></i> Guardar Cambios
-                </button>
-                <a href="@Url.Action("Detalles", "Clientes", new { cedula = Model.Cedula })" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left-circle"></i> Cancelar
-                </a>
-            </div>
-        }
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn fw-bold me-2" style="background-color: #A8E063; color: black; border-radius: 8px;">
+                        <i class="bi bi-save2 me-1"></i> Guardar Cambios
+                    </button>
+                    <a href="@Url.Action("Detalles", "Clientes", new { cedula = Model.Cedula })"
+                       class="btn fw-bold" style="background-color: #A8E063; color: black; border-radius: 8px;">
+                        <i class="bi bi-arrow-left-circle me-1"></i> Cancelar
+                    </a>
+                </div>
+
+            }
+        </div>
     </div>
 </div>

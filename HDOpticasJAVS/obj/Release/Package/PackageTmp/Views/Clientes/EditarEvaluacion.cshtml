@@ -1,30 +1,50 @@
 ﻿@{
     ViewBag.Title = "Editar Evaluación Médica";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
+    <div class="card-header text-center rounded-top-4" style="background-color: #A8E063;">
+        <h4 class="fw-bold mb-0 text-black">
+            <i class="bi bi-journal-medical"></i> @ViewBag.Title
+        </h4>
+    </div>
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
+    <div class="card-body">
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+                <div>@TempData["ErrorMessage"]</div>
+            </div>
+        }
 
-<form method="post">
-    <div class="form-group">
-        <label>Fecha</label>
-        <input type="date" name="Fecha" class="form-control" value="@ViewBag.Fecha" />
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Fecha</label>
+                <input type="date" name="Fecha" class="form-control" value="@ViewBag.Fecha" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Diagnóstico</label>
+                <input type="text" name="Diagnostico" class="form-control" value="@ViewBag.Diagnostico" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Tratamiento</label>
+                <input type="text" name="Tratamiento" class="form-control" value="@ViewBag.Tratamiento" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Observaciones</label>
+                <textarea name="Observaciones" class="form-control" rows="3">@ViewBag.Observaciones</textarea>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn fw-bold" style="background-color: #A8E063; color: black; border-radius: 8px;">
+                    <i class="bi bi-save2 me-1"></i> Guardar Cambios
+                </button>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label>Diagnóstico</label>
-        <input type="text" name="Diagnostico" class="form-control" value="@ViewBag.Diagnostico" />
-    </div>
-    <div class="form-group">
-        <label>Tratamiento</label>
-        <input type="text" name="Tratamiento" class="form-control" value="@ViewBag.Tratamiento" />
-    </div>
-    <div class="form-group">
-        <label>Observaciones</label>
-        <textarea name="Observaciones" class="form-control" rows="3">@ViewBag.Observaciones</textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-</form>
+</div>

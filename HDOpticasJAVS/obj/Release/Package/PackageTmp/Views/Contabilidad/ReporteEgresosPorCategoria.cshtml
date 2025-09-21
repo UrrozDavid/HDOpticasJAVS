@@ -2,56 +2,157 @@
 
 @{
     ViewBag.Title = "Reporte de Egresos por Categoría";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<style>
+    /* ===== Header verde centrado ===== */
+    .k-header {
+        max-width: 1100px;
+        margin: 20px auto 0;
+        background: #A8E063;
+        color: #000;
+        border-radius: 15px 15px 0 0;
+        padding: 14px 20px;
+        font-weight: 800;
+        text-align: center;
+    }
 
-@using (Html.BeginForm("GenerarReporteEgresosPorCategoria", "Contabilidad", FormMethod.Post))
-{
-    <div class="mb-3">
-        <label>Categoría de Gasto</label>
-        @Html.DropDownList("Id_TipoMovimiento", (SelectList)ViewBag.CategoriasGastos, "Seleccione categoría", new { @class = "form-select", @value = Model?.Id_TipoMovimiento })
-    </div>
-    <div class="mb-3">
-        <label>Fecha inicio</label>
-        <input type="date" name="FechaInicio" value="@(Model?.FechaInicio?.ToString("yyyy-MM-dd") ?? "")" class="form-control" />
-    </div>
-    <div class="mb-3">
-        <label>Fecha fin</label>
-        <input type="date" name="FechaFin" value="@(Model?.FechaFin?.ToString("yyyy-MM-dd") ?? "")" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Generar Reporte</button>
-}
+        .k-header h2 {
+            margin: 0;
+            color: #000;
+            font-weight: 800;
+            text-shadow: none
+        }
+
+    /* ===== Card oscuro pegado al header ===== */
+    .k-card {
+        max-width: 1100px;
+        margin: 0 auto 24px;
+        background: #1f1f1f;
+        color: #F1E0C6;
+        border: 1px solid #2c2c2c;
+        border-top: 0;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 12px 24px rgba(0,0,0,.25);
+        padding: 20px;
+    }
+
+    /* Controles en oscuro */
+    .form-label {
+        color: #cfcfcf !important
+    }
+
+    .form-control, .form-select, textarea.form-control {
+        background: #2a2a2a !important;
+        color: #fff !important;
+        border: 1px solid #3b3b3b !important
+    }
+
+        .form-control:focus, .form-select:focus, textarea.form-control:focus {
+            background: #2f2f2f !important;
+            color: #fff !important;
+            border-color: #5b5b5b !important;
+            box-shadow: none !important
+        }
+
+    /* Botones */
+    .btn-success {
+        background: #A8E063 !important;
+        color: #000 !important;
+        border: none !important;
+        font-weight: 700;
+        border-radius: 8px
+    }
+
+        .btn-success:hover {
+            filter: brightness(.95)
+        }
+
+    .btn-primary {
+        background: #1A73E8;
+        border: none
+    }
+
+    /* Tabla */
+    .table-dark thead th {
+        color: #000 !important;
+        background: #f8f9fa !important
+    }
+</style>
+
+<div class="k-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<div class="k-card">
+    @using (Html.BeginForm("GenerarReporteEgresosPorCategoria", "Contabilidad", FormMethod.Post))
+    {
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Categoría de Gasto</label>
+                @Html.DropDownList(
+                    "Id_TipoMovimiento",
+                    (SelectList)ViewBag.CategoriasGastos,
+                    "Seleccione categoría",
+                    new { @class = "form-select", @value = Model?.Id_TipoMovimiento }
+                )
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Fecha inicio</label>
+                <input type="date" name="FechaInicio"
+                       value="@(Model?.FechaInicio?.ToString("yyyy-MM-dd") ?? "")"
+                       class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Fecha fin</label>
+                <input type="date" name="FechaFin"
+                       value="@(Model?.FechaFin?.ToString("yyyy-MM-dd") ?? "")"
+                       class="form-control" />
+            </div>
+        </div>
+
+        <div class="text-end mt-3">
+            <button type="submit" class="btn btn-success">Generar Reporte</button>
+        </div>
+    }
+</div>
 
 @if (Model != null && Model.EgresosPorCategoria != null && Model.EgresosPorCategoria.Any())
 {
-    <h3>Resultados</h3>
+    <div class="k-card">
+        <h4 class="mb-3">Resultados</h4>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Categoría</th>
-                <th>Total Egresos</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.EgresosPorCategoria)
-            {
-                <tr>
-                    <td>@item.Categoria</td>
-                    <td>@item.Total.ToString("C")</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        <div class="table-responsive">
+            <table class="table table-dark table-hover table-bordered align-middle text-center mb-4">
+                <thead class="table-light">
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Total Egresos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.EgresosPorCategoria)
+                    {
+                        <tr>
+                            <td>@item.Categoria</td>
+                            <td>@item.Total.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-    <div>
-        <canvas id="graficoEgresos" width="400" height="200"></canvas>
+        <div>
+            <canvas id="graficoEgresos" height="160"></canvas>
+        </div>
     </div>
 }
 else
 {
-    <p>No se encontraron registros para los filtros seleccionados.</p>
+    <div class="k-card">
+        <p class="mb-0">No se encontraron registros para los filtros seleccionados.</p>
+    </div>
 }
 
 @section Scripts {
@@ -60,25 +161,36 @@ else
     @if (Model != null && Model.EgresosPorCategoria != null && Model.EgresosPorCategoria.Any())
     {
         <script>
-            var ctx = document.getElementById('graficoEgresos').getContext('2d');
+            const ctx = document.getElementById('graficoEgresos').getContext('2d');
 
-            var categorias = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.EgresosPorCategoria.Select(x => x.Categoria)));
-            var totales = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.EgresosPorCategoria.Select(x => x.Total)));
+            const categorias = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.EgresosPorCategoria.Select(x => x.Categoria)));
+            const totales    = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.EgresosPorCategoria.Select(x => x.Total)));
 
-            var chart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: categorias,
                     datasets: [{
                         label: 'Total Egresos',
                         data: totales,
-                        backgroundColor: 'rgba(255, 99, 132, 0.5)'
+                        backgroundColor: 'rgba(255, 99, 132, 0.55)'
                     }]
                 },
                 options: {
+                    plugins: {
+                        legend: {
+                            labels: { color: '#fff' }
+                        }
+                    },
                     scales: {
+                        x: {
+                            ticks: { color: '#fff' },
+                            grid: { color: 'rgba(255,255,255,.08)' }
+                        },
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: { color: '#fff' },
+                            grid: { color: 'rgba(255,255,255,.08)' }
                         }
                     }
                 }

@@ -5,68 +5,62 @@
 
 <style>
     body {
-        background: linear-gradient(135deg, #00B5E2, #1A73E8, #FF7043);
-        color: #FFFFFF;
-        font-family: 'Roboto', sans-serif;
+        background-color: white; 
     }
 
-    h1, h2, h3 {
-        font-family: 'Montserrat', sans-serif;
+    .recuadro-oscuro {
+        background-color: rgba(0, 0, 0, 0.85);
+        padding: 30px;
+        border-radius: 15px;
         color: #F1E0C6;
+        max-width: 900px;
+        margin: 30px auto;
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
     }
 
-    h2 {
-        font-family: 'Raleway', sans-serif;
+        .recuadro-oscuro h1,
+        .recuadro-oscuro h2 {
+            color: #A8E063;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        .recuadro-oscuro p, a {
+            font-size: 1.2rem;
+            color: #F1E0C6;
+            font-family: 'Nunito', sans-serif;
+        }
+
+    .icono-verde {
+        color: #A8E063;
+        font-size: 1.3rem;
+        margin-right: 8px;
     }
 
-    p {
-        font-family: 'Nunito', sans-serif;
-    }
-
-    a, .btn {
-        font-family: 'Poppins', sans-serif;
-        text-decoration: none;
-    }
-
-    .contact-container {
-        background: rgba(0, 0, 0, 0.6);
-        padding: 40px;
-        border-radius: 12px;
-        max-width: 600px;
-        margin: auto;
-    }
-
-    .contact-info i {
-        font-size: 1.5rem;
-        margin-right: 10px;
-        color: #FFD54F;
-    }
-
-    .contact-info p {
-        font-size: 1.2rem;
-        margin: 10px 0;
+    .linea-verde {
+        border: none;
+        height: 4px;
+        background-color: #A8E063;
+        width: 80%;
+        margin: 50px auto;
+        border-radius: 5px;
     }
 </style>
 
-<section class="position-relative text-white d-flex align-items-center text-center" height: 60vh;">
-    <div class="container">
-        <div class="p-4 contact-container animate__animated animate__fadeInDown">
-            <h1 class="display-4 fw-bold">Contáctanos</h1>
-            <p class="lead">Estamos aquí para ayudarte con cualquier consulta o información que necesites.</p>
-        </div>
-    </div>
-</section>
+<div class="recuadro-oscuro text-center animate__animated animate__fadeInDown">
+    <h1>Contáctanos</h1>
+    <p>Estamos aquí para ayudarte con cualquier consulta o información que necesites.</p>
+</div>
 
-<section class="container my-5 animate__animated animate__fadeInUp">
-    <div class="contact-container text-center">
-        <h2 class="mb-4">Información de Contacto</h2>
-        <div class="contact-info">
-            <p><i class="fas fa-envelope"></i> Correo: <a href="mailto:hdopticascr@gmail.com" style="color: #FFFFFF;">hdopticascr@gmail.com</a></p>
-            <p><i class="fas fa-phone"></i> Tel: <a href="tel:+50622214315" style="color: #FFFFFF;">+506 2221-4315</a></p>
-        </div>
-    </div>
-</section>
+<hr class="linea-verde" />
 
-<!-- Asegúrate de tener FontAwesome cargado si estás usando íconos como fas fa-envelope, fas fa-phone -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<div class="recuadro-oscuro text-center animate__animated animate__fadeInUp">
+    <h2>Información de Contacto</h2>
+    <p><i class="fas fa-envelope icono-verde"></i>Correo: <a href="mailto:hdopticascr@gmail.com">hdopticascr@gmail.com</a></p>
+    <p><i class="fas fa-phone icono-verde"></i>Tel: <a href="tel:+50622214315">+506 2221-4315</a></p>
+</div>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />

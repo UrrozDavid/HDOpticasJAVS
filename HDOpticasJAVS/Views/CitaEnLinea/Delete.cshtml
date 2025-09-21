@@ -1,128 +1,92 @@
 ﻿@model HDOpticasJAVS.Cita
-
 @{
-    Layout = null;
+    Layout = null; // se mantiene como en tu versión original
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
+    <title>Eliminar Cita</title>
+    <style>
+        body{ background:#121212; color:#fff; margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; }
+        .wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+        .pv-card{ background:#1f1f1f; color:#fff; border-radius:15px; width:100%; max-width:900px; box-shadow:0 10px 30px rgba(0,0,0,.35);}
+        .pv-header{ background:#A8E063; color:#000; padding:16px 20px; border-top-left-radius:15px; border-top-right-radius:15px; }
+        .pv-header h3{ margin:0; font-weight:800; font-family:'Poppins',sans-serif; }
+        .pv-body{ padding:20px; font-family:'Roboto',sans-serif; }
+        .pv-subtitle{ color:#ccc; margin:0 0 12px; font-weight:600; }
+        .pv-dl{ margin:0; }
+        .pv-dl dt{ color:#dcdcdc; font-weight:600; width:35%; float:left; padding:10px 0; border-bottom:1px solid #2a2a2a; }
+        .pv-dl dd{ margin-left:35%; padding:10px 0; border-bottom:1px solid #2a2a2a; }
+        .pv-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:18px; }
+        .pv-btn-green{ background:#A8E063; color:#000; border:none; border-radius:8px; padding:10px 16px; font-weight:700; cursor:pointer; }
+        .pv-btn-green:hover{ filter:brightness(.95); color:#000; }
+        .pv-btn-red{ background:#e55353; color:#fff; border:none; border-radius:8px; padding:10px 16px; font-weight:700; cursor:pointer; }
+        .pv-btn-red:hover{ filter:brightness(.95); color:#fff; }
+        @media (max-width: 720px){
+            .pv-dl dt, .pv-dl dd{ float:none; width:100%; margin:0; }
+            .pv-dl dd{ border-top:0; }
+        }
+    </style>
 </head>
 <body>
-    <h3>Are you sure you want to delete this?</h3>
-    <div>
-        <h4>Cita</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Fecha_Cita)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Fecha_Cita)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Hora_Cita)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Hora_Cita)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Estado)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Estado)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.UsuarioCreador)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.UsuarioCreador)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.FechaCreacion)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.UsuarioModificador)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.UsuarioModificador)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.FechaModificacion)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.FechaModificacion)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.TokenConfirmacion)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.TokenConfirmacion)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Empleado.Direccion)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Empleado.Direccion)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Usuario.Nombre)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Usuario.Nombre)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Parametro.Nombre_Parametro)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Parametro.Nombre_Parametro)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Parametro1.Nombre_Parametro)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Parametro1.Nombre_Parametro)
-            </dd>
-    
-        </dl>
-    
-        @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
-    
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "Index")
+    <div class="wrap">
+        <div class="pv-card">
+            <div class="pv-header">
+                <h3>Confirmar eliminación</h3>
             </div>
-        }
+            <div class="pv-body">
+                <p class="pv-subtitle">¿Estás seguro que deseas eliminar esta cita?</p>
+
+                <dl class="dl-horizontal pv-dl">
+                    <dt>@Html.DisplayNameFor(m => m.Fecha_Cita)</dt>
+                    <dd>@Html.DisplayFor(m => m.Fecha_Cita)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.Hora_Cita)</dt>
+                    <dd>@Html.DisplayFor(m => m.Hora_Cita)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.Estado)</dt>
+                    <dd>@Html.DisplayFor(m => m.Estado)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.UsuarioCreador)</dt>
+                    <dd>@Html.DisplayFor(m => m.UsuarioCreador)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.FechaCreacion)</dt>
+                    <dd>@Html.DisplayFor(m => m.FechaCreacion)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.UsuarioModificador)</dt>
+                    <dd>@Html.DisplayFor(m => m.UsuarioModificador)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.FechaModificacion)</dt>
+                    <dd>@Html.DisplayFor(m => m.FechaModificacion)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.TokenConfirmacion)</dt>
+                    <dd>@Html.DisplayFor(m => m.TokenConfirmacion)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.Empleado.Direccion)</dt>
+                    <dd>@Html.DisplayFor(m => m.Empleado.Direccion)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.Usuario.Nombre)</dt>
+                    <dd>@Html.DisplayFor(m => m.Usuario.Nombre)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.Parametro.Nombre_Parametro)</dt>
+                    <dd>@Html.DisplayFor(m => m.Parametro.Nombre_Parametro)</dd>
+
+                    <dt>@Html.DisplayNameFor(m => m.Parametro1.Nombre_Parametro)</dt>
+                    <dd>@Html.DisplayFor(m => m.Parametro1.Nombre_Parametro)</dd>
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="pv-actions">
+                        <a href="@Url.Action("Index")" class="pv-btn-green">Cancelar</a>
+                        <input type="submit" value="Eliminar" class="pv-btn-red" />
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </body>
 </html>

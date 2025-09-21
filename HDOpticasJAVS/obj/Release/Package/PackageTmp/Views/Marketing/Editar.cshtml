@@ -1,30 +1,96 @@
-﻿@{
+﻿@model HDOpticasJAVS.Models.ViewModels.CampaniaMarketingViewModel
+@{
     ViewBag.Title = "Editar Campaña de Marketing";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<style>
+    .card-dark {
+        background-color: #1f1f1f;
+        color: #F1E0C6;
+        border-radius: 12px;
+    }
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
+    .header-verde {
+        background-color: #A8E063;
+        color: #000;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        padding: 10px;
+        text-align: center;
+    }
 
-<form method="post">
-    <div class="form-group">
-        <label>Título</label>
-        <input type="text" name="Titulo" class="form-control" value="@ViewBag.Titulo" />
+    .form-control {
+        background-color: #f8f9fa;
+        color: #000;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .btn-verde {
+        background-color: #A8E063;
+        border-color: #A8E063;
+        color: #000;
+        font-weight: 600;
+    }
+
+        .btn-verde:hover {
+            background-color: #8DC44B;
+            border-color: #8DC44B;
+            color: #000;
+        }
+</style>
+
+<div class="card shadow-lg mt-4 card-dark">
+    <div class="header-verde">
+        <h4 class="fw-bold mb-0">Editar Campaña de Marketing</h4>
     </div>
-    <div class="form-group">
-        <label>Segmento</label>
-        <input type="text" name="Segmento" class="form-control" value="@ViewBag.Segmento" />
+
+    <div class="card-body">
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-info">@TempData["Mensaje"]</div>
+        }
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @using (Html.BeginForm("EditarHistorial", "Marketing", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id_Campania)
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Título (Nombre de la campaña)</label>
+                @Html.TextBoxFor(m => m.Nombre_Campania, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(m => m.Nombre_Campania, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Descripción / Mensaje</label>
+                @Html.TextAreaFor(m => m.Descripcion, 4, 40, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Fecha de Inicio</label>
+                    @Html.TextBoxFor(m => m.Fecha_Inicio, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Fecha_Inicio, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Fecha Programada (opcional)</label>
+                    @Html.TextBoxFor(m => m.Fecha_Programada, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Fecha_Programada, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Tipo</label>
+                @Html.TextBoxFor(m => m.Tipo, new { @class = "form-control", placeholder = "Manual / Automática" })
+                @Html.ValidationMessageFor(m => m.Tipo, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-verde w-100 mt-3">Guardar Cambios</button>
+        }
     </div>
-    <div class="form-group">
-        <label>Fecha de Envío</label>
-        <input type="date" name="FechaEnvio" class="form-control" value="@ViewBag.FechaEnvio" />
-    </div>
-    <div class="form-group">
-        <label>Mensaje</label>
-        <textarea name="Mensaje" class="form-control" rows="4">@ViewBag.Mensaje</textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-</form>
+</div>

@@ -3,9 +3,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .btn-verde {
+        background-color: #A8E063 !important;
+        color: #000 !important;
+        border: none;
+    }
+
+        .btn-verde:hover {
+            background-color: #91cc56 !important;
+            color: #000 !important;
+        }
+
+    .btn-outline-light:hover {
+        background-color: #f8f9fa !important;
+        color: #000 !important;
+    }
+</style>
+
 <div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
-    <div class="card-header bg-info text-white text-center rounded-top-4">
-        <h4 class="fw-bold mb-0"><i class="bi bi-person-vcard"></i> Detalles del Cliente</h4>
+    <div class="card-header text-center rounded-top-4" style="background-color: #A8E063;">
+        <h4 class="fw-bold mb-0 text-black">
+            <i class="bi bi-person-vcard"></i> Detalles del Cliente
+        </h4>
     </div>
 
     <div class="card-body">
@@ -25,37 +45,38 @@
         }
 
         <dl class="row">
-            <dt class="col-sm-4">👤 Nombre Completo:</dt>
+            <dt class="col-sm-4"><i class="fa fa-user"></i> Nombre Completo:</dt>
             <dd class="col-sm-8">@ViewBag.ClienteNombre</dd>
 
-            <dt class="col-sm-4">🆔 Cédula:</dt>
+            <dt class="col-sm-4"><i class="fa fa-id-card"></i> Cédula:</dt>
             <dd class="col-sm-8">@ViewBag.Cedula</dd>
 
-            <dt class="col-sm-4">📧 Correo:</dt>
+            <dt class="col-sm-4"><i class="fa fa-envelope"></i> Correo:</dt>
             <dd class="col-sm-8">@ViewBag.Correo</dd>
 
-            <dt class="col-sm-4">📞 Teléfono:</dt>
+            <dt class="col-sm-4"><i class="fa fa-phone"></i> Teléfono:</dt>
             <dd class="col-sm-8">@ViewBag.Telefono</dd>
 
-            <dt class="col-sm-4">🎂 Fecha de Nacimiento:</dt>
+            <dt class="col-sm-4"><i class="fa fa-birthday-cake"></i> Fecha de Nacimiento:</dt>
             <dd class="col-sm-8">@ViewBag.FechaNacimiento</dd>
 
-            <dt class="col-sm-4">📆 Edad:</dt>
+            <dt class="col-sm-4"><i class="fa fa-hourglass-half"></i> Edad:</dt>
             <dd class="col-sm-8">@ViewBag.Edad</dd>
 
-            <dt class="col-sm-4">⚧️ Género:</dt>
+            <dt class="col-sm-4"><i class="fa fa-venus-mars"></i> Género:</dt>
             <dd class="col-sm-8">@ViewBag.Genero</dd>
 
-            <dt class="col-sm-4">🩺 Padecimiento:</dt>
+            <dt class="col-sm-4"><i class="fa fa-notes-medical"></i> Padecimiento:</dt>
             <dd class="col-sm-8">@(string.IsNullOrEmpty(ViewBag.Padecimiento) ? "Ninguno" : ViewBag.Padecimiento)</dd>
         </dl>
 
         <div class="text-center mt-4">
-            <a href="@Url.Action("Index", "Clientes")" class="btn btn-secondary">
-                <i class="bi bi-arrow-left-circle"></i> Volver al Inicio
-                <a href="@Url.Action("Historial", "Clientes", new { cedula = ViewBag.Cedula })" class="btn btn-outline-light mt-2">
-                    <i class="bi bi-folder2-open"></i> Ver Historial Clínico
-                </a>          
+            <a href="@Url.Action("Index", "Clientes")" class="btn btn-verde rounded-3 px-4 py-2 me-2">
+                <i class="fa fa-home"></i> Volver al Inicio
+            </a>
+            <a href="@Url.Action("Historial", "Clientes", new { cedula = ViewBag.Cedula })" class="btn btn-outline-light rounded-3 px-4 py-2">
+                <i class="fa fa-file-medical-alt"></i> Ver Historial Clínico
+            </a>
         </div>
     </div>
 </div>

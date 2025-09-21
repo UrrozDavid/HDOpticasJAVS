@@ -1,0 +1,75 @@
+﻿@model List<HDOpticasJAVS.Models.EmpleadoViewModel>
+@{
+    ViewBag.Title = "Informe de Empleados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2 class="text-white">@ViewBag.Title</h2>
+
+    @using (Html.BeginForm("Informe", "Empleado", FormMethod.Get))
+    {
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <input type="text" name="rol" value="@ViewBag.Rol" class="form-control" placeholder="Rol" />
+            </div>
+            <div class="col-md-3">
+                <select name="estado" class="form-control">
+                    <option value="">Todos los Estados</option>
+                    <option value="A" @(ViewBag.Estado == "A" ? "selected" : "")>Activo</option>
+                    <option value="I" @(ViewBag.Estado == "I" ? "selected" : "")>Inactivo</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+            </div>
+        </div>
+    }
+
+    <div class="d-flex justify-content-end gap-2 mb-3">
+
+        <a href="@Url.Action("ExportarExcel", "Empleado", new { estado = ViewBag.Estado, rol = ViewBag.Rol })" class="btn btn-success">
+            Exportar a Excel
+        </a>
+        <a href="@Url.Action("ExportarPdf", "Empleado", new { estado = ViewBag.Estado, rol = ViewBag.Rol })" class="btn btn-danger">
+            <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
+        </a>
+    </div>
+
+    <table class="table table-dark table-bordered table-hover">
+        <thead class="table-light text-dark">
+            <tr class="text-center">
+                <th>Cédula</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in Model)
+            {
+                <tr>
+                    <td>@emp.Cedula</td>
+                    <td>@emp.Nombre @emp.Apellido1 @emp.Apellido2</td>
+                    <td>@emp.Correo</td>
+                    <td>@emp.Rol</td>
+                    <td>
+                        @if (emp.Estado == "A")
+                        {
+                            <span class="badge bg-success">Activo</span>
+                        }
+                        else if (emp.Estado == "I")
+                        {
+                            <span class="badge bg-danger">Inactivo</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Desconocido</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

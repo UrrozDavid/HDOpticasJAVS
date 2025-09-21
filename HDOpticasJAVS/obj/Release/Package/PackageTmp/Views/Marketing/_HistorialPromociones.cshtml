@@ -1,50 +1,59 @@
 ﻿@model IEnumerable<HDOpticasJAVS.Models.ViewModels.PromocionHistorialItemViewModel>
 @using System.Globalization
 
-<div class="mt-4">
-    
+<div class="container d-flex justify-content-center align-items-center mt-4">
+    <div class="card shadow-lg w-100" style="max-width: 900px; background-color: #1a1a1a; color: #F1E0C6; border-radius: 15px;">
+        <!-- Encabezado -->
+        <div class="card-header text-center" style="background-color: #A8E063; color: black; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h4 class="fw-bold" style="font-family: 'Poppins', sans-serif;">Historial de Promociones</h4>
+        </div>
 
-    @if (Model == null || !Model.Any())
-    {
-        <div class="text-muted">No hay registros.</div>
-    }
-    else
-    {
-        <ul class="list-group mb-4">
-            @foreach (var p in Model)
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+            @if (Model == null || !Model.Any())
             {
-                <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between">
-                    <div>
-                        <div class="fw-bold">@p.Campania</div>
-
-                        <div class="small text-muted">
-                            @((p.Fecha is DateTime d) ? d.ToString("dd/MM/yyyy HH:mm") : "")
-                        </div>
-
-                        <div>
-                            @p.Tipo
-                            @if (!string.IsNullOrWhiteSpace(p.CodigoPromo))
-                            {
-                                <span>(@p.CodigoPromo)</span>
-                            }
-                        </div>
-                    </div>
-
-                    <div class="text-end">
-                        @if (p.MontoDescuento.HasValue)
-                        {
-                            <div>@p.MontoDescuento.Value.ToString("C0", new CultureInfo("es-CR"))</div>
-                        }
-
-                        @if (p.IdVenta.HasValue && p.TotalVenta.HasValue)
-                        {
-                            <div class="small">
-                                Venta #@p.IdVenta – Total @p.TotalVenta.Value.ToString("C0", new CultureInfo("es-CR"))
-                            </div>
-                        }
-                    </div>
-                </li>
+                <div class="text-center text-muted">No hay registros.</div>
             }
-        </ul>
-    }
+            else
+            {
+                <ul class="list-group">
+                    @foreach (var p in Model)
+                    {
+                        <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between align-items-start rounded-3 mb-2">
+                            <div>
+                                <div class="fw-bold" style="color:#A8E063;">@p.Campania</div>
+
+                                <div class="small text-muted">
+                                    @((p.Fecha is DateTime d) ? d.ToString("dd/MM/yyyy HH:mm") : "")
+                                </div>
+
+                                <div>
+                                    @p.Tipo
+                                    @if (!string.IsNullOrWhiteSpace(p.CodigoPromo))
+                                    {
+                                        <span>(@p.CodigoPromo)</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="text-end">
+                                @if (p.MontoDescuento.HasValue)
+                                {
+                                    <div class="fw-bold" style="color:#A8E063;">
+                                        @p.MontoDescuento.Value.ToString("C0", new CultureInfo("es-CR"))
+                                    </div>
+                                }
+
+                                @if (p.IdVenta.HasValue && p.TotalVenta.HasValue)
+                                {
+                                    <div class="small text-muted">
+                                        Venta #@p.IdVenta – Total @p.TotalVenta.Value.ToString("C0", new CultureInfo("es-CR"))
+                                    </div>
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
 </div>

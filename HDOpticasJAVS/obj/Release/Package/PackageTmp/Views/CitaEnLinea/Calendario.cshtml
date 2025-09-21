@@ -3,34 +3,134 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
 
+<style>
+    /* Tema base */
+    .pv-card {
+        background: #1f1f1f;
+        color: #fff;
+        border-radius: 15px;
+    }
+
+    .pv-header {
+        background: #A8E063;
+        color: #000;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .pv-subcard {
+        background: #222;
+        color: #fff;
+        border-radius: 10px;
+    }
+
+    .pv-subheader {
+        background: #A8E063;
+        color: #000;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .pv-btn-green {
+        background: #A8E063;
+        color: #000;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+
+        .pv-btn-green:hover {
+            filter: brightness(.95);
+            color: #000;
+        }
+
+    .form-label {
+        color: #dcdcdc;
+    }
+
+    /* Tabs estilo verde */
+    .nav-tabs .nav-link {
+        color: #dcdcdc;
+        background: #1f1f1f;
+        border: 1px solid #333;
+    }
+
+        .nav-tabs .nav-link:hover {
+            color: #fff;
+            background: #262626;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #000;
+            background: #A8E063;
+            border-color: #A8E063;
+            font-weight: 600;
+        }
+
+    /* Alerts sutiles que combinan con tema */
+    .pv-alert-success {
+        background: #2f8f57;
+        color: #000;
+        border-radius: 10px;
+        border: 0;
+    }
+
+    .pv-alert-danger {
+        background: #e55353;
+        color: #fff;
+        border-radius: 10px;
+        border: 0;
+    }
+
+    .pv-alert-warning {
+        background: #f6c26b;
+        color: #000;
+        border-radius: 10px;
+        border: 0;
+    }
+
+    /* Inputs oscuros para mejor contraste */
+    .form-control, .form-select {
+        background: #2a2a2a;
+        color: #fff;
+        border: 1px solid #444;
+    }
+
+        .form-control:focus, .form-select:focus {
+            background: #2d2d2d;
+            color: #fff;
+            border-color: #A8E063;
+            box-shadow: 0 0 0 .2rem rgba(168,224,99,.15);
+        }
+</style>
+
 @if (TempData["MensajeCitaError"] != null)
 {
-    <div class="alert alert-danger text-center">
-        <div class="card bg-danger text-light p-3 shadow-sm rounded">
+    <div class="container my-3">
+        <div class="alert pv-alert-danger text-center py-3">
             <strong>@TempData["MensajeCitaError"]</strong>
         </div>
     </div>
 }
 @if (TempData["MensajeCitaExito"] != null)
 {
-    <div class="alert alert-success text-center">
-        <div class="card bg-success text-light p-3 shadow-sm rounded">
+    <div class="container my-3">
+        <div class="alert pv-alert-success text-center py-3">
             <strong>@TempData["MensajeCitaExito"]</strong>
         </div>
     </div>
 }
 
-<div class="container-fluid p-4" style="min-height: 100vh; background: rgba(0, 0, 0, 0.85); color: #F1E0C6;">
-    <div class="card shadow-lg mb-4" style="background: rgba(0,0,0,0.75); border-radius: 15px;">
-        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+<div class="container-fluid p-4" style="min-height: 100vh;">
+    <div class="card shadow-lg mb-4 pv-card">
+        <div class="card-header text-center pv-header">
+            <h2 class="fw-bold m-0" style="font-family:'Poppins',sans-serif;">@ViewBag.Title</h2>
         </div>
-        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+
+        <div class="card-body" style="font-family:'Roboto',sans-serif;">
 
             @{
                 int? rol = Session["Rol"] as int?;
@@ -41,18 +141,24 @@
 
             <ul class="nav nav-tabs mb-3" id="tabsCita" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="tab-reservar" data-bs-toggle="tab" data-bs-target="#reservar" type="button" role="tab">Reservar Cita</button>
+                    <button class="nav-link active" id="tab-reservar" data-bs-toggle="tab" data-bs-target="#reservar" type="button" role="tab">
+                        Reservar Cita
+                    </button>
                 </li>
                 @if (estaLogueado && esCliente)
                 {
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="tab-mis-citas" data-bs-toggle="tab" data-bs-target="#mis-citas" type="button" role="tab">Mis Citas</button>
+                        <button class="nav-link" id="tab-mis-citas" data-bs-toggle="tab" data-bs-target="#mis-citas" type="button" role="tab">
+                            Mis Citas
+                        </button>
                     </li>
                 }
                 @if (estaLogueado && esEspecialista)
                 {
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="tab-citas-especialista" data-bs-toggle="tab" data-bs-target="#citas-especialista" type="button" role="tab">Citas Asignadas</button>
+                        <button class="nav-link" id="tab-citas-especialista" data-bs-toggle="tab" data-bs-target="#citas-especialista" type="button" role="tab">
+                            Citas Asignadas
+                        </button>
                     </li>
                 }
             </ul>
@@ -61,46 +167,49 @@
                 <div class="tab-pane fade show active" id="reservar" role="tabpanel">
                     @if (!estaLogueado)
                     {
-                        <div class="alert alert-danger text-center">
-                            <div class="card bg-danger text-light p-3 shadow-sm rounded">
-                                <strong>Debe iniciar sesión para agendar una cita.</strong>
-                            </div>
+                        <div class="alert pv-alert-danger text-center py-3">
+                            <strong>Debe iniciar sesión para agendar una cita.</strong>
                         </div>
                     }
                     else
                     {
                         <div class="row justify-content-center">
                             <div class="col-lg-6">
-                                <div class="card bg-dark text-light" style="border-radius: 10px;">
-                                    <div class="card-header bg-secondary">
+                                <div class="card pv-subcard">
+                                    <div class="card-header pv-subheader">
                                         <h5 class="mb-0">Reservar Cita</h5>
                                     </div>
                                     <div class="card-body">
                                         @using (Html.BeginForm("Crear", "CitaEnLinea", FormMethod.Post))
                                         {
-                                            <div class="form-group">
-                                                <label>Especialidad:</label>
-                                                @Html.DropDownList("Id_TipoEspecialista", ViewBag.Especialidades as SelectList, "Seleccione una especialidad", new { @class = "form-control", @id = "ddlEspecialidad" })
+                                            <div class="mb-3">
+                                                <label class="form-label">Especialidad:</label>
+                                                @Html.DropDownList("Id_TipoEspecialista",
+                                                  ViewBag.Especialidades as SelectList,
+                                                  "Seleccione una especialidad",
+                                                  new { @class = "form-select", @id = "ddlEspecialidad" })
                                             </div>
 
-                                            <div class="form-group">
-                                                <label>Especialista:</label>
-                                                <select id="ddlEspecialista" name="Cedula_Especialista" class="form-control" required>
+                                            <div class="mb-3">
+                                                <label class="form-label">Especialista:</label>
+                                                <select id="ddlEspecialista" name="Cedula_Especialista" class="form-select" required>
                                                     <option value="">Seleccione un especialista</option>
                                                 </select>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label>Fecha:</label>
-                                                <input type="date" name="Fecha" class="form-control" required />
+                                            <div class="mb-3">
+                                                <label class="form-label">Fecha:</label>
+                                                <input type="date" id="Fecha" name="Fecha" class="form-control" required />
                                             </div>
 
-                                            <div class="form-group">
-                                                <label>Hora:</label>
-                                                <input type="time" name="Hora" class="form-control" required />
+                                            <div class="mb-3">
+                                                <label class="form-label">Hora:</label>
+                                                <input type="time" id="Hora" name="Hora" class="form-control" required />
                                             </div>
 
-                                            <button type="submit" class="btn btn-primary mt-3">Agendar cita</button>
+                                            <button type="submit" class="btn pv-btn-green mt-2">
+                                                <i class="fa fa-calendar-check"></i> Agendar cita
+                                            </button>
                                         }
                                     </div>
                                 </div>
@@ -108,6 +217,7 @@
                         </div>
                     }
                 </div>
+
                 @if (estaLogueado && esCliente)
                 {
                     <div class="tab-pane fade" id="mis-citas" role="tabpanel">
@@ -117,13 +227,12 @@
                 else
                 {
                     <div class="tab-pane fade" id="mis-citas" role="tabpanel">
-                        <div class="alert alert-warning text-center">
-                            <div class="card bg-warning text-dark p-3 shadow-sm rounded">
-                                <strong>Debe iniciar sesión como cliente para ver sus citas.</strong>
-                            </div>
+                        <div class="alert pv-alert-warning text-center py-3">
+                            <strong>Debe iniciar sesión como cliente para ver sus citas.</strong>
                         </div>
                     </div>
                 }
+
                 @if (estaLogueado && esEspecialista)
                 {
                     <div class="tab-pane fade" id="citas-especialista" role="tabpanel">
@@ -137,12 +246,12 @@
 
 @section Scripts {
     <script>
+        // Flatpickr en español
         flatpickr("#Fecha", {
             locale: "es",
             dateFormat: "Y-m-d",
             minDate: "today"
         });
-
         flatpickr("#Hora", {
             enableTime: true,
             noCalendar: true,
@@ -154,22 +263,23 @@
 
     <script>
     $(document).ready(function () {
-        $('#ddlEspecialidad').change(function () {
-            var idEspecialidad = $(this).val();
+      $('#ddlEspecialidad').change(function () {
+        var idEspecialidad = $(this).val();
 
-            if (idEspecialidad) {
-                $.getJSON('@Url.Action("ObtenerEspecialistas", "CitaEnLinea")', { idEspecialidad: idEspecialidad }, function (data) {
-                    var $especialista = $('#ddlEspecialista');
-                    $especialista.empty().append('<option value="">Seleccione un especialista</option>');
-
-                    $.each(data, function (i, item) {
-                        $especialista.append('<option value="' + item.Cedula + '">' + item.NombreCompleto + '</option>');
-                    });
-                });
-            } else {
-                $('#ddlEspecialista').empty().append('<option value="">Seleccione un especialista</option>');
-            }
-        });
+        if (idEspecialidad) {
+          $.getJSON('@Url.Action("ObtenerEspecialistas", "CitaEnLinea")',
+            { idEspecialidad: idEspecialidad },
+            function (data) {
+              var $especialista = $('#ddlEspecialista');
+              $especialista.empty().append('<option value="">Seleccione un especialista</option>');
+              $.each(data, function (i, item) {
+                $especialista.append('<option value="' + item.Cedula + '">' + item.NombreCompleto + '</option>');
+              });
+            });
+        } else {
+          $('#ddlEspecialista').empty().append('<option value="">Seleccione un especialista</option>');
+        }
+      });
     });
     </script>
 }

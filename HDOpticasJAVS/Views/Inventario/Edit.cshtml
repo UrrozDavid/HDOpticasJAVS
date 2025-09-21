@@ -5,99 +5,109 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <h2 class="text-white">@ViewBag.Title</h2>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.Id_Producto)
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Nombre del Producto</label>
-                @Html.TextBoxFor(model => model.Nombre_Producto, new { @class = "form-control", @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.Nombre_Producto, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-6">
-                <label>Código del Producto</label>
-                @Html.TextBoxFor(model => model.Codigo_Producto, new { @class = "form-control", @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.Codigo_Producto, "", new { @class = "text-danger" })
-            </div>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh;">
+    <div class="card shadow-lg w-100" style="max-width: 900px; background-color: #1f1f1f; border-radius: 15px; color: #F1E0C6;">
+        <!-- Encabezado verde -->
+        <div class="card-header text-center" style="background-color: #A8E063; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h3 class="fw-bold mb-0" style="color: black;">@ViewBag.Title</h3>
         </div>
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Stock</label>
-                @Html.TextBoxFor(model => model.Stock, new { @class = "form-control", type = "number", min = "0", step = "1" })
-                @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-6">
-                <label>Precio</label>
-                @Html.TextBoxFor(model => model.Precio, new { @class = "form-control", type = "number", step = "0.01", min = "0.01" })
-                @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.Id_Producto)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Proveedor</label>
-                @Html.TextBox("Nombre_Proveedor",
-                    ((SelectList)ViewBag.Id_Proveedor)
-                    .Cast<SelectListItem>()
-                    .FirstOrDefault(p => int.Parse(p.Value) == Model.Id_Proveedor)?.Text,
-                    new { @class = "form-control", @readonly = "readonly" })
-                @Html.HiddenFor(model => model.Id_Proveedor)
-            </div>
-            <div class="col-md-6">
-                <label>Descripción</label>
-                @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = 3 })
-                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <!-- Primera fila -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Nombre del Producto</label>
+                        @Html.TextBoxFor(model => model.Nombre_Producto, new { @class = "form-control bg-dark text-white", @readonly = "readonly" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Código del Producto</label>
+                        @Html.TextBoxFor(model => model.Codigo_Producto, new { @class = "form-control bg-dark text-white", @readonly = "readonly" })
+                    </div>
+                </div>
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Estado</label>
-                @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-6">
-                <label>Usuario Creador</label>
-                @Html.TextBoxFor(model => model.UsuarioCreador, new { @class = "form-control", @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.UsuarioCreador, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <!-- Segunda fila -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Stock</label>
+                        @Html.TextBoxFor(model => model.Stock, new { @class = "form-control bg-dark text-white", type = "number", min = "0", step = "1" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Precio</label>
+                        @Html.TextBoxFor(model => model.Precio, new { @class = "form-control bg-dark text-white", type = "number", step = "0.01", min = "0.01" })
+                    </div>
+                </div>
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Fecha de Creación</label>
-                <input type="datetime-local" name="FechaCreacion" class="form-control"
-                       value="@(Model.FechaCreacion != null && DateTime.TryParse(Model.FechaCreacion, out var dtCreacion) ? dtCreacion.ToString("yyyy-MM-ddTHH:mm") : "")" readonly />
-                @Html.ValidationMessageFor(model => model.FechaCreacion, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-6">
-                <label>Usuario Modificador</label>
-                @Html.EditorFor(model => model.UsuarioModificador, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UsuarioModificador, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <!-- Tercera fila -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Proveedor</label>
+                        @Html.TextBox("Nombre_Proveedor",
+                            ((SelectList)ViewBag.Id_Proveedor)
+                            .Cast<SelectListItem>()
+                            .FirstOrDefault(p => int.Parse(p.Value) == Model.Id_Proveedor)?.Text,
+                            new { @class = "form-control bg-dark text-white", @readonly = "readonly" })
+                        @Html.HiddenFor(model => model.Id_Proveedor)
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Descripción</label>
+                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control bg-dark text-white", rows = 3 })
+                    </div>
+                </div>
 
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <label>Fecha de Modificación</label>
-                <input type="datetime-local" name="FechaModificacion" class="form-control"
-                       value="@(Model.FechaModificacion != null && DateTime.TryParse(Model.FechaModificacion, out var dtModificacion) ? dtModificacion.ToString("yyyy-MM-ddTHH:mm") : "")" />
-                @Html.ValidationMessageFor(model => model.FechaModificacion, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <!-- Cuarta fila -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Estado</label>
+                        @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control bg-dark text-white" } })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Usuario Creador</label>
+                        @Html.TextBoxFor(model => model.UsuarioCreador, new { @class = "form-control bg-dark text-white", @readonly = "readonly" })
+                    </div>
+                </div>
 
-        <div class="text-end mb-5">
-            <input type="submit" value="Guardar" class="btn btn-success" />
-            <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
+                <!-- Quinta fila -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Fecha de Creación</label>
+                        <input type="datetime-local" name="FechaCreacion" class="form-control bg-dark text-white"
+                               value="@(Model.FechaCreacion != null && DateTime.TryParse(Model.FechaCreacion, out var dtCreacion) ? dtCreacion.ToString("yyyy-MM-ddTHH:mm") : "")" readonly />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Usuario Modificador</label>
+                        @Html.EditorFor(model => model.UsuarioModificador, new { htmlAttributes = new { @class = "form-control bg-dark text-white" } })
+                    </div>
+                </div>
+
+                <!-- Sexta fila -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label">Fecha de Modificación</label>
+                        <input type="datetime-local" name="FechaModificacion" class="form-control bg-dark text-white"
+                               value="@(Model.FechaModificacion != null && DateTime.TryParse(Model.FechaModificacion, out var dtModificacion) ? dtModificacion.ToString("yyyy-MM-ddTHH:mm") : "")" />
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="text-end">
+                    <button type="submit" class="btn fw-bold px-4" style="background-color: #A8E063; color: black; border: none;">
+                        <i class="bi bi-save"></i> Guardar
+                    </button>
+                    <a href="@Url.Action("Index")"
+                       class="btn fw-bold px-4 ms-2"
+                       style="background-color: #A8E063; color: black; border: none;">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </a>
+                </div>
+            }
         </div>
-    }
+    </div>
 </div>
 
 @section Scripts {
