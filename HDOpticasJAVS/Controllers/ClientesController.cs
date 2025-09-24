@@ -492,7 +492,6 @@ namespace HDOpticasJAVS.Controllers
             return View(viewModel);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditarHistorial(HistorialClienteViewModel model)
@@ -503,17 +502,39 @@ namespace HDOpticasJAVS.Controllers
                 return View(model);
             }
 
-            if (model.FechaRegistro == null)
+            // 1) Reconstruir fecha original desde los hidden del form (como ya lo tienes):
+            DateTime? fechaRegistroOriginal = null;
+            var iso = Request["FechaRegistroIso"];
+            var ticksStr = Request["FechaRegistroTicks"];
+
+            if (!string.IsNullOrWhiteSpace(iso))
             {
-                TempData["ErrorMessage"] = "La fecha de registro es inválida.";
+                DateTime parsed;
+                if (DateTime.TryParse(iso, null, System.Globalization.DateTimeStyles.RoundtripKind, out parsed))
+                    fechaRegistroOriginal = parsed;
+            }
+            else if (!string.IsNullOrWhiteSpace(ticksStr))
+            {
+                long ticks;
+                if (long.TryParse(ticksStr, out ticks))
+                    fechaRegistroOriginal = new DateTime(ticks);
+            }
+
+            if (string.IsNullOrEmpty(model.CedulaCliente) || !fechaRegistroOriginal.HasValue)
+            {
+                TempData["ErrorMessage"] = "Datos insuficientes para identificar el historial.";
                 return RedirectToAction("Index");
             }
 
-            var historial = db.HistorialCliente
-                .AsEnumerable()
-                .FirstOrDefault(h =>
-                    h.Cedula_Cliente == model.CedulaCliente &&
-                    h.FechaRegistro.Ticks == model.FechaRegistro.Value.Ticks);
+            // 2) Ventana ±1s para evitar overflow y problemas de precisión
+            var minTs = fechaRegistroOriginal.Value.AddSeconds(-1);
+            var maxTs = fechaRegistroOriginal.Value.AddSeconds(1);
+
+            var historial = db.HistorialCliente.FirstOrDefault(h =>
+                h.Cedula_Cliente == model.CedulaCliente &&
+                h.FechaRegistro >= minTs &&
+                h.FechaRegistro <= maxTs
+            );
 
             if (historial == null)
             {
@@ -521,7 +542,7 @@ namespace HDOpticasJAVS.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Actualizar campos del historial
+            // 3) Actualizar campos
             historial.Antecedentes = model.Antecedentes;
             historial.Diagnostico = model.Diagnostico;
             historial.Tratamiento = model.Tratamiento;
@@ -533,12 +554,14 @@ namespace HDOpticasJAVS.Controllers
             {
                 db.SaveChanges();
 
-                // Si se indicó fecha de seguimiento, actualizar o insertar alerta
+                // 4) Upsert de alerta usando la MISMA ventana
                 if (model.FechaProximoSeguimiento.HasValue)
                 {
                     var alerta = db.AlertaSeguimiento.FirstOrDefault(a =>
                         a.Cedula_Cliente == model.CedulaCliente &&
-                        a.FechaRegistro == historial.FechaRegistro);
+                        a.FechaRegistro >= minTs &&
+                        a.FechaRegistro <= maxTs
+                    );
 
                     if (alerta != null)
                     {
@@ -550,16 +573,15 @@ namespace HDOpticasJAVS.Controllers
                     }
                     else
                     {
-                        var nuevaAlerta = new AlertaSeguimiento
+                        db.AlertaSeguimiento.Add(new AlertaSeguimiento
                         {
                             Cedula_Cliente = model.CedulaCliente,
-                            FechaRegistro = historial.FechaRegistro,
+                            FechaRegistro = historial.FechaRegistro, // usa la marca de la fila encontrada
                             FechaAlerta = model.FechaProximoSeguimiento.Value,
                             Mensaje = "Seguimiento clínico agregado",
                             Enviada = false,
                             MedioEnvio = "Interno"
-                        };
-                        db.AlertaSeguimiento.Add(nuevaAlerta);
+                        });
                     }
 
                     db.SaveChanges();
@@ -567,13 +589,14 @@ namespace HDOpticasJAVS.Controllers
 
                 TempData["SuccessMessage"] = "Historial actualizado correctamente.";
             }
-            catch (Exception ex) {
-
+            catch (Exception ex)
+            {
                 TempData["ErrorMessage"] = "Error al guardar los cambios: " + ex.Message;
             }
-            return RedirectToAction("Historial", "Clientes", new { cedula = model.CedulaCliente
-            });
+
+            return RedirectToAction("Historial", "Clientes", new { cedula = model.CedulaCliente });
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

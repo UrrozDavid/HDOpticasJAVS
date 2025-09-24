@@ -8,35 +8,67 @@
     body {
         font-family: "Segoe UI", sans-serif;
         font-size: 12px;
-        color: #333;
+        color: #fff;
+        background-color: #111;
+        margin: 0;
+        padding: 20px;
     }
 
     h2 {
-        font-family: "Georgia", serif;
+        font-family: "Poppins", sans-serif;
         font-size: 20px;
-        margin-bottom: 20px;
+        background-color: #A8E063;
+        color: #000;
+        padding: 10px;
         text-align: center;
+        border-radius: 8px;
+        margin-bottom: 20px;
     }
 
     table {
         border-collapse: collapse;
         width: 100%;
+        font-size: 12px;
     }
 
-    th {
-        background-color: #f0f0f0;
+    thead th {
+        background-color: #1f1f1f;
+        color: #ddd;
         font-weight: bold;
-        font-size: 13px;
-    }
-
-    th, td {
-        font-family: "Segoe UI", sans-serif;
         padding: 8px;
-        border: 1px solid #ccc;
+        border: 1px solid rgba(255,255,255,0.15);
+        text-align: center;
     }
 
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
+    tbody td {
+        padding: 8px;
+        border: 1px solid rgba(255,255,255,0.08);
+        text-align: center;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #15191d;
+    }
+
+    tbody tr:nth-child(odd) {
+        background-color: #1b1f23;
+    }
+
+    /* Estado como "badge" simplificado para PDF */
+    .estado-activo {
+        color: #000;
+        background: #A8E063;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+
+    .estado-inactivo {
+        color: #fff;
+        background: #e74c3c;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
     }
 </style>
 
@@ -63,9 +95,21 @@
                 <td>@item.Apellido2</td>
                 <td>@item.Correo</td>
                 <td>@item.Rol</td>
-                <td>@item.Estado</td>
+                <td>
+                    @if (item.Estado == "A")
+                    {
+                        <span class="estado-activo">Activo</span>
+                    }
+                    else if (item.Estado == "I")
+                    {
+                        <span class="estado-inactivo">Inactivo</span>
+                    }
+                    else
+                    {
+                        @item.Estado
+                    }
+                </td>
             </tr>
         }
     </tbody>
 </table>
-

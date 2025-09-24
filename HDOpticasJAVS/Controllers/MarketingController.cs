@@ -400,6 +400,7 @@ namespace HDOpticasJAVS.Controllers
             return RedirectToAction("Historial");
         }
 
+
         [HttpGet]
         public ActionResult ContarApertura(int idCampania, string cedulaCliente)
         {
@@ -1130,7 +1131,7 @@ namespace HDOpticasJAVS.Controllers
                 .ToList();
 
             return PartialView("_HistorialPromociones", data);
-        }
+        }       
     }
 }
 

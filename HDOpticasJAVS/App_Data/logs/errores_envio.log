@@ -1,0 +1,6 @@
+[2025-09-21 16:16:33] System.Net.Mail.SmtpException: Mailbox unavailable. The server response was: 5.4.5 Daily user sending limit exceeded. For more information on Gmail
+   at System.Net.Mail.DataCommand.CheckResponse(SmtpStatusCode statusCode, String serverResponse)
+   at System.Net.Mail.DataCommand.Send(SmtpConnection conn)
+   at System.Net.Mail.SmtpTransport.SendMail(MailAddress sender, MailAddressCollection recipients, String deliveryNotify, Boolean allowUnicode, SmtpFailedRecipientException& exception)
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at HDOpticasJAVS.Helpers.CorreoHelper.EnviarCorreo(String para, String asunto, String cuerpoHtml) in S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\Helpers\CorreoHelper.cs:line 41

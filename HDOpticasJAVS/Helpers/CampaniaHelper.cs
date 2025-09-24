@@ -1,11 +1,16 @@
 ﻿using HDOpticasJAVS.Models;
 using System;
+using System.Configuration;
 using System.Linq;
 
 namespace HDOpticasJAVS.Helpers
 {
     public static class CampaniaHelper
     {
+        private static readonly string BaseUrl =
+            ConfigurationManager.AppSettings["BaseUrl"]
+            ?? "https://hdopticasjavs-bdetarhtbdaqeecb.mexicocentral-01.azurewebsites.net";
+
         public static void ProcesarCampaniaPorId(int idCampania)
         {
             using (var db = new HD_Opticas_JAVS_BDEntities())
@@ -21,9 +26,10 @@ namespace HDOpticasJAVS.Helpers
                 {
                     string asunto = $"Promoción: {campania.Nombre_Campania}";
 
-                    string redirectUrl = $"https://localhost:44305/Marketing/PromocionesCliente?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}";
-                    string urlClick = $"https://localhost:44305/Marketing/ContarClick?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}&redirect={Uri.EscapeDataString(redirectUrl)}";
-                    string urlApertura = $"https://localhost:44305/Marketing/ContarApertura?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}";
+                    // ✅ Usamos la URL del servidor en producción
+                    string redirectUrl = $"{BaseUrl}/Marketing/PromocionesCliente?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}";
+                    string urlClick = $"{BaseUrl}/Marketing/ContarClick?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}&redirect={Uri.EscapeDataString(redirectUrl)}";
+                    string urlApertura = $"{BaseUrl}/Marketing/ContarApertura?idCampania={idCampania}&cedulaCliente={cliente.Cedula_Cliente}";
 
                     string mensaje = $@"
                         <div style='text-align:center; font-family:Arial, sans-serif;'>
@@ -71,9 +77,9 @@ namespace HDOpticasJAVS.Helpers
                     {
                         string asunto = $"Promoción: {campania.Nombre_Campania}";
 
-                        string redirectUrl = $"https://localhost:44305/Marketing/PromocionesCliente?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}";
-                        string urlClick = $"https://localhost:44305/Marketing/ContarClick?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}&redirect={Uri.EscapeDataString(redirectUrl)}";
-                        string urlApertura = $"https://localhost:44305/Marketing/ContarApertura?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}";
+                        string redirectUrl = $"{BaseUrl}/Marketing/PromocionesCliente?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}";
+                        string urlClick = $"{BaseUrl}/Marketing/ContarClick?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}&redirect={Uri.EscapeDataString(redirectUrl)}";
+                        string urlApertura = $"{BaseUrl}/Marketing/ContarApertura?idCampania={campania.Id_Campania}&cedulaCliente={cliente.Cedula_Cliente}";
 
                         string mensaje = $@"
                             <div style='text-align:center; font-family:Arial, sans-serif;'>

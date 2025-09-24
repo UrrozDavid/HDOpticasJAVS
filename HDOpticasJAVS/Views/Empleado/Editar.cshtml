@@ -12,15 +12,87 @@
     }
 }
 
-<div class="container">
+<style>
+    /* Wrapper local para no afectar otras vistas */
+    #empleado-editar .card {
+        background: #111 !important;
+        border: 1px solid rgba(255,255,255,0.08);
+        color: #F1E0C6;
+        border-radius: 15px;
+    }
+
+    #empleado-editar .card-header {
+        background-color: #A8E063 !important;
+        color: #000 !important;
+        border: none !important;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+        #empleado-editar .card-header .titulo {
+            color: #000 !important;
+            margin: 0;
+        }
+
+    /* Inputs oscuros */
+    #empleado-editar .form-control,
+    #empleado-editar textarea,
+    #empleado-editar select {
+        background-color: #1a1a1a !important;
+        color: #fff !important;
+        border: 1px solid rgba(255,255,255,0.2) !important;
+    }
+
+        #empleado-editar .form-control::placeholder {
+            color: #bfbfbf !important;
+        }
+
+    /* Labels en verde */
+    #empleado-editar label {
+        color: #A8E063;
+        font-weight: 600;
+    }
+
+    /* Botones coherentes */
+    #empleado-editar .btn-guardar {
+        background-color: #A8E063 !important;
+        border-color: #A8E063 !important;
+        color: #000 !important;
+    }
+
+        #empleado-editar .btn-guardar:hover {
+            background-color: #91cc56 !important;
+            border-color: #91cc56 !important;
+        }
+
+    #empleado-editar .btn-volver {
+        background-color: #444 !important;
+        border-color: #444 !important;
+        color: #fff !important;
+    }
+
+        #empleado-editar .btn-volver:hover {
+            background-color: #555 !important;
+            border-color: #555 !important;
+        }
+
+    /* Apariencia cuando está inactivo */
+    #empleado-editar .form-control:disabled {
+        opacity: .7;
+        cursor: not-allowed;
+        background-color: #262626 !important;
+    }
+</style>
+
+<div id="empleado-editar" class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header text-center bg-primary text-white">
+            <div class="card shadow-lg">
+                <div class="card-header text-center">
                     <h2 class="titulo">Editar Empleado</h2>
                 </div>
-                <div class="card-body bg-dark">
-                    @Html.AntiForgeryToken()
+
+                <div class="card-body">
                     @using (Html.BeginForm("Editar", "Empleado", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
@@ -28,41 +100,46 @@
 
                         <div class="form-group">
                             <label>Nombre:</label>
-                            @Html.TextBoxFor(model => model.Usuario.Nombre, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Usuario.Nombre, atributos)
                         </div>
+
                         <div class="form-group">
                             <label>Primer Apellido:</label>
-                            @Html.TextBoxFor(model => model.Usuario.Apellido1, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Usuario.Apellido1, atributos)
                         </div>
+
                         <div class="form-group">
                             <label>Segundo Apellido:</label>
-                            @Html.TextBoxFor(model => model.Usuario.Apellido2, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Usuario.Apellido2, atributos)
                         </div>
+
                         <div class="form-group">
                             <label>Correo:</label>
-                            @Html.TextBoxFor(model => model.Usuario.Correo, new { @class = "form-control", type = "email" })
+                            @Html.TextBoxFor(m => m.Usuario.Correo, new Dictionary<string, object>(atributos) { ["type"] = "email" })
                         </div>
+
                         <div class="form-group">
-                            <label>Direccion:</label>
-                            @Html.TextBoxFor(model => model.Direccion, new { @class = "form-control" })
+                            <label>Dirección:</label>
+                            @Html.TextBoxFor(m => m.Direccion, atributos)
                         </div>
+
                         <div class="form-group">
-                            <label>Numero de telefono:</label>
-                            @Html.TextBoxFor(model => model.Numero_Telefono, new { @class = "form-control", type = "num" })
+                            <label>Número de teléfono:</label>
+                            @Html.TextBoxFor(m => m.Numero_Telefono, new Dictionary<string, object>(atributos) { ["type"] = "number" })
                         </div>
+
                         <div class="form-group">
                             <label>Contacto de emergencia:</label>
-                            @Html.TextBoxFor(model => model.Contacto_Emergencia, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Contacto_Emergencia, atributos)
                         </div>
+
                         <div class="form-group">
-                            <label>Placa del vehiculo:</label>
-                            @Html.TextBoxFor(model => model.Placa_Vehiculo, new { @class = "form-control" })
+                            <label>Placa del vehículo:</label>
+                            @Html.TextBoxFor(m => m.Placa_Vehiculo, atributos)
                         </div>
 
-
-                        <a href="@Url.Action("Index", "Empleado")" class="btn btn-secondary mt-3">Volver</a>
-
-                        <button type="submit" class="btn btn-warning btn-block">Actualizar</button>
+                        <a href="@Url.Action("Index", "Empleado")" class="btn btn-volver mt-3">Volver</a>
+                        <button type="submit" class="btn btn-guardar mt-3">Actualizar</button>
                     }
                 </div>
             </div>

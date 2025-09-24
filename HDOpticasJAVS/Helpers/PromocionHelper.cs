@@ -105,32 +105,29 @@ namespace HDOpticasJAVS.Helpers
                             Automatica = true
                         });
 
+                        
                         db.SaveChanges();
 
+                        // Definimos el asunto y el cuerpo del correo
                         string asunto = "🎁 ¡Gracias por ser parte de nuestra familia!";
                         string cuerpo = $@"
-                            <h2>Hola {{Nombre}}</h2>
-                            <p>Queremos agradecer tu lealtad con una promoción exclusiva.</p>
-                            <p><strong>10% de descuento en tu próxima compra</strong>.</p>
-                            <p><a href='https://www.hdopticas.com'>Haz clic aquí para redimirla</a></p>";
+    <h2>Hola {{Nombre}}</h2>
+    <p>Queremos agradecer tu lealtad con una promoción exclusiva.</p>
+    <p><strong>10% de descuento en tu próxima compra</strong>.</p>
+    <p><a href='https://hdopticasjavs-bdetarhtbdaqeecb.mexicocentral-01.azurewebsites.net/Clientes/Perfil'>
+       Haz clic aquí para redimirla</a></p>
+";
+
 
                         cuerpo = cuerpo.Replace("{{Nombre}}", cliente.Usuario.Nombre ?? "")
-                                       .Replace("{{Edad}}", cliente.Cliente.Edad.ToString());
+                                       .Replace("{{Edad}}", cliente.Cliente.Edad?.ToString() ?? "");
 
-                        if (string.IsNullOrWhiteSpace(cliente.Usuario.Nombre) || cuerpo.Contains("{{"))
+                        
+                        if (!string.IsNullOrWhiteSpace(cliente.Usuario.Correo))
                         {
-                            db.LogSistema.Add(new LogSistema
-                            {
-                                Fecha = DateTime.Now,
-                                Modulo = "Promociones Recurrentes",
-                                Mensaje = $"Correo no enviado a {cliente.Usuario.Correo ?? "sin correo"}. Error en plantilla personalizada.",
-                                Usuario = "Sistema"
-                            });
-                            db.SaveChanges();
-                            continue;
+                            CorreoHelper.EnviarCorreo(cliente.Usuario.Correo, asunto, cuerpo);
                         }
 
-                        CorreoHelper.EnviarCorreo(cliente.Usuario.Correo, asunto, cuerpo);
                     }
                     catch (Exception ex)
                     {

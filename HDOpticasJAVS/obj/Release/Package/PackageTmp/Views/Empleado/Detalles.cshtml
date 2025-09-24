@@ -5,11 +5,63 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
-    <div class="card shadow-lg w-100" style="max-width: 1000px; background: rgba(0, 0, 0, 0.85); color: #F1E0C6; border-radius: 15px;">
-        <div class="card-header text-center" style="background-color: #1A73E8; color: white;">
+<style>
+    /* ====== Header verde ====== */
+    #empleado-detalle .card-header {
+        background-color: #A8E063 !important;
+        color: #000 !important;
+        border: none !important;
+    }
+
+        #empleado-detalle .card-header h2 {
+            color: #000 !important;
+            margin: 0;
+            text-shadow: none;
+        }
+
+    /* ====== Fondo tarjeta y bordes ====== */
+    #empleado-detalle .card {
+        background: #111 !important;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* ====== Estilo para la lista de detalles ====== */
+    #empleado-detalle dl {
+        margin-bottom: 0;
+    }
+
+    #empleado-detalle dt {
+        color: #A8E063;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 6px 0;
+    }
+
+    #empleado-detalle dd {
+        color: #fff;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        padding: 6px 0;
+    }
+
+    /* ====== Botón volver ====== */
+    #empleado-detalle .btn-secondary {
+        background-color: #444 !important;
+        border-color: #444 !important;
+        color: #fff !important;
+    }
+
+        #empleado-detalle .btn-secondary:hover {
+            background-color: #555 !important;
+            border-color: #555 !important;
+        }
+</style>
+
+<div id="empleado-detalle" class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card shadow-lg w-100" style="max-width: 1000px; background: #111; color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="color: white;">
             <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
         </div>
+
         <div class="card-body" style="font-family: 'Roboto', sans-serif;">
             <dl class="row">
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Empleado.Cedula)</dt>

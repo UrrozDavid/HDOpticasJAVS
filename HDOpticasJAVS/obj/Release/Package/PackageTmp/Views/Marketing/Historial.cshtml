@@ -39,7 +39,7 @@
         align-items: center;
         gap: 6px;
         box-shadow: 0 0 0 1px rgba(0,0,0,.15) inset;
-        transition: transform .12s ease,filter .12s ease
+        transition: transform .12s ease, filter .12s ease
     }
 
         .btn-verde:hover {
@@ -122,21 +122,20 @@
                                            "<span class=\"badge badge-inact\">-</span>";
                         }
                         @Html.Raw(estadoHtml)
-
                     </p>
 
                     <p class="mb-1"><strong>Inicio:</strong> @item.Fecha_Inicio.ToShortDateString()</p>
                     <p class="mb-3"><strong>Programada:</strong> @(item.Fecha_Programada?.ToShortDateString() ?? "-")</p>
 
                     <div class="mt-auto d-flex flex-wrap gap-2">
-                        <a href='@Url.Action("ExportarExcel", new { id = item.Id_Campania })' class="btn-verde btn-sm">📄 Exportar a Excel</a>
-                        <a href='@Url.Action("ExportarPDF",  new { id = item.Id_Campania })' class="btn-verde btn-sm">📝 Exportar a PDF</a>
-                        <a href='@Url.Action("EditarHistorial", new { id = item.Id_Campania })' class="btn-verde btn-sm">✏️ Editar</a>
+                        <a href="@Url.Action("ExportarExcel", new { id = item.Id_Campania })" class="btn-verde btn-sm">📄 Exportar a Excel</a>
+                        <a href="@Url.Action("ExportarPdf",  new { id = item.Id_Campania })" class="btn-verde btn-sm">📝 Exportar a PDF</a>
+                        <a href="@Url.Action("EditarHistorial", new { id = item.Id_Campania })" class="btn-verde btn-sm">✏️ Editar</a>
 
                         @* Finalizar *@
                         @if (item.Estado != "I")
                         {
-                            using (Html.BeginForm("Finalizar", "Marketing", FormMethod.Post, new { @class = "d-inline" }))
+                            using (Html.BeginForm("Finalizar", "Marketing", FormMethod.Post, new { @class = "d-inline", data_ajax = "false" }))
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.Hidden("id", item.Id_Campania)
@@ -144,39 +143,38 @@
                             }
                         }
 
-                        @* ELIMINAR — CORREGIDO *@
-                        @using (Html.BeginForm("Eliminar", "Marketing", FormMethod.Post, new { @class = "d-inline" }))
+                        @* Eliminar *@
+                        @using (Html.BeginForm("Eliminar", "Marketing", FormMethod.Post, new { @class = "d-inline", data_ajax = "false" }))
                         {
                             @Html.AntiForgeryToken()
                             @Html.Hidden("id", item.Id_Campania)
                             <button type="submit" class="btn-verde btn-sm" onclick="return confirm('¿Eliminar definitivamente esta campaña?');">🗑️ Eliminar</button>
                         }
 
-                        @* Enviar Manual por campaña: solo MANUAL y ACTIVA *@
+                        @* Enviar Manual (form independiente + botón que lo referencia) *@
                         @if (esManual && estaActiva)
                         {
-                            <form action="@Url.Action("EnviarCampaniaManual","Marketing", new { id = item.Id_Campania })"
+                            <!-- formulario oculto, NO anidado -->
+                            <form id="form-enviar-@item.Id_Campania"
+                                  action="@Url.Action("EnviarCampaniaManual","Marketing", new { id = item.Id_Campania })"
                                   method="post"
-                                  class="d-inline"
-                                  novalidate
+                                  class="d-none"
                                   data-ajax="false"
-                                  onsubmit="this.querySelector('button[type=submit]').disabled = true;">
-
+                                  novalidate>
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@item.Id_Campania" />
-
-                                <button type="submit"
-                                        class="btn-verde btn-sm"
-                                        onclick="return confirm('¿Enviar esta campaña manualmente?');">
-                                    📤 Enviar Manual
-                                </button>
                             </form>
+
+                            <button type="submit"
+                                    form="form-enviar-@item.Id_Campania"
+                                    class="btn-verde btn-sm"
+                                    onclick="if(!confirm('¿Enviar esta campaña manualmente?')){ return false; } this.disabled = true;">
+                                📤 Enviar Manual
+                            </button>
                         }
                         else
                         {
-                            <button type="button" class="btn-verde btn-sm" disabled title="Disponible para campañas MANUALES y ACTIVAS">
-                                📤 Enviar Manual
-                            </button>
+                            <button type="button" class="btn-verde btn-sm" disabled title="Disponible para campañas MANUALES y ACTIVAS">📤 Enviar Manual</button>
                         }
                     </div>
                 </div>

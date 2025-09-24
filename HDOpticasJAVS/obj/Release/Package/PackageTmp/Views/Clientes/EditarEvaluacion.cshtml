@@ -1,10 +1,11 @@
-﻿@{
-    ViewBag.Title = "Editar Evaluación Médica";
+﻿@model HDOpticasJAVS.Models.ViewModels.HistorialClienteViewModel
+@{
+    ViewBag.Title = "Editar Historial Clínico";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="card mt-4 shadow-lg rounded-4 bg-dark text-white">
-    <div class="card-header text-center rounded-top-4" style="background-color: #A8E063;">
+    <div class="card-header text-center rounded-top-4" style="background-color:#A8E063;">
         <h4 class="fw-bold mb-0 text-black">
             <i class="bi bi-journal-medical"></i> @ViewBag.Title
         </h4>
@@ -19,32 +20,68 @@
             </div>
         }
 
-        <form method="post">
+        @using (Html.BeginForm("EditarHistorial", "Clientes", FormMethod.Post, new { @class = "needs-validation" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <!-- Claves ocultas: NO se muestran al usuario -->
+            @Html.HiddenFor(m => m.CedulaCliente)
+            <input type="hidden" name="FechaRegistroIso" value="@Model.FechaRegistro?.ToString(" o")" />
+            <input type="hidden" name="FechaRegistroTicks" value="@Model.FechaRegistro?.Ticks" />
+
             <div class="mb-3">
-                <label class="form-label">Fecha</label>
-                <input type="date" name="Fecha" class="form-control" value="@ViewBag.Fecha" />
+                <label class="form-label">Paciente</label>
+                <input type="text" class="form-control" value="@(ViewBag.NombreCliente ?? "Cliente")" readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Fecha del registro</label>
+                <input type="text" class="form-control"
+                       value="@(Model.FechaRegistro.HasValue ? Model.FechaRegistro.Value.ToString("dd/MM/yyyy HH:mm") : "")"
+                       readonly />
+                <small class="text-secondary">Esta fecha identifica el registro y no se puede modificar.</small>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Antecedentes</label>
+                @Html.TextAreaFor(m => m.Antecedentes, 3, 60, new { @class = "form-control", placeholder = "Antecedentes..." })
+                @Html.ValidationMessageFor(m => m.Antecedentes, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Diagnóstico</label>
-                <input type="text" name="Diagnostico" class="form-control" value="@ViewBag.Diagnostico" />
+                @Html.TextAreaFor(m => m.Diagnostico, 3, 60, new { @class = "form-control", placeholder = "Diagnóstico..." })
+                @Html.ValidationMessageFor(m => m.Diagnostico, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Tratamiento</label>
-                <input type="text" name="Tratamiento" class="form-control" value="@ViewBag.Tratamiento" />
+                @Html.TextAreaFor(m => m.Tratamiento, 3, 60, new { @class = "form-control", placeholder = "Tratamiento..." })
+                @Html.ValidationMessageFor(m => m.Tratamiento, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Observaciones</label>
-                <textarea name="Observaciones" class="form-control" rows="3">@ViewBag.Observaciones</textarea>
+                @Html.TextAreaFor(m => m.Observaciones, 3, 60, new { @class = "form-control", placeholder = "Observaciones..." })
+                @Html.ValidationMessageFor(m => m.Observaciones, "", new { @class = "text-danger" })
             </div>
 
-            <div class="text-center mt-4">
-                <button type="submit" class="btn fw-bold" style="background-color: #A8E063; color: black; border-radius: 8px;">
+            <div class="mb-3">
+                <label class="form-label">Próximo seguimiento (opcional)</label>
+                @Html.TextBoxFor(m => m.FechaProximoSeguimiento, "{0:yyyy-MM-dd}",
+                                 new { @class = "form-control", type = "date" })
+                <small class="text-secondary">Si lo indicas, se creará o actualizará la alerta de seguimiento.</small>
+            </div>
+
+            <div class="d-flex justify-content-center gap-2 mt-4">
+                <a href="@Url.Action("Historial", "Clientes", new { cedula = Model.CedulaCliente })" class="btn btn-outline-light">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+                <button type="submit" class="btn fw-bold"
+                        style="background-color:#A8E063; color:black; border-radius:8px;">
                     <i class="bi bi-save2 me-1"></i> Guardar Cambios
                 </button>
             </div>
-        </form>
+        }
     </div>
 </div>

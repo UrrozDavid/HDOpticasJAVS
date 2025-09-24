@@ -1,132 +1,301 @@
 ﻿@{
     ViewBag.Title = "Roles y Permisos";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+
 }
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg" style="max-width: 900px; width: 100%; background: rgba(0, 0, 0, 0.7); color: #F1E0C6; border-radius: 15px;">
-        <div class="card-header text-center" style="background-color: #1A73E8; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
-        </div>
-        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+<style>
+   
+    #roles-view .card-header {
+        background-color: #A8E063 !important; 
+        color: #000 !important;
+        border: none !important;
+    }
 
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabRoles">Roles</a></li>
-                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabPermisos">Permisos</a></li>
-                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabMasiva">Asignar Roles Masivamente</a></li>
-            </ul>
+        #roles-view .card-header h2 {
+            color: #000 !important;
+            margin: 0;
+            text-shadow: none;
+        }
 
-            <div class="tab-content mt-3">
-                <!-- TAB ROLES -->
-                <div class="tab-pane container active" id="tabRoles">
-                    <h4>Lista de Roles</h4>
-                    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalCrearRol">
-                        Crear nuevo rol
-                    </button>
+    
+    #roles-view .card {
+        background: #111 !important;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
 
-                    <div class="modal fade" id="modalCrearRol" tabindex="-1" aria-labelledby="modalCrearRolLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modalCrearRolLabel">Crear nuevo rol</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <input type="text" id="nombreRolNuevo" class="form-control" placeholder="Nombre del rol">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn btn-primary" onclick="crearRol()">Crear</button>
+    
+    #roles-view .nav-tabs {
+        border-bottom: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        #roles-view .nav-tabs .nav-link {
+            color: #A8E063 !important;
+            border: none !important;
+        }
+
+            #roles-view .nav-tabs .nav-link.active {
+                background: #2b2b2b !important;
+                color: #fff !important;
+                border-radius: 8px !important;
+            }
+
+   
+    #roles-view .btn-success,
+    #roles-view .btn-verde {
+        background-color: #A8E063 !important;
+        border-color: #A8E063 !important;
+        color: #000 !important;
+    }
+
+        #roles-view .btn-success:hover,
+        #roles-view .btn-verde:hover {
+            background-color: #91cc56 !important;
+            border-color: #91cc56 !important;
+            color: #000 !important;
+        }
+
+    #roles-view .table {
+        border-color: rgba(255,255,255,0.08) !important;
+    }
+
+        #roles-view .table thead th {
+            background: #1f1f1f !important; 
+            color: #ddd !important;
+            border-color: rgba(255,255,255,0.12) !important;
+        }
+
+    #roles-view .table-dark > :not(caption) > * > * {
+        background-color: #15191d !important; /* filas base */
+        color: #e6e6e6 !important;
+        border-color: rgba(255,255,255,0.08) !important;
+    }
+
+    #roles-view .table-dark.table-hover tbody tr:hover > td,
+    #roles-view .table-dark.table-hover tbody tr:hover > th {
+        background-color: #22272c !important; /* hover */
+        color: #fff !important;
+    }
+
+       #roles-view .table td a.btn,
+    #roles-view .table td button.btn,
+    #roles-view .table td input.btn {
+        background-color: #2b2b2b !important; /* acciones oscuras */
+        border-color: rgba(255,255,255,0.15) !important;
+        color: #fff !important;
+    }
+
+        #roles-view .table td a.btn:hover,
+        #roles-view .table td button.btn:hover,
+        #roles-view .table td input.btn:hover {
+            background-color: #3a3a3a !important;
+            border-color: rgba(255,255,255,0.25) !important;
+        }
+
+    /* Opcional: Eliminar en rojo (2º botón de la celda) */
+    #roles-view td > .btn:nth-child(2) {
+        background-color: #E74C3C !important;
+        border-color: #E74C3C !important;
+        color: #fff !important;
+    }
+
+        #roles-view td > .btn:nth-child(2):hover {
+            background-color: #c94032 !important;
+            border-color: #c94032 !important;
+        }
+    /* ====== MODAL: Crear nuevo rol (dentro de #roles-view) ====== */
+    #roles-view .modal-content {
+        background-color: #111 !important;
+        color: #fff !important;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+    }
+
+    #roles-view .modal-header {
+        background-color: #A8E063 !important;
+        color: #000 !important;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+        #roles-view .modal-header .modal-title {
+            color: #000 !important;
+            font-weight: 700;
+        }
+
+        #roles-view .modal-header .btn-close {
+            filter: invert(0) grayscale(1) contrast(100);
+            opacity: .8;
+        }
+
+    #roles-view .modal-body .form-control,
+    #roles-view .modal-body input,
+    #roles-view .modal-body textarea,
+    #roles-view .modal-body select {
+        background-color: #1a1a1a !important;
+        color: #fff !important;
+        border: 1px solid rgba(255,255,255,0.2) !important;
+    }
+
+        #roles-view .modal-body .form-control::placeholder {
+            color: #bfbfbf !important;
+        }
+
+    #roles-view .modal-footer {
+        background-color: #1a1a1a !important;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+        /* Botones del modal */
+        #roles-view .modal-footer .btn-primary {
+            background-color: #A8E063 !important; /* Crear */
+            border-color: #A8E063 !important;
+            color: #000 !important;
+        }
+
+            #roles-view .modal-footer .btn-primary:hover {
+                background-color: #91cc56 !important;
+                border-color: #91cc56 !important;
+            }
+
+        #roles-view .modal-footer .btn-secondary {
+            background-color: #444 !important; /* Cancelar */
+            border-color: #444 !important;
+            color: #fff !important;
+        }
+
+            #roles-view .modal-footer .btn-secondary:hover {
+                background-color: #555 !important;
+                border-color: #555 !important;
+            }
+</style>
+
+
+<div id="roles-view" class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg" style="max-width: 900px; width: 100%; background: #111; color: #F1E0C6; border-radius: 15px;">
+        <div class="card-header text-center" style="color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h2 class="fw-bold" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2> </div>
+
+            <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabRoles">Roles</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabPermisos">Permisos</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabMasiva">Asignar Roles Masivamente</a></li>
+                </ul>
+
+                <div class="tab-content mt-3">
+                    <!-- TAB ROLES -->
+                    <div class="tab-pane container active" id="tabRoles">
+                        <h4>Lista de Roles</h4>
+                        <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalCrearRol">
+                            Crear nuevo rol
+                        </button>
+
+                        <div class="modal fade" id="modalCrearRol" tabindex="-1" aria-labelledby="modalCrearRolLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalCrearRolLabel">Crear nuevo rol</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" id="nombreRolNuevo" class="form-control" placeholder="Nombre del rol">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary" onclick="crearRol()">Crear</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <table class="table table-dark table-hover table-bordered rounded mt-4">
+                            <thead class="table-light text-dark">
+                                <tr><th>Nombre</th><th>Acciones</th></tr>
+                            </thead>
+                            <tbody id="tablaRoles">
+                                @foreach (var rol in ViewBag.Roles)
+                                {
+                                    <tr data-id="@rol.Id_Parametro">
+                                        <td>
+                                            <span class="nombre">@rol.Nombre_Parametro</span>
+                                            <input type="text" class="editarInput" style="display:none;" />
+                                        </td>
+                                        <td>
+                                            <button class="editarBtn">Editar</button>
+                                            <button class="guardarBtn" style="display:none;">Guardar</button>
+                                            <button class="eliminarBtn">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
 
-                    <table class="table table-dark table-hover table-bordered rounded mt-4">
-                        <thead class="table-light text-dark">
-                            <tr><th>Nombre</th><th>Acciones</th></tr>
-                        </thead>
-                        <tbody id="tablaRoles">
+                    <!-- TAB PERMISOS -->
+                    <div class="tab-pane container fade" id="tabPermisos">
+                        <h4>Asignar Permisos</h4>
+                        <select id="rolPermiso" class="form-control mb-3">
                             @foreach (var rol in ViewBag.Roles)
                             {
-                                <tr data-id="@rol.Id_Parametro">
-                                    <td>
-                                        <span class="nombre">@rol.Nombre_Parametro</span>
-                                        <input type="text" class="editarInput" style="display:none;" />
-                                    </td>
-                                    <td>
-                                        <button class="editarBtn">Editar</button>
-                                        <button class="guardarBtn" style="display:none;">Guardar</button>
-                                        <button class="eliminarBtn">Eliminar</button>
-                                    </td>
-                                </tr>
+                                <option value="@rol.Id_Parametro">@rol.Nombre_Parametro</option>
                             }
-                        </tbody>
-                    </table>
-                </div>
+                        </select>
 
-                <!-- TAB PERMISOS -->
-                <div class="tab-pane container fade" id="tabPermisos">
-                    <h4>Asignar Permisos</h4>
-                    <select id="rolPermiso" class="form-control mb-3">
-                        @foreach (var rol in ViewBag.Roles)
-                        {
-                            <option value="@rol.Id_Parametro">@rol.Nombre_Parametro</option>
-                        }
-                    </select>
+                        <table class="table table-dark table-hover table-bordered rounded mt-4">
+                            <thead class="table-light text-dark">
+                                <tr><th>Módulo</th><th>Permitir</th></tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var modulo in ViewBag.Modulos)
+                                {
+                                    <tr>
+                                        <td>@modulo.Nombre</td>
+                                        <td><input type="checkbox" class="permisoCheck" data-modulo="@modulo.Id_Modulo" /></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <button id="btnAplicarPermisos" class="btn btn-success mt-3">Aplicar Cambios</button>
+                    </div>
 
-                    <table class="table table-dark table-hover table-bordered rounded mt-4">
-                        <thead class="table-light text-dark">
-                            <tr><th>Módulo</th><th>Permitir</th></tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var modulo in ViewBag.Modulos)
+                    <!-- TAB ASINACIÓN MASIVA DE ROLES -->
+                    <div class="tab-pane container fade" id="tabMasiva">
+                        <h4>Asignar Roles a Múltiples Usuarios</h4>
+                        <select id="rolMasivo" class="form-control mb-3">
+                            @foreach (var rol in ViewBag.Roles)
                             {
-                                <tr>
-                                    <td>@modulo.Nombre</td>
-                                    <td><input type="checkbox" class="permisoCheck" data-modulo="@modulo.Id_Modulo" /></td>
-                                </tr>
+                                <option value="@rol.Id_Parametro">@rol.Nombre_Parametro</option>
                             }
-                        </tbody>
-                    </table>
-                    <button id="btnAplicarPermisos" class="btn btn-success mt-3">Aplicar Cambios</button>
+                        </select>
+
+                        <table class="table table-dark table-hover table-bordered rounded mt-4">
+                            <thead class="table-light text-dark">
+                                <tr><th>Seleccionar</th><th>Nombre de Usuario</th><th>Correo</th></tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var usuario in ViewBag.Usuarios)
+                                {
+                                    <tr>
+                                        <td><input type="checkbox" class="usuarioSeleccionado" value="@usuario.Cedula" /></td>
+                                        <td>@usuario.Nombre</td>
+                                        <td>@usuario.Correo</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <button class="btn btn-success mt-3" onclick="asignarRolMasivo()">Asignar Rol Seleccionado</button>
+                    </div>
                 </div>
 
-                <!-- TAB ASINACIÓN MASIVA DE ROLES -->
-                <div class="tab-pane container fade" id="tabMasiva">
-                    <h4>Asignar Roles a Múltiples Usuarios</h4>
-                    <select id="rolMasivo" class="form-control mb-3">
-                        @foreach (var rol in ViewBag.Roles)
-                        {
-                            <option value="@rol.Id_Parametro">@rol.Nombre_Parametro</option>
-                        }
-                    </select>
-
-                    <table class="table table-dark table-hover table-bordered rounded mt-4">
-                        <thead class="table-light text-dark">
-                            <tr><th>Seleccionar</th><th>Nombre de Usuario</th><th>Correo</th></tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var usuario in ViewBag.Usuarios)
-                            {
-                                <tr>
-                                    <td><input type="checkbox" class="usuarioSeleccionado" value="@usuario.Cedula" /></td>
-                                    <td>@usuario.Nombre</td>
-                                    <td>@usuario.Correo</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-                    <button class="btn btn-success mt-3" onclick="asignarRolMasivo()">Asignar Rol Seleccionado</button>
-                </div>
             </div>
-
         </div>
     </div>
-</div>
 
-<script>
+    <script>
     function asignarRolMasivo() {
     const rolId = document.getElementById("rolMasivo").value;
     const usuarios = Array.from(document.querySelectorAll(".usuarioSeleccionado:checked")).map(cb => parseInt(cb.value));
@@ -272,4 +441,4 @@ document.querySelectorAll(".eliminarBtn").forEach(btn => {
         });
     });
 });
-</script>
+    </script>

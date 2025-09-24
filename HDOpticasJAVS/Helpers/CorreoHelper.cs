@@ -12,7 +12,7 @@ namespace HDOpticasJAVS.Helpers
             {
                 var fromAddress = new MailAddress("hdopticasjavs@gmail.com", "HD Ópticas JAVS");
                 var toAddress = new MailAddress(para);
-                const string fromPassword = "ysuk wivj qivo dacj"; 
+                const string fromPassword = "ysuk wivj qivo dacj";
 
                 var smtp = new SmtpClient
                 {
