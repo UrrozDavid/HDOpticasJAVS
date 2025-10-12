@@ -1,14 +1,15 @@
 ﻿using HDOpticasJAVS.Models;
 using HDOpticasJAVS.Models.ViewModels;
+using HDOpticasJAVS.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
-using System.Net.Mail;
 using System.Net;
-using System.Web.Mvc;
+using System.Net.Mail;
 using System.Text;
-using HDOpticasJAVS.ViewModels;
-using System.Collections.Generic;
+using System.Web.Mvc;
 
 
 namespace HDOpticasJAVS.Controllers
@@ -557,6 +558,13 @@ namespace HDOpticasJAVS.Controllers
                 // 4) Upsert de alerta usando la MISMA ventana
                 if (model.FechaProximoSeguimiento.HasValue)
                 {
+                    // 🚧 NUEVO: fecha futura obligatoria
+                    if (model.FechaProximoSeguimiento.Value.Date < DateTime.Today)
+                    {
+                        TempData["ErrorMessage"] = "La fecha de seguimiento debe ser hoy o futura.";
+                        return RedirectToAction("EditarHistorial", new { cedula = model.CedulaCliente, fecha = historial.FechaRegistro.ToString("o") });
+                    }
+
                     var alerta = db.AlertaSeguimiento.FirstOrDefault(a =>
                         a.Cedula_Cliente == model.CedulaCliente &&
                         a.FechaRegistro >= minTs &&
@@ -576,7 +584,7 @@ namespace HDOpticasJAVS.Controllers
                         db.AlertaSeguimiento.Add(new AlertaSeguimiento
                         {
                             Cedula_Cliente = model.CedulaCliente,
-                            FechaRegistro = historial.FechaRegistro, // usa la marca de la fila encontrada
+                            FechaRegistro = historial.FechaRegistro,
                             FechaAlerta = model.FechaProximoSeguimiento.Value,
                             Mensaje = "Seguimiento clínico agregado",
                             Enviada = false,
@@ -773,11 +781,14 @@ namespace HDOpticasJAVS.Controllers
         public void RevisarAlertasPendientes()
         {
             var hoy = DateTime.Today;
-            var mañana = hoy.AddDays(1);
+            var anticipacion = GetAnticipacionDias();
+            var limite = hoy.AddDays(anticipacion);
 
-            // Buscar alertas pendientes cuya FechaAlerta sea mañana
+            // Buscar alertas pendientes cuya FechaAlerta esté entre hoy y hoy+anticipación
             var alertas = db.AlertaSeguimiento
-                .Where(a => a.Estado == "Pendiente" && DbFunctions.TruncateTime(a.FechaAlerta) == mañana)
+                .Where(a => a.Estado == "Pendiente"
+                         && DbFunctions.TruncateTime(a.FechaAlerta) >= hoy
+                         && DbFunctions.TruncateTime(a.FechaAlerta) <= limite)
                 .ToList();
 
             foreach (var alerta in alertas)
@@ -798,7 +809,6 @@ namespace HDOpticasJAVS.Controllers
 
                         enviada = true;
                         mensaje = "Recordatorio enviado exitosamente";
-
                     }
                     else
                     {
@@ -808,7 +818,6 @@ namespace HDOpticasJAVS.Controllers
 
                         enviada = false;
                         mensaje = "Correo no disponible para el cliente";
-
                     }
                 }
                 catch (Exception ex)
@@ -819,7 +828,6 @@ namespace HDOpticasJAVS.Controllers
 
                     enviada = false;
                     mensaje = $"Error: {ex.Message}";
-
                 }
 
                 // Guardar cambios de estado en AlertaSeguimiento
@@ -838,6 +846,7 @@ namespace HDOpticasJAVS.Controllers
                 db.SaveChanges();
             }
         }
+
 
 
         public ActionResult EjecutarAlertas()
@@ -868,9 +877,17 @@ namespace HDOpticasJAVS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RegistrarAlerta(AlertaSeguimiento alerta)
         {
+            
             if (alerta.FechaAlerta == default(DateTime))
             {
                 TempData["ErrorMessage"] = "Debe ingresar una fecha de alerta para registrar la alerta.";
+                return RedirectToAction("Historial", new { cedula = alerta.Cedula_Cliente });
+            }
+
+            
+            if (alerta.FechaAlerta.Date < DateTime.Today)
+            {
+                TempData["ErrorMessage"] = "La fecha de alerta debe ser futura o al menos hoy.";
                 return RedirectToAction("Historial", new { cedula = alerta.Cedula_Cliente });
             }
 
@@ -878,7 +895,7 @@ namespace HDOpticasJAVS.Controllers
             {
                 alerta.FechaConfiguracion = DateTime.Now;
                 alerta.Estado = "Pendiente";
-                alerta.ConfiguradaPor = Session["Usuario"]?.ToString(); // si tienes ese dato
+                alerta.ConfiguradaPor = Session["Usuario"]?.ToString();
 
                 db.AlertaSeguimiento.Add(alerta);
                 db.SaveChanges();
@@ -888,6 +905,7 @@ namespace HDOpticasJAVS.Controllers
 
             return RedirectToAction("Historial", new { cedula = alerta.Cedula_Cliente });
         }
+
         public ActionResult ExportarHistorialExcel(string cedula)
         {
             var cliente = db.Cliente.FirstOrDefault(c => c.Cedula == cedula);
@@ -1044,7 +1062,30 @@ namespace HDOpticasJAVS.Controllers
             return View(model);
         }
 
+        private int GetAnticipacionDias()
+        {
+            try
+            {
+                var diasDb = db.Database.SqlQuery<int?>(
+                    "SELECT TOP 1 AnticipacionDias FROM ConfigNotificaciones WITH (NOLOCK)"
+                ).FirstOrDefault();
 
+                if (diasDb.HasValue && diasDb.Value > 0)
+                    return diasDb.Value;
+            }
+            catch
+            {
+                
+            }
+
+            
+            var val = ConfigurationManager.AppSettings["AnticipacionDias"];
+            if (int.TryParse(val, out int dias) && dias > 0)
+                return dias;
+
+            
+            return 3;
+        }
     }
 
 }

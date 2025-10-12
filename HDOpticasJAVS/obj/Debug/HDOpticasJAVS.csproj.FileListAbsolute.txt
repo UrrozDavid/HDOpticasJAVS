@@ -433,6 +433,8 @@ C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJ
 C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOptica.15B28D0C.Up2Date
 C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.dll
 C:\Users\jason\Documents\GitHub\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.pdb
+S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.AssemblyReference.cache
+S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.CoreCompileInputs.cache
 S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\bin\Content\Img\especialista.jpg
 S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\bin\Content\Img\examen-visual.jpg
 S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\bin\Content\Img\fondo1.jpg
@@ -573,8 +575,6 @@ S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\bin\sv\Hangfire.Core.resources.dll
 S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\bin\tr-TR\Hangfire.Core.resources.dll
 S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\bin\zh\Hangfire.Core.resources.dll
 S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\bin\zh-TW\Hangfire.Core.resources.dll
-S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.AssemblyReference.cache
-S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.csproj.CoreCompileInputs.cache
 S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOptica.15B28D0C.Up2Date
 S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.dll
 S:\OpticaJuly27\HDOpticasJAVS\HDOpticasJAVS\obj\Debug\HDOpticasJAVS.pdb
