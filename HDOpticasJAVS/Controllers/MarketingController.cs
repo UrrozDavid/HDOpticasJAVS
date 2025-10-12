@@ -85,6 +85,18 @@ namespace HDOpticasJAVS.Controllers
 
             var omitidosSinCorreo = todos.Count(c => c.Seleccionado && string.IsNullOrWhiteSpace(c.Correo));
 
+            // ===================== NUEVO (guardia) =====================
+            if (seleccionadosValidos == null || seleccionadosValidos.Count == 0)
+            {
+                // Revertir la campaña creada para no dejar registros huérfanos
+                db.CampaniaMarketing.Remove(campania);
+                db.SaveChanges();
+
+                TempData["Mensaje"] = "⚠️ No se puede crear/enviar la campaña: no hay destinatarios válidos seleccionados.";
+                return RedirectToAction("Crear");
+            }
+            // =================== FIN NUEVO (guardia) ===================
+
             foreach (var cliente in seleccionadosValidos)
             {
                 db.CampaniaCliente.Add(new CampaniaCliente
@@ -121,6 +133,15 @@ namespace HDOpticasJAVS.Controllers
 
             foreach (var c in campañas)
             {
+                var tieneDestinatarios = db.CampaniaCliente
+                    .Any(cc => cc.Id_Campania == c.Id_Campania && !string.IsNullOrWhiteSpace(cc.Correo_Cliente));
+                if (!tieneDestinatarios)
+                {
+                  
+                    continue;
+                }
+              
+
                 c.Estado = "A";
                 c.Fecha_Inicio = hoy;
                 c.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -131,6 +152,7 @@ namespace HDOpticasJAVS.Controllers
 
             db.SaveChanges();
         }
+
 
         public ActionResult Historial()
         {
@@ -390,6 +412,15 @@ namespace HDOpticasJAVS.Controllers
                 var campania = db.CampaniaMarketing.Find(id);
                 if (campania == null) return HttpNotFound();
 
+                
+                var tieneDestinatarios = db.CampaniaCliente
+                    .Any(x => x.Id_Campania == id && !string.IsNullOrWhiteSpace(x.Correo_Cliente));
+                if (!tieneDestinatarios)
+                {
+                    TempData["Mensaje"] = "⚠️ No se puede enviar: la campaña no tiene destinatarios válidos.";
+                    return RedirectToAction("Historial");
+                }
+
                 CampaniaHelper.ProcesarCampaniaPorId(id);
                 TempData["Mensaje"] = "✅ Correos enviados manualmente para la campaña.";
             }
@@ -399,6 +430,7 @@ namespace HDOpticasJAVS.Controllers
             }
             return RedirectToAction("Historial");
         }
+
 
 
         [HttpGet]
@@ -690,7 +722,21 @@ namespace HDOpticasJAVS.Controllers
                 .Select(x => x.Cedula_Cliente)
                 .ToList();
 
+          
+            if (listaCedulas == null || listaCedulas.Count == 0)
+            {
+                ModelState.AddModelError("", "La lista seleccionada no tiene clientes.");
+                model.ListasDisponibles = db.ListaSegmentada
+                    .Select(l => new SelectListItem
+                    {
+                        Value = l.Id_Lista.ToString(),
+                        Text = l.NombreLista
+                    }).ToList();
+                return View(model);
+            }
+
             var erroresPersonalizacion = new List<string>();
+            var enviados = 0; 
 
             foreach (var cedula in listaCedulas)
             {
@@ -712,6 +758,7 @@ namespace HDOpticasJAVS.Controllers
                 }
 
                 CorreoHelper.EnviarCorreo(cliente.Usuario.Correo, model.Asunto, mensaje);
+                enviados++; 
             }
 
             if (erroresPersonalizacion.Any())
@@ -728,15 +775,28 @@ namespace HDOpticasJAVS.Controllers
                 return View(model);
             }
 
+                       if (enviados == 0)
+            {
+                ModelState.AddModelError("", "No se pudo enviar la campaña: la lista no contiene destinatarios con correo válido.");
+                model.ListasDisponibles = db.ListaSegmentada
+                    .Select(l => new SelectListItem
+                    {
+                        Value = l.Id_Lista.ToString(),
+                        Text = l.NombreLista
+                    }).ToList();
+                return View(model);
+            }
+
             TempData["Exito"] = "Campaña enviada correctamente.";
             return RedirectToAction("Historial");
         }
+
         public ActionResult ConfigurarRecurrencia()
         {
             var regla = db.ConfiguracionRecurrencia.FirstOrDefault();
             var model = new ReglasRecurrenciaViewModel
             {
-                UmbralCompras = regla?.UmbralCompras ?? 3 // Valor por defecto
+                UmbralCompras = regla?.UmbralCompras ?? 3
             };
             return View(model);
         }
@@ -782,7 +842,6 @@ namespace HDOpticasJAVS.Controllers
 
             if (!clientesFrecuentes.Any())
             {
-
                 return;
             }
 
@@ -801,10 +860,12 @@ namespace HDOpticasJAVS.Controllers
             db.CampaniaMarketing.Add(campania);
             db.SaveChanges();
 
+            var agregados = 0; 
+
             foreach (var cedula in clientesFrecuentes)
             {
                 var cliente = db.Cliente.FirstOrDefault(c => c.Cedula == cedula);
-                if (cliente == null || cliente.Usuario?.Correo == null)
+                if (cliente == null || string.IsNullOrWhiteSpace(cliente.Usuario?.Correo))
                     continue;
 
                 db.CampaniaCliente.Add(new CampaniaCliente
@@ -816,13 +877,24 @@ namespace HDOpticasJAVS.Controllers
                     UsuarioCreador = "Sistema",
                     FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                 });
+                agregados++; 
             }
 
             db.SaveChanges();
 
+            
+            if (agregados == 0)
+            {
+                
+                campania.Estado = "I";
+                db.Entry(campania).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return;
+            }
 
             CampaniaHelper.ProcesarCampaniaPorId(campania.Id_Campania);
         }
+
         [HttpGet]
         public ActionResult ConfigurarCriteriosRecurrentes()
         {
