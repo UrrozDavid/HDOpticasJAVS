@@ -276,6 +276,7 @@ namespace HDOpticasJAVS.Controllers
             return View();
         }
 
+        //NUEVO
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarEmpleado(FormCollection form)
@@ -285,13 +286,25 @@ namespace HDOpticasJAVS.Controllers
                 string cedula = form["Cedula"];
                 string correo = form["Correo"];
 
-                if (db.Usuario.Any(u => u.Cedula == cedula || u.Correo == correo))
+                bool existeUsuario = db.Usuario.Any(u => u.Cedula == cedula || u.Correo == correo);
+                bool existeEmpleado = db.Empleado.Any(e => e.Cedula == cedula);
+
+                if (existeUsuario || existeEmpleado)
                 {
-                    ViewBag.Mensaje = "Ya existe un usuario con esa cédula o correo.";
-                    ViewBag.Roles = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A"), "Id_Parametro", "Nombre_Parametro");
-                    return View("CrearEmpleado");
+                    // Mostrar mensaje en la vista
+                    ModelState.AddModelError("", "Ya existe un empleado con esa cédula o correo.");
+
+                    // Volver a cargar roles en el combo
+                    ViewBag.Roles = new SelectList(
+                        db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A" && p.Nombre_Parametro.ToLower() != "cliente"),
+                        "Id_Parametro",
+                        "Nombre_Parametro"
+                    );
+
+                    return View("Crear");
                 }
 
+                // Crear nuevo usuario
                 Usuario nuevoUsuario = new Usuario
                 {
                     Cedula = cedula,
@@ -309,6 +322,7 @@ namespace HDOpticasJAVS.Controllers
 
                 db.Usuario.Add(nuevoUsuario);
 
+                // Crear nuevo empleado
                 Empleado nuevoEmpleado = new Empleado
                 {
                     Cedula = cedula,
@@ -329,11 +343,19 @@ namespace HDOpticasJAVS.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensaje = "Error al registrar: " + ex.Message;
-                ViewBag.Roles = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A"), "Id_Parametro", "Nombre_Parametro");
-                return View("CrearEmpleado");
+                // Captura del error genérico
+                ModelState.AddModelError("", "Error al registrar: " + ex.Message);
+
+                ViewBag.Roles = new SelectList(
+                    db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A" && p.Nombre_Parametro.ToLower() != "cliente"),
+                    "Id_Parametro",
+                    "Nombre_Parametro"
+                );
+
+                return View("Crear");
             }
         }
+
 
         [HttpGet]
         public ActionResult Editar(string cedula)
