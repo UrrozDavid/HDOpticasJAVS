@@ -297,6 +297,7 @@ namespace HDOpticasJAVS.Controllers
             return Json(especialistas, JsonRequestBehavior.AllowGet);
         }
 
+        //NUEVO
         [HttpPost]
         public ActionResult Crear(FormCollection collection)
         {
@@ -307,7 +308,7 @@ namespace HDOpticasJAVS.Controllers
                 string fecha = collection["Fecha"];
                 string hora = collection["Hora"];
 
-                // Validaciones
+                // Validaciones básicas
                 if (string.IsNullOrWhiteSpace(cedulaEspecialista) ||
                     string.IsNullOrWhiteSpace(especialidadId) ||
                     string.IsNullOrWhiteSpace(fecha) ||
@@ -317,10 +318,13 @@ namespace HDOpticasJAVS.Controllers
                     return RedirectToAction("Calendario");
                 }
 
-                string cedulaUsuario = Session["Cedula"] as string;
-                if (cedulaUsuario == null)
+                // Obtener datos del usuario en sesión
+                string cedulaSesion = Session["Cedula"] as string;
+                int? rolSesion = Session["Rol"] as int?;
+
+                if (cedulaSesion == null)
                 {
-                    TempData["MensajeCitaError"] = "Debe iniciar sesión como cliente para agendar una cita.";
+                    TempData["MensajeCitaError"] = "Debe iniciar sesión para agendar una cita.";
                     return RedirectToAction("Calendario");
                 }
 
@@ -328,7 +332,7 @@ namespace HDOpticasJAVS.Controllers
                 TimeSpan horaCita = TimeSpan.Parse(hora);
                 int idEspecialidad = int.Parse(especialidadId);
 
-                // Verificar conflicto
+                // 🚫 Verificar conflicto de horario (para todos los roles)
                 bool citaExiste = db.Cita.Any(c =>
                     c.Fecha_Cita == fechaCita &&
                     c.Hora_Cita == horaCita &&
@@ -337,20 +341,26 @@ namespace HDOpticasJAVS.Controllers
 
                 if (citaExiste)
                 {
-                    TempData["MensajeCitaError"] = "La hora seleccionada ya está ocupada.";
+                    TempData["MensajeCitaError"] = "El horario seleccionado ya está ocupado.";
                     return RedirectToAction("Calendario");
                 }
 
+                // Si el usuario es cliente, él mismo es el dueño de la cita.
+                // Si es admin, puede agendar en nombre de otro cliente (campo en el formulario).
+                string cedulaCliente = rolSesion == 1
+                    ? collection["Cedula_Usuario"] ?? cedulaSesion  // Admin puede elegir cliente
+                    : cedulaSesion;                                 // Cliente usa su propia cédula
+
                 var nuevaCita = new Cita
                 {
-                    Cedula_Usuario = cedulaUsuario,
+                    Cedula_Usuario = cedulaCliente,
                     Fecha_Cita = fechaCita,
                     Hora_Cita = horaCita,
                     Id_TipoEspecialista = idEspecialidad,
                     Cedula_Especialista = cedulaEspecialista,
                     Id_EstadoCita = db.Parametro.FirstOrDefault(p => p.Nombre_Parametro == "Pendiente" && p.Id_TipoParametro == 4)?.Id_Parametro ?? 1,
                     Estado = "A",
-                    UsuarioCreador = cedulaUsuario,
+                    UsuarioCreador = cedulaSesion,
                     FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                     TokenConfirmacion = Guid.NewGuid()
                 };
@@ -358,32 +368,16 @@ namespace HDOpticasJAVS.Controllers
                 db.Cita.Add(nuevaCita);
                 db.SaveChanges();
 
-                var usuario = db.Usuario.FirstOrDefault(u => u.Cedula == cedulaUsuario);
-                string correo = usuario?.Correo ?? "";
-                string url = Url.Action("ConfirmarCita", "CitaEnLinea", new { id = nuevaCita.Id_Cita, token = nuevaCita.TokenConfirmacion }, protocol: Request.Url.Scheme);
-
-                var mensaje = new MailMessage();
-                mensaje.To.Add(correo);
-                mensaje.Subject = "Confirmación de Cita - HD Ópticas JAVS";
-                mensaje.Body = $"Hola {usuario?.Nombre},\n\nHas agendado una cita para el {fechaCita:dd/MM/yyyy} a las {horaCita}.\n\nPara confirmar tu cita, haz clic en el siguiente enlace:\n{url}\n\nGracias por confiar en nosotros.";
-                mensaje.IsBodyHtml = false;
-                mensaje.From = new MailAddress("hdopticasjavs@gmail.com");
-
-                var smtp = new SmtpClient("smtp.gmail.com", 587);
-                smtp.Credentials = new NetworkCredential("hdopticasjavs@gmail.com", "ysuk wivj qivo dacj");
-                smtp.EnableSsl = true;
-
-                smtp.Send(mensaje);
-
                 TempData["MensajeCitaExito"] = $"La cita fue agendada correctamente para el {fechaCita:yyyy-MM-dd} a las {horaCita}.";
                 return RedirectToAction("Calendario");
             }
-            catch
+            catch (Exception ex)
             {
-                TempData["MensajeCitaError"] = "Ocurrió un error al registrar la cita.";
+                TempData["MensajeCitaError"] = "Ocurrió un error al registrar la cita. " + ex.Message;
                 return RedirectToAction("Calendario");
             }
         }
+
 
         public ActionResult Editar(int id)
         {
@@ -503,29 +497,66 @@ namespace HDOpticasJAVS.Controllers
             return PartialView("_CitasDelEspecialista", citas);
         }
 
+        //NUEVO
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CancelarCita(int idCita)
         {
-            var cita = db.Cita.Find(idCita);
-            string cedulaUsuario = Session["Cedula"] as string;
-
-            if ((cita == null || cita.Cedula_Usuario != cedulaUsuario) && cita.Fecha_Cita <= DateTime.Now.AddHours(24))
-
+            try
             {
-                TempData["MensajeCitaError"] = "No es posible cancelar la cita con menos de 24 horas de anticipación.";
+                var cita = db.Cita.Find(idCita);
+                string cedulaSesion = Session["Cedula"] as string;
+                int? rolSesion = Session["Rol"] as int?;
+
+                if (cita == null)
+                {
+                    TempData["MensajeCitaError"] = "No se encontró la cita.";
+                    return RedirectToAction("Calendario");
+                }
+
+                // 🕒 Calcular fecha y hora completa de la cita
+                TimeSpan hora = cita.Hora_Cita is TimeSpan h ? h : TimeSpan.Zero;
+                DateTime fechaHoraCita = cita.Fecha_Cita.Add(hora);
+
+                double horasRestantes = (fechaHoraCita - DateTime.Now).TotalHours;
+
+                // 🚫 Restricción global: nadie puede cancelar dentro de las 24h
+                if (horasRestantes < 24)
+                {
+                    TempData["MensajeCitaError"] = "No es posible cancelar una cita con menos de 24 horas de anticipación.";
+                    return RedirectToAction("Calendario");
+                }
+
+                // 🧩 Validar permisos según el rol
+                if (rolSesion == 2) // Cliente
+                {
+                    if (cita.Cedula_Usuario != cedulaSesion)
+                    {
+                        TempData["MensajeCitaError"] = "No tiene permiso para cancelar esta cita.";
+                        return RedirectToAction("Calendario");
+                    }
+                }
+                // 🔒 Administrador (rol 1) también respeta la restricción de 24h
+
+                // ✅ Cancelar cita
+                cita.Estado = "I";
+                cita.UsuarioModificador = cedulaSesion ?? "Sistema";
+                cita.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                db.SaveChanges();
+
+                TempData["MensajeCitaExito"] = "La cita fue cancelada correctamente.";
                 return RedirectToAction("Calendario");
             }
-
-            cita.Estado = "I"; // Cancelada
-            cita.UsuarioModificador = cedulaUsuario ?? "Cliente";
-            cita.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
-            db.SaveChanges();
-
-            TempData["MensajeCitaExito"] = "Cita cancelada correctamente.";
-            return RedirectToAction("Calendario");
+            catch (Exception ex)
+            {
+                TempData["MensajeCitaError"] = "Ocurrió un error al cancelar la cita: " + ex.Message;
+                return RedirectToAction("Calendario");
+            }
         }
+
+
+
 
         public ActionResult ConfirmarCita(int id, Guid token)
         {
