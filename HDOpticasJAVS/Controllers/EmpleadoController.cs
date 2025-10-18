@@ -301,7 +301,7 @@ namespace HDOpticasJAVS.Controllers
                         "Nombre_Parametro"
                     );
 
-                    return View("Crear");
+                    return View();
                 }
 
                 // Crear nuevo usuario
@@ -352,7 +352,7 @@ namespace HDOpticasJAVS.Controllers
                     "Nombre_Parametro"
                 );
 
-                return View("Crear");
+                return View();
             }
         }
 
