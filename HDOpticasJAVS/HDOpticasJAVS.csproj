@@ -497,7 +497,7 @@
     <Content Include="Views\Usuario\Editar.cshtml" />
     <Content Include="Views\Usuario\Detalles.cshtml" />
     <Content Include="Views\Clientes\Perfil.cshtml" />
-    <Content Include="Views\Empleado\Crear.cshtml" />
+    <Content Include="Views\Empleado\CrearEmpleado.cshtml" />
     <Content Include="Views\Empleado\Detalles.cshtml" />
     <Content Include="Views\Empleado\Editar.cshtml" />
     <Content Include="Views\Empleado\Eliminar.cshtml" />
