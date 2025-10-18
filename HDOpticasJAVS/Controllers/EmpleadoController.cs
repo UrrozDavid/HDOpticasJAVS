@@ -266,7 +266,7 @@ namespace HDOpticasJAVS.Controllers
             return RedirectToAction("PerfilEmpleado");
         }
 
-        public ActionResult Crear()
+        public ActionResult CrearEmpelado()
         {
             ViewBag.Roles = new SelectList(
                 db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A" && p.Nombre_Parametro.ToLower() != "cliente"),
@@ -301,7 +301,7 @@ namespace HDOpticasJAVS.Controllers
                         "Nombre_Parametro"
                     );
 
-                    return View();
+                    return View("CrearEmpleado");
                 }
 
                 // Crear nuevo usuario
@@ -352,7 +352,7 @@ namespace HDOpticasJAVS.Controllers
                     "Nombre_Parametro"
                 );
 
-                return View();
+                return View("CrearEmpleado");
             }
         }
 
