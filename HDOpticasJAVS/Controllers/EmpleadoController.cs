@@ -228,9 +228,9 @@ namespace HDOpticasJAVS.Controllers
                 string correoDestinatario = "hdopticasjavs@gmail.com";
 
                 var mensaje = new MailMessage();
-                mensaje.From = new MailAddress("no-reply@optica.com", "Solicitud del Empleado"); // ficticio
+                mensaje.From = new MailAddress("no-reply@optica.com", "Solicitud del Empleado"); 
                 mensaje.To.Add(correoDestinatario);
-                mensaje.ReplyToList.Add(new MailAddress(empleado.Correo)); // permite responder al correo real del empleado
+                mensaje.ReplyToList.Add(new MailAddress(empleado.Correo));
                 mensaje.Subject = "Solicitud desde perfil de empleado";
                                 mensaje.Body = $@"
                 Hola, el siguiente empleado ha enviado una solicitud desde su perfil:
@@ -266,17 +266,17 @@ namespace HDOpticasJAVS.Controllers
             return RedirectToAction("PerfilEmpleado");
         }
 
-        public ActionResult CrearEmpelado()
+        public ActionResult CrearEmpleado()
         {
             ViewBag.Roles = new SelectList(
                 db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A" && p.Nombre_Parametro.ToLower() != "cliente"),
                 "Id_Parametro",
                 "Nombre_Parametro"
             );
-            return View();
+            return View("CrearEmpleado");
         }
 
-        //NUEVO
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GuardarEmpleado(FormCollection form)
@@ -291,10 +291,9 @@ namespace HDOpticasJAVS.Controllers
 
                 if (existeUsuario || existeEmpleado)
                 {
-                    // Mostrar mensaje en la vista
+
                     ModelState.AddModelError("", "Ya existe un empleado con esa cédula o correo.");
 
-                    // Volver a cargar roles en el combo
                     ViewBag.Roles = new SelectList(
                         db.Parametro.Where(p => p.Id_TipoParametro == 1 && p.Estado == "A" && p.Nombre_Parametro.ToLower() != "cliente"),
                         "Id_Parametro",

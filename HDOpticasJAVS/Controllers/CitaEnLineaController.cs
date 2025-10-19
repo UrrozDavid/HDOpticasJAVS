@@ -80,8 +80,45 @@ namespace HDOpticasJAVS.Controllers
             {
                 try
                 {
+                    bool citaExiste = db.Cita.Any(c =>
+                        c.Fecha_Cita == cita.Fecha_Cita &&
+                        c.Hora_Cita == cita.Hora_Cita &&
+                        c.Cedula_Especialista == cita.Cedula_Especialista &&
+                        c.Estado == "A"
+                    );
+
+                    if (citaExiste)
+                    {
+                        ModelState.AddModelError("", "⚠️ Ya existe una cita en ese horario para este especialista.");
+
+                        ViewBag.Cedula_Especialista = new SelectList(db.Empleado, "Cedula", "Direccion", cita.Cedula_Especialista);
+                        ViewBag.Cedula_Usuario = new SelectList(db.Usuario, "Cedula", "Nombre", cita.Cedula_Usuario);
+                        ViewBag.Id_EstadoCita = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 4), "Id_Parametro", "Nombre_Parametro", cita.Id_EstadoCita);
+                        ViewBag.Id_TipoEspecialista = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 6), "Id_Parametro", "Nombre_Parametro", cita.Id_TipoEspecialista);
+
+                        return View(cita);
+                    }
+
                     cita.UsuarioCreador = Session["Cedula"]?.ToString() ?? "Sistema";
                     cita.FechaCreacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                    if (Request.Form["Hora_Cita"] != null)
+                    {
+                        TimeSpan horaForm;
+                        if (TimeSpan.TryParse(Request.Form["Hora_Cita"], out horaForm))
+                        {
+                            cita.Hora_Cita = horaForm;
+                        }
+                    }
+
+                    if (Request.Form["Fecha_Cita"] != null)
+                    {
+                        DateTime fechaForm;
+                        if (DateTime.TryParse(Request.Form["Fecha_Cita"], out fechaForm))
+                        {
+                            cita.Fecha_Cita = fechaForm.Date;
+                        }
+                    }
 
                     db.Cita.Add(cita);
                     db.SaveChanges();
@@ -99,7 +136,6 @@ namespace HDOpticasJAVS.Controllers
                 }
             }
 
-            // Reasignar los ViewBag necesarios para que los DropDown funcionen
             ViewBag.Cedula_Especialista = new SelectList(db.Empleado, "Cedula", "Direccion", cita.Cedula_Especialista);
             ViewBag.Cedula_Usuario = new SelectList(db.Usuario, "Cedula", "Nombre", cita.Cedula_Usuario);
             ViewBag.Id_EstadoCita = new SelectList(db.Parametro.Where(p => p.Id_TipoParametro == 4), "Id_Parametro", "Nombre_Parametro", cita.Id_EstadoCita);
@@ -107,6 +143,7 @@ namespace HDOpticasJAVS.Controllers
 
             return View(cita);
         }
+
 
         // GET: CitaEnLinea/Edit/5
         public ActionResult Edit(int? id)
@@ -128,13 +165,11 @@ namespace HDOpticasJAVS.Controllers
 
             ViewBag.Cedula_Usuario = new SelectList(usuarios, "Cedula", "NombreCompleto", cita.Cedula_Usuario);
 
-            // Estados de cita (catálogo)
             ViewBag.Id_EstadoCita = new SelectList(
                 db.Parametro.Where(p => p.Id_TipoParametro == 4 && p.Estado == "A"),
                 "Id_Parametro", "Nombre_Parametro", cita.Id_EstadoCita
             );
 
-            // Tipos de especialista
             ViewBag.Id_TipoEspecialista = new SelectList(
                 db.Parametro.Where(p => p.Id_TipoParametro == 6 && p.Estado == "A"),
                 "Id_Parametro", "Nombre_Parametro", cita.Id_TipoEspecialista
@@ -154,7 +189,6 @@ namespace HDOpticasJAVS.Controllers
 
             ViewBag.Especialistas = new SelectList(especialistas, "Cedula", "NombreCompleto", cita.Cedula_Especialista);
 
-            // Estado A/I
             ViewBag.EstadosAI = new SelectList(new[]
             {
         new { Value = "A", Text = "Activo" },
@@ -174,7 +208,6 @@ namespace HDOpticasJAVS.Controllers
                 var citaDb = db.Cita.Find(cita.Id_Cita);
                 if (citaDb == null) return HttpNotFound();
 
-                // Actualizar solo campos editables
                 citaDb.Cedula_Usuario = cita.Cedula_Usuario;
                 citaDb.Fecha_Cita = cita.Fecha_Cita;
                 citaDb.Hora_Cita = cita.Hora_Cita;
@@ -183,7 +216,6 @@ namespace HDOpticasJAVS.Controllers
                 citaDb.Id_EstadoCita = cita.Id_EstadoCita;
                 citaDb.Estado = cita.Estado;
 
-                // Auditoría de edición
                 citaDb.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 citaDb.UsuarioModificador = Session["Cedula"]?.ToString() ?? "Sistema";
 
@@ -194,7 +226,6 @@ namespace HDOpticasJAVS.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Si algo falla, recargamos combos con lo que vino del form
             var usuarios = db.Usuario
                 .Where(u => u.Id_Rol == 2 && u.Estado == "A")
                 .Select(u => new
@@ -262,15 +293,47 @@ namespace HDOpticasJAVS.Controllers
             if (cita == null)
                 return HttpNotFound();
 
-            db.Cita.Remove(cita);
+            int rolSesion = 0;
+            var rolObj = Session["Rol"];
+            if (rolObj != null)
+            {
+                int.TryParse(Convert.ToString(rolObj), out rolSesion);
+            }
+
+            string cedulaSesion = Session["Cedula"] as string ?? "";
+
+            TimeSpan horaCita = cita.Hora_Cita;
+            DateTime fechaHoraCita = cita.Fecha_Cita.Date.Add(horaCita);
+
+            double horasRestantes = (fechaHoraCita - DateTime.Now).TotalHours;
+
+            if (rolSesion == 1 && horasRestantes < 24)
+            {
+                TempData["MensajeCitaError"] = "El administrador no puede cancelar citas con menos de 24 horas de anticipación.";
+                return RedirectToAction("Index");
+            }
+
+            if (rolSesion == 2 && cita.Cedula_Usuario != cedulaSesion)
+            {
+                TempData["MensajeCitaError"] = "No tiene permiso para eliminar esta cita.";
+                return RedirectToAction("Index");
+            }
+
+            cita.Estado = "I";
+            cita.UsuarioModificador = string.IsNullOrEmpty(cedulaSesion) ? "Sistema" : cedulaSesion;
+            cita.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
             db.SaveChanges();
+
+            TempData["MensajeCitaExito"] = rolSesion == 1
+                ? "La cita fue cancelada/eliminada por el administrador."
+                : "La cita fue cancelada correctamente.";
+
             return RedirectToAction("Index");
         }
 
-
         public ActionResult Calendario()
         {
-            // Todas las especialidades disponibles
             var especialidades = db.Parametro
                 .Where(p => p.Id_TipoParametro == 6)
                 .ToList();
@@ -297,7 +360,6 @@ namespace HDOpticasJAVS.Controllers
             return Json(especialistas, JsonRequestBehavior.AllowGet);
         }
 
-        //NUEVO
         [HttpPost]
         public ActionResult Crear(FormCollection collection)
         {
@@ -308,7 +370,6 @@ namespace HDOpticasJAVS.Controllers
                 string fecha = collection["Fecha"];
                 string hora = collection["Hora"];
 
-                // Validaciones básicas
                 if (string.IsNullOrWhiteSpace(cedulaEspecialista) ||
                     string.IsNullOrWhiteSpace(especialidadId) ||
                     string.IsNullOrWhiteSpace(fecha) ||
@@ -318,7 +379,6 @@ namespace HDOpticasJAVS.Controllers
                     return RedirectToAction("Calendario");
                 }
 
-                // Obtener datos del usuario en sesión
                 string cedulaSesion = Session["Cedula"] as string;
                 int? rolSesion = Session["Rol"] as int?;
 
@@ -332,7 +392,6 @@ namespace HDOpticasJAVS.Controllers
                 TimeSpan horaCita = TimeSpan.Parse(hora);
                 int idEspecialidad = int.Parse(especialidadId);
 
-                // 🚫 Verificar conflicto de horario (para todos los roles)
                 bool citaExiste = db.Cita.Any(c =>
                     c.Fecha_Cita == fechaCita &&
                     c.Hora_Cita == horaCita &&
@@ -344,12 +403,9 @@ namespace HDOpticasJAVS.Controllers
                     TempData["MensajeCitaError"] = "El horario seleccionado ya está ocupado.";
                     return RedirectToAction("Calendario");
                 }
-
-                // Si el usuario es cliente, él mismo es el dueño de la cita.
-                // Si es admin, puede agendar en nombre de otro cliente (campo en el formulario).
                 string cedulaCliente = rolSesion == 1
-                    ? collection["Cedula_Usuario"] ?? cedulaSesion  // Admin puede elegir cliente
-                    : cedulaSesion;                                 // Cliente usa su propia cédula
+                    ? collection["Cedula_Usuario"] ?? cedulaSesion 
+                    : cedulaSesion;                                 
 
                 var nuevaCita = new Cita
                 {
@@ -417,9 +473,8 @@ namespace HDOpticasJAVS.Controllers
                         return RedirectToAction("Calendario");
                     }
 
-                    // Validación de rol (opcional)
                     var rol = Session["Rol"] as int?;
-                    if (rol == 2) // Cliente
+                    if (rol == 2) 
                     {
                         string cedulaSesion = Session["Cedula"]?.ToString();
                         if (citaExistente.Cedula_Usuario != cedulaSesion)
@@ -429,7 +484,6 @@ namespace HDOpticasJAVS.Controllers
                         }
                     }
 
-                    // Actualizar campos válidos
                     citaExistente.Fecha_Cita = cita.Fecha_Cita;
                     citaExistente.Hora_Cita = cita.Hora_Cita;
                     citaExistente.Id_TipoEspecialista = cita.Id_TipoEspecialista;
@@ -447,7 +501,6 @@ namespace HDOpticasJAVS.Controllers
                 }
             }
 
-            // Volver a cargar los dropdowns
             ViewBag.Id_TipoEspecialista = new SelectList(
                 db.Parametro.Where(p => p.Id_TipoParametro == 6).ToList(),
                 "Id_Parametro",
@@ -497,7 +550,6 @@ namespace HDOpticasJAVS.Controllers
             return PartialView("_CitasDelEspecialista", citas);
         }
 
-        //NUEVO
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CancelarCita(int idCita)
@@ -514,31 +566,23 @@ namespace HDOpticasJAVS.Controllers
                     return RedirectToAction("Calendario");
                 }
 
-                // 🕒 Calcular fecha y hora completa de la cita
-                TimeSpan hora = cita.Hora_Cita is TimeSpan h ? h : TimeSpan.Zero;
-                DateTime fechaHoraCita = cita.Fecha_Cita.Add(hora);
+                TimeSpan horaCita = cita.Hora_Cita;
+                DateTime fechaHoraCita = cita.Fecha_Cita.Date.Add(horaCita);
 
                 double horasRestantes = (fechaHoraCita - DateTime.Now).TotalHours;
 
-                // 🚫 Restricción global: nadie puede cancelar dentro de las 24h
-                if (horasRestantes < 24)
+                if (rolSesion == 1 && horasRestantes < 24)
                 {
-                    TempData["MensajeCitaError"] = "No es posible cancelar una cita con menos de 24 horas de anticipación.";
+                    TempData["MensajeCitaError"] = "El administrador no puede cancelar citas con menos de 24 horas de anticipación.";
+                    return RedirectToAction("Index");
+                }
+
+                if (rolSesion == 2 && cita.Cedula_Usuario != cedulaSesion)
+                {
+                    TempData["MensajeCitaError"] = "No tiene permiso para cancelar esta cita.";
                     return RedirectToAction("Calendario");
                 }
 
-                // 🧩 Validar permisos según el rol
-                if (rolSesion == 2) // Cliente
-                {
-                    if (cita.Cedula_Usuario != cedulaSesion)
-                    {
-                        TempData["MensajeCitaError"] = "No tiene permiso para cancelar esta cita.";
-                        return RedirectToAction("Calendario");
-                    }
-                }
-                // 🔒 Administrador (rol 1) también respeta la restricción de 24h
-
-                // ✅ Cancelar cita
                 cita.Estado = "I";
                 cita.UsuarioModificador = cedulaSesion ?? "Sistema";
                 cita.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -555,9 +599,6 @@ namespace HDOpticasJAVS.Controllers
             }
         }
 
-
-
-
         public ActionResult ConfirmarCita(int id, Guid token)
         {
             var cita = db.Cita.Find(id);
@@ -568,7 +609,7 @@ namespace HDOpticasJAVS.Controllers
                 return RedirectToAction("Calendario");
             }
 
-            cita.Id_EstadoCita = 9; // Confirmada
+            cita.Id_EstadoCita = 9;
             cita.UsuarioModificador = cita.Cedula_Usuario;
             cita.FechaModificacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
