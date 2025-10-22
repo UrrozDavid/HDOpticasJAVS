@@ -23,43 +23,42 @@ namespace HDOpticasJAVS.Controllers
 
             if (!string.IsNullOrWhiteSpace(filtro))
             {
-                // Si el filtro es un número, intentamos buscar por ID
-                if (int.TryParse(filtro, out int id))
+                // Validación de caracteres especiales (ajustable según tu criterio)
+                if (System.Text.RegularExpressions.Regex.IsMatch(filtro, @"[^a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ-]"))
                 {
-                    var resultado = await inventario.Where(i => i.Id_Producto == id).ToListAsync();
-                    if (!resultado.Any())
-                    {
-                        TempData["Mensaje"] = "❌ No se encontró ningún producto con ese ID.";
-                        return View(new List<Inventario>());
-                    }
-                    return View(resultado);
+                    TempData["Mensaje"] = "⚠️ El valor ingresado no es válido.";
+                    return View(new List<Inventario>());
                 }
-                else
+
+                // Buscar por Código de producto (si el valor ingresado coincide)
+                var resultadoCodigo = await inventario
+                    .Where(i => i.Codigo_Producto.Contains(filtro))
+                    .ToListAsync();
+
+                if (resultadoCodigo.Any())
                 {
-                    // Validación de caracteres especiales (ajustable según tu criterio)
-                    if (System.Text.RegularExpressions.Regex.IsMatch(filtro, @"[^a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]"))
-                    {
-                        TempData["Mensaje"] = "⚠️ El valor ingresado no es válido.";
-                        return View(new List<Inventario>());
-                    }
-
-                    var resultado = await inventario
-                        .Where(i => i.Nombre_Producto.Contains(filtro))
-                        .ToListAsync();
-
-                    if (!resultado.Any())
-                    {
-                        TempData["Mensaje"] = "❌ No se encontró ningún producto con ese nombre.";
-                        return View(new List<Inventario>());
-                    }
-
-                    return View(resultado);
+                    return View(resultadoCodigo);
                 }
+
+                // Si no se encuentra por código, buscar por nombre
+                var resultadoNombre = await inventario
+                    .Where(i => i.Nombre_Producto.Contains(filtro))
+                    .ToListAsync();
+
+                if (resultadoNombre.Any())
+                {
+                    return View(resultadoNombre);
+                }
+
+                TempData["Mensaje"] = "❌ No se encontró ningún producto con ese código o nombre.";
+                return View(new List<Inventario>());
             }
 
-            // Si no hay filtro, devolvés todo
+            // Si no hay filtro, devolver todos
             return View(await inventario.ToListAsync());
-        }
+
+         }
+
 
         // GET: Inventarios/Details/5
         public async Task<ActionResult> Details(int? id)
