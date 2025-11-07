@@ -5,51 +5,108 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="container">
-    <h2 class="text-white">@ViewBag.Title</h2>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.Id_Cita)
-        @Html.HiddenFor(model => model.Cedula_Usuario)
-        @Html.HiddenFor(model => model.Id_EstadoCita)
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Fecha de Cita</label>
-                @Html.TextBoxFor(model => model.Fecha_Cita, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
-                @Html.ValidationMessageFor(model => model.Fecha_Cita, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-6">
-                <label>Hora de Cita</label>
-                @Html.TextBoxFor(model => model.Hora_Cita, "{0:hh\\:mm}", new { @class = "form-control", @type = "time" })
-                @Html.ValidationMessageFor(model => model.Hora_Cita, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>Tipo de Especialista</label>
-                @Html.DropDownList("Id_TipoEspecialista", ViewBag.Especialidades as SelectList, "-- Seleccionar --", new { @class = "form-select", @id = "ddlEspecialidadAdmin" })
-            </div>
-            <div class="col-md-6">
-                <label>Especialista</label>
-                <select id="ddlEspecialistaAdmin" name="Cedula_Especialista" class="form-select" required>
-                    <option value="">-- Seleccionar --</option>
-                </select>
-            </div>
-        </div>
-
-
-        <div class="col-12 text-end mt-3">
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-            <a href="@Url.Action("Calendario", "CitaEnLinea")" class="btn btn-secondary me-2">Volver</a>
-        </div>
-
+<style>
+    /* Card + header */
+    .pv-card {
+        background: #1f1f1f;
+        color: #fff;
+        border-radius: 15px;
     }
+
+    .pv-header {
+        background: #A8E063;
+        color: #000;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    /* Inputs en tema oscuro */
+    .form-control, .form-select {
+        background: #2a2a2a;
+        color: #fff;
+        border: 1px solid #444;
+    }
+
+        .form-control:focus, .form-select:focus {
+            background: #2d2d2d;
+            color: #fff;
+            border-color: #A8E063;
+            box-shadow: 0 0 0 .2rem rgba(168,224,99,.15);
+        }
+
+    label {
+        color: #dcdcdc;
+        font-weight: 500;
+    }
+
+    .text-danger {
+        color: #ff7575 !important;
+    }
+
+    /* Botones verdes */
+    .pv-btn-green {
+        background: #A8E063;
+        color: #000;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 16px;
+        font-weight: 700;
+    }
+
+        .pv-btn-green:hover {
+            filter: brightness(.95);
+            color: #000;
+        }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg pv-card" style="max-width: 900px; width: 100%;">
+        <div class="card-header text-center pv-header">
+            <h2 class="fw-bold m-0" style="font-family: 'Poppins', sans-serif;">@ViewBag.Title</h2>
+        </div>
+
+        <div class="card-body" style="font-family: 'Roboto', sans-serif;">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.Id_Cita)
+                @Html.HiddenFor(model => model.Cedula_Usuario)
+                @Html.HiddenFor(model => model.Id_EstadoCita)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Fecha de Cita</label>
+                        @Html.TextBoxFor(model => model.Fecha_Cita, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                        @Html.ValidationMessageFor(model => model.Fecha_Cita, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Hora de Cita</label>
+                        @Html.TextBoxFor(model => model.Hora_Cita, "{0:hh\\:mm}", new { @class = "form-control", @type = "time" })
+                        @Html.ValidationMessageFor(model => model.Hora_Cita, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Tipo de Especialista</label>
+                        @Html.DropDownList("Id_TipoEspecialista", ViewBag.Especialidades as SelectList, "-- Seleccionar --", new { @class = "form-select", @id = "ddlEspecialidadAdmin" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Especialista</label>
+                        <select id="ddlEspecialistaAdmin" name="Cedula_Especialista" class="form-select" required>
+                            <option value="">-- Seleccionar --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-end mt-3">
+                    <a href="@Url.Action("Calendario", "CitaEnLinea")" class="pv-btn-green me-2">Volver</a>
+                    <button type="submit" class="pv-btn-green">Guardar Cambios</button>
+                </div>
+            }
+        </div>
+    </div>
 </div>
 
 @section Scripts {
@@ -66,7 +123,7 @@
                             console.log("Especialistas recibidos:", data);
                             var ddl = $('#ddlEspecialistaAdmin');
                             ddl.empty();
-                            ddl.append($('<option>').text('-- Seleccione un especialista --').attr('value', ''));
+                            ddl.append($('<option>').text('-- Seleccionar --').attr('value', ''));
                             $.each(data, function (i, item) {
                                 ddl.append($('<option>').text(item.NombreCompleto).attr('value', item.Cedula));
                             });
@@ -74,7 +131,7 @@
                             console.error("Error en la petición AJAX:", textStatus, errorThrown);
                         });
                 } else {
-                    $('#ddlEspecialistaAdmin').empty().append($('<option>').text('-- Seleccione un especialista --').attr('value', ''));
+                    $('#ddlEspecialistaAdmin').empty().append($('<option>').text('-- Seleccionar --').attr('value', ''));
                 }
             });
         });
