@@ -5,7 +5,6 @@
 }
 
 <style>
-    /* Card / Header */
     #empleado-informe .card {
         background: #111 !important;
         border: 1px solid rgba(255,255,255,.08);
@@ -21,17 +20,6 @@
         border-top-right-radius: 20px;
     }
 
-        #empleado-informe .card-header h2 {
-            margin: 0;
-            text-shadow: none;
-        }
-
-    /* Body */
-    #empleado-informe .card-body {
-        padding: 20px 24px;
-    }
-
-    /* Filtros y botones: misma línea/altura */
     #empleado-informe .form-control {
         background: #1a1a1a !important;
         color: #fff !important;
@@ -46,35 +34,26 @@
         font-weight: 600;
     }
 
-    #empleado-informe .btn-primary,
-    #empleado-informe .btn-success,
+    #empleado-informe .btn-success {
+        background: #A8E063 !important;
+        border-color: #A8E063 !important;
+        color: #000 !important;
+    }
+
+        #empleado-informe .btn-success:hover {
+            background: #91cc56 !important;
+            border-color: #91cc56 !important;
+        }
+
     #empleado-informe .btn-danger {
         background: #A8E063 !important;
         border-color: #A8E063 !important;
         color: #000 !important;
     }
 
-        #empleado-informe .btn-primary:hover,
-        #empleado-informe .btn-success:hover,
         #empleado-informe .btn-danger:hover {
             background: #91cc56 !important;
             border-color: #91cc56 !important;
-        }
-
-        #empleado-informe .btn-danger i {
-            color: #000 !important;
-        }
-    /* icono PDF */
-
-    /* Tabla */
-    #empleado-informe .table {
-        border-color: rgba(255,255,255,.08) !important;
-    }
-
-        #empleado-informe .table thead th {
-            background: #1f1f1f !important;
-            color: #ddd !important;
-            border-color: rgba(255,255,255,.12) !important;
         }
 
     #empleado-informe .table-dark > :not(caption) > * > * {
@@ -88,7 +67,6 @@
         color: #fff !important;
     }
 
-    /* Badges */
     #empleado-informe .badge.bg-success {
         background: #2ecc71 !important;
     }
@@ -123,21 +101,25 @@
                         </select>
                     </div>
                     <div class="col-12 col-md-3">
-                        <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="bi bi-funnel"></i> Filtrar
+                        </button>
                     </div>
                     <div class="col-12 col-md-3 text-md-end">
                         <div class="d-flex gap-2 justify-content-md-end">
-                            <a href="@Url.Action("ExportarExcel","Empleado", new { estado = ViewBag.Estado, rol = ViewBag.Rol })" class="btn btn-success">Exportar a Excel</a>
-                            <a href="@Url.Action("ExportarPdf","Empleado", new { estado = ViewBag.Estado, rol = ViewBag.Rol })" class="btn btn-danger">
-                                <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
-                            </a>
+                            <button type="button" class="btn btn-success" onclick="exportarTablaExcel()">
+                                <i class="bi bi-file-earmark-excel"></i> Exportar a Excel
+                            </button>
+                            <button type="button" class="btn btn-danger" onclick="exportarTablaPDF()">
+                                <i class="bi bi-file-earmark-pdf"></i> Exportar a PDF
+                            </button>
                         </div>
                     </div>
                 </div>
             }
 
             <div class="table-responsive mt-3">
-                <table class="table table-dark table-bordered table-hover mb-0">
+                <table id="tablaEmpleados" class="table table-dark table-bordered table-hover mb-0">
                     <thead class="table-light text-dark">
                         <tr class="text-center">
                             <th>Cédula</th>
@@ -155,7 +137,7 @@
                                 <td>@emp.Nombre @emp.Apellido1 @emp.Apellido2</td>
                                 <td>@emp.Correo</td>
                                 <td>@emp.Rol</td>
-                                <td>
+                                <td class="text-center">
                                     @if (emp.Estado == "A")
                                     {<span class="badge bg-success">Activo</span> }
                                     else if (emp.Estado == "I")
@@ -171,6 +153,40 @@
         </div>
     </div>
 </div>
+
+<!-- Scripts para exportar -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+    // Exportar a Excel
+    function exportarTablaExcel() {
+        const tabla = document.getElementById("tablaEmpleados").cloneNode(true);
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.table_to_sheet(tabla);
+        XLSX.utils.book_append_sheet(wb, ws, "Empleados");
+        XLSX.writeFile(wb, "Informe_Empleados.xlsx");
+    }
+
+    // Exportar a PDF
+    async function exportarTablaPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const tablaOriginal = document.getElementById("tablaEmpleados");
+        const tablaClonada = tablaOriginal.cloneNode(true);
+        doc.setFontSize(14);
+        doc.text("Informe de Empleados", 14, 15);
+        doc.autoTable({
+            html: tablaClonada,
+            startY: 25,
+            styles: { fontSize: 10 },
+            headStyles: { fillColor: [26, 115, 232], textColor: [255, 255, 255] },
+            alternateRowStyles: { fillColor: [240, 240, 240] }
+        });
+        doc.save("Informe_Empleados.pdf");
+    }
+</script>
 
 <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
