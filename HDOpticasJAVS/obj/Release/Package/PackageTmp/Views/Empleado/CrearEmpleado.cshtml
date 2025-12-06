@@ -75,18 +75,13 @@
 
         <div class="card-body" style="font-family: 'Roboto', sans-serif;">
 
-            <!-- NUEVO -->
-
-            <!-- 🔴 Mostrar errores de validación generales -->
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <!-- 🟢 Mostrar mensaje de éxito -->
             @if (TempData["Exito"] != null)
             {
                 <div class="alert alert-success">@TempData["Exito"]</div>
             }
 
-            <!-- 🔴 Mostrar mensaje específico (si lo manda el controlador con ViewBag.Mensaje) -->
             @if (ViewBag.Mensaje != null)
             {
                 <div class="alert alert-danger">@ViewBag.Mensaje</div>

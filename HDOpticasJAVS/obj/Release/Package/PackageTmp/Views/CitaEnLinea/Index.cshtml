@@ -83,6 +83,21 @@
 
         <div class="card-body" style="font-family:'Roboto',sans-serif;">
 
+
+            @if (TempData["MensajeCitaError"] != null)
+            {
+                <div class="alert alert-danger text-center fw-bold mb-3" role="alert">
+                    @TempData["MensajeCitaError"]
+                </div>
+            }
+
+            @if (TempData["MensajeCitaExito"] != null)
+            {
+                <div class="alert alert-success text-center fw-bold mb-3" role="alert">
+                    @TempData["MensajeCitaExito"]
+                </div>
+            }
+
             <div class="d-flex justify-content-between mb-3">
                 <div>
                     @Html.ActionLink("Crear Nueva Cita", "Create", null, new { @class = "btn pv-btn-green" })

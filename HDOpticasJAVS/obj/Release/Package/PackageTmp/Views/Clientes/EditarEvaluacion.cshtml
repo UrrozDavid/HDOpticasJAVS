@@ -16,7 +16,7 @@
         {
             <div class="alert alert-danger d-flex align-items-center">
                 <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
-                <div>@TempData["ErrorMessage"]</div>
+                <div>@Html.Raw(TempData["ErrorMessage"])</div>
             </div>
         }
 
@@ -24,10 +24,10 @@
         {
             @Html.AntiForgeryToken()
 
-            <!-- Claves ocultas: NO se muestran al usuario -->
+            @* Claves ocultas (para ubicar el registro exacto) *@
             @Html.HiddenFor(m => m.CedulaCliente)
             <input type="hidden" name="FechaRegistroIso" value="@Model.FechaRegistro?.ToString(" o")" />
-            <input type="hidden" name="FechaRegistroTicks" value="@Model.FechaRegistro?.Ticks" />
+            <input type="hidden" name="FechaRegistroTicks" value="@(Model.FechaRegistro?.Ticks)" />
 
             <div class="mb-3">
                 <label class="form-label">Paciente</label>
@@ -43,33 +43,33 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Antecedentes</label>
-                @Html.TextAreaFor(m => m.Antecedentes, 3, 60, new { @class = "form-control", placeholder = "Antecedentes..." })
+                <label class="form-label" for="Antecedentes">Antecedentes</label>
+                @Html.TextAreaFor(m => m.Antecedentes, 3, 60, new { @class = "form-control", placeholder = "Antecedentes...", id = "Antecedentes" })
                 @Html.ValidationMessageFor(m => m.Antecedentes, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Diagnóstico</label>
-                @Html.TextAreaFor(m => m.Diagnostico, 3, 60, new { @class = "form-control", placeholder = "Diagnóstico..." })
+                <label class="form-label" for="Diagnostico">Diagnóstico</label>
+                @Html.TextAreaFor(m => m.Diagnostico, 3, 60, new { @class = "form-control", placeholder = "Diagnóstico...", id = "Diagnostico" })
                 @Html.ValidationMessageFor(m => m.Diagnostico, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Tratamiento</label>
-                @Html.TextAreaFor(m => m.Tratamiento, 3, 60, new { @class = "form-control", placeholder = "Tratamiento..." })
+                <label class="form-label" for="Tratamiento">Tratamiento</label>
+                @Html.TextAreaFor(m => m.Tratamiento, 3, 60, new { @class = "form-control", placeholder = "Tratamiento...", id = "Tratamiento" })
                 @Html.ValidationMessageFor(m => m.Tratamiento, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Observaciones</label>
-                @Html.TextAreaFor(m => m.Observaciones, 3, 60, new { @class = "form-control", placeholder = "Observaciones..." })
+                <label class="form-label" for="Observaciones">Observaciones</label>
+                @Html.TextAreaFor(m => m.Observaciones, 3, 60, new { @class = "form-control", placeholder = "Observaciones...", id = "Observaciones" })
                 @Html.ValidationMessageFor(m => m.Observaciones, "", new { @class = "text-danger" })
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Próximo seguimiento (opcional)</label>
+                <label class="form-label" for="FechaProximoSeguimiento">Próximo seguimiento (opcional)</label>
                 @Html.TextBoxFor(m => m.FechaProximoSeguimiento, "{0:yyyy-MM-dd}",
-                                 new { @class = "form-control", type = "date" })
+                                 new { @class = "form-control", type = "date", id = "FechaProximoSeguimiento" })
                 <small class="text-secondary">Si lo indicas, se creará o actualizará la alerta de seguimiento.</small>
             </div>
 
