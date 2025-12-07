@@ -19,6 +19,20 @@
         }
 </style>
 
+@if (TempData["Exito"] != null)
+{
+    <div class="alert alert-success mt-3">
+        @TempData["Exito"]
+    </div>
+}
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-warning mt-3">
+        @TempData["Mensaje"]
+    </div>
+}
+
+
 <div class="container mt-4 text-white">
     <div class="card shadow-lg border-0">
         <!-- Título -->
@@ -77,6 +91,7 @@
 
                     <div class="card-body">
                         <form method="post" action="@Url.Action("GuardarLista", "Marketing")">
+                            @Html.AntiForgeryToken()
                             <div class="table-responsive">
                                 <table class="table table-dark table-bordered align-middle">
                                     <thead class="text-center" style="background-color:#A8E063; color:black;">

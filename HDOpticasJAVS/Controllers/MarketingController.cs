@@ -656,9 +656,13 @@ namespace HDOpticasJAVS.Controllers
 
 
         [HttpPost]
-        public ActionResult GuardarLista(string nombreLista, List<string> cedulasClientes)
+        [ValidateAntiForgeryToken]
+        public ActionResult GuardarLista(string nombreLista, string[] clientesSeleccionados)
         {
-            if (string.IsNullOrWhiteSpace(nombreLista) || cedulasClientes == null || !cedulasClientes.Any())
+            // Validación básica
+            if (string.IsNullOrWhiteSpace(nombreLista) ||
+                clientesSeleccionados == null ||
+                !clientesSeleccionados.Any())
             {
                 TempData["Mensaje"] = "Debe ingresar un nombre y seleccionar al menos un cliente.";
                 return RedirectToAction("SegmentarClientes");
@@ -669,15 +673,26 @@ namespace HDOpticasJAVS.Controllers
                 // Crear lista segmentada
                 var lista = new ListaSegmentada
                 {
+                    // OJO: usa el nombre correcto de la propiedad según tu modelo:
+                    // Si en tu EDMX es "NombreLista", usa:
+                    // NombreLista = nombreLista,
+                    // Si es "Nombre", deja como está:
                     Nombre = nombreLista,
+
                     UsuarioCreador = Session["Usuario"]?.ToString() ?? "Sistema",
                     FechaCreacion = DateTime.Now
                 };
+
                 db.ListaSegmentada.Add(lista);
                 db.SaveChanges();
 
-                // Asociar clientes a la lista
-                foreach (var cedula in cedulasClientes)
+                // Evitar duplicados y vacíos
+                var cedulasUnicas = clientesSeleccionados
+                    .Where(c => !string.IsNullOrWhiteSpace(c))
+                    .Distinct()
+                    .ToList();
+
+                foreach (var cedula in cedulasUnicas)
                 {
                     db.ListaSegmentadaCliente.Add(new ListaSegmentadaCliente
                     {
@@ -687,9 +702,9 @@ namespace HDOpticasJAVS.Controllers
                 }
 
                 db.SaveChanges();
-                TempData["Exito"] = "Lista guardada exitosamente.";
             }
 
+            TempData["Exito"] = "Lista guardada exitosamente.";
             return RedirectToAction("SegmentarClientes");
         }
 
@@ -697,32 +712,50 @@ namespace HDOpticasJAVS.Controllers
         [HttpGet]
         public ActionResult EnviarCampaniaSegmentada()
         {
+            var listas = db.ListaSegmentada
+                           .OrderByDescending(l => l.FechaCreacion)
+                           .ToList();
+
             var viewModel = new CampaniaSegmentadaViewModel
             {
-                ListasDisponibles = db.ListaSegmentada
-                    .Select(l => new SelectListItem
-                    {
-                        Value = l.Id_Lista.ToString(),
-                        Text = l.NombreLista
-                    }).ToList()
+                ListasDisponibles = listas.Select(l => new SelectListItem
+                {
+                    Value = l.Id_Lista.ToString(),
+                    
+                    Text = l.Nombre    
+                }).ToList()
             };
+
+            if (!viewModel.ListasDisponibles.Any())
+                ViewBag.Mensaje = "No hay listas segmentadas guardadas aún.";
 
             return View(viewModel);
         }
+
+
 
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult EnviarCampaniaSegmentada(CampaniaSegmentadaViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+            {
+                model.ListasDisponibles = db.ListaSegmentada
+                    .Select(l => new SelectListItem
+                    {
+                        Value = l.Id_Lista.ToString(),
+                        Text = l.Nombre   // o NombreLista, según tu entidad
+                    }).ToList();
 
+                return View(model);
+            }
+
+            // 1) Obtener las cédulas de la lista segmentada
             var listaCedulas = db.ListaSegmentadaCliente
                 .Where(x => x.Id_Lista == model.Id_Lista)
                 .Select(x => x.Cedula_Cliente)
                 .ToList();
 
-          
             if (listaCedulas == null || listaCedulas.Count == 0)
             {
                 ModelState.AddModelError("", "La lista seleccionada no tiene clientes.");
@@ -730,66 +763,98 @@ namespace HDOpticasJAVS.Controllers
                     .Select(l => new SelectListItem
                     {
                         Value = l.Id_Lista.ToString(),
-                        Text = l.NombreLista
+                        Text = l.Nombre
                     }).ToList();
                 return View(model);
             }
 
+            // 2) Traer Cliente + Usuario con JOIN (no Include)
+            var datosClientes = (
+                from c in db.Cliente
+                join u in db.Usuario on c.Cedula equals u.Cedula into gj
+                from u in gj.DefaultIfEmpty()
+                where listaCedulas.Contains(c.Cedula)
+                select new { Cliente = c, Usuario = u }
+            ).ToList();
+
             var erroresPersonalizacion = new List<string>();
-            var enviados = 0; 
+            var erroresEnvio = new List<string>();
+            var enviados = 0;
 
-            foreach (var cedula in listaCedulas)
+            // 3) Enviar correos
+            foreach (var item in datosClientes)
             {
-                var cliente = db.Cliente
-                    .Include(c => c.Usuario)
-                    .FirstOrDefault(c => c.Cedula == cedula);
+                var cliente = item.Cliente;
+                var usuario = item.Usuario;
 
-                if (cliente == null || cliente.Usuario == null || string.IsNullOrEmpty(cliente.Usuario.Correo))
+                // 👉 Tomar correo de Usuario.Correo y, si no hay, de Cliente.Correo
+                var correo = usuario?.Correo;
+                if (string.IsNullOrWhiteSpace(correo))
+                    correo = cliente.Correo;
+
+                // Sin correo -> se omite
+                if (string.IsNullOrWhiteSpace(correo))
                     continue;
 
-                string mensaje = model.MensajeHtml;
-                mensaje = mensaje.Replace("{{Nombre}}", cliente.Usuario.Nombre ?? "")
-                                 .Replace("{{Edad}}", cliente.Edad.HasValue ? cliente.Edad.ToString() : "");
+                string mensaje = model.MensajeHtml ?? "";
 
+                // Nombre para {{Nombre}}: primero Usuario, si no, Cliente
+                var nombre = ((usuario?.Nombre ?? cliente.Nombre ?? "") + " " +
+                              (usuario?.Apellido1 ?? cliente.Apellido1 ?? "")).Trim();
+
+                // Reemplazos
+                mensaje = mensaje.Replace("{{Nombre}}", nombre)
+                                 .Replace("{{Edad}}", cliente.Edad.HasValue ? cliente.Edad.Value.ToString() : "");
+
+                // Si quedaron {{...}} sin reemplazar, se considera error de personalización
                 if (mensaje.Contains("{{"))
                 {
-                    erroresPersonalizacion.Add(cliente.Usuario.Correo);
+                    erroresPersonalizacion.Add(correo);
                     continue;
                 }
 
-                CorreoHelper.EnviarCorreo(cliente.Usuario.Correo, model.Asunto, mensaje);
-                enviados++; 
+                // Envío real: solo contamos como enviado si devuelve true
+                if (!CorreoHelper.EnviarCorreo(correo, model.Asunto, mensaje))
+                {
+                    erroresEnvio.Add(correo);
+                    continue;
+                }
+
+                enviados++;
             }
 
-            if (erroresPersonalizacion.Any())
+            // 4) Ningún correo enviado
+            if (enviados == 0)
             {
-                ModelState.AddModelError("", $"No se pudo enviar a algunos clientes por errores en la personalización: {string.Join(", ", erroresPersonalizacion)}");
+                var msg = "No se pudo enviar la campaña: la lista no contiene destinatarios con correo válido o todos fallaron.";
+                if (erroresEnvio.Any())
+                    msg += $" Errores de envío: {erroresEnvio.Count}.";
+                ModelState.AddModelError("", msg);
 
                 model.ListasDisponibles = db.ListaSegmentada
                     .Select(l => new SelectListItem
                     {
                         Value = l.Id_Lista.ToString(),
-                        Text = l.NombreLista
+                        Text = l.Nombre
                     }).ToList();
 
                 return View(model);
             }
 
-                       if (enviados == 0)
+            // 5) Si hubo errores parciales, avisamos en TempData (opcional)
+            if (erroresPersonalizacion.Any() || erroresEnvio.Any())
             {
-                ModelState.AddModelError("", "No se pudo enviar la campaña: la lista no contiene destinatarios con correo válido.");
-                model.ListasDisponibles = db.ListaSegmentada
-                    .Select(l => new SelectListItem
-                    {
-                        Value = l.Id_Lista.ToString(),
-                        Text = l.NombreLista
-                    }).ToList();
-                return View(model);
+                TempData["Advertencia"] =
+                    $"Campaña enviada con advertencias. Enviados: {enviados}. " +
+                    $"Errores de personalización: {erroresPersonalizacion.Count}. " +
+                    $"Errores de envío: {erroresEnvio.Count}.";
             }
 
-            TempData["Exito"] = "Campaña enviada correctamente.";
+            TempData["Exito"] = $"Campaña enviada correctamente. Correos enviados: {enviados}.";
             return RedirectToAction("Historial");
         }
+
+
 
         public ActionResult ConfigurarRecurrencia()
         {

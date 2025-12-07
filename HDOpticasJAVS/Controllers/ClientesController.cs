@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -503,21 +505,25 @@ namespace HDOpticasJAVS.Controllers
                 return View(model);
             }
 
-            // 1) Reconstruir fecha original desde los hidden del form (como ya lo tienes):
+            // ============= 1) Reconstruir fecha original =============
             DateTime? fechaRegistroOriginal = null;
-            var iso = Request["FechaRegistroIso"];
-            var ticksStr = Request["FechaRegistroTicks"];
+            string iso = Request["FechaRegistroIso"];
+            string ticksStr = Request["FechaRegistroTicks"];
 
             if (!string.IsNullOrWhiteSpace(iso))
             {
-                DateTime parsed;
-                if (DateTime.TryParse(iso, null, System.Globalization.DateTimeStyles.RoundtripKind, out parsed))
+                if (DateTime.TryParse(
+                        iso,
+                        null,
+                        System.Globalization.DateTimeStyles.RoundtripKind,
+                        out DateTime parsed))
+                {
                     fechaRegistroOriginal = parsed;
+                }
             }
             else if (!string.IsNullOrWhiteSpace(ticksStr))
             {
-                long ticks;
-                if (long.TryParse(ticksStr, out ticks))
+                if (long.TryParse(ticksStr, out long ticks))
                     fechaRegistroOriginal = new DateTime(ticks);
             }
 
@@ -527,9 +533,9 @@ namespace HDOpticasJAVS.Controllers
                 return RedirectToAction("Index");
             }
 
-            // 2) Ventana ±1s para evitar overflow y problemas de precisión
-            var minTs = fechaRegistroOriginal.Value.AddSeconds(-1);
-            var maxTs = fechaRegistroOriginal.Value.AddSeconds(1);
+            // ventana ±1 segundo
+            DateTime minTs = fechaRegistroOriginal.Value.AddSeconds(-1);
+            DateTime maxTs = fechaRegistroOriginal.Value.AddSeconds(1);
 
             var historial = db.HistorialCliente.FirstOrDefault(h =>
                 h.Cedula_Cliente == model.CedulaCliente &&
@@ -543,67 +549,141 @@ namespace HDOpticasJAVS.Controllers
                 return RedirectToAction("Index");
             }
 
-            // 3) Actualizar campos
+            // ============= 2) Validar fecha de seguimiento =============
+            if (model.FechaProximoSeguimiento.HasValue &&
+                model.FechaProximoSeguimiento.Value.Date < DateTime.Today)
+            {
+                TempData["ErrorMessage"] = "La fecha de seguimiento debe ser hoy o futura.";
+                return RedirectToAction(
+                    "EditarHistorial",
+                    new { cedula = model.CedulaCliente, fecha = historial.FechaRegistro.ToString("o") }
+                );
+            }
+
+            // ============= 3) Actualizar historial =============
             historial.Antecedentes = model.Antecedentes;
             historial.Diagnostico = model.Diagnostico;
             historial.Tratamiento = model.Tratamiento;
             historial.Observaciones = model.Observaciones;
-
             db.Entry(historial).State = EntityState.Modified;
+
+            // fecha mínima válida para columnas datetime en SQL
+            DateTime minSqlDate = new DateTime(1753, 1, 1);
+
+            // ============= 4) Preparar alerta (sin guardar aún) =============
+            if (model.FechaProximoSeguimiento.HasValue)
+            {
+                // Normalizamos la fecha de alerta
+                DateTime rawFechaAlerta = model.FechaProximoSeguimiento.Value;
+                DateTime safeFechaAlerta = rawFechaAlerta < minSqlDate ? DateTime.Today : rawFechaAlerta;
+
+                var alerta = db.AlertaSeguimiento.FirstOrDefault(a =>
+                    a.Cedula_Cliente == model.CedulaCliente &&
+                    a.FechaRegistro >= minTs &&
+                    a.FechaRegistro <= maxTs
+                );
+
+                if (alerta != null)
+                {
+                    alerta.FechaAlerta = safeFechaAlerta;
+                    alerta.Mensaje = "Seguimiento clínico reprogramado";
+                    alerta.Enviada = false;
+                    alerta.MedioEnvio = "Interno";
+                    alerta.TipoAlerta = "Clinico";
+                    alerta.Estado = "Pendiente";
+
+                    db.Entry(alerta).State = EntityState.Modified;
+                }
+                else
+                {
+                    // usamos la fecha de historial; por si acaso la normalizamos
+                    DateTime rawFechaRegistroHist = historial.FechaRegistro;
+                    DateTime safeFechaRegistroHist = rawFechaRegistroHist < minSqlDate ? DateTime.Now : rawFechaRegistroHist;
+
+                    var nuevaAlerta = new AlertaSeguimiento
+                    {
+                        Cedula_Cliente = model.CedulaCliente,
+                        FechaRegistro = safeFechaRegistroHist,
+                        FechaAlerta = safeFechaAlerta,
+                        Mensaje = "Seguimiento clínico agregado",
+                        Enviada = false,
+                        MedioEnvio = "Interno",
+                        TipoAlerta = "Clinico",
+                        Estado = "Pendiente"
+                    };
+
+                    db.AlertaSeguimiento.Add(nuevaAlerta);
+                }
+            }
+
+            // ============= 5) Guardar TODO =============
+            bool oldValidateFlag = db.Configuration.ValidateOnSaveEnabled;
+            db.Configuration.ValidateOnSaveEnabled = false;
 
             try
             {
-                db.SaveChanges();
-
-                // 4) Upsert de alerta usando la MISMA ventana
-                if (model.FechaProximoSeguimiento.HasValue)
+                // 5.1 Normalizar TODAS las fechas de TODAS las entidades que se van a guardar
+                foreach (var entry in db.ChangeTracker.Entries()
+                                         .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
                 {
-                    // 🚧 NUEVO: fecha futura obligatoria
-                    if (model.FechaProximoSeguimiento.Value.Date < DateTime.Today)
-                    {
-                        TempData["ErrorMessage"] = "La fecha de seguimiento debe ser hoy o futura.";
-                        return RedirectToAction("EditarHistorial", new { cedula = model.CedulaCliente, fecha = historial.FechaRegistro.ToString("o") });
-                    }
+                    var entity = entry.Entity;
+                    var props = entity.GetType().GetProperties()
+                                      .Where(p =>
+                                          p.PropertyType == typeof(DateTime) ||
+                                          p.PropertyType == typeof(DateTime?));
 
-                    var alerta = db.AlertaSeguimiento.FirstOrDefault(a =>
-                        a.Cedula_Cliente == model.CedulaCliente &&
-                        a.FechaRegistro >= minTs &&
-                        a.FechaRegistro <= maxTs
-                    );
+                    foreach (var prop in props)
+                    {
+                        var val = prop.GetValue(entity, null);
+                        if (val == null) continue;
 
-                    if (alerta != null)
-                    {
-                        alerta.FechaAlerta = model.FechaProximoSeguimiento.Value;
-                        alerta.Mensaje = "Seguimiento clínico reprogramado";
-                        alerta.Enviada = false;
-                        alerta.MedioEnvio = "Interno";
-                        db.Entry(alerta).State = EntityState.Modified;
-                    }
-                    else
-                    {
-                        db.AlertaSeguimiento.Add(new AlertaSeguimiento
+                        DateTime dt = (DateTime)val;
+                        if (dt < minSqlDate)
                         {
-                            Cedula_Cliente = model.CedulaCliente,
-                            FechaRegistro = historial.FechaRegistro,
-                            FechaAlerta = model.FechaProximoSeguimiento.Value,
-                            Mensaje = "Seguimiento clínico agregado",
-                            Enviada = false,
-                            MedioEnvio = "Interno"
-                        });
+                            // si es nullable y venía "vacía", podrías poner null,
+                            // pero para evitar problemas usamos el mínimo permitido
+                            prop.SetValue(entity, minSqlDate, null);
+                        }
                     }
-
-                    db.SaveChanges();
                 }
 
+                // 5.2 Guardar cambios
+                db.SaveChanges();
                 TempData["SuccessMessage"] = "Historial actualizado correctamente.";
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Error al guardar los cambios: " + ex.Message;
+                TempData["ErrorMessage"] = "Error al guardar los cambios: " + ex.GetBaseException().Message;
+
+                // log con contexto separado
+                try
+                {
+                    using (var dbLog = new HD_Opticas_JAVS_BDEntities())
+                    {
+                        dbLog.LogSistema.Add(new LogSistema
+                        {
+                            Fecha = DateTime.Now,
+                            Modulo = "ClientesController.EditarHistorial",
+                            Mensaje = "Error general al guardar historial: " + ex.ToString(),
+                            Usuario = (Session["Usuario"] ?? "Sistema").ToString()
+                        });
+                        dbLog.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    
+                }
+            }
+            finally
+            {
+                db.Configuration.ValidateOnSaveEnabled = oldValidateFlag;
             }
 
             return RedirectToAction("Historial", "Clientes", new { cedula = model.CedulaCliente });
         }
+
+
 
 
         [HttpPost]
